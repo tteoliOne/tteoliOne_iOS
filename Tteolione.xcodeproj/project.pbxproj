@@ -9,19 +9,20 @@
 /* Begin PBXBuildFile section */
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
-		724DEC732D0091B700171F44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC722D0091B700171F44 /* ViewController.swift */; };
-		724DEC762D0091B700171F44 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC752D0091B700171F44 /* Base */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
 		724DEC7B2D0091B800171F44 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC7A2D0091B800171F44 /* Base */; };
 		724DEC832D0091D800171F44 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC822D0091D800171F44 /* .gitignore */; };
+		724DEC892D00937300171F44 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC882D00937300171F44 /* RxCocoa */; };
+		724DEC8B2D00937300171F44 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC8A2D00937300171F44 /* RxSwift */; };
+		724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC8D2D00937F00171F44 /* SnapKit */; };
+		724DEC912D00938800171F44 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC902D00938800171F44 /* Alamofire */; };
+		724DEC942D00939100171F44 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC932D00939100171F44 /* ReactorKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		724DEC722D0091B700171F44 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		724DEC752D0091B700171F44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		724DEC772D0091B800171F44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		724DEC7A2D0091B800171F44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		724DEC7C2D0091B800171F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,6 +34,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
+				724DEC912D00938800171F44 /* Alamofire in Frameworks */,
+				724DEC8B2D00937300171F44 /* RxSwift in Frameworks */,
+				724DEC942D00939100171F44 /* ReactorKit in Frameworks */,
+				724DEC892D00937300171F44 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,15 +65,37 @@
 		724DEC6D2D0091B700171F44 /* Tteolione */ = {
 			isa = PBXGroup;
 			children = (
-				724DEC6E2D0091B700171F44 /* AppDelegate.swift */,
-				724DEC702D0091B700171F44 /* SceneDelegate.swift */,
-				724DEC722D0091B700171F44 /* ViewController.swift */,
-				724DEC742D0091B700171F44 /* Main.storyboard */,
-				724DEC772D0091B800171F44 /* Assets.xcassets */,
-				724DEC792D0091B800171F44 /* LaunchScreen.storyboard */,
+				724DEC842D00930800171F44 /* Resources */,
+				724DEC862D00933400171F44 /* Sources */,
 				724DEC7C2D0091B800171F44 /* Info.plist */,
 			);
 			path = Tteolione;
+			sourceTree = "<group>";
+		};
+		724DEC842D00930800171F44 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				724DEC6E2D0091B700171F44 /* AppDelegate.swift */,
+				724DEC702D0091B700171F44 /* SceneDelegate.swift */,
+				724DEC772D0091B800171F44 /* Assets.xcassets */,
+				724DEC852D00931500171F44 /* StoryBoard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		724DEC852D00931500171F44 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				724DEC792D0091B800171F44 /* LaunchScreen.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		724DEC862D00933400171F44 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +114,13 @@
 			dependencies = (
 			);
 			name = Tteolione;
+			packageProductDependencies = (
+				724DEC882D00937300171F44 /* RxCocoa */,
+				724DEC8A2D00937300171F44 /* RxSwift */,
+				724DEC8D2D00937F00171F44 /* SnapKit */,
+				724DEC902D00938800171F44 /* Alamofire */,
+				724DEC932D00939100171F44 /* ReactorKit */,
+			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +149,12 @@
 				Base,
 			);
 			mainGroup = 724DEC622D0091B700171F44;
+			packageReferences = (
+				724DEC872D00937300171F44 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				724DEC8C2D00937F00171F44 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				724DEC8F2D00938800171F44 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				724DEC922D00939100171F44 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -131,7 +172,6 @@
 				724DEC832D0091D800171F44 /* .gitignore in Resources */,
 				724DEC782D0091B800171F44 /* Assets.xcassets in Resources */,
 				724DEC7B2D0091B800171F44 /* Base in Resources */,
-				724DEC762D0091B700171F44 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +182,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				724DEC732D0091B700171F44 /* ViewController.swift in Sources */,
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
 			);
@@ -151,14 +190,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		724DEC742D0091B700171F44 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				724DEC752D0091B700171F44 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		724DEC792D0091B800171F44 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -301,9 +332,9 @@
 				INFOPLIST_FILE = Tteolione/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,9 +342,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jun.Tteolione;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -329,9 +364,9 @@
 				INFOPLIST_FILE = Tteolione/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -339,9 +374,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jun.Tteolione;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -367,6 +406,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		724DEC872D00937300171F44 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.8.0;
+			};
+		};
+		724DEC8C2D00937F00171F44 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		724DEC8F2D00938800171F44 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		724DEC922D00939100171F44 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		724DEC882D00937300171F44 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724DEC872D00937300171F44 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		724DEC8A2D00937300171F44 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724DEC872D00937300171F44 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		724DEC8D2D00937F00171F44 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724DEC8C2D00937F00171F44 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		724DEC902D00938800171F44 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724DEC8F2D00938800171F44 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		724DEC932D00939100171F44 /* ReactorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724DEC922D00939100171F44 /* XCRemoteSwiftPackageReference "ReactorKit" */;
+			productName = ReactorKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 724DEC632D0091B700171F44 /* Project object */;
 }
