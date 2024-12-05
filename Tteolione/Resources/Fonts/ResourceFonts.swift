@@ -45,8 +45,13 @@ extension Font {
     static let bold18 = Font.bold(18).font()
     static let bold20 = Font.bold(20).font()
     
-    static let Andong60 = Font.custom(FontNames.andong, 60).font() // 로그인 화면 로고
-    static let Andong30 = Font.custom(FontNames.andong, 30).font() // 떠리원 텍스트
+    static let Andong11 = Font.custom(FontNames.andong, 11).font()
+    static let Andong13 = Font.custom(FontNames.andong, 13).font()
+    static let Andong15 = Font.custom(FontNames.andong, 15).font()
+    static let Andong16 = Font.custom(FontNames.andong, 16).font()
+    static let Andong18 = Font.custom(FontNames.andong, 18).font()
+    static let Andong30 = Font.custom(FontNames.andong, 30).font()
+    static let Andong60 = Font.custom(FontNames.andong, 60).font()
     
     static let bold25 = Font.bold(25).font()
 }
