@@ -17,6 +17,10 @@
 		724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC8D2D00937F00171F44 /* SnapKit */; };
 		724DEC912D00938800171F44 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC902D00938800171F44 /* Alamofire */; };
 		724DEC942D00939100171F44 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 724DEC932D00939100171F44 /* ReactorKit */; };
+		724DEC972D01732C00171F44 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC962D01732C00171F44 /* BaseView.swift */; };
+		724DEC992D01734200171F44 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC982D01734200171F44 /* BaseViewController.swift */; };
+		724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC9B2D01746A00171F44 /* ResourceFonts.swift */; };
+		724DEC9E2D01749900171F44 /* AndongKaturiOTF.otf in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC9D2D01749900171F44 /* AndongKaturiOTF.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,10 @@
 		724DEC7A2D0091B800171F44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		724DEC7C2D0091B800171F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		724DEC822D0091D800171F44 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		724DEC962D01732C00171F44 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		724DEC982D01734200171F44 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		724DEC9B2D01746A00171F44 /* ResourceFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceFonts.swift; sourceTree = "<group>"; };
+		724DEC9D2D01749900171F44 /* AndongKaturiOTF.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AndongKaturiOTF.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,7 @@
 				724DEC702D0091B700171F44 /* SceneDelegate.swift */,
 				724DEC772D0091B800171F44 /* Assets.xcassets */,
 				724DEC852D00931500171F44 /* StoryBoard */,
+				724DEC9A2D01742400171F44 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -94,8 +103,27 @@
 		724DEC862D00933400171F44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				724DEC952D01732200171F44 /* Base */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		724DEC952D01732200171F44 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				724DEC962D01732C00171F44 /* BaseView.swift */,
+				724DEC982D01734200171F44 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		724DEC9A2D01742400171F44 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				724DEC9B2D01746A00171F44 /* ResourceFonts.swift */,
+				724DEC9D2D01749900171F44 /* AndongKaturiOTF.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +199,7 @@
 			files = (
 				724DEC832D0091D800171F44 /* .gitignore in Resources */,
 				724DEC782D0091B800171F44 /* Assets.xcassets in Resources */,
+				724DEC9E2D01749900171F44 /* AndongKaturiOTF.otf in Resources */,
 				724DEC7B2D0091B800171F44 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,8 +211,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
+				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
+				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
