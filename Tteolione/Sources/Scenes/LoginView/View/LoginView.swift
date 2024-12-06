@@ -110,7 +110,7 @@ final class LoginView: BaseView {
     }()
     
     //MARK: - 또는 부분
-    private let boundarView = BoundarView()
+    private let boundarView = BoundarView(.myAppDarkGray)
     private let orTextLabel: UILabel = {
         let label = UILabel()
         label.text = AppText.Login.orText
@@ -118,7 +118,7 @@ final class LoginView: BaseView {
         label.font = Font.Andong16
         return label
     }()
-    private let boundarView2 = BoundarView()
+    private let boundarView2 = BoundarView(.myAppDarkGray)
     private let orStackView: UIStackView = {
         let stview = UIStackView()
         stview.spacing = 12

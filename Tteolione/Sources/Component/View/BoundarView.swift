@@ -9,10 +9,10 @@ import UIKit
 
 class BoundarView: UILabel {
     
-    init() {
+    init(_ color: UIColor) {
         super.init(frame: .zero)
         
-        backgroundColor = .myAppDarkGray
+        backgroundColor = color
     }
     
     required init?(coder: NSCoder) {

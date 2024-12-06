@@ -17,37 +17,44 @@ final class LoginViewController: BaseViewController<LoginView> {
         super.viewDidLoad()
         self.reactor = LoginReactor()
     }
-
+    
 }
 
 extension LoginViewController: View {
     
     func bind(reactor: LoginReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+    }
+    
+    private func bindAction(_ reactor: LoginReactor) {
         rootView.emailTextField.rx.controlEvent(.touchDown)
             .map { LoginReactor.Action.emailTextFieldTapBegin }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+        
         rootView.emailTextField.rx.controlEvent(.editingDidEnd)
             .map { LoginReactor.Action.emailTextFieldTapEnd }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+        
         rootView.passwordTextField.rx.controlEvent(.touchDown)
             .map { LoginReactor.Action.passwordTextFieldTapBegin }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+        
         rootView.passwordTextField.rx.controlEvent(.editingDidEnd)
             .map { LoginReactor.Action.passwordTextFieldTapEnd }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+        
         rootView.passwordSecureButton.rx.tap
             .map { LoginReactor.Action.passwordSecureButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+    }
+    
+    private func bindState(_ reactor: LoginReactor) {
         reactor.state.map { $0.isEmailLabelUp }
             .distinctUntilChanged()
             .bind(with: self) { owner, isUp in
@@ -59,7 +66,7 @@ extension LoginViewController: View {
                 }
             }
             .disposed(by: disposeBag)
-
+        
         reactor.state.map { $0.isPasswordLabelUp }
             .distinctUntilChanged()
             .bind(with: self) { owner, isUp in
@@ -71,7 +78,7 @@ extension LoginViewController: View {
                 }
             }
             .disposed(by: disposeBag)
-
+        
         reactor.state.map { $0.isPasswordSecure }
             .distinctUntilChanged()
             .bind(with: self) { owner, isSecure in

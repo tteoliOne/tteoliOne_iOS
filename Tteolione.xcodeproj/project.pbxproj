@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1C2D02D095009BEF12 /* TopBarView.swift */; };
+		72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1F2D02D18F009BEF12 /* JoinImageView.swift */; };
+		72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E212D02D1B1009BEF12 /* AppJoinImage.swift */; };
+		72361E242D02D1E8009BEF12 /* JoinTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E232D02D1E8009BEF12 /* JoinTextField.swift */; };
+		72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E252D02D208009BEF12 /* AppTextFieldPlaceholder.swift */; };
+		72361E282D02D233009BEF12 /* JoinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E272D02D233009BEF12 /* JoinButton.swift */; };
+		72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */; };
+		72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E2B2D02E12F009BEF12 /* LineView.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -31,9 +39,21 @@
 		724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECB62D01883B00171F44 /* SlashLabel.swift */; };
 		724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECB92D0188BA00171F44 /* BoundarView.swift */; };
 		724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECBB2D0192EE00171F44 /* LabelButton.swift */; };
+		724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */; };
+		724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC52D02CBC600171F44 /* EmailAuthView.swift */; };
+		724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */; };
+		724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC92D02CE2E00171F44 /* BackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		72361E1C2D02D095009BEF12 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
+		72361E1F2D02D18F009BEF12 /* JoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinImageView.swift; sourceTree = "<group>"; };
+		72361E212D02D1B1009BEF12 /* AppJoinImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppJoinImage.swift; sourceTree = "<group>"; };
+		72361E232D02D1E8009BEF12 /* JoinTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinTextField.swift; sourceTree = "<group>"; };
+		72361E252D02D208009BEF12 /* AppTextFieldPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextFieldPlaceholder.swift; sourceTree = "<group>"; };
+		72361E272D02D233009BEF12 /* JoinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinButton.swift; sourceTree = "<group>"; };
+		72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelView.swift; sourceTree = "<group>"; };
+		72361E2B2D02E12F009BEF12 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +75,10 @@
 		724DECB62D01883B00171F44 /* SlashLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlashLabel.swift; sourceTree = "<group>"; };
 		724DECB92D0188BA00171F44 /* BoundarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundarView.swift; sourceTree = "<group>"; };
 		724DECBB2D0192EE00171F44 /* LabelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButton.swift; sourceTree = "<group>"; };
+		724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthViewController.swift; sourceTree = "<group>"; };
+		724DECC52D02CBC600171F44 /* EmailAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthView.swift; sourceTree = "<group>"; };
+		724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthReactor.swift; sourceTree = "<group>"; };
+		724DECC92D02CE2E00171F44 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +97,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72361E1B2D02D07A009BEF12 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				72361E1C2D02D095009BEF12 /* TopBarView.swift */,
+				72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */,
+				72361E2B2D02E12F009BEF12 /* LineView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		72361E1E2D02D184009BEF12 /* ImageView */ = {
+			isa = PBXGroup;
+			children = (
+				72361E1F2D02D18F009BEF12 /* JoinImageView.swift */,
+			);
+			path = ImageView;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				724DECA02D0181B000171F44 /* LoginView */,
+				724DECC02D02CB1600171F44 /* JoinView */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -188,6 +231,8 @@
 			children = (
 				724DECAA2D0184EE00171F44 /* AppText.swift */,
 				724DECB32D0187A800171F44 /* AppButtonTitle.swift */,
+				72361E212D02D1B1009BEF12 /* AppJoinImage.swift */,
+				72361E252D02D208009BEF12 /* AppTextFieldPlaceholder.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -195,6 +240,7 @@
 		724DECAC2D0186A200171F44 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				72361E1E2D02D184009BEF12 /* ImageView */,
 				724DECB82D0188AC00171F44 /* View */,
 				724DECB52D01882F00171F44 /* Label */,
 				724DECB02D01876100171F44 /* Button */,
@@ -207,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				724DECAE2D01870800171F44 /* CommonTextField.swift */,
+				72361E232D02D1E8009BEF12 /* JoinTextField.swift */,
 			);
 			path = TextField;
 			sourceTree = "<group>";
@@ -216,6 +263,8 @@
 			children = (
 				724DECB12D01876B00171F44 /* CommonButton.swift */,
 				724DECBB2D0192EE00171F44 /* LabelButton.swift */,
+				724DECC92D02CE2E00171F44 /* BackButton.swift */,
+				72361E272D02D233009BEF12 /* JoinButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -232,6 +281,33 @@
 			isa = PBXGroup;
 			children = (
 				724DECB92D0188BA00171F44 /* BoundarView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		724DECC02D02CB1600171F44 /* JoinView */ = {
+			isa = PBXGroup;
+			children = (
+				72361E1B2D02D07A009BEF12 /* Component */,
+				724DECC22D02CB2200171F44 /* View */,
+				724DECC12D02CB1C00171F44 /* Reactor */,
+			);
+			path = JoinView;
+			sourceTree = "<group>";
+		};
+		724DECC12D02CB1C00171F44 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		724DECC22D02CB2200171F44 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */,
+				724DECC52D02CBC600171F44 /* EmailAuthView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -321,13 +397,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
+				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
+				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
+				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
+				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
+				72361E242D02D1E8009BEF12 /* JoinTextField.swift in Sources */,
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
+				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
+				724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */,
+				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
+				72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
@@ -335,7 +421,9 @@
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
+				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
+				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
