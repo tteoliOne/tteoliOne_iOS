@@ -97,9 +97,9 @@ final class LoginView: BaseView {
     //MARK: - 아이디 찾기, 비밀번호 변경, 회원가입
     let idSearchButton = LabelButton(title: .findID)
     private let slash = SlashLabel()
-    let signUpButton = LabelButton(title: .signUp)
-    private let slash2 = SlashLabel()
     let passwordResetButton = LabelButton(title: .resetPassword)
+    private let slash2 = SlashLabel()
+    let signUpButton = LabelButton(title: .signUp)
     
     private lazy var signStackView: UIStackView = {
         let stview = UIStackView()
@@ -110,7 +110,7 @@ final class LoginView: BaseView {
     }()
     
     //MARK: - 또는 부분
-    private let boundarView = BoundarView()
+    private let boundarView = BoundarView(.myAppDarkGray)
     private let orTextLabel: UILabel = {
         let label = UILabel()
         label.text = AppText.Login.orText
@@ -118,7 +118,7 @@ final class LoginView: BaseView {
         label.font = Font.Andong16
         return label
     }()
-    private let boundarView2 = BoundarView()
+    private let boundarView2 = BoundarView(.myAppDarkGray)
     private let orStackView: UIStackView = {
         let stview = UIStackView()
         stview.spacing = 12
@@ -171,7 +171,7 @@ final class LoginView: BaseView {
     override func configureLayout() {
         logoStackView.snp.makeConstraints { make in
             make.centerX.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(safeAreaLayoutGuide).inset(40)
         }
 
         emailTextFieldView.snp.makeConstraints { make in
