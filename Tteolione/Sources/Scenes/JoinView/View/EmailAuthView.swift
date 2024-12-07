@@ -10,7 +10,7 @@ import SnapKit
 
 final class EmailAuthView: BaseView {
     
-    private let topBarView = TopBarView()
+    let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
     let emailInputTextField = JoinTextField(text: .email,
@@ -39,6 +39,7 @@ final class EmailAuthView: BaseView {
     override func configureLayout() {
         topBarView.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(safeAreaLayoutGuide).inset(12)
             make.height.equalTo(48)
         }
         
@@ -73,7 +74,6 @@ final class EmailAuthView: BaseView {
     override func configureView() {
         iconWithLabelView.configure(icon: .email,
                                     text: AppText.Join.joinEmail)
-        emailInputTextField.keyboardType = .emailAddress
     }
     
 }

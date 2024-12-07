@@ -13,6 +13,7 @@ final class EmailAuthReactor: Reactor {
     
     enum Action {
         case emailInputChanged(String)
+        case backButtonTap
     }
     
     enum Mutation {
@@ -26,6 +27,7 @@ final class EmailAuthReactor: Reactor {
     }
     
     let initialState: State = State()
+    let backNavigation = PublishSubject<Void>()
     
 }
 
@@ -40,6 +42,10 @@ extension EmailAuthReactor {
                 Observable.just(.setEmail(email)),
                 Observable.just(.setButtonEnabled(isValid))
             ])
+            
+        case .backButtonTap:
+            backNavigation.onNext(())
+            return Observable.empty()
         }
     }
     

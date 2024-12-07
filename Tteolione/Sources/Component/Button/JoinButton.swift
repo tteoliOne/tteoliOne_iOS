@@ -16,7 +16,7 @@ class JoinButton: UIButton {
         layer.cornerRadius = 5
         setTitle(title.rawValue, for: .normal)
         setTitleColor(.black, for: .normal)
-        titleLabel?.font = Font.bold17
+        titleLabel?.font = Font.Andong16
         
     }
     
