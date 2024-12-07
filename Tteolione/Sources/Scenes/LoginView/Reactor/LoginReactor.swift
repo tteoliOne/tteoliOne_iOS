@@ -16,6 +16,7 @@ final class LoginReactor: Reactor {
         case passwordTextFieldTapBegin
         case passwordTextFieldTapEnd
         case passwordSecureButtonTap
+        case signUpButtonTap
     }
     
     enum Mutation {
@@ -31,6 +32,7 @@ final class LoginReactor: Reactor {
     }
     
     let initialState: State = State()
+    let navigateToSignUp = PublishSubject<Void>()
     
 }
 
@@ -52,6 +54,10 @@ extension LoginReactor {
             
         case .passwordSecureButtonTap:
             return Observable.just(.togglePasswordSecureMode)
+            
+        case .signUpButtonTap:
+            navigateToSignUp.onNext(())
+            return Observable.empty()
         }
     }
     

@@ -18,6 +18,10 @@ final class LoginViewController: BaseViewController<LoginView> {
         self.reactor = LoginReactor()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
 }
 
 extension LoginViewController: View {
@@ -25,6 +29,7 @@ extension LoginViewController: View {
     func bind(reactor: LoginReactor) {
         bindAction(reactor)
         bindState(reactor)
+        bindNavigation(reactor)
     }
     
     private func bindAction(_ reactor: LoginReactor) {
@@ -50,6 +55,11 @@ extension LoginViewController: View {
         
         rootView.passwordSecureButton.rx.tap
             .map { LoginReactor.Action.passwordSecureButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.signUpButton.rx.tap
+            .map { LoginReactor.Action.signUpButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -85,6 +95,24 @@ extension LoginViewController: View {
                 owner.rootView.passwordTextField.isSecureTextEntry = isSecure
             }
             .disposed(by: disposeBag)
+        
+    }
+    
+    private func bindNavigation(_ reactor: LoginReactor) {
+        reactor.navigateToSignUp
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigateToScreen(EmailAuthViewController())
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension LoginViewController {
+    
+    private func navigateToScreen(_ scenes: UIViewController) {
+        let viewController = scenes
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
 }
