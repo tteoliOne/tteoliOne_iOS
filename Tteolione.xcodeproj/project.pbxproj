@@ -115,6 +115,14 @@
 			path = ImageView;
 			sourceTree = "<group>";
 		};
+		72361E2D2D042716009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -288,6 +296,7 @@
 		724DECC02D02CB1600171F44 /* JoinView */ = {
 			isa = PBXGroup;
 			children = (
+				72361E2D2D042716009BEF12 /* ViewController */,
 				724DECC22D02CB2200171F44 /* View */,
 				724DECC12D02CB1C00171F44 /* Reactor */,
 				72361E1B2D02D07A009BEF12 /* Component */,
@@ -306,7 +315,6 @@
 		724DECC22D02CB2200171F44 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */,
 				724DECC52D02CBC600171F44 /* EmailAuthView.swift */,
 			);
 			path = View;
