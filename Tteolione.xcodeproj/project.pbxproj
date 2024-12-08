@@ -15,6 +15,9 @@
 		72361E282D02D233009BEF12 /* JoinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E272D02D233009BEF12 /* JoinButton.swift */; };
 		72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */; };
 		72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E2B2D02E12F009BEF12 /* LineView.swift */; };
+		72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */; };
+		72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E302D0427CC009BEF12 /* AuthNumView.swift */; };
+		72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E322D0427F7009BEF12 /* AuthNumReactor.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -54,6 +57,9 @@
 		72361E272D02D233009BEF12 /* JoinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinButton.swift; sourceTree = "<group>"; };
 		72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelView.swift; sourceTree = "<group>"; };
 		72361E2B2D02E12F009BEF12 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
+		72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumViewController.swift; sourceTree = "<group>"; };
+		72361E302D0427CC009BEF12 /* AuthNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumView.swift; sourceTree = "<group>"; };
+		72361E322D0427F7009BEF12 /* AuthNumReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumReactor.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +119,15 @@
 				72361E1F2D02D18F009BEF12 /* JoinImageView.swift */,
 			);
 			path = ImageView;
+			sourceTree = "<group>";
+		};
+		72361E2D2D042716009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */,
+				72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -288,6 +303,7 @@
 		724DECC02D02CB1600171F44 /* JoinView */ = {
 			isa = PBXGroup;
 			children = (
+				72361E2D2D042716009BEF12 /* ViewController */,
 				724DECC22D02CB2200171F44 /* View */,
 				724DECC12D02CB1C00171F44 /* Reactor */,
 				72361E1B2D02D07A009BEF12 /* Component */,
@@ -299,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */,
+				72361E322D0427F7009BEF12 /* AuthNumReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -306,8 +323,8 @@
 		724DECC22D02CB2200171F44 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */,
 				724DECC52D02CBC600171F44 /* EmailAuthView.swift */,
+				72361E302D0427CC009BEF12 /* AuthNumView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -400,10 +417,12 @@
 				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
+				72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */,
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
+				72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
@@ -419,6 +438,7 @@
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
+				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
