@@ -1,34 +1,34 @@
 //
-//  AuthNumView.swift
+//  IDView.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/7/24.
+//  Created by 전준영 on 12/10/24.
 //
 
 import UIKit
 import SnapKit
 
-final class AuthNumView: BaseView {
+final class IDView: BaseView {
     
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let authNumInputTextField = JoinTextField(text: .authNum,
+    let idInputTextField = JoinTextField(text: .id,
                                             keboard: .default,
                                             isSecure: nil)
     let explanationLabel: UILabel = {
         let label = UILabel()
-        label.text = AppText.Join.joinAuthTime
+        label.text = AppText.Join.joinIDExplain
         label.font = Font.bold15
-        label.textColor = .myAppRed
+        label.textColor = .myAppBlack
         return label
     }()
-    let joinButton = JoinButton(title: .authNum)
+    let joinButton = JoinButton(title: .next)
     
     override func configureHierarchy() {
         [topBarView, iconWithLabelView,
          boundarView, joinButton,
-         authNumInputTextField, explanationLabel].forEach { addSubview($0) }
+         idInputTextField, explanationLabel].forEach { addSubview($0) }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>,
@@ -48,15 +48,15 @@ final class AuthNumView: BaseView {
             make.top.equalTo(topBarView.snp.bottom).offset(60)
         }
         
-        authNumInputTextField.snp.makeConstraints { make in
+        idInputTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(40)
             make.top.equalTo(iconWithLabelView.snp.bottom).offset(20)
             make.height.equalTo(40)
         }
         
         boundarView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(authNumInputTextField).offset(-8)
-            make.top.equalTo(authNumInputTextField.snp.bottom)
+            make.horizontalEdges.equalTo(idInputTextField).offset(-8)
+            make.top.equalTo(idInputTextField.snp.bottom)
             make.height.equalTo(1)
         }
         
@@ -72,8 +72,30 @@ final class AuthNumView: BaseView {
     }
     
     override func configureView() {
-        iconWithLabelView.configure(icon: .authNum,
-                                    text: AppText.Join.joinAuthNum)
+        iconWithLabelView.configure(icon: .id,
+                                    text: AppText.Join.joinID)
     }
     
 }
+
+#if DEBUG
+
+import SwiftUI
+
+struct ViewControllerPresentable: UIViewControllerRepresentable{
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+
+    }
+
+    func makeUIViewController(context: Context) -> some UIViewController {
+        IDViewController()
+    }
+}
+
+struct ViewControllerPrepresentable_PreviewProvider : PreviewProvider{
+    static var previews: some View{
+        ViewControllerPresentable()
+    }
+}
+
+#endif
