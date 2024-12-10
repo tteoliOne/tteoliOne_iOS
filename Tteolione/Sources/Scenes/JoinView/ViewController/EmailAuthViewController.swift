@@ -38,6 +38,11 @@ extension EmailAuthViewController: View {
             .map { EmailAuthReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.joinButton.rx.tap
+            .map { EmailAuthReactor.Action.emailCheckButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: EmailAuthReactor) {
@@ -56,6 +61,13 @@ extension EmailAuthViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.navigateToNextView
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigateToScreen(AuthNumViewController())
             }
             .disposed(by: disposeBag)
     }

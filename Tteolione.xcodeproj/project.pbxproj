@@ -18,6 +18,7 @@
 		72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */; };
 		72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E302D0427CC009BEF12 /* AuthNumView.swift */; };
 		72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E322D0427F7009BEF12 /* AuthNumReactor.swift */; };
+		72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E352D08761A009BEF12 /* ViewController+Extension.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumViewController.swift; sourceTree = "<group>"; };
 		72361E302D0427CC009BEF12 /* AuthNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumView.swift; sourceTree = "<group>"; };
 		72361E322D0427F7009BEF12 /* AuthNumReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumReactor.swift; sourceTree = "<group>"; };
+		72361E352D08761A009BEF12 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +132,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		72361E342D087600009BEF12 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				72361E352D08761A009BEF12 /* ViewController+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +190,7 @@
 		724DEC862D00933400171F44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				72361E342D087600009BEF12 /* Extension */,
 				724DECAC2D0186A200171F44 /* Component */,
 				724DECA92D0184DF00171F44 /* Enum */,
 				724DEC9F2D0180CE00171F44 /* Scenes */,
@@ -431,6 +442,7 @@
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
 				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
 				724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */,
+				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,

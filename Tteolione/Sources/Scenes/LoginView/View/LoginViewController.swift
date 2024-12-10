@@ -107,12 +107,3 @@ extension LoginViewController: View {
             .disposed(by: disposeBag)
     }
 }
-
-extension LoginViewController {
-    
-    private func navigateToScreen(_ scenes: UIViewController) {
-        let viewController = scenes
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-}
