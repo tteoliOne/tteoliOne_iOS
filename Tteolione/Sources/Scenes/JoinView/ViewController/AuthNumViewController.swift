@@ -48,6 +48,11 @@ extension AuthNumViewController: View {
             .map { AuthNumReactor.Action.authNumTextChanged($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.joinButton.rx.tap
+            .map { AuthNumReactor.Action.authCheckButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: AuthNumReactor) {
@@ -71,6 +76,13 @@ extension AuthNumViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.navigateToNextView
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigateToScreen(IDViewController())
             }
             .disposed(by: disposeBag)
     }
