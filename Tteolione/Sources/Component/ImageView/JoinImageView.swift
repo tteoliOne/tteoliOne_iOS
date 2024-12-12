@@ -11,7 +11,6 @@ class JoinImageView: UIImageView {
     
     init(image: AppJoinImage) {
         super.init(frame: .zero)
-        configure(image: image)
         self.contentMode = .scaleAspectFit
     }
     

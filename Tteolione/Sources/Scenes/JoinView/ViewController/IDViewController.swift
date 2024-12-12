@@ -38,6 +38,11 @@ extension IDViewController: View {
             .map { IDReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.joinButton.rx.tap
+            .map { IDReactor.Action.idCheckButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: IDReactor) {
@@ -56,6 +61,13 @@ extension IDViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.navigateToNextView
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigateToScreen(PasswordViewController())
             }
             .disposed(by: disposeBag)
     }

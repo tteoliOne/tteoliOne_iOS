@@ -77,25 +77,3 @@ final class IDView: BaseView {
     }
     
 }
-
-#if DEBUG
-
-import SwiftUI
-
-struct ViewControllerPresentable: UIViewControllerRepresentable{
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        IDViewController()
-    }
-}
-
-struct ViewControllerPrepresentable_PreviewProvider : PreviewProvider{
-    static var previews: some View{
-        ViewControllerPresentable()
-    }
-}
-
-#endif
