@@ -1,29 +1,29 @@
 //
-//  EmailAuthReactor.swift
+//  IDReactor.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/6/24.
+//  Created by 전준영 on 12/10/24.
 //
 
 import Foundation
 import ReactorKit
 import RxSwift
 
-final class EmailAuthReactor: Reactor {
+final class IDReactor: Reactor {
     
     enum Action {
-        case emailInputChanged(String)
+        case idInputChanged(String)
         case backButtonTap
-        case emailCheckButtonTap
+        case idCheckButtonTap
     }
     
     enum Mutation {
-        case setEmail(String)
+        case setID(String)
         case setButtonEnabled(Bool)
     }
 
     struct State {
-        var email: String = ""
+        var id: String = ""
         var isButtonEnabled: Bool = false
     }
     
@@ -33,15 +33,15 @@ final class EmailAuthReactor: Reactor {
     
 }
 
-extension EmailAuthReactor {
+extension IDReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case let .emailInputChanged(email):
-            let isValid = isValidEmail(email)
+        case let .idInputChanged(id):
+            let isValid = isValidID(id)
             
             return Observable.concat([
-                Observable.just(.setEmail(email)),
+                Observable.just(.setID(id)),
                 Observable.just(.setButtonEnabled(isValid))
             ])
             
@@ -49,7 +49,7 @@ extension EmailAuthReactor {
             backNavigation.onNext(())
             return Observable.empty()
             
-        case .emailCheckButtonTap:
+        case .idCheckButtonTap:
             navigateToNextView.onNext(())
             return Observable.empty()
         }
@@ -57,14 +57,14 @@ extension EmailAuthReactor {
     
 }
 
-extension EmailAuthReactor {
+extension IDReactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
         switch mutation {
-        case let .setEmail(email):
-            newState.email = email
+        case let .setID(id):
+            newState.id = id
             
         case let .setButtonEnabled(isEnabled):
             newState.isButtonEnabled = isEnabled
@@ -75,11 +75,12 @@ extension EmailAuthReactor {
     
 }
 
-extension EmailAuthReactor {
+extension IDReactor {
     
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
+    private func isValidID(_ id: String) -> Bool {
+        let idRegex = "^(?=.*[a-z])[a-zA-Z0-9]{6,20}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", idRegex)
+        return predicate.evaluate(with: id)
     }
     
 }

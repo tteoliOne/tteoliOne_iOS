@@ -14,6 +14,7 @@ final class AuthNumReactor: Reactor {
     enum Action {
         case backButtonTap
         case authNumTextChanged(String)
+        case authCheckButtonTap
         case startTimer
         case stopTimer
     }
@@ -34,6 +35,7 @@ final class AuthNumReactor: Reactor {
     private var timerDisposable: Disposable?
     let initialState: State = State()
     let backNavigation = PublishSubject<Void>()
+    let navigateToNextView = PublishSubject<Void>()
     
 }
 
@@ -51,6 +53,10 @@ extension AuthNumReactor {
                 .just(.setAuthNum(authNum)),
                 .just(.setButtonEnabled(isEnabled))
             ])
+            
+        case .authCheckButtonTap:
+            navigateToNextView.onNext(())
+            return Observable.empty()
             
         case .startTimer:
             return Observable.create { [weak self] observer in

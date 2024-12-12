@@ -18,6 +18,17 @@
 		72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */; };
 		72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E302D0427CC009BEF12 /* AuthNumView.swift */; };
 		72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E322D0427F7009BEF12 /* AuthNumReactor.swift */; };
+		72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E352D08761A009BEF12 /* ViewController+Extension.swift */; };
+		72361E382D087B50009BEF12 /* IDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E372D087B50009BEF12 /* IDView.swift */; };
+		72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E392D087B82009BEF12 /* IDViewController.swift */; };
+		72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E3B2D087BA2009BEF12 /* IDReactor.swift */; };
+		72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E3D2D0B1754009BEF12 /* PasswordViewController.swift */; };
+		72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E3F2D0B175E009BEF12 /* PasswordView.swift */; };
+		72361E422D0B179A009BEF12 /* PasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E412D0B179A009BEF12 /* PasswordReactor.swift */; };
+		72361E442D0B28AE009BEF12 /* PasswordExplainLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E432D0B28AE009BEF12 /* PasswordExplainLabelView.swift */; };
+		72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E452D0B28CF009BEF12 /* CheckImageView.swift */; };
+		72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E472D0B292B009BEF12 /* PasswordExplainLabel.swift */; };
+		72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E492D0B2963009BEF12 /* AppPasswordExplain.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -60,6 +71,17 @@
 		72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumViewController.swift; sourceTree = "<group>"; };
 		72361E302D0427CC009BEF12 /* AuthNumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumView.swift; sourceTree = "<group>"; };
 		72361E322D0427F7009BEF12 /* AuthNumReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumReactor.swift; sourceTree = "<group>"; };
+		72361E352D08761A009BEF12 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
+		72361E372D087B50009BEF12 /* IDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDView.swift; sourceTree = "<group>"; };
+		72361E392D087B82009BEF12 /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
+		72361E3B2D087BA2009BEF12 /* IDReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDReactor.swift; sourceTree = "<group>"; };
+		72361E3D2D0B1754009BEF12 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		72361E3F2D0B175E009BEF12 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
+		72361E412D0B179A009BEF12 /* PasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordReactor.swift; sourceTree = "<group>"; };
+		72361E432D0B28AE009BEF12 /* PasswordExplainLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordExplainLabelView.swift; sourceTree = "<group>"; };
+		72361E452D0B28CF009BEF12 /* CheckImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckImageView.swift; sourceTree = "<group>"; };
+		72361E472D0B292B009BEF12 /* PasswordExplainLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordExplainLabel.swift; sourceTree = "<group>"; };
+		72361E492D0B2963009BEF12 /* AppPasswordExplain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPasswordExplain.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +131,8 @@
 				72361E1C2D02D095009BEF12 /* TopBarView.swift */,
 				72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */,
 				72361E2B2D02E12F009BEF12 /* LineView.swift */,
+				72361E432D0B28AE009BEF12 /* PasswordExplainLabelView.swift */,
+				72361E472D0B292B009BEF12 /* PasswordExplainLabel.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -117,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				72361E1F2D02D18F009BEF12 /* JoinImageView.swift */,
+				72361E452D0B28CF009BEF12 /* CheckImageView.swift */,
 			);
 			path = ImageView;
 			sourceTree = "<group>";
@@ -126,8 +151,18 @@
 			children = (
 				724DECC32D02CBAF00171F44 /* EmailAuthViewController.swift */,
 				72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */,
+				72361E392D087B82009BEF12 /* IDViewController.swift */,
+				72361E3D2D0B1754009BEF12 /* PasswordViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		72361E342D087600009BEF12 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				72361E352D08761A009BEF12 /* ViewController+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -180,6 +215,7 @@
 		724DEC862D00933400171F44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				72361E342D087600009BEF12 /* Extension */,
 				724DECAC2D0186A200171F44 /* Component */,
 				724DECA92D0184DF00171F44 /* Enum */,
 				724DEC9F2D0180CE00171F44 /* Scenes */,
@@ -248,6 +284,7 @@
 				724DECB32D0187A800171F44 /* AppButtonTitle.swift */,
 				72361E212D02D1B1009BEF12 /* AppJoinImage.swift */,
 				72361E252D02D208009BEF12 /* AppTextFieldPlaceholder.swift */,
+				72361E492D0B2963009BEF12 /* AppPasswordExplain.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -316,6 +353,8 @@
 			children = (
 				724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */,
 				72361E322D0427F7009BEF12 /* AuthNumReactor.swift */,
+				72361E3B2D087BA2009BEF12 /* IDReactor.swift */,
+				72361E412D0B179A009BEF12 /* PasswordReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -325,6 +364,8 @@
 			children = (
 				724DECC52D02CBC600171F44 /* EmailAuthView.swift */,
 				72361E302D0427CC009BEF12 /* AuthNumView.swift */,
+				72361E372D087B50009BEF12 /* IDView.swift */,
+				72361E3F2D0B175E009BEF12 /* PasswordView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -415,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
+				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
 				72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */,
@@ -422,25 +464,35 @@
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
+				72361E442D0B28AE009BEF12 /* PasswordExplainLabelView.swift in Sources */,
 				72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */,
+				72361E422D0B179A009BEF12 /* PasswordReactor.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
 				72361E242D02D1E8009BEF12 /* JoinTextField.swift in Sources */,
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
+				72361E382D087B50009BEF12 /* IDView.swift in Sources */,
 				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
 				724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */,
+				72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */,
+				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
+				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
+				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
+				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
+				72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
+				72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,

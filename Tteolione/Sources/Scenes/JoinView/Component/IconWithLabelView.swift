@@ -8,16 +8,14 @@
 import UIKit
 import SnapKit
 
-final class IconWithLabelView: UIView {
+final class IconWithLabelView: BaseView {
     
     private let iconImageView = JoinImageView(image: .email)
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = Font.bold20
         return label
     }()
-    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [iconImageView, titleLabel])
         stackView.spacing = 4
@@ -26,23 +24,11 @@ final class IconWithLabelView: UIView {
         return stackView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
-        setupConstraints()
-    }
-    
-    private func setupUI() {
+    override func configureHierarchy() {
         addSubview(stackView)
     }
     
-    private func setupConstraints() {
+    override func configureLayout() {
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

@@ -1,51 +1,51 @@
 //
-//  EmailAuthViewController.swift
+//  IDViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/6/24.
+//  Created by 전준영 on 12/10/24.
 //
 
 import UIKit
 import ReactorKit
 import RxCocoa
 
-final class EmailAuthViewController: BaseViewController<EmailAuthView> {
+final class IDViewController: BaseViewController<IDView> {
     
     var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = EmailAuthReactor()
+        self.reactor = IDReactor()
     }
     
 }
 
-extension EmailAuthViewController: View {
+extension IDViewController: View {
     
-    func bind(reactor: EmailAuthReactor) {
+    func bind(reactor: IDReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    private func bindAction(_ reactor: EmailAuthReactor) {
-        rootView.emailInputTextField.rx.text.orEmpty
-            .map { EmailAuthReactor.Action.emailInputChanged($0) }
+    private func bindAction(_ reactor: IDReactor) {
+        rootView.idInputTextField.rx.text.orEmpty
+            .map { IDReactor.Action.idInputChanged($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.topBarView.backButton.rx.tap
-            .map { EmailAuthReactor.Action.backButtonTap }
+            .map { IDReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.joinButton.rx.tap
-            .map { EmailAuthReactor.Action.emailCheckButtonTap }
+            .map { IDReactor.Action.idCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    private func bindState(_ reactor: EmailAuthReactor) {
+    private func bindState(_ reactor: IDReactor) {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
@@ -56,7 +56,7 @@ extension EmailAuthViewController: View {
             .disposed(by: disposeBag)
     }
     
-    private func bindNavigation(_ reactor: EmailAuthReactor) {
+    private func bindNavigation(_ reactor: IDReactor) {
         reactor.backNavigation
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
@@ -67,7 +67,7 @@ extension EmailAuthViewController: View {
         reactor.navigateToNextView
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(AuthNumViewController())
+                owner.navigateToScreen(PasswordViewController())
             }
             .disposed(by: disposeBag)
     }
