@@ -10,6 +10,7 @@ import SnapKit
 
 final class ProfileSetView: BaseView {
     
+    let profilePhotoPicker = UIImagePickerController()
     let topBarView = TopBarView()
     private let profileLabel: UILabel = {
         let label = UILabel()
@@ -73,11 +74,6 @@ final class ProfileSetView: BaseView {
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(48)
         }
-        
-    }
-    
-    override func configureView() {
-        
     }
     
 }

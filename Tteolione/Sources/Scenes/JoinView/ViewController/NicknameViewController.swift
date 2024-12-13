@@ -67,7 +67,7 @@ extension NicknameViewController: View {
         reactor.navigateToNextView
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(PasswordViewController())
+                owner.navigateToScreen(ProfileSetViewController())
             }
             .disposed(by: disposeBag)
     }
