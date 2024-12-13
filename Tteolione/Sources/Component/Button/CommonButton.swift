@@ -9,12 +9,15 @@ import UIKit
 
 class CommonButton: UIButton {
     
-    init(title: AppButtonTitle) {
+    init(title: AppButtonTitle,
+         corner: CGFloat,
+         backgroundColor: UIColor,
+         textColor: UIColor) {
         super.init(frame: .zero)
-        
-        layer.cornerRadius = 8
-        backgroundColor = .myAppDarkGray
+        layer.cornerRadius = corner
+        self.backgroundColor = backgroundColor
         setTitle(title.rawValue, for: .normal)
+        setTitleColor(textColor, for: .normal)
         titleLabel?.font = Font.Andong18
         
     }

@@ -36,7 +36,10 @@ enum AppText {
         static let joinPassword = "비밀번호"
         
         static let joinNickname = "닉네임"
-        static let joinNicknameExplain = "한글, 영문, 숫자(2 ~ 10)"
+        static let joinNicknameExplain = "한글, 영문, 숫자만 사용가능(2 ~ 10자리)\n닉네임은 커뮤니티 활동할 때 표시됩니다\n닉네임은 사용자 설정에서 변경이 가능합니다"
+        
+        static let joinProfile = "프로필 설정"
+        static let joinProfileExplain = "프로필 변경하지 않을시 기본이미지로 설정됩니다"
     }
     
 }

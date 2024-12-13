@@ -39,6 +39,11 @@ extension PasswordViewController: View {
             .map { PasswordReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.joinButton.rx.tap
+            .map { PasswordReactor.Action.passwordCheckButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: PasswordReactor) {
@@ -63,6 +68,13 @@ extension PasswordViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.navigateToNextView
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.navigateToScreen(NicknameViewController())
             }
             .disposed(by: disposeBag)
     }
