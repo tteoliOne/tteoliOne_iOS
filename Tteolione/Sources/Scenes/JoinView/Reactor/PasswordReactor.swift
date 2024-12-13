@@ -14,6 +14,7 @@ final class PasswordReactor: Reactor {
     enum Action {
         case updatePassword(String)
         case backButtonTap
+        case passwordCheckButtonTap
     }
     
     enum Mutation {
@@ -42,6 +43,10 @@ extension PasswordReactor {
             
         case .backButtonTap:
             backNavigation.onNext(())
+            return Observable.empty()
+            
+        case .passwordCheckButtonTap:
+            navigateToNextView.onNext(())
             return Observable.empty()
         }
     }

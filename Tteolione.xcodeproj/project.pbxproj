@@ -29,6 +29,9 @@
 		72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E452D0B28CF009BEF12 /* CheckImageView.swift */; };
 		72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E472D0B292B009BEF12 /* PasswordExplainLabel.swift */; };
 		72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E492D0B2963009BEF12 /* AppPasswordExplain.swift */; };
+		72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E4B2D0BEEBD009BEF12 /* NicknameViewController.swift */; };
+		72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E4D2D0BEEC5009BEF12 /* NicknameView.swift */; };
+		72361E502D0BEED0009BEF12 /* NicknameReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E4F2D0BEED0009BEF12 /* NicknameReactor.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -82,6 +85,9 @@
 		72361E452D0B28CF009BEF12 /* CheckImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckImageView.swift; sourceTree = "<group>"; };
 		72361E472D0B292B009BEF12 /* PasswordExplainLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordExplainLabel.swift; sourceTree = "<group>"; };
 		72361E492D0B2963009BEF12 /* AppPasswordExplain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPasswordExplain.swift; sourceTree = "<group>"; };
+		72361E4B2D0BEEBD009BEF12 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		72361E4D2D0BEEC5009BEF12 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
+		72361E4F2D0BEED0009BEF12 /* NicknameReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameReactor.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 				72361E2E2D0427BC009BEF12 /* AuthNumViewController.swift */,
 				72361E392D087B82009BEF12 /* IDViewController.swift */,
 				72361E3D2D0B1754009BEF12 /* PasswordViewController.swift */,
+				72361E4B2D0BEEBD009BEF12 /* NicknameViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -355,6 +362,7 @@
 				72361E322D0427F7009BEF12 /* AuthNumReactor.swift */,
 				72361E3B2D087BA2009BEF12 /* IDReactor.swift */,
 				72361E412D0B179A009BEF12 /* PasswordReactor.swift */,
+				72361E4F2D0BEED0009BEF12 /* NicknameReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -366,6 +374,7 @@
 				72361E302D0427CC009BEF12 /* AuthNumView.swift */,
 				72361E372D087B50009BEF12 /* IDView.swift */,
 				72361E3F2D0B175E009BEF12 /* PasswordView.swift */,
+				72361E4D2D0BEEC5009BEF12 /* NicknameView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -485,16 +494,19 @@
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
+				72361E502D0BEED0009BEF12 /* NicknameReactor.swift in Sources */,
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
 				72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
+				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
 				72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
+				72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

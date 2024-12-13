@@ -109,25 +109,3 @@ final class PasswordView: BaseView {
     }
     
 }
-
-#if DEBUG
-
-import SwiftUI
-
-struct ViewControllerPresentable: UIViewControllerRepresentable{
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        PasswordViewController()
-    }
-}
-
-struct ViewControllerPrepresentable_PreviewProvider : PreviewProvider{
-    static var previews: some View{
-        ViewControllerPresentable()
-    }
-}
-
-#endif
