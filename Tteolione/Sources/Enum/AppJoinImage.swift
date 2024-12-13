@@ -14,4 +14,5 @@ enum AppJoinImage: String {
     case id = "person"
     case password = "lock.fill"
     case nickname = "person.crop.square.fill"
+    case setProfile = "31photo"
 }

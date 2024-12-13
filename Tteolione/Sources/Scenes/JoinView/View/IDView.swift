@@ -16,7 +16,7 @@ final class IDView: BaseView {
     let idInputTextField = JoinTextField(text: .id,
                                             keboard: .default,
                                             isSecure: nil)
-    let explanationLabel: UILabel = {
+    private let explanationLabel: UILabel = {
         let label = UILabel()
         label.text = AppText.Join.joinIDExplain
         label.font = Font.bold15

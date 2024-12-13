@@ -16,7 +16,7 @@ final class NicknameView: BaseView {
     let nicknameInputTextField = JoinTextField(text: .nickname,
                                             keboard: .default,
                                             isSecure: nil)
-    let explanationLabel: UILabel = {
+    private let explanationLabel: UILabel = {
         let label = UILabel()
         let text = AppText.Join.joinNicknameExplain
         let paragraphStyle = NSMutableParagraphStyle()
@@ -87,25 +87,3 @@ final class NicknameView: BaseView {
     }
     
 }
-
-#if DEBUG
-
-import SwiftUI
-
-struct ViewControllerPresentable: UIViewControllerRepresentable{
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-
-    }
-
-    func makeUIViewController(context: Context) -> some UIViewController {
-        NicknameViewController()
-    }
-}
-
-struct ViewControllerPrepresentable_PreviewProvider : PreviewProvider{
-    static var previews: some View{
-        ViewControllerPresentable()
-    }
-}
-
-#endif
