@@ -17,14 +17,18 @@ final class NetworkProvider<T: TargetType> {
         let session = Session(interceptor: interceptor)
 //        let plugins: [PluginType] = [NetworkLoggerPlugin()]
         let plugins: [PluginType] = [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
-        self.provider = MoyaProvider<T>(session: session, plugins: plugins)
+        self.provider = MoyaProvider<T>(session: session,
+                                        plugins: plugins)
     }
     
-    func request<R: Decodable>(_ target: T, decodingType: R.Type) -> Single<R> {
+    func request<R: Decodable>(_ target: T,
+                               decodingType: R.Type,
+                               retryCount: Int = 0) -> Single<R> {
         return provider.rx
             .request(target)
             .filterSuccessfulStatusCodes()
             .map(R.self)
+            .retry(retryCount)
             .catch { error in
                 if let moyaError = error as? MoyaError, let response = moyaError.response {
                     let serverError = NetworkError.serverError(

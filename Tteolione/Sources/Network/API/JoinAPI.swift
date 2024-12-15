@@ -9,7 +9,11 @@ import Foundation
 import Moya
 
 enum JoinAPI {
-    case joinEmail(email: String)
+    case joinEmail(body: JoinRequestBody)
+    case validateEmail(body: JoinRequestBody)
+    case validateID(body: JoinRequestBody)
+    case validateNickname(body: JoinRequestBody)
+    case signUp(body: SignUpProfileImageRequestBody)
 }
 
 extension JoinAPI: TargetType {
@@ -21,26 +25,56 @@ extension JoinAPI: TargetType {
         switch self {
         case .joinEmail:
             return "/api/v2/email/send"
+            
+        case .validateEmail:
+            return "/api/v2/email/verify"
+            
+        case .validateID:
+            return "/api/users/check/login-id"
+            
+        case .validateNickname:
+            return "/api/users/check/nickname"
+            
+        case .signUp:
+            return "/api/users/signup"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .joinEmail:
+        case .joinEmail, .validateEmail,
+             .validateID, .validateNickname,
+             .signUp:
             return .post
         }
     }
     
     var task: Task {
         switch self {
-        case let .joinEmail(email):
-            let parameters = ["email": email]
-            return .requestParameters(parameters: parameters,
-                                      encoding: JSONEncoding.default)
+        case let .joinEmail(body),
+            let .validateEmail(body),
+            let .validateID(body),
+            let .validateNickname(body):
+            if let jsonData = try? JSONEncoder().encode(body) {
+                return .requestCustomJSONEncodable(jsonData, encoder: JSONEncoder())
+            } else {
+                return .requestPlain
+            }
+            
+        case let .signUp(body):
+            return .uploadMultipart(body.toMultipartFormData())
         }
     }
     
     var headers: [String: String]? {
-        return nil
+        switch self {
+        case .joinEmail,
+                .validateEmail,
+                .validateID,
+                .validateNickname:
+            return [Header.contentTypeJson.key: Header.contentTypeJson.value]
+        case .signUp:
+            return [Header.contentTypeJson.key: Header.contentTypeMulti.value]
+        }
     }
 }
