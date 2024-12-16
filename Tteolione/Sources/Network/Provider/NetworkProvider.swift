@@ -23,7 +23,7 @@ final class NetworkProvider<T: TargetType> {
     
     func request<R: Decodable>(_ target: T,
                                decodingType: R.Type,
-                               retryCount: Int = 0) -> Single<R> {
+                               retryCount: Int = 1) -> Single<R> {
         return provider.rx
             .request(target)
             .filterSuccessfulStatusCodes()

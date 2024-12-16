@@ -15,4 +15,16 @@ struct JoinRequestBody: Encodable {
     let nickname: String?
     let password: String?
     
+    init(email: String? = nil,
+         code: String? = nil,
+         loginId: String? = nil,
+         nickname: String? = nil,
+         password: String? = nil) {
+        self.email = email
+        self.code = code
+        self.loginId = loginId
+        self.nickname = nickname
+        self.password = password
+    }
+    
 }
