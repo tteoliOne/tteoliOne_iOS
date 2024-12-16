@@ -55,11 +55,7 @@ extension JoinAPI: TargetType {
             let .validateEmail(body),
             let .validateID(body),
             let .validateNickname(body):
-            if let jsonData = try? JSONEncoder().encode(body) {
-                return .requestCustomJSONEncodable(jsonData, encoder: JSONEncoder())
-            } else {
-                return .requestPlain
-            }
+            return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
         case let .signUp(body):
             return .uploadMultipart(body.toMultipartFormData())

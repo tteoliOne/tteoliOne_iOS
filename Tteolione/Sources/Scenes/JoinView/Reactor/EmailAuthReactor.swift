@@ -20,16 +20,23 @@ final class EmailAuthReactor: Reactor {
     enum Mutation {
         case setEmail(String)
         case setButtonEnabled(Bool)
+        case showError(NetworkError)
     }
-
+    
     struct State {
         var email: String = ""
         var isButtonEnabled: Bool = false
+        var errorMessage: String?
     }
     
     let initialState: State = State()
     let backNavigation = PublishSubject<Void>()
     let navigateToNextView = PublishSubject<Void>()
+    private let networkProvider: NetworkProvider<JoinAPI>
+    
+    init(networkProvider: NetworkProvider<JoinAPI>) {
+        self.networkProvider = networkProvider
+    }
     
 }
 
@@ -40,18 +47,20 @@ extension EmailAuthReactor {
         case let .emailInputChanged(email):
             let isValid = isValidEmail(email)
             
-            return Observable.concat([
-                Observable.just(.setEmail(email)),
-                Observable.just(.setButtonEnabled(isValid))
+            return .concat([
+                .just(.setEmail(email)),
+                .just(.setButtonEnabled(isValid))
             ])
             
         case .backButtonTap:
             backNavigation.onNext(())
-            return Observable.empty()
+            return .empty()
             
         case .emailCheckButtonTap:
-            navigateToNextView.onNext(())
-            return Observable.empty()
+            guard currentState.isButtonEnabled else { return .empty() }
+            return .concat([
+                performEmailCheck(email: currentState.email)
+            ])
         }
     }
     
@@ -68,9 +77,32 @@ extension EmailAuthReactor {
             
         case let .setButtonEnabled(isEnabled):
             newState.isButtonEnabled = isEnabled
+            
+        case let .showError(error):
+            newState.errorMessage = error.errorDescription
         }
         
         return newState
+    }
+    
+}
+
+extension EmailAuthReactor {
+    
+    private func performEmailCheck(email: String) -> Observable<Mutation> {
+        let body = JoinRequestBody(email: email)
+        return networkProvider
+            .request(.joinEmail(body: body), decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let message):
+                    self.navigateToNextView.onNext(())
+                    return .empty()
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
     }
     
 }

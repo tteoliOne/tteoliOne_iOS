@@ -15,7 +15,7 @@ final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = EmailAuthReactor()
+        self.reactor = EmailAuthReactor(networkProvider: NetworkProvider<JoinAPI>())
     }
     
 }
@@ -52,6 +52,14 @@ extension EmailAuthViewController: View {
                 owner.rootView.joinButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
                 owner.rootView.joinButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
                 owner.rootView.joinButton.isEnabled = isEnabled
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(message: errorMessage)
             }
             .disposed(by: disposeBag)
     }
