@@ -56,6 +56,7 @@ extension EmailAuthViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
             .compactMap { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, errorMessage in
