@@ -26,7 +26,6 @@ final class NetworkProvider<T: TargetType> {
                                retryCount: Int = 1) -> Single<R> {
         return provider.rx
             .request(target)
-            .filterSuccessfulStatusCodes()
             .map(R.self)
             .retry(retryCount)
             .catch { error in
