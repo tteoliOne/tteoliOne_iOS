@@ -15,7 +15,10 @@ final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = EmailAuthReactor(networkProvider: NetworkProvider<JoinAPI>())
+        self.reactor = EmailAuthReactor(
+            networkProvider: NetworkProvider<JoinAPI>(),
+            mediator: DefaultSignUpMediator(signUpReactor: SignUpReactor())
+        )
     }
     
 }
@@ -76,7 +79,12 @@ extension EmailAuthViewController: View {
         reactor.navigateToNextView
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(AuthNumViewController())
+                owner.navigateToScreen(AuthNumViewController.self) { viewController in
+                    viewController.reactor = AuthNumReactor(
+                        networkProvider: owner.reactor?.networkProvider ?? NetworkProvider<JoinAPI>(),
+                        mediator: reactor.mediator
+                    )
+                }
             }
             .disposed(by: disposeBag)
     }

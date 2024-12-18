@@ -14,6 +14,12 @@ extension UIViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    func navigateToScreen<T: UIViewController>(_ viewControllerType: T.Type, reactor: (T) -> Void) {
+        let viewController = viewControllerType.init()
+        reactor(viewController)
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func showAlert(title: String? = nil,
                    message: String,
                    completion: (() -> Void)? = nil) {
