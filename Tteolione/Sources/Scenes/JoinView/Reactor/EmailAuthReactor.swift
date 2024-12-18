@@ -29,13 +29,17 @@ final class EmailAuthReactor: Reactor {
         var errorMessage: String?
     }
     
+    let networkProvider: NetworkProvider<JoinAPI>
+    let mediator: SignUpMediator
+    
     let initialState: State = State()
     let backNavigation = PublishSubject<Void>()
     let navigateToNextView = PublishSubject<Void>()
-    private let networkProvider: NetworkProvider<JoinAPI>
     
-    init(networkProvider: NetworkProvider<JoinAPI>) {
+    init(networkProvider: NetworkProvider<JoinAPI>,
+         mediator: SignUpMediator) {
         self.networkProvider = networkProvider
+        self.mediator = mediator
     }
     
 }
@@ -58,8 +62,10 @@ extension EmailAuthReactor {
             
         case .emailCheckButtonTap:
             guard currentState.isButtonEnabled else { return .empty() }
+            let email = currentState.email
+            mediator.update(email, action: SignUpReactor.Action.updateEmail)
             return .concat([
-                performEmailCheck(email: currentState.email)
+                performEmailCheck(email: email)
             ])
         }
     }

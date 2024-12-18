@@ -47,6 +47,9 @@
 		72361E752D0EB575009BEF12 /* SignUpProfileImageRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E742D0EB575009BEF12 /* SignUpProfileImageRequestBody.swift */; };
 		72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E772D0EB691009BEF12 /* MultipartFormDataConvertible.swift */; };
 		72361E7B2D0EC866009BEF12 /* HeaderKeyAndValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7A2D0EC866009BEF12 /* HeaderKeyAndValue.swift */; };
+		72361E7D2D12B7BC009BEF12 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7C2D12B7BC009BEF12 /* SignUpReactor.swift */; };
+		72361E802D12BFAC009BEF12 /* SignUpMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7F2D12BFAC009BEF12 /* SignUpMediator.swift */; };
+		72361E832D12BFDF009BEF12 /* DefaultSignUpMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -115,6 +118,9 @@
 		72361E742D0EB575009BEF12 /* SignUpProfileImageRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpProfileImageRequestBody.swift; sourceTree = "<group>"; };
 		72361E772D0EB691009BEF12 /* MultipartFormDataConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataConvertible.swift; sourceTree = "<group>"; };
 		72361E7A2D0EC866009BEF12 /* HeaderKeyAndValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderKeyAndValue.swift; sourceTree = "<group>"; };
+		72361E7C2D12B7BC009BEF12 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
+		72361E7F2D12BFAC009BEF12 /* SignUpMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMediator.swift; sourceTree = "<group>"; };
+		72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpMediator.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -306,6 +312,22 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
+		72361E7E2D12BFA0009BEF12 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				72361E7F2D12BFAC009BEF12 /* SignUpMediator.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		72361E812D12BFBC009BEF12 /* Mediator */ = {
+			isa = PBXGroup;
+			children = (
+				72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */,
+			);
+			path = Mediator;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -482,6 +504,8 @@
 		724DECC02D02CB1600171F44 /* JoinView */ = {
 			isa = PBXGroup;
 			children = (
+				72361E812D12BFBC009BEF12 /* Mediator */,
+				72361E7E2D12BFA0009BEF12 /* Protocol */,
 				72361E2D2D042716009BEF12 /* ViewController */,
 				724DECC22D02CB2200171F44 /* View */,
 				724DECC12D02CB1C00171F44 /* Reactor */,
@@ -493,6 +517,7 @@
 		724DECC12D02CB1C00171F44 /* Reactor */ = {
 			isa = PBXGroup;
 			children = (
+				72361E7C2D12B7BC009BEF12 /* SignUpReactor.swift */,
 				724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */,
 				72361E322D0427F7009BEF12 /* AuthNumReactor.swift */,
 				72361E3B2D087BA2009BEF12 /* IDReactor.swift */,
@@ -636,6 +661,7 @@
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
 				72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */,
+				72361E832D12BFDF009BEF12 /* DefaultSignUpMediator.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
@@ -644,11 +670,13 @@
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
 				72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */,
+				72361E7D2D12B7BC009BEF12 /* SignUpReactor.swift in Sources */,
 				72361E662D0C2D30009BEF12 /* NetworkProvider.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
+				72361E802D12BFAC009BEF12 /* SignUpMediator.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
 				72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,

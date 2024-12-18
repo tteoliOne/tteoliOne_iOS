@@ -24,18 +24,29 @@ final class AuthNumReactor: Reactor {
         case setButtonEnabled(Bool)
         case updateTimer(String)
         case stopTimer
+        case showError(NetworkError)
     }
 
     struct State {
         var authNum: String = ""
         var isButtonEnabled: Bool = false
         var remainingTime: String = AppText.Join.joinAuthTime
+        var errorMessage: String?
     }
     
     private var timerDisposable: Disposable?
+    private let networkProvider: NetworkProvider<JoinAPI>
+    private let mediator: SignUpMediator
+    
     let initialState: State = State()
     let backNavigation = PublishSubject<Void>()
     let navigateToNextView = PublishSubject<Void>()
+    
+    init(networkProvider: NetworkProvider<JoinAPI>,
+         mediator: SignUpMediator) {
+        self.networkProvider = networkProvider
+        self.mediator = mediator
+    }
     
 }
 
@@ -55,8 +66,13 @@ extension AuthNumReactor {
             ])
             
         case .authCheckButtonTap:
-            navigateToNextView.onNext(())
-            return Observable.empty()
+            guard currentState.isButtonEnabled else { return .empty() }
+            let authCode = currentState.authNum
+            
+            mediator.update(authCode, action: SignUpReactor.Action.updatePassword)
+            return .concat([
+                performAuthCheck(code: authCode)
+            ])
             
         case .startTimer:
             return Observable.create { [weak self] observer in
@@ -91,9 +107,33 @@ extension AuthNumReactor {
             
         case .stopTimer:
             break
+            
+        case let .showError(error):
+            newState.errorMessage = error.errorDescription
         }
         
         return newState
+    }
+    
+}
+
+extension AuthNumReactor {
+    
+    private func performAuthCheck(code: String) -> Observable<Mutation> {
+        let email = mediator.get(\.email)
+        let body = JoinRequestBody(email: email, code: code)
+        return networkProvider
+            .request(.validateEmail(body: body), decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    self.navigateToNextView.onNext(())
+                    return .empty()
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
     }
     
 }
@@ -111,6 +151,7 @@ extension AuthNumReactor {
                 onUpdate(String(format: "남은시간 %d:%02d", minutes, seconds))
             }, onCompleted: {
                 onUpdate("남은시간 0:00")
+                self.backNavigation.onNext(())
             })
     }
     

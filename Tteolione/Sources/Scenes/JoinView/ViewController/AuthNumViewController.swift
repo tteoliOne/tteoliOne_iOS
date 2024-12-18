@@ -15,7 +15,6 @@ final class AuthNumViewController: BaseViewController<AuthNumView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = AuthNumReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
