@@ -25,7 +25,7 @@ final class SignUpReactor: Reactor {
     
     struct State {
         var email: String = ""
-        var authCode: String = ""
+        var code: String = ""
         var password: String = ""
     }
     
@@ -59,8 +59,8 @@ extension SignUpReactor {
         case let .setEmail(email):
             newState.email = email
             
-        case let .setAuthCode(authCode):
-            newState.authCode = authCode
+        case let .setAuthCode(code):
+            newState.code = code
             
         case let .setPassword(password):
             newState.password = password

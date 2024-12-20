@@ -67,11 +67,8 @@ extension AuthNumReactor {
             
         case .authCheckButtonTap:
             guard currentState.isButtonEnabled else { return .empty() }
-            let authCode = currentState.authNum
-            
-            mediator.update(authCode, action: SignUpReactor.Action.updatePassword)
             return .concat([
-                performAuthCheck(code: authCode)
+                performAuthCheck(code: currentState.authNum)
             ])
             
         case .startTimer:
@@ -128,6 +125,8 @@ extension AuthNumReactor {
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(_):
+                    self.mediator.update(code,
+                                         action: SignUpReactor.Action.updateAuthCode)
                     self.navigateToNextView.onNext(())
                     return .empty()
                 case .failure(let error):
