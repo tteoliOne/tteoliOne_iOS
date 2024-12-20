@@ -13,7 +13,8 @@ final class SignUpCoordinator: Coordinator {
     var navigationController: UINavigationController
     private let dependency: AppDependency
 
-    init(navigationController: UINavigationController, dependency: AppDependency) {
+    init(navigationController: UINavigationController,
+         dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
     }
