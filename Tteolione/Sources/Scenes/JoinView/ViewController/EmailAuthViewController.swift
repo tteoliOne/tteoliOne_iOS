@@ -76,16 +76,16 @@ extension EmailAuthViewController: View {
             }
             .disposed(by: disposeBag)
         
-        reactor.navigateToNextView
-            .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, _ in
-                owner.navigateToScreen(AuthNumViewController.self) { viewController in
-                    viewController.reactor = AuthNumReactor(
-                        networkProvider: owner.reactor?.networkProvider ?? NetworkProvider<JoinAPI>(),
-                        mediator: reactor.mediator
-                    )
-                }
-            }
-            .disposed(by: disposeBag)
+//        reactor.navigateToNextView
+//            .observe(on: MainScheduler.instance)
+//            .bind(with: self) { owner, _ in
+//                owner.navigateToScreen(AuthNumViewController.self) { viewController in
+//                    viewController.reactor = AuthNumReactor(
+//                        networkProvider: owner.reactor?.networkProvider ?? NetworkProvider<JoinAPI>(),
+//                        mediator: reactor.mediator
+//                    )
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
 }

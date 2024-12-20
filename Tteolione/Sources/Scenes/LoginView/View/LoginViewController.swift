@@ -12,6 +12,7 @@ import RxCocoa
 final class LoginViewController: BaseViewController<LoginView> {
     
     var disposeBag = DisposeBag()
+    var delegate: LoginViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,8 +103,9 @@ extension LoginViewController: View {
         reactor.navigateToSignUp
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(EmailAuthViewController())
+                owner.delegate?.showSignUpView()
             }
             .disposed(by: disposeBag)
     }
+    
 }
