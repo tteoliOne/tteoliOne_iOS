@@ -12,6 +12,7 @@ import RxCocoa
 final class AuthNumViewController: BaseViewController<AuthNumView> {
     
     var disposeBag = DisposeBag()
+    var delegate: AuthNumViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,17 +72,22 @@ extension AuthNumViewController: View {
     }
     
     private func bindNavigation(_ reactor: AuthNumReactor) {
-        reactor.backNavigation
+        reactor.state.map { $0.navigateBack }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+                owner.delegate?.popToPreviousScreen()
             }
             .disposed(by: disposeBag)
         
-        reactor.navigateToNextView
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(IDViewController())
+                guard let delegate = owner.delegate else { return }
+                delegate.showAuthNum()
             }
             .disposed(by: disposeBag)
     }

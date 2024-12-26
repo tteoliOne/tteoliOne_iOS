@@ -10,6 +10,7 @@ import UIKit
 final class LoginCoordinator: Coordinator, LoginViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
+    weak var parentCoordinator: Coordinator?
     var delegate: LoginCoordinatorDelegate?
     var navigationController: UINavigationController
 
@@ -20,7 +21,7 @@ final class LoginCoordinator: Coordinator, LoginViewControllerDelegate {
     func start() {
         let loginVC = LoginViewController()
         loginVC.delegate = self
-        self.navigationController.viewControllers = [loginVC]
+        navigationController.viewControllers = [loginVC]
     }
 
     func showSignUpView() {

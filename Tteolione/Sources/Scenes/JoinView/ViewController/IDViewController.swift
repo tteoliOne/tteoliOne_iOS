@@ -12,10 +12,10 @@ import RxCocoa
 final class IDViewController: BaseViewController<IDView> {
     
     var disposeBag = DisposeBag()
+    var delegate: IDViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = IDReactor()
     }
     
 }

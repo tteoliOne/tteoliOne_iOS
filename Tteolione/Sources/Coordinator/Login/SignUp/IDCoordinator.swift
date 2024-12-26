@@ -1,0 +1,52 @@
+//
+//  IDCoordinator.swift
+//  Tteolione
+//
+//  Created by 전준영 on 12/26/24.
+//
+
+import UIKit
+
+final class IDCoordinator: Coordinator, IDViewControllerDelegate {
+    
+    var childCoordinators: [Coordinator] = []
+    var navigationController: UINavigationController
+    weak var parentCoordinator: Coordinator?
+    private let dependency: AppDependency
+
+    init(navigationController: UINavigationController,
+         dependency: AppDependency) {
+        self.navigationController = navigationController
+        self.dependency = dependency
+    }
+
+    func start() {
+        showID()
+    }
+
+    func popToPreviousScreen() {
+        navigationController.popViewController(animated: true)
+    }
+    
+    func showID() {
+        let viewController = IDViewController()
+        let reactor = IDReactor(
+            networkProvider: dependency.networkProvider,
+            mediator: dependency.signUpMediator
+        )
+        viewController.reactor = reactor
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showAuthNum() {
+        let authNumCoordinator = AuthNumCoordinator(
+            navigationController: navigationController,
+            dependency: dependency
+        )
+        childCoordinators.append(authNumCoordinator)
+        authNumCoordinator.parentCoordinator = self
+        authNumCoordinator.start()
+    }
+    
+}

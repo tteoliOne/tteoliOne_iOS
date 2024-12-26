@@ -27,9 +27,18 @@ final class IDReactor: Reactor {
         var isButtonEnabled: Bool = false
     }
     
+    private let networkProvider: NetworkProvider<JoinAPI>
+    private let mediator: SignUpMediator
+    
     let initialState: State = State()
     let backNavigation = PublishSubject<Void>()
     let navigateToNextView = PublishSubject<Void>()
+    
+    init(networkProvider: NetworkProvider<JoinAPI>,
+         mediator: SignUpMediator) {
+        self.networkProvider = networkProvider
+        self.mediator = mediator
+    }
     
 }
 

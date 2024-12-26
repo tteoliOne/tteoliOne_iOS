@@ -20,22 +20,23 @@ final class EmailAuthReactor: Reactor {
     enum Mutation {
         case setEmail(String)
         case setButtonEnabled(Bool)
+        case setNavigateToNext(Bool)
+        case setNavigateBack(Bool)
         case showError(NetworkError)
     }
     
     struct State {
         var email: String = ""
         var isButtonEnabled: Bool = false
+        var navigateToNext: Bool = false
+        var navigateBack: Bool = false
         var errorMessage: String?
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
     private let mediator: SignUpMediator
-    var onNavigateToNextView: (() -> Void)?
     
     let initialState: State = State()
-    let backNavigation = PublishSubject<Void>()
-    let navigateToNextView = PublishSubject<Void>()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
          mediator: SignUpMediator) {
@@ -58,8 +59,10 @@ extension EmailAuthReactor {
             ])
             
         case .backButtonTap:
-            backNavigation.onNext(())
-            return .empty()
+            return .concat([
+                .just(.setNavigateBack(true)),
+                .just(.setNavigateBack(false))
+            ])
             
         case .emailCheckButtonTap:
             guard currentState.isButtonEnabled else { return .empty() }
@@ -84,6 +87,12 @@ extension EmailAuthReactor {
         case let .setButtonEnabled(isEnabled):
             newState.isButtonEnabled = isEnabled
             
+        case let .setNavigateToNext(navigateToNext):
+            newState.navigateToNext = navigateToNext
+            
+        case let .setNavigateBack(navigateBack):
+            newState.navigateBack = navigateBack
+            
         case let .showError(error):
             newState.errorMessage = error.errorDescription
         }
@@ -104,9 +113,10 @@ extension EmailAuthReactor {
                 switch handleResponse(response) {
                 case .success(let message):
                     self.mediator.update(email, action: SignUpReactor.Action.updateEmail)
-//                    self.navigateToNextView.onNext(())
-                    self.onNavigateToNextView?()
-                    return .empty()
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
                 case .failure(let error):
                     return .just(.showError(error))
                 }

@@ -10,6 +10,7 @@ import UIKit
 final class AppCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
+    weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -32,7 +33,7 @@ extension AppCoordinator: LoginCoordinatorDelegate {
     
     func didRequestSignUp(_ coordinator: LoginCoordinator) {
         removeChildCoordinator(coordinator)
-        let signUpCoordinator = SignUpCoordinator(
+        let signUpCoordinator = EmailAuthCoordinator(
             navigationController: navigationController,
             dependency: AppDependency.shared
         )
