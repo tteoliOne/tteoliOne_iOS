@@ -51,12 +51,13 @@
 		72361E802D12BFAC009BEF12 /* SignUpMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7F2D12BFAC009BEF12 /* SignUpMediator.swift */; };
 		72361E832D12BFDF009BEF12 /* DefaultSignUpMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */; };
 		72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E862D13FBC2009BEF12 /* AppCoordinator.swift */; };
-		72361E8A2D13FC49009BEF12 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E892D13FC49009BEF12 /* SignUpCoordinator.swift */; };
+		72361E8A2D13FC49009BEF12 /* EmailAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */; };
 		72361E8D2D140585009BEF12 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E8C2D140585009BEF12 /* Coordinator.swift */; };
 		72361E8F2D140C9E009BEF12 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E8E2D140C9E009BEF12 /* AppDependency.swift */; };
 		72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E902D1411D9009BEF12 /* LoginCoordinator.swift */; };
 		72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E942D155D61009BEF12 /* LoginDelegate.swift */; };
 		72361E982D17D38A009BEF12 /* SignUpDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E972D17D38A009BEF12 /* SignUpDelegate.swift */; };
+		72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -129,12 +130,13 @@
 		72361E7F2D12BFAC009BEF12 /* SignUpMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpMediator.swift; sourceTree = "<group>"; };
 		72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpMediator.swift; sourceTree = "<group>"; };
 		72361E862D13FBC2009BEF12 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		72361E892D13FC49009BEF12 /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
+		72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthCoordinator.swift; sourceTree = "<group>"; };
 		72361E8C2D140585009BEF12 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		72361E8E2D140C9E009BEF12 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
 		72361E902D1411D9009BEF12 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		72361E942D155D61009BEF12 /* LoginDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDelegate.swift; sourceTree = "<group>"; };
 		72361E972D17D38A009BEF12 /* SignUpDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDelegate.swift; sourceTree = "<group>"; };
+		72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumCoordinator.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -356,7 +358,8 @@
 		72361E882D13FC2D009BEF12 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				72361E892D13FC49009BEF12 /* SignUpCoordinator.swift */,
+				72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */,
+				72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -701,6 +704,7 @@
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
 				72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */,
+				72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */,
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
 				72361E542D0BF5F7009BEF12 /* ProfileSetView.swift in Sources */,
@@ -747,7 +751,7 @@
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 				72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */,
 				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
-				72361E8A2D13FC49009BEF12 /* SignUpCoordinator.swift in Sources */,
+				72361E8A2D13FC49009BEF12 /* EmailAuthCoordinator.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
 				72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */,
 				72361E802D12BFAC009BEF12 /* SignUpMediator.swift in Sources */,

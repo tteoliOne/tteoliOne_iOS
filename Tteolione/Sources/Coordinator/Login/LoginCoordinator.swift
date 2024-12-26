@@ -10,6 +10,7 @@ import UIKit
 final class LoginCoordinator: Coordinator, LoginViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
+    weak var parentCoordinator: Coordinator?
     var delegate: LoginCoordinatorDelegate?
     var navigationController: UINavigationController
 

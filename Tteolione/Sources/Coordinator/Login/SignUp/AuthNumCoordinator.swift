@@ -1,39 +1,29 @@
 //
-//  SignUpCoordinator.swift
+//  AuthNumCoordinator.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/19/24.
+//  Created by 전준영 on 12/26/24.
 //
 
 import UIKit
 
-final class SignUpCoordinator: Coordinator, SignUpViewControllerDelegate {
+final class AuthNumCoordinator: Coordinator, AuthNumViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    weak var parentCoordinator: Coordinator?
     private let dependency: AppDependency
-
+    
     init(navigationController: UINavigationController,
          dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
     }
-
-    func start() {
-        showEmailAuth()
-    }
-
-    func showEmailAuth() {
-        let viewController = EmailAuthViewController()
-        let reactor = EmailAuthReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
-        )
-        viewController.reactor = reactor
-        viewController.delegate = self
-        navigationController.pushViewController(viewController, animated: true)
-    }
     
+    func start() {
+        showAuthNum()
+    }
+
     func showAuthNum() {
         let viewController = AuthNumViewController()
         let reactor = AuthNumReactor(
@@ -43,22 +33,6 @@ final class SignUpCoordinator: Coordinator, SignUpViewControllerDelegate {
         viewController.reactor = reactor
         viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
-    }
-    
-    func showID() {
-        
-    }
-    
-    func showPassword() {
-        
-    }
-    
-    func showNickname() {
-        
-    }
-    
-    func showProfileSet() {
-        
     }
     
 }

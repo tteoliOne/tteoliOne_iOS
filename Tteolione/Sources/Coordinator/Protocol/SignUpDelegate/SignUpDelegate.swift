@@ -7,15 +7,32 @@
 
 import Foundation
 
-protocol SignUpCoordinatorDelegate {
-    func didRequestSignUp(_ coordinator: LoginCoordinator)
+protocol EmailAuthCoordinatorDelegate {
+    func showAuthNum(_ coordinator: AuthNumCoordinator)
 }
 
-protocol SignUpViewControllerDelegate {
-    func showEmailAuth()
+protocol EmailAuthViewControllerDelegate {
+    func popToPreviousScreen()
     func showAuthNum()
+    func showEmailAuth()
+}
+
+protocol AuthNumViewControllerDelegate {
+    func showAuthNum()
+}
+
+protocol IDViewControllerDelegate {
     func showID()
+}
+
+protocol PasswordViewControllerDelegate {
     func showPassword()
+}
+
+protocol NicknameViewControllerDelegate {
     func showNickname()
+}
+
+protocol ProfileSetViewControllerDelegate {
     func showProfileSet()
 }

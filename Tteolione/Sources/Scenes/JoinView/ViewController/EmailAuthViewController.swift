@@ -12,7 +12,7 @@ import RxCocoa
 final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     var disposeBag = DisposeBag()
-    var delegate: SignUpViewControllerDelegate?
+    var delegate: EmailAuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ extension EmailAuthViewController: View {
         reactor.backNavigation
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+                owner.delegate?.popToPreviousScreen()
             }
             .disposed(by: disposeBag)
         
