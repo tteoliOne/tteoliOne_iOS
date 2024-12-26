@@ -12,13 +12,10 @@ import RxCocoa
 final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     var disposeBag = DisposeBag()
+    var delegate: SignUpViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = EmailAuthReactor(
-            networkProvider: NetworkProvider<JoinAPI>(),
-            mediator: DefaultSignUpMediator(signUpReactor: SignUpReactor())
-        )
     }
     
 }
@@ -76,16 +73,14 @@ extension EmailAuthViewController: View {
             }
             .disposed(by: disposeBag)
         
-//        reactor.navigateToNextView
-//            .observe(on: MainScheduler.instance)
-//            .bind(with: self) { owner, _ in
-//                owner.navigateToScreen(AuthNumViewController.self) { viewController in
-//                    viewController.reactor = AuthNumReactor(
-//                        networkProvider: owner.reactor?.networkProvider ?? NetworkProvider<JoinAPI>(),
-//                        mediator: reactor.mediator
-//                    )
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                guard let delegate = owner.delegate else { return }
+                delegate.showAuthNum()
+            }
+            .disposed(by: disposeBag)
     }
 }

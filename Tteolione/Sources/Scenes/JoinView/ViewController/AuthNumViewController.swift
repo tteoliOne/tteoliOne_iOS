@@ -12,6 +12,7 @@ import RxCocoa
 final class AuthNumViewController: BaseViewController<AuthNumView> {
     
     var disposeBag = DisposeBag()
+    var delegate: SignUpViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

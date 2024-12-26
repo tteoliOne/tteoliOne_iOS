@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SignUpCoordinator: Coordinator {
+final class SignUpCoordinator: Coordinator, SignUpViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -23,13 +23,42 @@ final class SignUpCoordinator: Coordinator {
         showEmailAuth()
     }
 
-    private func showEmailAuth() {
+    func showEmailAuth() {
         let viewController = EmailAuthViewController()
-        viewController.reactor = EmailAuthReactor(
+        let reactor = EmailAuthReactor(
             networkProvider: dependency.networkProvider,
             mediator: dependency.signUpMediator
         )
+        viewController.reactor = reactor
+        viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
     }
-
+    
+    func showAuthNum() {
+        let viewController = AuthNumViewController()
+        let reactor = AuthNumReactor(
+            networkProvider: dependency.networkProvider,
+            mediator: dependency.signUpMediator
+        )
+        viewController.reactor = reactor
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    func showID() {
+        
+    }
+    
+    func showPassword() {
+        
+    }
+    
+    func showNickname() {
+        
+    }
+    
+    func showProfileSet() {
+        
+    }
+    
 }
