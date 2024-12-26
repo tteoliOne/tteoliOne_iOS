@@ -21,7 +21,7 @@ final class LoginCoordinator: Coordinator, LoginViewControllerDelegate {
     func start() {
         let loginVC = LoginViewController()
         loginVC.delegate = self
-        self.navigationController.viewControllers = [loginVC]
+        navigationController.viewControllers = [loginVC]
     }
 
     func showSignUpView() {

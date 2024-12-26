@@ -21,6 +21,7 @@ final class EmailAuthReactor: Reactor {
         case setEmail(String)
         case setButtonEnabled(Bool)
         case setNavigateToNext(Bool)
+        case setNavigateBack(Bool)
         case showError(NetworkError)
     }
     
@@ -28,16 +29,14 @@ final class EmailAuthReactor: Reactor {
         var email: String = ""
         var isButtonEnabled: Bool = false
         var navigateToNext: Bool = false
+        var navigateBack: Bool = false
         var errorMessage: String?
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
     private let mediator: SignUpMediator
-    var onNavigateToNextView: (() -> Void)?
     
     let initialState: State = State()
-    let backNavigation = PublishSubject<Void>()
-    let navigateToNextView = PublishSubject<Void>()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
          mediator: SignUpMediator) {
@@ -60,8 +59,10 @@ extension EmailAuthReactor {
             ])
             
         case .backButtonTap:
-            backNavigation.onNext(())
-            return .empty()
+            return .concat([
+                .just(.setNavigateBack(true)),
+                .just(.setNavigateBack(false))
+            ])
             
         case .emailCheckButtonTap:
             guard currentState.isButtonEnabled else { return .empty() }
@@ -88,6 +89,9 @@ extension EmailAuthReactor {
             
         case let .setNavigateToNext(navigateToNext):
             newState.navigateToNext = navigateToNext
+            
+        case let .setNavigateBack(navigateBack):
+            newState.navigateBack = navigateBack
             
         case let .showError(error):
             newState.errorMessage = error.errorDescription

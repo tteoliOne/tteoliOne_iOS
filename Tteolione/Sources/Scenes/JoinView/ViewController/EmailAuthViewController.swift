@@ -66,7 +66,9 @@ extension EmailAuthViewController: View {
     }
     
     private func bindNavigation(_ reactor: EmailAuthReactor) {
-        reactor.backNavigation
+        reactor.state.map { $0.navigateBack }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.popToPreviousScreen()
@@ -83,4 +85,5 @@ extension EmailAuthViewController: View {
             }
             .disposed(by: disposeBag)
     }
+    
 }

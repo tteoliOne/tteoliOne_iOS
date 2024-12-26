@@ -1,5 +1,5 @@
 //
-//  AuthNumCoordinator.swift
+//  IDCoordinator.swift
 //  Tteolione
 //
 //  Created by 전준영 on 12/26/24.
@@ -7,30 +7,30 @@
 
 import UIKit
 
-final class AuthNumCoordinator: Coordinator, AuthNumViewControllerDelegate {
+final class IDCoordinator: Coordinator, IDViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var parentCoordinator: Coordinator?
     private let dependency: AppDependency
-    
+
     init(navigationController: UINavigationController,
          dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
     }
-    
+
     func start() {
-        showAuthNum()
+        showID()
     }
-    
+
     func popToPreviousScreen() {
         navigationController.popViewController(animated: true)
     }
-
-    func showAuthNum() {
-        let viewController = AuthNumViewController()
-        let reactor = AuthNumReactor(
+    
+    func showID() {
+        let viewController = IDViewController()
+        let reactor = IDReactor(
             networkProvider: dependency.networkProvider,
             mediator: dependency.signUpMediator
         )
@@ -39,14 +39,14 @@ final class AuthNumCoordinator: Coordinator, AuthNumViewControllerDelegate {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func showID() {
-        let idCoordinator = IDCoordinator(
+    func showAuthNum() {
+        let authNumCoordinator = AuthNumCoordinator(
             navigationController: navigationController,
             dependency: dependency
         )
-        childCoordinators.append(idCoordinator)
-        idCoordinator.parentCoordinator = self
-        idCoordinator.start()
+        childCoordinators.append(authNumCoordinator)
+        authNumCoordinator.parentCoordinator = self
+        authNumCoordinator.start()
     }
     
 }

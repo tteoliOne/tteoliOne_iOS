@@ -25,13 +25,17 @@ final class AuthNumReactor: Reactor {
         case updateTimer(String)
         case stopTimer
         case showError(NetworkError)
+        case setNavigateToNext(Bool)
+        case setNavigateBack(Bool)
     }
-
+    
     struct State {
         var authNum: String = ""
         var isButtonEnabled: Bool = false
         var remainingTime: String = AppText.Join.joinAuthTime
         var errorMessage: String?
+        var navigateToNext: Bool = false
+        var navigateBack: Bool = false
     }
     
     private var timerDisposable: Disposable?
@@ -39,8 +43,6 @@ final class AuthNumReactor: Reactor {
     private let mediator: SignUpMediator
     
     let initialState: State = State()
-    let backNavigation = PublishSubject<Void>()
-    let navigateToNextView = PublishSubject<Void>()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
          mediator: SignUpMediator) {
@@ -55,8 +57,10 @@ extension AuthNumReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonTap:
-            backNavigation.onNext(())
-            return Observable.empty()
+            return .concat([
+                .just(.setNavigateBack(true)),
+                .just(.setNavigateBack(false))
+            ])
             
         case let .authNumTextChanged(authNum):
             let isEnabled = !authNum.isEmpty
@@ -72,11 +76,8 @@ extension AuthNumReactor {
             ])
             
         case .startTimer:
-            return Observable.create { [weak self] observer in
-                self?.startTimer { timeString in
-                    observer.onNext(.updateTimer(timeString))
-                }
-                return Disposables.create()
+            return startTimer { timeString in
+                
             }
             
         case .stopTimer:
@@ -107,6 +108,12 @@ extension AuthNumReactor {
             
         case let .showError(error):
             newState.errorMessage = error.errorDescription
+            
+        case let .setNavigateToNext(navigateToNext):
+            newState.navigateToNext = navigateToNext
+            
+        case let .setNavigateBack(navigateBack):
+            newState.navigateBack = navigateBack
         }
         
         return newState
@@ -127,8 +134,10 @@ extension AuthNumReactor {
                 case .success(_):
                     self.mediator.update(code,
                                          action: SignUpReactor.Action.updateAuthCode)
-                    self.navigateToNextView.onNext(())
-                    return .empty()
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
                 case .failure(let error):
                     return .just(.showError(error))
                 }
@@ -139,21 +148,27 @@ extension AuthNumReactor {
 
 extension AuthNumReactor {
     
-    private func startTimer(onUpdate: @escaping (String) -> Void) {
-        var totalSeconds = 180
-        timerDisposable = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
-            .take(while: { _ in totalSeconds > 0 })
-            .subscribe(onNext: { _ in
-                totalSeconds -= 1
-                let minutes = totalSeconds / 60
-                let seconds = totalSeconds % 60
-                onUpdate(String(format: "남은시간 %d:%02d", minutes, seconds))
-            }, onCompleted: {
-                onUpdate("남은시간 0:00")
-                self.backNavigation.onNext(())
-            })
+    private func startTimer(onUpdate: @escaping (String) -> Void) -> Observable<Mutation> {
+        let totalSeconds = 10
+        return Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+            .map { totalSeconds - $0 - 1 }
+            .take(while: { $0 >= 0 })
+            .flatMap { remainingSeconds -> Observable<Mutation> in
+                let minutes = remainingSeconds / 60
+                let seconds = remainingSeconds % 60
+                let timeString = String(format: "남은시간 %d:%02d", minutes, seconds)
+                onUpdate(timeString)
+                if remainingSeconds == 0 {
+                    return .concat([
+                        .just(.updateTimer("남은시간 0:00")),
+                        .just(.setNavigateBack(true)),
+                        .just(.setNavigateBack(false))
+                    ])
+                }
+                return .just(.updateTimer(timeString))
+            }
     }
-    
+
     private func stopTimer() {
         timerDisposable?.dispose()
         timerDisposable = nil

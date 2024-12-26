@@ -19,6 +19,8 @@ protocol EmailAuthViewControllerDelegate {
 
 protocol AuthNumViewControllerDelegate {
     func showAuthNum()
+    func popToPreviousScreen()
+    func showID()
 }
 
 protocol IDViewControllerDelegate {
