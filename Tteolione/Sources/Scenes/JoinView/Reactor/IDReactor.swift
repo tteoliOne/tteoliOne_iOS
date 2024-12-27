@@ -20,19 +20,23 @@ final class IDReactor: Reactor {
     enum Mutation {
         case setID(String)
         case setButtonEnabled(Bool)
+        case setNavigateToNext(Bool)
+        case setNavigateBack(Bool)
+        case showError(NetworkError)
     }
 
     struct State {
         var id: String = ""
         var isButtonEnabled: Bool = false
+        var navigateToNext: Bool = false
+        var navigateBack: Bool = false
+        var errorMessage: String?
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
     private let mediator: SignUpMediator
     
     let initialState: State = State()
-    let backNavigation = PublishSubject<Void>()
-    let navigateToNextView = PublishSubject<Void>()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
          mediator: SignUpMediator) {
@@ -55,12 +59,17 @@ extension IDReactor {
             ])
             
         case .backButtonTap:
-            backNavigation.onNext(())
-            return Observable.empty()
+            return .concat([
+                .just(.setNavigateBack(true)),
+                .just(.setNavigateBack(false))
+            ])
             
         case .idCheckButtonTap:
-            navigateToNextView.onNext(())
-            return Observable.empty()
+            guard currentState.isButtonEnabled else { return .empty() }
+            let id = currentState.id
+            return .concat([
+                performIDCheck(id: id)
+            ])
         }
     }
     
@@ -77,6 +86,15 @@ extension IDReactor {
             
         case let .setButtonEnabled(isEnabled):
             newState.isButtonEnabled = isEnabled
+            
+        case let .setNavigateToNext(navigateToNext):
+            newState.navigateToNext = navigateToNext
+            
+        case let .setNavigateBack(navigateBack):
+            newState.navigateBack = navigateBack
+            
+        case let .showError(error):
+            newState.errorMessage = error.errorDescription
         }
         
         return newState
@@ -90,6 +108,30 @@ extension IDReactor {
         let idRegex = "^(?=.*[a-z])[a-zA-Z0-9]{6,20}$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", idRegex)
         return predicate.evaluate(with: id)
+    }
+    
+}
+
+extension IDReactor {
+    
+    private func performIDCheck(id: String) -> Observable<Mutation> {
+        let body = JoinRequestBody(loginId: id)
+        return networkProvider
+            .request(.validateID(body: body),
+                     decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let message):
+                    self.mediator.update(id, action: SignUpReactor.Action.updateID)
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
     }
     
 }

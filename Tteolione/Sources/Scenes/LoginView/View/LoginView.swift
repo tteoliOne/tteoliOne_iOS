@@ -13,7 +13,7 @@ final class LoginView: BaseView {
     //MARK: - 로고
     private let teoliOneNumberLogo: UILabel = {
         let label = UILabel()
-        label.text = AppText.Logo.teoliOneNumber
+        label.text = AppText.Logo.tteoliOneNumber
         label.font = Font.Andong60
         label.textColor = .myAppMain
         return label
@@ -21,7 +21,7 @@ final class LoginView: BaseView {
 
     private let teoliOneTextLogo: UILabel = {
         let label = UILabel()
-        label.text = AppText.Logo.teoliOneText
+        label.text = AppText.Logo.tteoliOneText
         label.font = Font.Andong30
         label.textColor = .myAppMain
         return label

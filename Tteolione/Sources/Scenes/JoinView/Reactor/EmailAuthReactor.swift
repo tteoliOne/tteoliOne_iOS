@@ -35,7 +35,6 @@ final class EmailAuthReactor: Reactor {
     
     private let networkProvider: NetworkProvider<JoinAPI>
     private let mediator: SignUpMediator
-    
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,

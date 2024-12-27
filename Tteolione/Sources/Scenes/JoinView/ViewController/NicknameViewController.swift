@@ -12,10 +12,10 @@ import RxCocoa
 final class NicknameViewController: BaseViewController<NicknameView> {
     
     var disposeBag = DisposeBag()
+    weak var delegate: NicknameViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = NicknameReactor()
     }
     
 }
@@ -57,18 +57,26 @@ extension NicknameViewController: View {
     }
     
     private func bindNavigation(_ reactor: NicknameReactor) {
-        reactor.backNavigation
+        reactor.state.map { $0.navigateBack }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+                owner.delegate?.popToPreviousScreen()
             }
             .disposed(by: disposeBag)
         
-        reactor.navigateToNextView
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(ProfileSetViewController())
+                owner.delegate?.showProfileSet()
             }
             .disposed(by: disposeBag)
     }
+}
+
+extension NicknameViewController: DelegateOwner {
+    typealias Delegate = NicknameViewControllerDelegate
 }

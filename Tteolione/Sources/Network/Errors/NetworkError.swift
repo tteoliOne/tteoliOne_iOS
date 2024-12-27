@@ -14,7 +14,8 @@ public enum NetworkError: LocalizedError {
     case decodingFailure // JSON 디코딩 실패
     case notModified // Not Modified
     case unknownError // 알 수 없는 에러
-
+    case invalidInputImage // 이미지 입력 실패
+    
     public var errorDescription: String? {
         switch self {
         case .connectionError:
@@ -31,6 +32,9 @@ public enum NetworkError: LocalizedError {
             
         case .unknownError:
             return "알 수 없는 문제가 발생했습니다."
+            
+        case .invalidInputImage:
+            return "이미지가 잘못되었습니다."
         }
     }
     

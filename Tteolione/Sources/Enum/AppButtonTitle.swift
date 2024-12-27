@@ -18,5 +18,5 @@ enum AppButtonTitle: String {
     case next = "다음"
     case complete = "완료"
     case profile = "프로필 변경하기"
-    
+    case finshSignUp = "로그인하러 가기"
 }

@@ -52,6 +52,7 @@ extension Font {
     static let Andong18 = Font.custom(FontNames.andong, 18).font()
     static let Andong30 = Font.custom(FontNames.andong, 30).font()
     static let Andong60 = Font.custom(FontNames.andong, 60).font()
+    static let Andong100 = Font.custom(FontNames.andong, 100).font()
     
     static let bold25 = Font.bold(25).font()
 }

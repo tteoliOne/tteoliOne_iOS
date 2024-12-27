@@ -12,10 +12,10 @@ import RxCocoa
 final class PasswordViewController: BaseViewController<PasswordView> {
     
     var disposeBag = DisposeBag()
+    weak var delegate: PasswordViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = PasswordReactor()
     }
     
 }
@@ -64,18 +64,26 @@ extension PasswordViewController: View {
     }
     
     private func bindNavigation(_ reactor: PasswordReactor) {
-        reactor.backNavigation
+        reactor.state.map { $0.navigateBack }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+                owner.delegate?.popToPreviousScreen()
             }
             .disposed(by: disposeBag)
         
-        reactor.navigateToNextView
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigateToScreen(NicknameViewController())
+                owner.delegate?.showNickname()
             }
             .disposed(by: disposeBag)
     }
+}
+
+extension PasswordViewController: DelegateOwner {
+    typealias Delegate = PasswordViewControllerDelegate
 }

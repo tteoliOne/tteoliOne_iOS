@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class IDCoordinator: Coordinator, IDViewControllerDelegate {
+final class IDCoordinator: IDViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -21,32 +21,27 @@ final class IDCoordinator: Coordinator, IDViewControllerDelegate {
     }
 
     func start() {
-        showID()
-    }
-
-    func popToPreviousScreen() {
-        navigationController.popViewController(animated: true)
-    }
-    
-    func showID() {
-        let viewController = IDViewController()
         let reactor = IDReactor(
             networkProvider: dependency.networkProvider,
             mediator: dependency.signUpMediator
         )
-        viewController.reactor = reactor
-        viewController.delegate = self
-        navigationController.pushViewController(viewController, animated: true)
+        let viewController = createViewController(
+            ofType: IDViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
     }
     
-    func showAuthNum() {
-        let authNumCoordinator = AuthNumCoordinator(
+    func showPassword() {
+        let passwordCoordinator = PasswordCoordinator(
             navigationController: navigationController,
             dependency: dependency
         )
-        childCoordinators.append(authNumCoordinator)
-        authNumCoordinator.parentCoordinator = self
-        authNumCoordinator.start()
+        childCoordinators.append(passwordCoordinator)
+        passwordCoordinator.parentCoordinator = self
+        passwordCoordinator.start()
     }
     
 }

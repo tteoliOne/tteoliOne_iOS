@@ -12,7 +12,7 @@ import RxCocoa
 final class AuthNumViewController: BaseViewController<AuthNumView> {
     
     var disposeBag = DisposeBag()
-    var delegate: AuthNumViewControllerDelegate?
+    weak var delegate: AuthNumViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,9 +86,12 @@ extension AuthNumViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                guard let delegate = owner.delegate else { return }
-                delegate.showAuthNum()
+                owner.delegate?.showID()
             }
             .disposed(by: disposeBag)
     }
+}
+
+extension AuthNumViewController: DelegateOwner {
+    typealias Delegate = AuthNumViewControllerDelegate
 }
