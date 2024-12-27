@@ -12,10 +12,10 @@ import RxCocoa
 final class ProfileSetViewController: BaseViewController<ProfileSetView> {
     
     var disposeBag = DisposeBag()
+    weak var delegate: ProfileSetViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = ProfileSetReactor()
     }
     
 }
@@ -58,10 +58,21 @@ extension ProfileSetViewController: View {
     }
     
     private func bindNavigation(_ reactor: ProfileSetReactor) {
-        reactor.backNavigation
+        reactor.state.map { $0.navigateBack }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
+                owner.delegate?.popToPreviousScreen()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.showFinshSignUp()
             }
             .disposed(by: disposeBag)
     }
@@ -76,4 +87,8 @@ extension ProfileSetViewController: UIImagePickerControllerDelegate, UINavigatio
         picker.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension ProfileSetViewController: DelegateOwner {
+    typealias Delegate = ProfileSetViewControllerDelegate
 }

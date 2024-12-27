@@ -12,7 +12,7 @@ import RxCocoa
 final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     var disposeBag = DisposeBag()
-    var delegate: EmailAuthViewControllerDelegate?
+    weak var delegate: EmailAuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,10 +80,13 @@ extension EmailAuthViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                guard let delegate = owner.delegate else { return }
-                delegate.showAuthNum()
+                owner.delegate?.showAuthNum()
             }
             .disposed(by: disposeBag)
     }
     
+}
+
+extension EmailAuthViewController: DelegateOwner {
+    typealias Delegate = EmailAuthViewControllerDelegate
 }
