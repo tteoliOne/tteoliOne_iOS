@@ -7,36 +7,31 @@
 
 import UIKit
 
-final class EmailAuthCoordinator: Coordinator, EmailAuthViewControllerDelegate {
+final class EmailAuthCoordinator: EmailAuthViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var parentCoordinator: Coordinator?
     private let dependency: AppDependency
-
+    
     init(navigationController: UINavigationController,
          dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
     }
-
-    func start() {
-        showEmailAuth()
-    }
-
-    func popToPreviousScreen() {
-        navigationController.popViewController(animated: true)
-    }
     
-    func showEmailAuth() {
-        let viewController = EmailAuthViewController()
+    func start() {
         let reactor = EmailAuthReactor(
             networkProvider: dependency.networkProvider,
             mediator: dependency.signUpMediator
         )
-        viewController.reactor = reactor
-        viewController.delegate = self
-        navigationController.pushViewController(viewController, animated: true)
+        let viewController = createViewController(
+            ofType: EmailAuthViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
     }
     
     func showAuthNum() {
@@ -44,8 +39,8 @@ final class EmailAuthCoordinator: Coordinator, EmailAuthViewControllerDelegate {
             navigationController: navigationController,
             dependency: dependency
         )
-        childCoordinators.append(authNumCoordinator)
-        authNumCoordinator.parentCoordinator = self
+        
+        addChildCoordinator(authNumCoordinator)
         authNumCoordinator.start()
     }
     

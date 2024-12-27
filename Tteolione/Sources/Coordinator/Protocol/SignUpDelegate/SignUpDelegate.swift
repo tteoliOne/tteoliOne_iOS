@@ -11,30 +11,30 @@ protocol EmailAuthCoordinatorDelegate {
     func showAuthNum(_ coordinator: AuthNumCoordinator)
 }
 
-protocol EmailAuthViewControllerDelegate {
-    func popToPreviousScreen()
+protocol EmailAuthViewControllerDelegate: AnyObject, Coordinator {
     func showAuthNum()
-    func showEmailAuth()
 }
 
-protocol AuthNumViewControllerDelegate {
-    func showAuthNum()
-    func popToPreviousScreen()
+protocol AuthNumViewControllerDelegate: AnyObject, Coordinator {
     func showID()
 }
 
-protocol IDViewControllerDelegate {
-    func showID()
-}
-
-protocol PasswordViewControllerDelegate {
+protocol IDViewControllerDelegate: AnyObject, Coordinator {
     func showPassword()
 }
 
-protocol NicknameViewControllerDelegate {
+protocol PasswordViewControllerDelegate: AnyObject, Coordinator {
     func showNickname()
 }
 
-protocol ProfileSetViewControllerDelegate {
+protocol NicknameViewControllerDelegate: AnyObject, Coordinator {
     func showProfileSet()
+}
+
+protocol ProfileSetViewControllerDelegate: AnyObject, Coordinator {
+    func showFinshSignUp()
+}
+
+protocol SignUpFinshViewControllerDelegate: AnyObject, Coordinator {
+    func showLogin()
 }

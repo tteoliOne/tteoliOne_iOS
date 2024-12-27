@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AuthNumCoordinator: Coordinator, AuthNumViewControllerDelegate {
+final class AuthNumCoordinator: AuthNumViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -21,22 +21,17 @@ final class AuthNumCoordinator: Coordinator, AuthNumViewControllerDelegate {
     }
     
     func start() {
-        showAuthNum()
-    }
-    
-    func popToPreviousScreen() {
-        navigationController.popViewController(animated: true)
-    }
-
-    func showAuthNum() {
-        let viewController = AuthNumViewController()
         let reactor = AuthNumReactor(
             networkProvider: dependency.networkProvider,
             mediator: dependency.signUpMediator
         )
-        viewController.reactor = reactor
-        viewController.delegate = self
-        navigationController.pushViewController(viewController, animated: true)
+        let viewController = createViewController(
+            ofType: AuthNumViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
     }
     
     func showID() {
