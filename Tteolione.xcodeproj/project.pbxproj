@@ -59,6 +59,13 @@
 		72361E982D17D38A009BEF12 /* SignUpDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E972D17D38A009BEF12 /* SignUpDelegate.swift */; };
 		72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */; };
 		72361E9C2D1DA455009BEF12 /* IDCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */; };
+		72361E9E2D1E6677009BEF12 /* PasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */; };
+		72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */; };
+		72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA12D1E669A009BEF12 /* ProfileSetCoordinator.swift */; };
+		72361EA42D1E9041009BEF12 /* SignUpFinshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA32D1E9041009BEF12 /* SignUpFinshViewController.swift */; };
+		72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA52D1E904D009BEF12 /* SignUpFinshView.swift */; };
+		72361EA82D1E921A009BEF12 /* SignUpFinshReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA72D1E921A009BEF12 /* SignUpFinshReactor.swift */; };
+		72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA92D1E9584009BEF12 /* SignUpFinshCoordinator.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -139,6 +146,13 @@
 		72361E972D17D38A009BEF12 /* SignUpDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDelegate.swift; sourceTree = "<group>"; };
 		72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumCoordinator.swift; sourceTree = "<group>"; };
 		72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDCoordinator.swift; sourceTree = "<group>"; };
+		72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCoordinator.swift; sourceTree = "<group>"; };
+		72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameCoordinator.swift; sourceTree = "<group>"; };
+		72361EA12D1E669A009BEF12 /* ProfileSetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetCoordinator.swift; sourceTree = "<group>"; };
+		72361EA32D1E9041009BEF12 /* SignUpFinshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshViewController.swift; sourceTree = "<group>"; };
+		72361EA52D1E904D009BEF12 /* SignUpFinshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshView.swift; sourceTree = "<group>"; };
+		72361EA72D1E921A009BEF12 /* SignUpFinshReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshReactor.swift; sourceTree = "<group>"; };
+		72361EA92D1E9584009BEF12 /* SignUpFinshCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshCoordinator.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +228,7 @@
 				72361E3D2D0B1754009BEF12 /* PasswordViewController.swift */,
 				72361E4B2D0BEEBD009BEF12 /* NicknameViewController.swift */,
 				72361E512D0BF5C9009BEF12 /* ProfileSetViewController.swift */,
+				72361EA32D1E9041009BEF12 /* SignUpFinshViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -363,6 +378,10 @@
 				72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */,
 				72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */,
 				72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */,
+				72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */,
+				72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */,
+				72361EA12D1E669A009BEF12 /* ProfileSetCoordinator.swift */,
+				72361EA92D1E9584009BEF12 /* SignUpFinshCoordinator.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -579,11 +598,11 @@
 		724DECC02D02CB1600171F44 /* JoinView */ = {
 			isa = PBXGroup;
 			children = (
-				72361E812D12BFBC009BEF12 /* Mediator */,
-				72361E7E2D12BFA0009BEF12 /* Protocol */,
 				72361E2D2D042716009BEF12 /* ViewController */,
 				724DECC22D02CB2200171F44 /* View */,
 				724DECC12D02CB1C00171F44 /* Reactor */,
+				72361E812D12BFBC009BEF12 /* Mediator */,
+				72361E7E2D12BFA0009BEF12 /* Protocol */,
 				72361E1B2D02D07A009BEF12 /* Component */,
 			);
 			path = JoinView;
@@ -599,6 +618,7 @@
 				72361E412D0B179A009BEF12 /* PasswordReactor.swift */,
 				72361E4F2D0BEED0009BEF12 /* NicknameReactor.swift */,
 				72361E552D0BF609009BEF12 /* ProfileSetReactor.swift */,
+				72361EA72D1E921A009BEF12 /* SignUpFinshReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -612,6 +632,7 @@
 				72361E3F2D0B175E009BEF12 /* PasswordView.swift */,
 				72361E4D2D0BEEC5009BEF12 /* NicknameView.swift */,
 				72361E532D0BF5F7009BEF12 /* ProfileSetView.swift */,
+				72361EA52D1E904D009BEF12 /* SignUpFinshView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -709,7 +730,9 @@
 				72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */,
 				72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */,
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
+				72361EA82D1E921A009BEF12 /* SignUpFinshReactor.swift in Sources */,
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
+				72361EA42D1E9041009BEF12 /* SignUpFinshViewController.swift in Sources */,
 				72361E542D0BF5F7009BEF12 /* ProfileSetView.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
@@ -721,6 +744,7 @@
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
+				72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
@@ -733,9 +757,11 @@
 				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
 				724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */,
 				72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */,
+				72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */,
 				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
 				72361E9C2D1DA455009BEF12 /* IDCoordinator.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
+				72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
@@ -760,9 +786,11 @@
 				72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */,
 				72361E802D12BFAC009BEF12 /* SignUpMediator.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
+				72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */,
 				72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */,
 				72361E982D17D38A009BEF12 /* SignUpDelegate.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
+				72361E9E2D1E6677009BEF12 /* PasswordCoordinator.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
 				72361E522D0BF5C9009BEF12 /* ProfileSetViewController.swift in Sources */,

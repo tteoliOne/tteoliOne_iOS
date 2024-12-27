@@ -20,16 +20,28 @@ final class NicknameReactor: Reactor {
     enum Mutation {
         case setNickname(String)
         case setButtonEnabled(Bool)
+        case setNavigateToNext(Bool)
+        case setNavigateBack(Bool)
+        case showError(NetworkError)
     }
 
     struct State {
         var nickname: String = ""
         var isButtonEnabled: Bool = false
+        var navigateToNext: Bool = false
+        var navigateBack: Bool = false
+        var errorMessage: String?
     }
     
+    private let networkProvider: NetworkProvider<JoinAPI>
+    private let mediator: SignUpMediator
     let initialState: State = State()
-    let backNavigation = PublishSubject<Void>()
-    let navigateToNextView = PublishSubject<Void>()
+    
+    init(networkProvider: NetworkProvider<JoinAPI>,
+         mediator: SignUpMediator) {
+        self.networkProvider = networkProvider
+        self.mediator = mediator
+    }
     
 }
 
@@ -46,12 +58,17 @@ extension NicknameReactor {
             ])
             
         case .backButtonTap:
-            backNavigation.onNext(())
-            return Observable.empty()
+            return .concat([
+                .just(.setNavigateBack(true)),
+                .just(.setNavigateBack(false))
+            ])
             
         case .nicknameCheckButtonTap:
-            navigateToNextView.onNext(())
-            return Observable.empty()
+            guard currentState.isButtonEnabled else { return .empty() }
+            let nickname = currentState.nickname
+            return .concat([
+                performNicknameCheck(nickname: nickname)
+            ])
         }
     }
     
@@ -68,9 +85,42 @@ extension NicknameReactor {
             
         case let .setButtonEnabled(isEnabled):
             newState.isButtonEnabled = isEnabled
+            
+        case let .setNavigateToNext(navigateToNext):
+            newState.navigateToNext = navigateToNext
+            
+        case let .setNavigateBack(navigateBack):
+            newState.navigateBack = navigateBack
+            
+        case let .showError(error):
+            newState.errorMessage = error.errorDescription
         }
         
         return newState
+    }
+    
+}
+
+extension NicknameReactor {
+    
+    private func performNicknameCheck(nickname: String) -> Observable<Mutation> {
+        let body = JoinRequestBody(nickname: nickname)
+        return networkProvider
+            .request(.validateNickname(body: body),
+                     decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let message):
+                    self.mediator.update(nickname, action: SignUpReactor.Action.updateEmail)
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
     }
     
 }

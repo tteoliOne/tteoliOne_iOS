@@ -19,15 +19,27 @@ final class ProfileSetReactor: Reactor {
     
     enum Mutation {
         case setProfileImage(UIImage)
+        case setNavigateToNext(Bool)
+        case setNavigateBack(Bool)
+        case showError(NetworkError)
     }
 
     struct State {
         var profileImage: UIImage? = nil
+        var navigateToNext: Bool = false
+        var navigateBack: Bool = false
+        var errorMessage: String?
     }
     
+    private let networkProvider: NetworkProvider<JoinAPI>
+    private let mediator: SignUpMediator
     let initialState: State = State()
-    let backNavigation = PublishSubject<Void>()
-    let navigateToNextView = PublishSubject<Void>()
+    
+    init(networkProvider: NetworkProvider<JoinAPI>,
+         mediator: SignUpMediator) {
+        self.networkProvider = networkProvider
+        self.mediator = mediator
+    }
     
 }
 
@@ -36,8 +48,10 @@ extension ProfileSetReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .backButtonTap:
-            backNavigation.onNext(())
-            return Observable.empty()
+            return .concat([
+                .just(.setNavigateBack(true)),
+                .just(.setNavigateBack(false))
+            ])
             
         case let .imageSelected(image):
             return Observable.concat([
@@ -45,8 +59,10 @@ extension ProfileSetReactor {
             ])
             
         case .joinButtonTap:
-            navigateToNextView.onNext(())
-            return Observable.empty()
+            guard let profileImage = currentState.profileImage else {
+                return .just(.showError(NetworkError.invalidInputImage))
+            }
+            return performSetImageProfile(profile: profileImage)
         }
     }
 }
@@ -59,8 +75,60 @@ extension ProfileSetReactor {
         switch mutation {
         case let .setProfileImage(image):
             newState.profileImage = image
+            
+        case let .setNavigateToNext(navigateToNext):
+            newState.navigateToNext = navigateToNext
+            
+        case let .setNavigateBack(navigateBack):
+            newState.navigateBack = navigateBack
+            
+        case let .showError(error):
+            newState.errorMessage = error.errorDescription
         }
         
         return newState
     }
+}
+
+extension ProfileSetReactor {
+    
+    private func performSetImageProfile(profile: UIImage) -> Observable<Mutation> {
+        
+        let email = mediator.get(\SignUpReactor.State.email)
+        let loginId = mediator.get(\SignUpReactor.State.loginId)
+        let nickname = mediator.get(\SignUpReactor.State.nickname)
+        let password = mediator.get(\SignUpReactor.State.password)
+        
+        guard let profileImageData = profile.jpegData(compressionQuality: 0.8) else {
+            return .just(.showError(NetworkError.invalidInputImage))
+        }
+        
+        let signUpRequest = JoinRequestBody(
+            email: email,
+            loginId: loginId,
+            nickname: nickname,
+            password: password
+        )
+
+        let body = SignUpProfileImageRequestBody(
+            signUpRequest: signUpRequest,
+            image: profileImageData
+        )
+        
+        return networkProvider
+            .request(.signUp(body: body), decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let message):
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
+    
 }
