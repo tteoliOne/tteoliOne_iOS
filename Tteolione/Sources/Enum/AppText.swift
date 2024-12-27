@@ -10,8 +10,8 @@ import Foundation
 enum AppText {
     
     enum Logo {
-        static let teoliOneNumber = "31"
-        static let teoliOneText = "떠리원"
+        static let tteoliOneNumber = "31"
+        static let tteoliOneText = "떠리원"
     }
     
     enum Login {
@@ -40,6 +40,8 @@ enum AppText {
         
         static let joinProfile = "프로필 설정"
         static let joinProfileExplain = "프로필 변경하지 않을시 기본이미지로 설정됩니다"
+        
+        static let joinFinsh = "반갑습니다\n떠리원에 오신것을\n환영합니다"
     }
     
 }
