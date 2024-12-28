@@ -11,6 +11,7 @@ import Foundation
 enum AppJoinImage: String {
     case email = "envelope.fill"
     case authNum = "checkmark.circle"
+    case userName = "person.text.rectangle.fill"
     case id = "person"
     case password = "lock.fill"
     case nickname = "person.crop.square.fill"
