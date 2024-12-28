@@ -149,7 +149,7 @@ extension AuthNumReactor {
 extension AuthNumReactor {
     
     private func startTimer(onUpdate: @escaping (String) -> Void) -> Observable<Mutation> {
-        let totalSeconds = 300
+        let totalSeconds = 180
         return Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .map { totalSeconds - $0 - 1 }
             .take(while: { $0 >= 0 })
