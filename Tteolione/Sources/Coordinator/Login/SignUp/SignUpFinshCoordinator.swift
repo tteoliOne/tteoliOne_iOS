@@ -27,6 +27,7 @@ final class SignUpFinshCoordinator: SignUpFinshViewControllerDelegate {
         parentCoordinator?.removeChildCoordinators(ofTypes: [
             EmailAuthCoordinator.self,
             AuthNumCoordinator.self,
+            NameCoordinator.self,
             IDCoordinator.self,
             PasswordCoordinator.self,
             NicknameCoordinator.self,

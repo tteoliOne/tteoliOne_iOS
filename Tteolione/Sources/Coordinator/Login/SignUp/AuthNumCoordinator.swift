@@ -34,14 +34,14 @@ final class AuthNumCoordinator: AuthNumViewControllerDelegate {
         show(viewController)
     }
     
-    func showID() {
-        let idCoordinator = IDCoordinator(
+    func showName() {
+        let nameCoordinator = NameCoordinator(
             navigationController: navigationController,
             dependency: dependency
         )
-        childCoordinators.append(idCoordinator)
-        idCoordinator.parentCoordinator = self
-        idCoordinator.start()
+        childCoordinators.append(nameCoordinator)
+        nameCoordinator.parentCoordinator = self
+        nameCoordinator.start()
     }
     
 }
