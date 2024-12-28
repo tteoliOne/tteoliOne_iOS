@@ -49,7 +49,10 @@ extension PasswordReactor {
         switch action {
         case .updatePassword(let password):
             let validations = validatePassword(password)
-            return .just(.updateValidations(validations))
+            return .concat([
+                .just(.updateValidations(validations)),
+                .just(.setPassword(password))
+            ])
             
         case .backButtonTap:
             return .concat([
