@@ -32,10 +32,7 @@ extension SignUpFinshReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .signUpFishButtonTap:
-            return .concat([
-                .just(.setNavigateToNext(true)),
-                .just(.setNavigateToNext(false))
-            ])
+            return .just(.setNavigateToNext(true))
         }
     }
     

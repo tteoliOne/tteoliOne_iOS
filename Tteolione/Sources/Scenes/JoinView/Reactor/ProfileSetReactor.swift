@@ -95,6 +95,7 @@ extension ProfileSetReactor {
     private func performSetImageProfile(profile: UIImage) -> Observable<Mutation> {
         
         let email = mediator.get(\SignUpReactor.State.email)
+        let username = mediator.get(\SignUpReactor.State.username)
         let loginId = mediator.get(\SignUpReactor.State.loginId)
         let nickname = mediator.get(\SignUpReactor.State.nickname)
         let password = mediator.get(\SignUpReactor.State.password)
@@ -105,6 +106,7 @@ extension ProfileSetReactor {
         
         let signUpRequest = JoinRequestBody(
             email: email,
+            username: username,
             loginId: loginId,
             nickname: nickname,
             password: password

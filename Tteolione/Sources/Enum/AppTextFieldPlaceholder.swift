@@ -10,6 +10,7 @@ import Foundation
 enum AppTextFieldPlaceholder: String {
     case email = "이메일주소를 입력해주세요"
     case authNum = "인증번호"
+    case username = "이름을 적어주세요"
     case id = "사용하실 아이디를 입력해주세요"
     case password = "사용할 비밀번호를 입력해주세요"
     case nickname = "사용할 닉네임을 입력해주세요"

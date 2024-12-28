@@ -14,6 +14,7 @@ final class SignUpReactor: Reactor {
     enum Action {
         case updateEmail(String)
         case updateAuthCode(String)
+        case updateUsername(String)
         case updateID(String)
         case updatePassword(String)
         case updateNickname(String)
@@ -22,6 +23,7 @@ final class SignUpReactor: Reactor {
     enum Mutation {
         case setEmail(String)
         case setAuthCode(String)
+        case setUsername(String)
         case setID(String)
         case setPassword(String)
         case setNickname(String)
@@ -30,6 +32,7 @@ final class SignUpReactor: Reactor {
     struct State {
         var email: String = ""
         var code: String = ""
+        var username: String = ""
         var loginId: String = ""
         var password: String = ""
         var nickname: String = ""
@@ -48,6 +51,9 @@ extension SignUpReactor {
             
         case let .updateAuthCode(authCode):
             return .just(.setAuthCode(authCode))
+            
+        case let .updateUsername(username):
+            return .just(.setUsername(username))
             
         case let .updateID(loginId):
             return .just(.setID(loginId))
@@ -73,6 +79,9 @@ extension SignUpReactor {
             
         case let .setAuthCode(code):
             newState.code = code
+            
+        case let .setUsername(username):
+            newState.username = username
             
         case let .setID(id):
             newState.loginId = id

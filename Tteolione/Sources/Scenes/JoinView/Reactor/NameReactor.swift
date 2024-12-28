@@ -1,38 +1,39 @@
 //
-//  PasswordReactor.swift
+//  NameReactor.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/12/24.
+//  Created by 전준영 on 12/28/24.
 //
 
 import Foundation
 import ReactorKit
 import RxSwift
 
-final class PasswordReactor: Reactor {
+final class NameReactor: Reactor {
     
     enum Action {
-        case updatePassword(String)
+        case usernameInputChanged(String)
         case backButtonTap
-        case passwordCheckButtonTap
+        case usernameCheckButtonTap
     }
     
     enum Mutation {
-        case updateValidations([Bool])
-        case setPassword(String)
+        case setUsername(String)
+        case setButtonEnabled(Bool)
         case setNavigateToNext(Bool)
         case setNavigateBack(Bool)
     }
 
     struct State {
-        var validations: [Bool] = [false, false, false, false, false]
-        var password: String = ""
+        var username: String = ""
+        var isButtonEnabled: Bool = false
         var navigateToNext: Bool = false
         var navigateBack: Bool = false
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
     private let mediator: SignUpMediator
+    
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
@@ -43,15 +44,16 @@ final class PasswordReactor: Reactor {
     
 }
 
-extension PasswordReactor {
+extension NameReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case let .updatePassword(password):
-            let validations = validatePassword(password)
+        case let .usernameInputChanged(username):
+            let isValid = isValiName(username)
+            
             return .concat([
-                .just(.updateValidations(validations)),
-                .just(.setPassword(password))
+                .just(.setButtonEnabled(isValid)),
+                .just(.setUsername(username))
             ])
             
         case .backButtonTap:
@@ -60,10 +62,10 @@ extension PasswordReactor {
                 .just(.setNavigateBack(false))
             ])
             
-        case .passwordCheckButtonTap:
-            let password = currentState.password
-            mediator.update(password,
-                            action: SignUpReactor.Action.updatePassword)
+        case .usernameCheckButtonTap:
+            let username = currentState.username
+            mediator.update(username,
+                            action: SignUpReactor.Action.updateUsername)
             return .concat([
                 .just(.setNavigateToNext(true)),
                 .just(.setNavigateToNext(false))
@@ -73,17 +75,17 @@ extension PasswordReactor {
     
 }
 
-extension PasswordReactor {
+extension NameReactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
         switch mutation {
-        case .updateValidations(let validations):
-            newState.validations = validations
+        case let .setUsername(username):
+            newState.username = username
             
-        case .setPassword(let password):
-            newState.password = password
+        case let .setButtonEnabled(isEnabled):
+            newState.isButtonEnabled = isEnabled
             
         case let .setNavigateToNext(navigateToNext):
             newState.navigateToNext = navigateToNext
@@ -97,16 +99,10 @@ extension PasswordReactor {
     
 }
 
-extension PasswordReactor {
+extension NameReactor {
     
-    private func validatePassword(_ password: String) -> [Bool] {
-        return [
-            password.rangeOfCharacter(from: .decimalDigits) != nil,
-            password.rangeOfCharacter(from: .symbols) != nil || password.rangeOfCharacter(from: .punctuationCharacters) != nil,
-            password.rangeOfCharacter(from: .lowercaseLetters) != nil,
-            password.count >= 8 && password.count <= 16,
-            password.rangeOfCharacter(from: .whitespacesAndNewlines) == nil
-        ]
+    private func isValiName(_ username: String) -> Bool {
+        return username.count >= 1
     }
     
 }

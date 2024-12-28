@@ -71,14 +71,13 @@ extension AuthNumReactor {
             
         case .authCheckButtonTap:
             guard currentState.isButtonEnabled else { return .empty() }
+            stopTimer()
             return .concat([
                 performAuthCheck(code: currentState.authNum)
             ])
             
         case .startTimer:
-            return startTimer { timeString in
-                
-            }
+            return startTimer()
             
         case .stopTimer:
             stopTimer()
@@ -148,16 +147,19 @@ extension AuthNumReactor {
 
 extension AuthNumReactor {
     
-    private func startTimer(onUpdate: @escaping (String) -> Void) -> Observable<Mutation> {
-        let totalSeconds = 300
-        return Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+    private func startTimer() -> Observable<Mutation> {
+        guard timerDisposable == nil else {
+            return .empty()
+        }
+
+        let totalSeconds = 15
+        let timerObservable = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .map { totalSeconds - $0 - 1 }
             .take(while: { $0 >= 0 })
             .flatMap { remainingSeconds -> Observable<Mutation> in
                 let minutes = remainingSeconds / 60
                 let seconds = remainingSeconds % 60
                 let timeString = String(format: "남은시간 %d:%02d", minutes, seconds)
-                onUpdate(timeString)
                 if remainingSeconds == 0 {
                     return .concat([
                         .just(.updateTimer("남은시간 0:00")),
@@ -167,6 +169,11 @@ extension AuthNumReactor {
                 }
                 return .just(.updateTimer(timeString))
             }
+
+        timerDisposable = timerObservable
+            .subscribe()
+
+        return timerObservable
     }
 
     private func stopTimer() {

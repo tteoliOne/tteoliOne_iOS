@@ -30,6 +30,9 @@ enum AppText {
         static let joinAuthNum = "인증번호"
         static let joinAuthTime = "남은시간 3:00"
         
+        static let joinUserName = "이름"
+        static let joinUserNameExplain = "자신의 이름을 적으세요"
+        
         static let joinID = "아이디"
         static let joinIDExplain = "6~20자리 소문자 하나이상 포함"
         

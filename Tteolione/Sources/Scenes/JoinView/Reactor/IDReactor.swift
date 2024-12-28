@@ -53,9 +53,9 @@ extension IDReactor {
         case let .idInputChanged(id):
             let isValid = isValidID(id)
             
-            return Observable.concat([
-                Observable.just(.setID(id)),
-                Observable.just(.setButtonEnabled(isValid))
+            return .concat([
+                .just(.setID(id)),
+                .just(.setButtonEnabled(isValid))
             ])
             
         case .backButtonTap:

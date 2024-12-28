@@ -16,6 +16,10 @@ protocol EmailAuthViewControllerDelegate: AnyObject, Coordinator {
 }
 
 protocol AuthNumViewControllerDelegate: AnyObject, Coordinator {
+    func showName()
+}
+
+protocol NameViewControllerDelegate: AnyObject, Coordinator {
     func showID()
 }
 
