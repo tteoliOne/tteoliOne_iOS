@@ -69,6 +69,7 @@
 		72361EAD2D1FE748009BEF12 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EAC2D1FE748009BEF12 /* NameViewController.swift */; };
 		72361EAF2D1FE757009BEF12 /* NameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EAE2D1FE757009BEF12 /* NameView.swift */; };
 		72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB02D1FE764009BEF12 /* NameReactor.swift */; };
+		72361EB32D1FF7C3009BEF12 /* NameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB22D1FF7C3009BEF12 /* NameCoordinator.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -159,6 +160,7 @@
 		72361EAC2D1FE748009BEF12 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
 		72361EAE2D1FE757009BEF12 /* NameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameView.swift; sourceTree = "<group>"; };
 		72361EB02D1FE764009BEF12 /* NameReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameReactor.swift; sourceTree = "<group>"; };
+		72361EB22D1FF7C3009BEF12 /* NameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCoordinator.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 			children = (
 				72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */,
 				72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */,
+				72361EB22D1FF7C3009BEF12 /* NameCoordinator.swift */,
 				72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */,
 				72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */,
 				72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */,
@@ -785,6 +788,7 @@
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
 				72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */,
 				72361E7D2D12B7BC009BEF12 /* SignUpReactor.swift in Sources */,
+				72361EB32D1FF7C3009BEF12 /* NameCoordinator.swift in Sources */,
 				72361E662D0C2D30009BEF12 /* NetworkProvider.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,

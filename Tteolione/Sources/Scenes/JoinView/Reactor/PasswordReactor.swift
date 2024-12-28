@@ -47,7 +47,7 @@ extension PasswordReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .updatePassword(let password):
+        case let .updatePassword(password):
             let validations = validatePassword(password)
             return .concat([
                 .just(.updateValidations(validations)),
