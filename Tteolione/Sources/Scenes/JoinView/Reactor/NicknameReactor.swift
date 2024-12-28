@@ -112,7 +112,8 @@ extension NicknameReactor {
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(let message):
-                    self.mediator.update(nickname, action: SignUpReactor.Action.updateEmail)
+                    self.mediator.update(nickname,
+                                         action: SignUpReactor.Action.updateNickname)
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))
