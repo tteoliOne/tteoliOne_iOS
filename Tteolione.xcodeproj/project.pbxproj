@@ -73,9 +73,9 @@
 		72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB72D26B6D3009BEF12 /* FindIDView.swift */; };
 		72361EBA2D26B6E1009BEF12 /* FindIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB92D26B6E1009BEF12 /* FindIDViewController.swift */; };
 		72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EBB2D26B6F1009BEF12 /* FindIDReactor.swift */; };
-		72361EBE2D26BC98009BEF12 /* FindIDAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EBD2D26BC98009BEF12 /* FindIDAuthView.swift */; };
-		72361EC22D26BCC4009BEF12 /* FindIDAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC12D26BCC4009BEF12 /* FindIDAuthViewController.swift */; };
-		72361EC42D26BCD8009BEF12 /* FindIDAuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC32D26BCD8009BEF12 /* FindIDAuthReactor.swift */; };
+		72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EBD2D26BC98009BEF12 /* AuthView.swift */; };
+		72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC12D26BCC4009BEF12 /* AuthViewController.swift */; };
+		72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC32D26BCD8009BEF12 /* AuthReactor.swift */; };
 		72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC52D27AA0D009BEF12 /* FindIDResultView.swift */; };
 		72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC72D27AA1F009BEF12 /* FindIDResultViewController.swift */; };
 		72361ECA2D27AA2B009BEF12 /* FindIDResultReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EC92D27AA2B009BEF12 /* FindIDResultReactor.swift */; };
@@ -173,9 +173,9 @@
 		72361EB72D26B6D3009BEF12 /* FindIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDView.swift; sourceTree = "<group>"; };
 		72361EB92D26B6E1009BEF12 /* FindIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDViewController.swift; sourceTree = "<group>"; };
 		72361EBB2D26B6F1009BEF12 /* FindIDReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDReactor.swift; sourceTree = "<group>"; };
-		72361EBD2D26BC98009BEF12 /* FindIDAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDAuthView.swift; sourceTree = "<group>"; };
-		72361EC12D26BCC4009BEF12 /* FindIDAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDAuthViewController.swift; sourceTree = "<group>"; };
-		72361EC32D26BCD8009BEF12 /* FindIDAuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDAuthReactor.swift; sourceTree = "<group>"; };
+		72361EBD2D26BC98009BEF12 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		72361EC12D26BCC4009BEF12 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		72361EC32D26BCD8009BEF12 /* AuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReactor.swift; sourceTree = "<group>"; };
 		72361EC52D27AA0D009BEF12 /* FindIDResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDResultView.swift; sourceTree = "<group>"; };
 		72361EC72D27AA1F009BEF12 /* FindIDResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDResultViewController.swift; sourceTree = "<group>"; };
 		72361EC92D27AA2B009BEF12 /* FindIDResultReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDResultReactor.swift; sourceTree = "<group>"; };
@@ -449,21 +449,21 @@
 			path = SignUpDelegate;
 			sourceTree = "<group>";
 		};
-		72361EB42D26B65E009BEF12 /* FindIDView */ = {
+		72361EB42D26B65E009BEF12 /* FindAccountView */ = {
 			isa = PBXGroup;
 			children = (
 				72361EBF2D26BCA3009BEF12 /* ViewController */,
 				72361EB52D26B698009BEF12 /* View */,
 				72361EB62D26B69E009BEF12 /* Reactor */,
 			);
-			path = FindIDView;
+			path = FindAccountView;
 			sourceTree = "<group>";
 		};
 		72361EB52D26B698009BEF12 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				72361EB72D26B6D3009BEF12 /* FindIDView.swift */,
-				72361EBD2D26BC98009BEF12 /* FindIDAuthView.swift */,
+				72361EBD2D26BC98009BEF12 /* AuthView.swift */,
 				72361EC52D27AA0D009BEF12 /* FindIDResultView.swift */,
 			);
 			path = View;
@@ -473,7 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				72361EBB2D26B6F1009BEF12 /* FindIDReactor.swift */,
-				72361EC32D26BCD8009BEF12 /* FindIDAuthReactor.swift */,
+				72361EC32D26BCD8009BEF12 /* AuthReactor.swift */,
 				72361EC92D27AA2B009BEF12 /* FindIDResultReactor.swift */,
 			);
 			path = Reactor;
@@ -483,7 +483,7 @@
 			isa = PBXGroup;
 			children = (
 				72361EB92D26B6E1009BEF12 /* FindIDViewController.swift */,
-				72361EC12D26BCC4009BEF12 /* FindIDAuthViewController.swift */,
+				72361EC12D26BCC4009BEF12 /* AuthViewController.swift */,
 				72361EC72D27AA1F009BEF12 /* FindIDResultViewController.swift */,
 			);
 			path = ViewController;
@@ -591,7 +591,7 @@
 				724DECA22D01834800171F44 /* View */,
 				724DECA12D01832800171F44 /* Reactor */,
 				724DECC02D02CB1600171F44 /* JoinView */,
-				72361EB42D26B65E009BEF12 /* FindIDView */,
+				72361EB42D26B65E009BEF12 /* FindAccountView */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -829,9 +829,9 @@
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
-				72361EC22D26BCC4009BEF12 /* FindIDAuthViewController.swift in Sources */,
+				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
-				72361EBE2D26BC98009BEF12 /* FindIDAuthView.swift in Sources */,
+				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
 				72361E242D02D1E8009BEF12 /* JoinTextField.swift in Sources */,
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
@@ -886,7 +886,7 @@
 				72361EAD2D1FE748009BEF12 /* NameViewController.swift in Sources */,
 				72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */,
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
-				72361EC42D26BCD8009BEF12 /* FindIDAuthReactor.swift in Sources */,
+				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
 				72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  FindIDAuthView.swift
+//  AuthView.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/2/25.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class FindIDAuthView: BaseView {
+final class AuthView: BaseView {
     
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()

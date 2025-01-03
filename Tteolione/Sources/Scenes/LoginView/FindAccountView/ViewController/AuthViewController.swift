@@ -1,5 +1,5 @@
 //
-//  FindIDAuthViewController.swift
+//  AuthViewController.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/2/25.
@@ -9,7 +9,7 @@ import UIKit
 import ReactorKit
 import RxCocoa
 
-final class FindIDAuthViewController: BaseViewController<FindIDAuthView> {
+final class AuthViewController: BaseViewController<AuthView> {
     
     var disposeBag = DisposeBag()
     
@@ -23,7 +23,7 @@ final class FindIDAuthViewController: BaseViewController<FindIDAuthView> {
     }
 }
 
-extension FindIDAuthViewController: View {
+extension AuthViewController: View {
     
     func bind(reactor: LoginReactor) {
 //        bindAction(reactor)
