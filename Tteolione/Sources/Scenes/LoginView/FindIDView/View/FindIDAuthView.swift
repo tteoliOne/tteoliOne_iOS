@@ -72,6 +72,7 @@ final class FindIDAuthView: BaseView {
     }
     
     override func configureView() {
+        topBarView.joinLabel.text = AppText.Account.findId
         iconWithLabelView.configure(icon: .authNum,
                                     text: AppText.Join.joinAuthNum)
     }
