@@ -52,6 +52,8 @@ enum AppText {
         static let findIDExplain = "회원가입에 인증한 이메일 주소와 입력한 이메일 주소가 같아야합니다"
         static let findResult = "회원님이 찾으시는 아이디입니다"
         static let findResultID = "ID:"
+        
+        static let resetPassword = "비밀번호 변경"
     }
     
 }
