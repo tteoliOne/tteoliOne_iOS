@@ -47,4 +47,13 @@ enum AppText {
         static let joinFinsh = "반갑습니다\n떠리원에 오신것을\n환영합니다"
     }
     
+    enum Account {
+        static let findId = "아이디 찾기"
+        static let findIDExplain = "회원가입에 인증한 이메일 주소와 입력한 이메일 주소가 같아야합니다"
+        static let findResult = "회원님이 찾으시는 아이디입니다"
+        static let findResultID = "ID:"
+        
+        static let resetPassword = "비밀번호 변경"
+    }
+    
 }

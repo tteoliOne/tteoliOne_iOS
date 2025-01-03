@@ -10,7 +10,7 @@ import SnapKit
 
 final class TopBarView: BaseView {
     
-    private let joinLabel: UILabel = {
+    let joinLabel: UILabel = {
         let label = UILabel()
         label.text = AppText.Join.join
         label.font = Font.bold25

@@ -1,0 +1,34 @@
+//
+//  AuthViewController.swift
+//  Tteolione
+//
+//  Created by 전준영 on 1/2/25.
+//
+
+import UIKit
+import ReactorKit
+import RxCocoa
+
+final class AuthViewController: BaseViewController<AuthView> {
+    
+    var disposeBag = DisposeBag()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+}
+
+extension AuthViewController: View {
+    
+    func bind(reactor: LoginReactor) {
+//        bindAction(reactor)
+//        bindState(reactor)
+//        bindNavigation(reactor)
+    }
+    
+}
