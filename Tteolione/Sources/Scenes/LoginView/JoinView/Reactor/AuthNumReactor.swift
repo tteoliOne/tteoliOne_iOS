@@ -40,12 +40,12 @@ final class AuthNumReactor: Reactor {
     
     private var timerDisposable: Disposable?
     private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: SignUpMediator
+    private let mediator: OnBoardingMediator
     
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: SignUpMediator) {
+         mediator: OnBoardingMediator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
     }
@@ -132,7 +132,7 @@ extension AuthNumReactor {
                 switch handleResponse(response) {
                 case .success(_):
                     self.mediator.update(code,
-                                         action: SignUpReactor.Action.updateAuthCode)
+                                         action: OnBoardingReactor.Action.updateAuthCode)
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))
