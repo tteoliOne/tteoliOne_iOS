@@ -1,5 +1,5 @@
 //
-//  SignUpReactor.swift
+//  OnBoardingReactor.swift
 //  Tteolione
 //
 //  Created by 전준영 on 12/18/24.
@@ -9,7 +9,7 @@ import Foundation
 import ReactorKit
 import RxSwift
 
-final class SignUpReactor: Reactor {
+final class OnBoardingReactor: Reactor {
     
     enum Action {
         case updateEmail(String)
@@ -42,7 +42,7 @@ final class SignUpReactor: Reactor {
     
 }
 
-extension SignUpReactor {
+extension OnBoardingReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
@@ -68,7 +68,7 @@ extension SignUpReactor {
     
 }
 
-extension SignUpReactor {
+extension OnBoardingReactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state

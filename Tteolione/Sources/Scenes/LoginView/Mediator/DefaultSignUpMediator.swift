@@ -7,20 +7,20 @@
 
 import Foundation
 
-final class DefaultSignUpMediator: SignUpMediator {
+final class DefaultSignUpMediator: OnBoardingMediator {
     
-    private let signUpReactor: SignUpReactor
+    private let signUpReactor: OnBoardingReactor
 
-    init(signUpReactor: SignUpReactor) {
+    init(signUpReactor: OnBoardingReactor) {
         self.signUpReactor = signUpReactor
     }
 
-    func update<T>(_ value: T, action: (T) -> SignUpReactor.Action) {
+    func update<T>(_ value: T, action: (T) -> OnBoardingReactor.Action) {
         let reactorAction = action(value)
         self.signUpReactor.action.onNext(reactorAction)
     }
 
-    func get<T>(_ keyPath: KeyPath<SignUpReactor.State, T>) -> T {
+    func get<T>(_ keyPath: KeyPath<OnBoardingReactor.State, T>) -> T {
         return signUpReactor.currentState[keyPath: keyPath]
     }
 }

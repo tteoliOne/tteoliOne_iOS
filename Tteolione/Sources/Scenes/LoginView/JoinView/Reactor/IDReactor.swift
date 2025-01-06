@@ -34,12 +34,12 @@ final class IDReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: SignUpMediator
+    private let mediator: OnBoardingMediator
     
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: SignUpMediator) {
+         mediator: OnBoardingMediator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
     }
@@ -123,7 +123,7 @@ extension IDReactor {
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(let message):
-                    self.mediator.update(id, action: SignUpReactor.Action.updateID)
+                    self.mediator.update(id, action: OnBoardingReactor.Action.updateID)
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))

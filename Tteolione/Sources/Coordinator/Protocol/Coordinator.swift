@@ -42,7 +42,6 @@ extension Coordinator {
 }
 
 extension Coordinator {
-    
     func createViewController<T: UIViewController & ReactorKit.View & DelegateOwner,
                               R: Reactor>(ofType type: T.Type,
                                           with reactor: R,

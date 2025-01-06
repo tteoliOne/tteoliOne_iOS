@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LoginCoordinator: Coordinator, LoginViewControllerDelegate {
+final class LoginCoordinator: LoginViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     weak var parentCoordinator: Coordinator?
@@ -19,13 +19,22 @@ final class LoginCoordinator: Coordinator, LoginViewControllerDelegate {
     }
     
     func start() {
-        let loginVC = LoginViewController()
-        loginVC.delegate = self
-        navigationController.viewControllers = [loginVC]
+        let reactor = LoginReactor()
+        let viewController = createViewController(
+            ofType: LoginViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
     }
 
     func showSignUpView() {
         delegate?.didRequestSignUp(self)
+    }
+    
+    func showFindIDView() {
+        
     }
 
 }

@@ -34,11 +34,11 @@ final class NicknameReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: SignUpMediator
+    private let mediator: OnBoardingMediator
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: SignUpMediator) {
+         mediator: OnBoardingMediator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
     }
@@ -113,7 +113,7 @@ extension NicknameReactor {
                 switch handleResponse(response) {
                 case .success(let message):
                     self.mediator.update(nickname,
-                                         action: SignUpReactor.Action.updateNickname)
+                                         action: OnBoardingReactor.Action.updateNickname)
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))

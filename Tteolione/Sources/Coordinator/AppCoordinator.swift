@@ -32,7 +32,6 @@ final class AppCoordinator: Coordinator {
 extension AppCoordinator: LoginCoordinatorDelegate {
     
     func didRequestSignUp(_ coordinator: LoginCoordinator) {
-        removeChildCoordinators(ofType: type(of: coordinator))
         let signUpCoordinator = EmailAuthCoordinator(
             navigationController: navigationController,
             dependency: AppDependency.shared

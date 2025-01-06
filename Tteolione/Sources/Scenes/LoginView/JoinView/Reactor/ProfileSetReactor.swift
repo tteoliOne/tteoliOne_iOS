@@ -32,11 +32,11 @@ final class ProfileSetReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: SignUpMediator
+    private let mediator: OnBoardingMediator
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: SignUpMediator) {
+         mediator: OnBoardingMediator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
     }
@@ -94,11 +94,11 @@ extension ProfileSetReactor {
     
     private func performSetImageProfile(profile: UIImage) -> Observable<Mutation> {
         
-        let email = mediator.get(\SignUpReactor.State.email)
-        let username = mediator.get(\SignUpReactor.State.username)
-        let loginId = mediator.get(\SignUpReactor.State.loginId)
-        let nickname = mediator.get(\SignUpReactor.State.nickname)
-        let password = mediator.get(\SignUpReactor.State.password)
+        let email = mediator.get(\OnBoardingReactor.State.email)
+        let username = mediator.get(\OnBoardingReactor.State.username)
+        let loginId = mediator.get(\OnBoardingReactor.State.loginId)
+        let nickname = mediator.get(\OnBoardingReactor.State.nickname)
+        let password = mediator.get(\OnBoardingReactor.State.password)
         
         guard let profileImageData = profile.jpegData(compressionQuality: 0.8) else {
             return .just(.showError(NetworkError.invalidInputImage))

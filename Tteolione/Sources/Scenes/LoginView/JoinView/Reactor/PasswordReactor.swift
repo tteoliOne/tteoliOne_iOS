@@ -32,11 +32,11 @@ final class PasswordReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: SignUpMediator
+    private let mediator: OnBoardingMediator
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: SignUpMediator) {
+         mediator: OnBoardingMediator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
     }
@@ -63,7 +63,7 @@ extension PasswordReactor {
         case .passwordCheckButtonTap:
             let password = currentState.password
             mediator.update(password,
-                            action: SignUpReactor.Action.updatePassword)
+                            action: OnBoardingReactor.Action.updatePassword)
             return .concat([
                 .just(.setNavigateToNext(true)),
                 .just(.setNavigateToNext(false))

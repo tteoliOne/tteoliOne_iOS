@@ -100,3 +100,13 @@ final class FindIDView: BaseView {
     }
     
 }
+
+extension FindIDView {
+    
+    func setButton(_ isEnabled: Bool) {
+        checkButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+        checkButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+        checkButton.isEnabled = isEnabled
+    }
+    
+}

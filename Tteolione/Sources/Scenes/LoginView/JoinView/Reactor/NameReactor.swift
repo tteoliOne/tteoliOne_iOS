@@ -32,12 +32,12 @@ final class NameReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: SignUpMediator
+    private let mediator: OnBoardingMediator
     
     let initialState: State = State()
     
     init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: SignUpMediator) {
+         mediator: OnBoardingMediator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
     }
@@ -49,7 +49,7 @@ extension NameReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case let .usernameInputChanged(username):
-            let isValid = isValiName(username)
+            let isValid = isValidName(username)
             
             return .concat([
                 .just(.setButtonEnabled(isValid)),
@@ -65,7 +65,7 @@ extension NameReactor {
         case .usernameCheckButtonTap:
             let username = currentState.username
             mediator.update(username,
-                            action: SignUpReactor.Action.updateUsername)
+                            action: OnBoardingReactor.Action.updateUsername)
             return .concat([
                 .just(.setNavigateToNext(true)),
                 .just(.setNavigateToNext(false))
@@ -101,7 +101,7 @@ extension NameReactor {
 
 extension NameReactor {
     
-    private func isValiName(_ username: String) -> Bool {
+    private func isValidName(_ username: String) -> Bool {
         return username.count >= 1
     }
     

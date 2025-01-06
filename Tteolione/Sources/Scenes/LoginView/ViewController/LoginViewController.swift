@@ -12,11 +12,10 @@ import RxCocoa
 final class LoginViewController: BaseViewController<LoginView> {
     
     var disposeBag = DisposeBag()
-    var delegate: LoginViewControllerDelegate?
+    weak var delegate: LoginViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.reactor = LoginReactor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,4 +107,8 @@ extension LoginViewController: View {
             .disposed(by: disposeBag)
     }
     
+}
+
+extension LoginViewController: DelegateOwner {
+    typealias Delegate = LoginViewControllerDelegate
 }
