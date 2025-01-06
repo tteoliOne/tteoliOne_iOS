@@ -11,6 +11,6 @@ protocol LoginCoordinatorDelegate {
     func didRequestSignUp(_ coordinator: LoginCoordinator)
 }
 
-protocol LoginViewControllerDelegate {
+protocol LoginViewControllerDelegate: AnyObject, Coordinator {
     func showSignUpView()
 }

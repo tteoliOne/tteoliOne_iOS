@@ -10,7 +10,7 @@ import Foundation
 final class AppDependency {
     
     static let shared = AppDependency()
-    let signUpReactor = SignUpReactor()
+    let signUpReactor = OnBoardingReactor()
     let networkProvider = NetworkProvider<JoinAPI>()
     lazy var signUpMediator = DefaultSignUpMediator(signUpReactor: signUpReactor)
 
