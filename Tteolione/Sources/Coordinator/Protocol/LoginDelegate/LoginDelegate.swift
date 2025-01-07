@@ -9,8 +9,10 @@ import Foundation
 
 protocol LoginCoordinatorDelegate {
     func didRequestSignUp(_ coordinator: LoginCoordinator)
+    func didRequestFindID(_ coordinator: LoginCoordinator)
 }
 
 protocol LoginViewControllerDelegate: AnyObject, Coordinator {
     func showSignUpView()
+    func showFindIDView()
 }

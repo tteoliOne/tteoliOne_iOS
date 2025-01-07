@@ -22,8 +22,8 @@ final class AuthNumCoordinator: AuthNumViewControllerDelegate {
     
     func start() {
         let reactor = AuthNumReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
+            networkProvider: dependency.joinNetworkProvider,
+            mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
             ofType: AuthNumViewController.self,

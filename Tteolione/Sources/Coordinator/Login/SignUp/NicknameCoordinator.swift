@@ -22,8 +22,8 @@ final class NicknameCoordinator: Coordinator, NicknameViewControllerDelegate {
 
     func start() {
         let reactor = NicknameReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
+            networkProvider: dependency.joinNetworkProvider,
+            mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
             ofType: NicknameViewController.self,

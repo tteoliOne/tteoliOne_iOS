@@ -34,7 +34,7 @@ final class LoginCoordinator: LoginViewControllerDelegate {
     }
     
     func showFindIDView() {
-        
+        delegate?.didRequestFindID(self)
     }
 
 }

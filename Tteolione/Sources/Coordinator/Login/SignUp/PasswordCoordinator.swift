@@ -22,8 +22,8 @@ final class PasswordCoordinator: PasswordViewControllerDelegate {
 
     func start() {
         let reactor = PasswordReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
+            networkProvider: dependency.joinNetworkProvider,
+            mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
             ofType: PasswordViewController.self,

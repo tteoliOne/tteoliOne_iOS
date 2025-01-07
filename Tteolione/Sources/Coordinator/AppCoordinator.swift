@@ -40,4 +40,12 @@ extension AppCoordinator: LoginCoordinatorDelegate {
         signUpCoordinator.start()
     }
     
+    func didRequestFindID(_ coordinator: LoginCoordinator) {
+        let findIDCoordinator = FindIDCoordinator(
+            navigationController: navigationController,
+            dependency: AppDependency.shared)
+        addChildCoordinator(findIDCoordinator)
+        findIDCoordinator.start()
+    }
+    
 }

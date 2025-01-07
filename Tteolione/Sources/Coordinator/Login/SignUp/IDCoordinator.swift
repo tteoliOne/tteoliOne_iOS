@@ -22,8 +22,8 @@ final class IDCoordinator: IDViewControllerDelegate {
 
     func start() {
         let reactor = IDReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
+            networkProvider: dependency.joinNetworkProvider,
+            mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
             ofType: IDViewController.self,

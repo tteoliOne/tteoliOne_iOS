@@ -22,8 +22,8 @@ final class EmailAuthCoordinator: EmailAuthViewControllerDelegate {
     
     func start() {
         let reactor = EmailAuthReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
+            networkProvider: dependency.joinNetworkProvider,
+            mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
             ofType: EmailAuthViewController.self,
