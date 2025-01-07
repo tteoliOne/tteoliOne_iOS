@@ -1,5 +1,5 @@
 //
-//  DefaultSignUpMediator.swift
+//  DefaultOnBoardingMediator.swift
 //  Tteolione
 //
 //  Created by 전준영 on 12/18/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DefaultSignUpMediator: OnBoardingMediator {
+final class DefaultOnBoardingMediator: OnBoardingMediator {
     
     private let signUpReactor: OnBoardingReactor
 

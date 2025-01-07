@@ -49,7 +49,7 @@
 		72361E7B2D0EC866009BEF12 /* HeaderKeyAndValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7A2D0EC866009BEF12 /* HeaderKeyAndValue.swift */; };
 		72361E7D2D12B7BC009BEF12 /* OnBoardingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7C2D12B7BC009BEF12 /* OnBoardingReactor.swift */; };
 		72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7F2D12BFAC009BEF12 /* OnBoardingMediator.swift */; };
-		72361E832D12BFDF009BEF12 /* DefaultSignUpMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */; };
+		72361E832D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E822D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift */; };
 		72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E862D13FBC2009BEF12 /* AppCoordinator.swift */; };
 		72361E8A2D13FC49009BEF12 /* EmailAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */; };
 		72361E8D2D140585009BEF12 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E8C2D140585009BEF12 /* Coordinator.swift */; };
@@ -159,7 +159,7 @@
 		72361E7A2D0EC866009BEF12 /* HeaderKeyAndValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderKeyAndValue.swift; sourceTree = "<group>"; };
 		72361E7C2D12B7BC009BEF12 /* OnBoardingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingReactor.swift; sourceTree = "<group>"; };
 		72361E7F2D12BFAC009BEF12 /* OnBoardingMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingMediator.swift; sourceTree = "<group>"; };
-		72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpMediator.swift; sourceTree = "<group>"; };
+		72361E822D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnBoardingMediator.swift; sourceTree = "<group>"; };
 		72361E862D13FBC2009BEF12 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthCoordinator.swift; sourceTree = "<group>"; };
 		72361E8C2D140585009BEF12 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -398,7 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				72361E7C2D12B7BC009BEF12 /* OnBoardingReactor.swift */,
-				72361E822D12BFDF009BEF12 /* DefaultSignUpMediator.swift */,
+				72361E822D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift */,
 				72361E7F2D12BFAC009BEF12 /* OnBoardingMediator.swift */,
 			);
 			path = Mediator;
@@ -894,7 +894,7 @@
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
 				72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */,
 				72361ED02D27C529009BEF12 /* ResetPasswordCheckReactor.swift in Sources */,
-				72361E832D12BFDF009BEF12 /* DefaultSignUpMediator.swift in Sources */,
+				72361E832D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
