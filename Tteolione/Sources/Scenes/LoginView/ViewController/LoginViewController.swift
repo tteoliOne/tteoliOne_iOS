@@ -62,6 +62,11 @@ extension LoginViewController: View {
             .map { LoginReactor.Action.signUpButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.idSearchButton.rx.tap
+            .map { LoginReactor.Action.idSearchButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: LoginReactor) {
@@ -99,10 +104,21 @@ extension LoginViewController: View {
     }
     
     private func bindNavigation(_ reactor: LoginReactor) {
-        reactor.navigateToSignUp
+        reactor.state.map { $0.isSignUpToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.showSignUpView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isFindIDToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.showFindIDView()
             }
             .disposed(by: disposeBag)
     }

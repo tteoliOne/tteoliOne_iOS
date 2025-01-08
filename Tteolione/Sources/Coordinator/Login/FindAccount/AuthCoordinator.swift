@@ -1,32 +1,32 @@
 //
-//  IDCoordinator.swift
+//  AuthCoordinator.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/26/24.
+//  Created by 전준영 on 1/8/25.
 //
 
 import UIKit
 
-final class IDCoordinator: IDViewControllerDelegate {
+final class AuthCoordinator: AuthViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     weak var parentCoordinator: Coordinator?
     private let dependency: AppDependency
-
+    
     init(navigationController: UINavigationController,
          dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
     }
-
+    
     func start() {
-        let reactor = IDReactor(
-            networkProvider: dependency.joinNetworkProvider,
+        let reactor = AuthReactor(
+            networkProvider: dependency.accountNetworkProvider,
             mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
-            ofType: IDViewController.self,
+            ofType: AuthViewController.self,
             with: reactor,
             delegate: self
         )
@@ -34,14 +34,15 @@ final class IDCoordinator: IDViewControllerDelegate {
         show(viewController)
     }
     
-    func showPassword() {
-        let passwordCoordinator = PasswordCoordinator(
+    func showFindIDResult(with dto: FindIDDTO) {
+        let authNumCoordinator = FindIDResultCoordinator(
             navigationController: navigationController,
-            dependency: dependency
+            dependency: dependency,
+            dto: dto
         )
-        childCoordinators.append(passwordCoordinator)
-        passwordCoordinator.parentCoordinator = self
-        passwordCoordinator.start()
+        
+        addChildCoordinator(authNumCoordinator)
+        authNumCoordinator.start()
     }
     
 }

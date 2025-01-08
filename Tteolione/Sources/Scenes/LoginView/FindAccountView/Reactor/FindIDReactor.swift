@@ -55,13 +55,13 @@ extension FindIDReactor {
         case .updateUsername(let username):
             return .concat([
                 .just(.setUsername(username)),
-                .just(.setButtonEnabled(isValidName(username) && isValidEmail(currentState.email)))
+                .just(.setButtonEnabled(isValidName(username)))
             ])
             
         case .updateEmail(let email):
             return .concat([
                 .just(.setEmail(email)),
-                .just(.setButtonEnabled(isValidName(currentState.username) && isValidEmail(email)))
+                .just(.setButtonEnabled(isValidEmail(email)))
             ])
             
         case .backButtonTap:

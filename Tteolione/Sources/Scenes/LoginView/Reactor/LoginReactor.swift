@@ -17,22 +17,26 @@ final class LoginReactor: Reactor {
         case passwordTextFieldTapEnd
         case passwordSecureButtonTap
         case signUpButtonTap
+        case idSearchButtonTap
     }
     
     enum Mutation {
         case setEmailLabelPosition(up: Bool)
         case setPasswordLabelPosition(up: Bool)
         case togglePasswordSecureMode
+        case setSignUpToNext(Bool)
+        case setFindIDToNext(Bool)
     }
 
     struct State {
         var isEmailLabelUp: Bool = false
         var isPasswordLabelUp: Bool = false
         var isPasswordSecure: Bool = true
+        var isSignUpToNext: Bool = false
+        var isFindIDToNext: Bool = false
     }
     
     let initialState: State = State()
-    let navigateToSignUp = PublishSubject<Void>()
     
 }
 
@@ -56,8 +60,16 @@ extension LoginReactor {
             return Observable.just(.togglePasswordSecureMode)
             
         case .signUpButtonTap:
-            navigateToSignUp.onNext(())
-            return Observable.empty()
+            return .concat([
+                .just(.setSignUpToNext(true)),
+                .just(.setSignUpToNext(false))
+            ])
+            
+        case .idSearchButtonTap:
+            return .concat([
+                .just(.setFindIDToNext(true)),
+                .just(.setFindIDToNext(false))
+            ])
         }
     }
     
@@ -77,6 +89,12 @@ extension LoginReactor {
             
         case .togglePasswordSecureMode:
             newState.isPasswordSecure.toggle()
+            
+        case let .setSignUpToNext(isNavi):
+            newState.isSignUpToNext = isNavi
+            
+        case let .setFindIDToNext(isNavi):
+            newState.isFindIDToNext = isNavi
         }
         
         return newState

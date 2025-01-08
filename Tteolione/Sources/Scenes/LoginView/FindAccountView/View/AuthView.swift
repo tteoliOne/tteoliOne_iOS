@@ -23,11 +23,11 @@ final class AuthView: BaseView {
         label.textColor = .myAppRed
         return label
     }()
-    let joinButton = JoinButton(title: .authNum)
+    let checkButton = JoinButton(title: .authNum)
     
     override func configureHierarchy() {
         [topBarView, iconWithLabelView,
-         boundarView, joinButton,
+         boundarView, checkButton,
          authNumInputTextField, explanationLabel].forEach { addSubview($0) }
     }
     
@@ -64,7 +64,7 @@ final class AuthView: BaseView {
             make.leading.top.equalTo(boundarView).inset(4)
         }
         
-        joinButton.snp.makeConstraints { make in
+        checkButton.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(48)
         }
@@ -75,6 +75,16 @@ final class AuthView: BaseView {
         topBarView.joinLabel.text = AppText.Account.findId
         iconWithLabelView.configure(icon: .authNum,
                                     text: AppText.Join.joinAuthNum)
+    }
+    
+}
+
+extension AuthView {
+    
+    func setButton(_ isEnabled: Bool) {
+        checkButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+        checkButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+        checkButton.isEnabled = isEnabled
     }
     
 }

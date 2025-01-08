@@ -22,8 +22,8 @@ final class ProfileSetCoordinator: ProfileSetViewControllerDelegate {
 
     func start() {
         let reactor = ProfileSetReactor(
-            networkProvider: dependency.networkProvider,
-            mediator: dependency.signUpMediator
+            networkProvider: dependency.joinNetworkProvider,
+            mediator: dependency.onboardingMediator
         )
         let viewController = createViewController(
             ofType: ProfileSetViewController.self,
