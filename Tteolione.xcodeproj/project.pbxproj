@@ -99,6 +99,9 @@
 		72361F162D2E40DF009BEF12 /* UserSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */; };
 		72361F192D2E46BF009BEF12 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */; };
 		72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */; };
+		72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F1C2D2E502C009BEF12 /* TokenAPI.swift */; };
+		72361F242D2E5129009BEF12 /* ReissueTokenRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F232D2E5129009BEF12 /* ReissueTokenRequestBody.swift */; };
+		72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F252D2E51C2009BEF12 /* TokenDTO.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -219,6 +222,9 @@
 		72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionAPI.swift; sourceTree = "<group>"; };
 		72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
+		72361F1C2D2E502C009BEF12 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
+		72361F232D2E5129009BEF12 /* ReissueTokenRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReissueTokenRequestBody.swift; sourceTree = "<group>"; };
+		72361F252D2E51C2009BEF12 /* TokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDTO.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -330,6 +336,7 @@
 				72361ED72D291EA5009BEF12 /* FindAccountAPI.swift */,
 				72361F0D2D2E370A009BEF12 /* SocialAPI.swift */,
 				72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */,
+				72361F1C2D2E502C009BEF12 /* TokenAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -355,6 +362,7 @@
 				72361E6D2D0C65AC009BEF12 /* ServerResponse.swift */,
 				72361E762D0EB686009BEF12 /* Protocol */,
 				72361E6F2D0EA8BC009BEF12 /* OnBoarding */,
+				72361F1E2D2E50D4009BEF12 /* Token */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -572,6 +580,31 @@
 				72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		72361F1E2D2E50D4009BEF12 /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				72361F212D2E50F4009BEF12 /* Request */,
+				72361F222D2E50FC009BEF12 /* Response */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		72361F212D2E50F4009BEF12 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				72361F232D2E5129009BEF12 /* ReissueTokenRequestBody.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		72361F222D2E50FC009BEF12 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				72361F252D2E51C2009BEF12 /* TokenDTO.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -891,6 +924,7 @@
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
 				72361EA82D1E921A009BEF12 /* SignUpFinshReactor.swift in Sources */,
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
+				72361F242D2E5129009BEF12 /* ReissueTokenRequestBody.swift in Sources */,
 				72361EA42D1E9041009BEF12 /* SignUpFinshViewController.swift in Sources */,
 				72361E542D0BF5F7009BEF12 /* ProfileSetView.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
@@ -904,11 +938,13 @@
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
 				72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */,
+				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
+				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
