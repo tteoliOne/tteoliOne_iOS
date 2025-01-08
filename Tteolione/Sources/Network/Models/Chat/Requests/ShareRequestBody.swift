@@ -1,0 +1,14 @@
+//
+//  ApproveShareRequestBody.swift
+//  Tteolione
+//
+//  Created by 전준영 on 1/8/25.
+//
+
+import Foundation
+
+struct ApproveShareRequestBody: Encodable {
+    
+    let buyerId: Int
+    
+}
