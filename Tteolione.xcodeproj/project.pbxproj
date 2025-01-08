@@ -92,6 +92,10 @@
 		72361F082D2D1195009BEF12 /* FindIDDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F072D2D1195009BEF12 /* FindIDDTO.swift */; };
 		72361F0A2D2D7CF7009BEF12 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F092D2D7CF7009BEF12 /* AuthCoordinator.swift */; };
 		72361F0C2D2D7E19009BEF12 /* FindIDResultCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F0B2D2D7E19009BEF12 /* FindIDResultCoordinator.swift */; };
+		72361F0E2D2E370A009BEF12 /* SocialAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F0D2D2E370A009BEF12 /* SocialAPI.swift */; };
+		72361F102D2E38E1009BEF12 /* SocialRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F0F2D2E38E1009BEF12 /* SocialRequestBody.swift */; };
+		72361F122D2E3951009BEF12 /* SocialDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F112D2E3951009BEF12 /* SocialDTO.swift */; };
+		72361F142D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -205,6 +209,10 @@
 		72361F072D2D1195009BEF12 /* FindIDDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDDTO.swift; sourceTree = "<group>"; };
 		72361F092D2D7CF7009BEF12 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		72361F0B2D2D7E19009BEF12 /* FindIDResultCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDResultCoordinator.swift; sourceTree = "<group>"; };
+		72361F0D2D2E370A009BEF12 /* SocialAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAPI.swift; sourceTree = "<group>"; };
+		72361F0F2D2E38E1009BEF12 /* SocialRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialRequestBody.swift; sourceTree = "<group>"; };
+		72361F112D2E3951009BEF12 /* SocialDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialDTO.swift; sourceTree = "<group>"; };
+		72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProfileImageRequestBody.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -314,6 +322,7 @@
 			children = (
 				72361E672D0C2DFC009BEF12 /* JoinAPI.swift */,
 				72361ED72D291EA5009BEF12 /* FindAccountAPI.swift */,
+				72361F0D2D2E370A009BEF12 /* SocialAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -373,6 +382,8 @@
 				72361E722D0EA96F009BEF12 /* JoinRequestBody.swift */,
 				72361E742D0EB575009BEF12 /* SignUpProfileImageRequestBody.swift */,
 				72361ED92D2920B0009BEF12 /* FindAccountRequestBody.swift */,
+				72361F0F2D2E38E1009BEF12 /* SocialRequestBody.swift */,
+				72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -381,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				72361F072D2D1195009BEF12 /* FindIDDTO.swift */,
+				72361F112D2E3951009BEF12 /* SocialDTO.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -901,12 +913,15 @@
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
+				72361F102D2E38E1009BEF12 /* SocialRequestBody.swift in Sources */,
 				72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */,
 				72361ED02D27C529009BEF12 /* ResetPasswordCheckReactor.swift in Sources */,
 				72361E832D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
+				72361F0E2D2E370A009BEF12 /* SocialAPI.swift in Sources */,
+				72361F142D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift in Sources */,
 				72361EBA2D26B6E1009BEF12 /* FindIDViewController.swift in Sources */,
 				72361F082D2D1195009BEF12 /* FindIDDTO.swift in Sources */,
 				72361E502D0BEED0009BEF12 /* NicknameReactor.swift in Sources */,
@@ -946,6 +961,7 @@
 				72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */,
 				72361F0C2D2D7E19009BEF12 /* FindIDResultCoordinator.swift in Sources */,
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
+				72361F122D2E3951009BEF12 /* SocialDTO.swift in Sources */,
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
