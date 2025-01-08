@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct SubmitReviewRequestBody: Encodable {
+    
+    let content: String
+    let ddabong: Int
+    
+}

@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct CreateChatRoonRequestBody: Encodable {
+    
+    let productNo: Int
+    
+}

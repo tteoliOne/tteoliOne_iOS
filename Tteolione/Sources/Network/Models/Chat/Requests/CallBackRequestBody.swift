@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+struct CallBackRequestBody: Encodable {
+    
+    let id: String?
+    let chatRoomNo: Int
+    let contentType: String
+    let content: String
+    let senderName: String
+    let senderNo: Int
+    let productNo: Int
+    let sendTime: Int
+    let readCount: Int
+    let senderLoginId: String
+    
+}
