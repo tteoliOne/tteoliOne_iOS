@@ -11,12 +11,16 @@ enum Header {
     
     case contentTypeJson
     case contentTypeMulti
+    case authorization
     
     var key: String {
         switch self {
         case .contentTypeJson,
                 .contentTypeMulti:
             return "Content-Type"
+            
+        case .authorization:
+            return "Authorization"
         }
     }
     
@@ -27,6 +31,10 @@ enum Header {
             
         case .contentTypeMulti:
             return "multipart/form-data"
+            
+        case .authorization:
+            let token = UserDefaultsManager.shared.token
+            return "Bearer \(token)"
         }
         
     }
