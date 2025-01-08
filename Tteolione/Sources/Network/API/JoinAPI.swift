@@ -70,7 +70,7 @@ extension JoinAPI: TargetType {
                 .validateNickname:
             return [Header.contentTypeJson.key: Header.contentTypeJson.value]
         case .signUp:
-            return [Header.contentTypeJson.key: Header.contentTypeMulti.value]
+            return [Header.contentTypeMulti.key: Header.contentTypeMulti.value]
         }
     }
 }

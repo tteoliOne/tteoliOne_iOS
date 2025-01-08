@@ -64,7 +64,7 @@ extension SocialAPI: TargetType {
             
         case .kakaoProfile,
                 .appleProfile:
-            return [Header.contentTypeJson.key: Header.contentTypeMulti.value]
+            return [Header.contentTypeMulti.key: Header.contentTypeMulti.value]
         }
     }
 }
