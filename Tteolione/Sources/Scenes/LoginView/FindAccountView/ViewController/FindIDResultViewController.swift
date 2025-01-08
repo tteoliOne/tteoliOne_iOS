@@ -12,23 +12,63 @@ import RxCocoa
 final class FindIDResultViewController: BaseViewController<FindIDResultView> {
     
     var disposeBag = DisposeBag()
+    weak var delegate: FindIDResultViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
 }
 
 extension FindIDResultViewController: View {
     
-    func bind(reactor: LoginReactor) {
-//        bindAction(reactor)
-//        bindState(reactor)
-//        bindNavigation(reactor)
+    func bind(reactor: FindIDResultReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+        bindNavigation(reactor)
     }
     
+    private func bindAction(_ reactor: FindIDResultReactor) {
+        rootView.changePasswordButton.rx.tap
+            .map { FindIDResultReactor.Action.resetPasswordButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.loginButton.rx.tap
+            .map { FindIDResultReactor.Action.LoginHomeButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindState(_ reactor: FindIDResultReactor) {
+        reactor.state.map { $0.resultID }
+            .distinctUntilChanged()
+            .bind(to: rootView.resultIDLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindNavigation(_ reactor: FindIDResultReactor) {
+//        reactor.state.map { $0.navigateBack }
+//            .distinctUntilChanged()
+//            .filter { $0 }
+//            .observe(on: MainScheduler.instance)
+//            .bind(with: self) { owner, _ in
+//                owner.delegate?.popToPreviousScreen()
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        reactor.state.map { $0.navigateToNext }
+//            .distinctUntilChanged()
+//            .filter { $0 }
+//            .observe(on: MainScheduler.instance)
+//            .bind(with: self) { owner, _ in
+//                owner.delegate?.showFindIDResult()
+//            }
+//            .disposed(by: disposeBag)
+    }
+    
+}
+
+extension FindIDResultViewController: DelegateOwner {
+    typealias Delegate = FindIDResultViewControllerDelegate
 }
