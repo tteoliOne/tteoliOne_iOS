@@ -35,7 +35,7 @@ final class FindIDCoordinator: FindIDViewControllerDelegate {
     }
     
     func showFindAuth() {
-        let authNumCoordinator = AuthNumCoordinator(
+        let authNumCoordinator = AuthCoordinator(
             navigationController: navigationController,
             dependency: dependency
         )
