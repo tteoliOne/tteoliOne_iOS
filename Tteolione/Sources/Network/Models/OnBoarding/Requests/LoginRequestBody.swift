@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct LoginRequestBody: Encodable {
+    
+    let loginId: String
+    let password: String
+    let targetToken: String
+    
+}

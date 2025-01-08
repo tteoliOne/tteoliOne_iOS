@@ -94,8 +94,11 @@
 		72361F0C2D2D7E19009BEF12 /* FindIDResultCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F0B2D2D7E19009BEF12 /* FindIDResultCoordinator.swift */; };
 		72361F0E2D2E370A009BEF12 /* SocialAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F0D2D2E370A009BEF12 /* SocialAPI.swift */; };
 		72361F102D2E38E1009BEF12 /* SocialRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F0F2D2E38E1009BEF12 /* SocialRequestBody.swift */; };
-		72361F122D2E3951009BEF12 /* SocialDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F112D2E3951009BEF12 /* SocialDTO.swift */; };
+		72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F112D2E3951009BEF12 /* UserDTO.swift */; };
 		72361F142D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */; };
+		72361F162D2E40DF009BEF12 /* UserSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */; };
+		72361F192D2E46BF009BEF12 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */; };
+		72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -211,8 +214,11 @@
 		72361F0B2D2D7E19009BEF12 /* FindIDResultCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDResultCoordinator.swift; sourceTree = "<group>"; };
 		72361F0D2D2E370A009BEF12 /* SocialAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAPI.swift; sourceTree = "<group>"; };
 		72361F0F2D2E38E1009BEF12 /* SocialRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialRequestBody.swift; sourceTree = "<group>"; };
-		72361F112D2E3951009BEF12 /* SocialDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialDTO.swift; sourceTree = "<group>"; };
+		72361F112D2E3951009BEF12 /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProfileImageRequestBody.swift; sourceTree = "<group>"; };
+		72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionAPI.swift; sourceTree = "<group>"; };
+		72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -323,6 +329,7 @@
 				72361E672D0C2DFC009BEF12 /* JoinAPI.swift */,
 				72361ED72D291EA5009BEF12 /* FindAccountAPI.swift */,
 				72361F0D2D2E370A009BEF12 /* SocialAPI.swift */,
+				72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -384,6 +391,7 @@
 				72361ED92D2920B0009BEF12 /* FindAccountRequestBody.swift */,
 				72361F0F2D2E38E1009BEF12 /* SocialRequestBody.swift */,
 				72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */,
+				72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -392,7 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				72361F072D2D1195009BEF12 /* FindIDDTO.swift */,
-				72361F112D2E3951009BEF12 /* SocialDTO.swift */,
+				72361F112D2E3951009BEF12 /* UserDTO.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -558,6 +566,14 @@
 			path = FindAccountDelegate;
 			sourceTree = "<group>";
 		};
+		72361F172D2E46A5009BEF12 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -608,6 +624,7 @@
 		724DEC862D00933400171F44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				72361F172D2E46A5009BEF12 /* Util */,
 				72361E852D13FB99009BEF12 /* Coordinator */,
 				72361E5C2D0C22E3009BEF12 /* Network */,
 				72361E342D087600009BEF12 /* Extension */,
@@ -906,10 +923,12 @@
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
 				72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */,
 				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
+				72361F162D2E40DF009BEF12 /* UserSessionAPI.swift in Sources */,
 				72361E9C2D1DA455009BEF12 /* IDCoordinator.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
 				72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
+				72361F192D2E46BF009BEF12 /* UserDefaultsManager.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
@@ -961,10 +980,11 @@
 				72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */,
 				72361F0C2D2D7E19009BEF12 /* FindIDResultCoordinator.swift in Sources */,
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
-				72361F122D2E3951009BEF12 /* SocialDTO.swift in Sources */,
+				72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */,
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
+				72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */,
 				72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */,
 				72361E8D2D140585009BEF12 /* Coordinator.swift in Sources */,
 			);
