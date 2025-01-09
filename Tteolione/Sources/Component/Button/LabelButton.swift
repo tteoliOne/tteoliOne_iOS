@@ -5,8 +5,6 @@
 //  Created by 전준영 on 12/5/24.
 //
 
-import Foundation
-
 import UIKit
 
 class LabelButton: UIButton {
