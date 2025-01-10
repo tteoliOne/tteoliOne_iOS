@@ -45,7 +45,7 @@ struct ProductQueryParameters: QueryStringProtocol {
             items.append(URLQueryItem(name: "sort", value: sort))
         }
         
-        if let status = status {
+        if status != nil {
             items.append(URLQueryItem(name: "status", value: sort))
         }
         
