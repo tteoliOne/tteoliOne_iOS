@@ -36,6 +36,7 @@ extension Font {
     static let regular15 = Font.regular(15).font()
     static let regular16 = Font.regular(16).font()
     static let regular17 = Font.regular(17).font()
+    static let regular28 = Font.regular(28).font()
     
     static let bold13 = Font.bold(13).font()
     static let bold14 = Font.bold(14).font()
