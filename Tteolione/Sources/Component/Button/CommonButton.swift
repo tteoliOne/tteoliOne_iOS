@@ -12,13 +12,14 @@ class CommonButton: UIButton {
     init(title: AppButtonTitle,
          corner: CGFloat,
          backgroundColor: UIColor,
-         textColor: UIColor) {
+         textColor: UIColor,
+         font: UIFont? = Font.Andong18) {
         super.init(frame: .zero)
         layer.cornerRadius = corner
         self.backgroundColor = backgroundColor
         setTitle(title.rawValue, for: .normal)
         setTitleColor(textColor, for: .normal)
-        titleLabel?.font = Font.Andong18
+        titleLabel?.font = font
         
     }
     
