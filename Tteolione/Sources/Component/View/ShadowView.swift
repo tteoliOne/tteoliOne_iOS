@@ -5,4 +5,34 @@
 //  Created by 전준영 on 1/10/25.
 //
 
-import Foundation
+import UIKit
+import SnapKit
+
+class ShadowView: UIView {
+
+    private let roundedView = UIView()
+
+    init() {
+        super.init(frame: .zero)
+
+        backgroundColor = .clear
+        layer.shadowColor = UIColor.myAppBlack.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 5
+        layer.shadowOpacity = 0.3
+
+        roundedView.backgroundColor = .white
+        roundedView.layer.cornerRadius = 20
+        roundedView.layer.masksToBounds = true
+
+        addSubview(roundedView)
+        roundedView.snp.makeConstraints { make in
+            make.edges.equalTo(self)
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
