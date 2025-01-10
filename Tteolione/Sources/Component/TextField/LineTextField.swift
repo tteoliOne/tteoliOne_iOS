@@ -1,5 +1,5 @@
 //
-//  JoinTextField.swift
+//  LineTextField.swift
 //  Tteolione
 //
 //  Created by 전준영 on 12/6/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class JoinTextField: UITextField {
+class LineTextField: UITextField {
     
     init(text: AppTextFieldPlaceholder,
          keboard: UIKeyboardType?,

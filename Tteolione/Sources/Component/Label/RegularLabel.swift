@@ -1,19 +1,20 @@
 //
-//  SlashLabel.swift
+//  RegularLabel.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/5/24.
+//  Created by 전준영 on 1/10/25.
 //
 
 import UIKit
 
-class SlashLabel: UILabel {
+class RegularLabel: UILabel {
     
-    init(font: UIFont) {
+    init(text: String, color: UIColor) {
         super.init(frame: .zero)
         
-        text = AppText.Login.slash
-        self.font = font
+        self.text = text
+        font = Font.regular16
+        textColor = color
         
     }
     

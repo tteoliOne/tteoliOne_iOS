@@ -10,7 +10,7 @@
 		72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1C2D02D095009BEF12 /* TopBarView.swift */; };
 		72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1F2D02D18F009BEF12 /* JoinImageView.swift */; };
 		72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E212D02D1B1009BEF12 /* AppJoinImage.swift */; };
-		72361E242D02D1E8009BEF12 /* JoinTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E232D02D1E8009BEF12 /* JoinTextField.swift */; };
+		72361E242D02D1E8009BEF12 /* LineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E232D02D1E8009BEF12 /* LineTextField.swift */; };
 		72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E252D02D208009BEF12 /* AppTextFieldPlaceholder.swift */; };
 		72361E282D02D233009BEF12 /* JoinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E272D02D233009BEF12 /* JoinButton.swift */; };
 		72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */; };
@@ -131,6 +131,26 @@
 		72361F6A2D2EBE22009BEF12 /* ShareRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F692D2EBE22009BEF12 /* ShareRequestBody.swift */; };
 		72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F6B2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift */; };
 		72361F6E2D2EBFF2009BEF12 /* ChatContentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F6D2D2EBFF2009BEF12 /* ChatContentDTO.swift */; };
+		72361F982D2F8EDD009BEF12 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F972D2F8EDD009BEF12 /* MainViewController.swift */; };
+		72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F992D2F8EE8009BEF12 /* MainView.swift */; };
+		72361F9C2D2F8EF1009BEF12 /* MainReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F9B2D2F8EF1009BEF12 /* MainReactor.swift */; };
+		72361F9F2D2F906E009BEF12 /* ProductCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F9E2D2F906E009BEF12 /* ProductCollectionViewCell.swift */; };
+		72361FA22D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FA12D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift */; };
+		72361FA42D2F926F009BEF12 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FA32D2F926F009BEF12 /* BaseCollectionViewCell.swift */; };
+		72361FA62D2F9280009BEF12 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FA52D2F9280009BEF12 /* BaseTableViewCell.swift */; };
+		72361FA82D2F96BC009BEF12 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FA72D2F96BC009BEF12 /* LikeButton.swift */; };
+		72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FA92D2F9986009BEF12 /* MappinImageView.swift */; };
+		72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FAB2D2F9E13009BEF12 /* MainTableViewCell.swift */; };
+		72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FAD2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift */; };
+		72361FB02D2FF219009BEF12 /* PostButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FAF2D2FF219009BEF12 /* PostButton.swift */; };
+		72361FB62D30DBFE009BEF12 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FB52D30DBFE009BEF12 /* PostViewController.swift */; };
+		72361FB82D30DC05009BEF12 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FB72D30DC05009BEF12 /* PostView.swift */; };
+		72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FB92D30DC0D009BEF12 /* PostReactor.swift */; };
+		72361FBC2D30DDF9009BEF12 /* AndongLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FBB2D30DDF9009BEF12 /* AndongLabel.swift */; };
+		72361FBE2D30E5D6009BEF12 /* DeviceLenth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FBD2D30E5D6009BEF12 /* DeviceLenth.swift */; };
+		72361FC02D30E964009BEF12 /* SymbolImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */; };
+		72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC12D30EA0C009BEF12 /* ShadowView.swift */; };
+		72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC32D30F8D2009BEF12 /* RegularLabel.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -164,7 +184,7 @@
 		72361E1C2D02D095009BEF12 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		72361E1F2D02D18F009BEF12 /* JoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinImageView.swift; sourceTree = "<group>"; };
 		72361E212D02D1B1009BEF12 /* AppJoinImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppJoinImage.swift; sourceTree = "<group>"; };
-		72361E232D02D1E8009BEF12 /* JoinTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinTextField.swift; sourceTree = "<group>"; };
+		72361E232D02D1E8009BEF12 /* LineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTextField.swift; sourceTree = "<group>"; };
 		72361E252D02D208009BEF12 /* AppTextFieldPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTextFieldPlaceholder.swift; sourceTree = "<group>"; };
 		72361E272D02D233009BEF12 /* JoinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinButton.swift; sourceTree = "<group>"; };
 		72361E292D02DAFD009BEF12 /* IconWithLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelView.swift; sourceTree = "<group>"; };
@@ -283,6 +303,26 @@
 		72361F692D2EBE22009BEF12 /* ShareRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRequestBody.swift; sourceTree = "<group>"; };
 		72361F6B2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitReviewRequestBody.swift; sourceTree = "<group>"; };
 		72361F6D2D2EBFF2009BEF12 /* ChatContentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentDTO.swift; sourceTree = "<group>"; };
+		72361F972D2F8EDD009BEF12 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		72361F992D2F8EE8009BEF12 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		72361F9B2D2F8EF1009BEF12 /* MainReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainReactor.swift; sourceTree = "<group>"; };
+		72361F9E2D2F906E009BEF12 /* ProductCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewCell.swift; sourceTree = "<group>"; };
+		72361FA12D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifierProtocol.swift; sourceTree = "<group>"; };
+		72361FA32D2F926F009BEF12 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		72361FA52D2F9280009BEF12 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		72361FA72D2F96BC009BEF12 /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
+		72361FA92D2F9986009BEF12 /* MappinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappinImageView.swift; sourceTree = "<group>"; };
+		72361FAB2D2F9E13009BEF12 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		72361FAD2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonCollectionViewCell.swift; sourceTree = "<group>"; };
+		72361FAF2D2FF219009BEF12 /* PostButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostButton.swift; sourceTree = "<group>"; };
+		72361FB52D30DBFE009BEF12 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		72361FB72D30DC05009BEF12 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		72361FB92D30DC0D009BEF12 /* PostReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReactor.swift; sourceTree = "<group>"; };
+		72361FBB2D30DDF9009BEF12 /* AndongLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndongLabel.swift; sourceTree = "<group>"; };
+		72361FBD2D30E5D6009BEF12 /* DeviceLenth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLenth.swift; sourceTree = "<group>"; };
+		72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolImageButton.swift; sourceTree = "<group>"; };
+		72361FC12D30EA0C009BEF12 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
+		72361FC32D30F8D2009BEF12 /* RegularLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularLabel.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -345,6 +385,7 @@
 				72361E1F2D02D18F009BEF12 /* JoinImageView.swift */,
 				72361E452D0B28CF009BEF12 /* CheckImageView.swift */,
 				72361E572D0BFA4D009BEF12 /* CircleImageView.swift */,
+				72361FA92D2F9986009BEF12 /* MappinImageView.swift */,
 			);
 			path = ImageView;
 			sourceTree = "<group>";
@@ -643,6 +684,7 @@
 			isa = PBXGroup;
 			children = (
 				72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */,
+				72361FBD2D30E5D6009BEF12 /* DeviceLenth.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -782,6 +824,93 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
+		72361F932D2F8E90009BEF12 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				72361F942D2F8EA3009BEF12 /* ViewController */,
+				72361F952D2F8EAB009BEF12 /* View */,
+				72361F962D2F8EB1009BEF12 /* Reactor */,
+				72361FB12D30DBC0009BEF12 /* PostView */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		72361F942D2F8EA3009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72361F972D2F8EDD009BEF12 /* MainViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		72361F952D2F8EAB009BEF12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				72361F992D2F8EE8009BEF12 /* MainView.swift */,
+				72361FAB2D2F9E13009BEF12 /* MainTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72361F962D2F8EB1009BEF12 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				72361F9B2D2F8EF1009BEF12 /* MainReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		72361F9D2D2F9056009BEF12 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				72361F9E2D2F906E009BEF12 /* ProductCollectionViewCell.swift */,
+				72361FAD2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		72361FA02D2F90D6009BEF12 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				72361FA12D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		72361FB12D30DBC0009BEF12 /* PostView */ = {
+			isa = PBXGroup;
+			children = (
+				72361FB22D30DBD5009BEF12 /* ViewController */,
+				72361FB32D30DBDD009BEF12 /* View */,
+				72361FB42D30DBE1009BEF12 /* Reactor */,
+			);
+			path = PostView;
+			sourceTree = "<group>";
+		};
+		72361FB22D30DBD5009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72361FB52D30DBFE009BEF12 /* PostViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		72361FB32D30DBDD009BEF12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				72361FB72D30DC05009BEF12 /* PostView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72361FB42D30DBE1009BEF12 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				72361FB92D30DC0D009BEF12 /* PostReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -832,6 +961,7 @@
 		724DEC862D00933400171F44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				72361FA02D2F90D6009BEF12 /* Protocol */,
 				72361F172D2E46A5009BEF12 /* Util */,
 				72361E852D13FB99009BEF12 /* Coordinator */,
 				72361E5C2D0C22E3009BEF12 /* Network */,
@@ -849,6 +979,8 @@
 			children = (
 				724DEC962D01732C00171F44 /* BaseView.swift */,
 				724DEC982D01734200171F44 /* BaseViewController.swift */,
+				72361FA32D2F926F009BEF12 /* BaseCollectionViewCell.swift */,
+				72361FA52D2F9280009BEF12 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -866,6 +998,7 @@
 			isa = PBXGroup;
 			children = (
 				724DECA02D0181B000171F44 /* LoginView */,
+				72361F932D2F8E90009BEF12 /* MainView */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -914,6 +1047,7 @@
 		724DECAC2D0186A200171F44 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				72361F9D2D2F9056009BEF12 /* CollectionView */,
 				72361E1E2D02D184009BEF12 /* ImageView */,
 				724DECB82D0188AC00171F44 /* View */,
 				724DECB52D01882F00171F44 /* Label */,
@@ -927,7 +1061,7 @@
 			isa = PBXGroup;
 			children = (
 				724DECAE2D01870800171F44 /* CommonTextField.swift */,
-				72361E232D02D1E8009BEF12 /* JoinTextField.swift */,
+				72361E232D02D1E8009BEF12 /* LineTextField.swift */,
 			);
 			path = TextField;
 			sourceTree = "<group>";
@@ -939,6 +1073,9 @@
 				724DECBB2D0192EE00171F44 /* LabelButton.swift */,
 				724DECC92D02CE2E00171F44 /* BackButton.swift */,
 				72361E272D02D233009BEF12 /* JoinButton.swift */,
+				72361FA72D2F96BC009BEF12 /* LikeButton.swift */,
+				72361FAF2D2FF219009BEF12 /* PostButton.swift */,
+				72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -947,6 +1084,8 @@
 			isa = PBXGroup;
 			children = (
 				724DECB62D01883B00171F44 /* SlashLabel.swift */,
+				72361FBB2D30DDF9009BEF12 /* AndongLabel.swift */,
+				72361FC32D30F8D2009BEF12 /* RegularLabel.swift */,
 			);
 			path = Label;
 			sourceTree = "<group>";
@@ -955,6 +1094,7 @@
 			isa = PBXGroup;
 			children = (
 				724DECB92D0188BA00171F44 /* BoundarView.swift */,
+				72361FC12D30EA0C009BEF12 /* ShadowView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1087,6 +1227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
+				72361FB02D2FF219009BEF12 /* PostButton.swift in Sources */,
 				72361F532D2EB276009BEF12 /* MyReviewDTO.swift in Sources */,
 				72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */,
 				72361ECA2D27AA2B009BEF12 /* FindIDResultReactor.swift in Sources */,
@@ -1095,10 +1236,12 @@
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
 				72361F3E2D2EA226009BEF12 /* ProductQueryParameters.swift in Sources */,
+				72361FA82D2F96BC009BEF12 /* LikeButton.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
 				72361EE02D295C9D009BEF12 /* FindAccountDelegate.swift in Sources */,
 				72361ED22D27C576009BEF12 /* ResetPasswordViewController.swift in Sources */,
 				72361F352D2E9BCD009BEF12 /* SavedProdcutDTO.swift in Sources */,
+				72361F982D2F8EDD009BEF12 /* MainViewController.swift in Sources */,
 				72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */,
 				72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */,
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
@@ -1116,23 +1259,29 @@
 				72361F442D2EA8B7009BEF12 /* UserAPI.swift in Sources */,
 				72361F4B2D2EAEBA009BEF12 /* UserProfileRequestBody.swift in Sources */,
 				72361E8F2D140C9E009BEF12 /* AppDependency.swift in Sources */,
+				72361FBC2D30DDF9009BEF12 /* AndongLabel.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
+				72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
+				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
 				72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
+				72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
+				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
-				72361E242D02D1E8009BEF12 /* JoinTextField.swift in Sources */,
+				72361E242D02D1E8009BEF12 /* LineTextField.swift in Sources */,
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
+				72361F9C2D2F8EF1009BEF12 /* MainReactor.swift in Sources */,
 				72361F682D2EBBAA009BEF12 /* CallBackRequestBody.swift in Sources */,
 				72361E382D087B50009BEF12 /* IDView.swift in Sources */,
 				72361F372D2E9EEB009BEF12 /* ProductDetailDTO.swift in Sources */,
@@ -1143,6 +1292,7 @@
 				72361ECC2D27C510009BEF12 /* ResetPasswordCheckViewController.swift in Sources */,
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
 				72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */,
+				72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */,
 				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
 				72361F662D2EBA2C009BEF12 /* ChatListDTO.swift in Sources */,
 				72361F3A2D2EA1F4009BEF12 /* QueryStringProtocol.swift in Sources */,
@@ -1154,8 +1304,10 @@
 				72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
 				72361F332D2E98BF009BEF12 /* ProductDTO.swift in Sources */,
+				72361FA42D2F926F009BEF12 /* BaseCollectionViewCell.swift in Sources */,
 				72361F192D2E46BF009BEF12 /* UserDefaultsManager.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
+				72361FB82D30DC05009BEF12 /* PostView.swift in Sources */,
 				72361F6A2D2EBE22009BEF12 /* ShareRequestBody.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
@@ -1178,6 +1330,7 @@
 				72361F082D2D1195009BEF12 /* FindIDDTO.swift in Sources */,
 				72361E502D0BEED0009BEF12 /* NicknameReactor.swift in Sources */,
 				724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */,
+				72361FA62D2F9280009BEF12 /* BaseTableViewCell.swift in Sources */,
 				724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */,
 				724DECA82D0184A700171F44 /* LoginView.swift in Sources */,
 				72361EDD2D295C3D009BEF12 /* FindIDCoordinator.swift in Sources */,
@@ -1188,6 +1341,7 @@
 				72361E662D0C2D30009BEF12 /* NetworkProvider.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
+				72361F9F2D2F906E009BEF12 /* ProductCollectionViewCell.swift in Sources */,
 				72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */,
 				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
 				72361E8A2D13FC49009BEF12 /* EmailAuthCoordinator.swift in Sources */,
@@ -1198,8 +1352,11 @@
 				72361F0A2D2D7CF7009BEF12 /* AuthCoordinator.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
 				72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */,
+				72361FC02D30E964009BEF12 /* SymbolImageButton.swift in Sources */,
 				72361F5D2D2EB75D009BEF12 /* ChatAPI.swift in Sources */,
+				72361FA22D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift in Sources */,
 				72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */,
+				72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */,
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
 				72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */,
 				72361EAF2D1FE757009BEF12 /* NameView.swift in Sources */,
@@ -1217,12 +1374,15 @@
 				72361ED82D291EA5009BEF12 /* FindAccountAPI.swift in Sources */,
 				72361EAD2D1FE748009BEF12 /* NameViewController.swift in Sources */,
 				72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */,
+				72361FB62D30DBFE009BEF12 /* PostViewController.swift in Sources */,
 				72361F0C2D2D7E19009BEF12 /* FindIDResultCoordinator.swift in Sources */,
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
 				72361F6E2D2EBFF2009BEF12 /* ChatContentDTO.swift in Sources */,
 				72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */,
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
+				72361FBE2D30E5D6009BEF12 /* DeviceLenth.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
+				72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
 				72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */,
 				72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */,

@@ -14,4 +14,7 @@ enum AppTextFieldPlaceholder: String {
     case id = "사용하실 아이디를 입력해주세요"
     case password = "사용할 비밀번호를 입력해주세요"
     case nickname = "사용할 닉네임을 입력해주세요"
+    case productTitle = "상품명"
+    case productDetail = "상품 상세설명을 입력해주세요"
+    case noting = ""
 }

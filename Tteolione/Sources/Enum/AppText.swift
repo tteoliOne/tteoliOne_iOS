@@ -56,4 +56,25 @@ enum AppText {
         static let resetPassword = "비밀번호 변경"
     }
     
+    enum PostProduct {
+        static let photoImage = "상품 사진 등록"
+        static let title = "제목"
+        static let titleWarning = "제목을 입력해주세요"
+        static let titleWordCount = "0/20"
+        static let buyPrice = "구입 가격"
+        static let buyCount = "구입 수량"
+        static let won = "원"
+        static let count = "개"
+        static let spaceWarning = "빈칸을 입력해주세요"
+        static let sharePrice = "공유 가격"
+        static let shareCount = "공유 수량"
+        static let buyDay = "구매 일자"
+        static let category = "카테고리"
+        static let detailExplain = "상세설명"
+        static let detailPlaceholder = "상세설명을 입력해주세요"
+        static let detailWordCount = "0/100"
+        static let sharePlace = "희망 공유 장소"
+        static let recipeImage = "영수증 사진 등록"
+    }
+    
 }

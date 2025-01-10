@@ -20,4 +20,12 @@ enum AppButtonTitle: String {
     case complete = "완료"
     case profile = "프로필 변경하기"
     case finshSignUp = "로그인하러 가기"
+    
+    case vegetable = "야채"
+    case fruit = "과일"
+    case mealKit = "간편식"
+    case meat = "정육"
+    case seaFood = "수산물"
+    case etc = "기타"
+    case selectPlace = "장소 선택하기"
 }
