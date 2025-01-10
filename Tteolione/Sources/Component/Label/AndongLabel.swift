@@ -9,11 +9,13 @@ import UIKit
 
 class AndongLabel: UILabel {
     
-    init(text: String, color: UIColor) {
+    init(text: String,
+         font: UIFont? = Font.Andong18,
+         color: UIColor) {
         super.init(frame: .zero)
         
         self.text = text
-        font = Font.Andong18
+        self.font = font
         textColor = color
         
     }
