@@ -13,19 +13,19 @@ final class ResetPasswordCheckView: BaseView {
     let topBarView = TopBarView()
     private let userNameIconWithLabelView = IconWithLabelView()
     private let userNameBoundarView = BoundarView(.myAppBlack)
-    let userNameInputTextField = JoinTextField(text: .username,
+    let userNameInputTextField = LineTextField(text: .username,
                                             keboard: .default,
                                             isSecure: nil)
     
     private let idIconWithLabelView = IconWithLabelView()
     private let idBoundarView = BoundarView(.myAppBlack)
-    let idInputTextField = JoinTextField(text: .id,
+    let idInputTextField = LineTextField(text: .id,
                                             keboard: .default,
                                             isSecure: nil)
     
     private let emailIconWithLabelView = IconWithLabelView()
     private let emailBoundarView = BoundarView(.myAppBlack)
-    let emailInputTextField = JoinTextField(text: .email,
+    let emailInputTextField = LineTextField(text: .email,
                                             keboard: .emailAddress,
                                             isSecure: nil)
     private let explanationLabel: UILabel = {

@@ -19,7 +19,7 @@ final class ResetPasswordView: BaseView {
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let passwordInputTextField = JoinTextField(text: .password,
+    let passwordInputTextField = LineTextField(text: .password,
                                          keboard: .default,
                                          isSecure: true)
     let passwordExplainViews: [PasswordExplainLabelView] = [

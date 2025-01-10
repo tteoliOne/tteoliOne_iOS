@@ -13,7 +13,7 @@ final class NicknameView: BaseView {
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let nicknameInputTextField = JoinTextField(text: .nickname,
+    let nicknameInputTextField = LineTextField(text: .nickname,
                                             keboard: .default,
                                             isSecure: nil)
     private let explanationLabel: UILabel = {

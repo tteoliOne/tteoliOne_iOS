@@ -13,7 +13,7 @@ final class IDView: BaseView {
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let idInputTextField = JoinTextField(text: .id,
+    let idInputTextField = LineTextField(text: .id,
                                             keboard: .default,
                                             isSecure: nil)
     private let explanationLabel: UILabel = {

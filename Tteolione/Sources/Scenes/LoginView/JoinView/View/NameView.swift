@@ -13,7 +13,7 @@ final class NameView: BaseView {
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let nameInputTextField = JoinTextField(text: .username,
+    let nameInputTextField = LineTextField(text: .username,
                                             keboard: .default,
                                             isSecure: nil)
     private let explanationLabel: UILabel = {

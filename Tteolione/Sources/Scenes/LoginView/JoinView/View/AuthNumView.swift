@@ -13,7 +13,7 @@ final class AuthNumView: BaseView {
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let authNumInputTextField = JoinTextField(text: .authNum,
+    let authNumInputTextField = LineTextField(text: .authNum,
                                             keboard: .default,
                                             isSecure: nil)
     let explanationLabel: UILabel = {

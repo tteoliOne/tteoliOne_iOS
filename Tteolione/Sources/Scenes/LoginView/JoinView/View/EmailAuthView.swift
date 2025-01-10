@@ -13,7 +13,7 @@ final class EmailAuthView: BaseView {
     let topBarView = TopBarView()
     private let iconWithLabelView = IconWithLabelView()
     private let boundarView = BoundarView(.myAppBlack)
-    let emailInputTextField = JoinTextField(text: .email,
+    let emailInputTextField = LineTextField(text: .email,
                                             keboard: .emailAddress,
                                             isSecure: nil)
     private let explanationLabel: UILabel = {
