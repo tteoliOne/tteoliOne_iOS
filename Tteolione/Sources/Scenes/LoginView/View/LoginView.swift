@@ -99,9 +99,9 @@ final class LoginView: BaseView {
     
     //MARK: - 아이디 찾기, 비밀번호 변경, 회원가입
     let idSearchButton = LabelButton(title: .findID)
-    private let slash = SlashLabel()
+    private let slash = SlashLabel(font: Font.Andong16)
     let passwordResetButton = LabelButton(title: .resetPassword)
-    private let slash2 = SlashLabel()
+    private let slash2 = SlashLabel(font: Font.Andong16)
     let signUpButton = LabelButton(title: .signUp)
     
     private lazy var signStackView: UIStackView = {
