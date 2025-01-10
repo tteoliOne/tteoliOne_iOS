@@ -9,11 +9,11 @@ import UIKit
 
 class SlashLabel: UILabel {
     
-    init() {
+    init(font: UIFont) {
         super.init(frame: .zero)
         
         text = AppText.Login.slash
-        font = Font.Andong16
+        self.font = font
         
     }
     
