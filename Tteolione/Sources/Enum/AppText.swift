@@ -74,7 +74,9 @@ enum AppText {
         static let detailPlaceholder = "상세설명을 입력해주세요"
         static let detailWordCount = "0/100"
         static let sharePlace = "희망 공유 장소"
-        static let recipeImage = "영수증 사진 등록"
+        static let recipetImage = "영수증 사진 등록"
+        static let recipetExplain = "영수증 찍을때 주의 사항"
+        static let recipetDetailExplain = "1. 다른 정보가 보이지 않도록 찍는다\n2. 상품명, 수량, 금액이 보이도록 찍는다\n3. 영수증 아닌 사진은 금한다"
     }
     
 }
