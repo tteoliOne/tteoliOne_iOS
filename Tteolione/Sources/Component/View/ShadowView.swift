@@ -12,7 +12,8 @@ class ShadowView: UIView {
 
     private let roundedView = UIView()
 
-    init() {
+    init(color: UIColor? = .white,
+         corner: CGFloat? = 20) {
         super.init(frame: .zero)
 
         backgroundColor = .clear
@@ -21,8 +22,8 @@ class ShadowView: UIView {
         layer.shadowRadius = 5
         layer.shadowOpacity = 0.3
 
-        roundedView.backgroundColor = .white
-        roundedView.layer.cornerRadius = 20
+        roundedView.backgroundColor = color
+        roundedView.layer.cornerRadius = corner ?? 20
         roundedView.layer.masksToBounds = true
 
         addSubview(roundedView)
