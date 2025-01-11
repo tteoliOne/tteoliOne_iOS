@@ -5,4 +5,270 @@
 //  Created by 전준영 on 1/11/25.
 //
 
-import Foundation
+import UIKit
+import SnapKit
+
+final class ProductDetailView: BaseView {
+    
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    private let productImagesScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+    private let productFieldView = UIView()
+    private let profileImageView = CircleImageView(joinImage: .setProfile,
+                                                   corner: 30,
+                                                   border: 1)
+    private let nicknameLabel = RegularLabel(text: "닉네임",
+                                             color: .myAppBlack)
+    private let titleLabel = RegularLabel(text: "제목",
+                                          font: Font.regular20,
+                                          color: .myAppBlack)
+    private let boundarView = BoundarView(.myAppBlack)
+    private let buyDateExplainLabel = AndongLabel(text: AppText.PostProduct.buyDay,
+                                                  color: .myAppMain)
+    private let buyDateLabel = RegularLabel(text: "0000.00.00(화)",
+                                            font: Font.regular13,
+                                            color: .myAppBlack)
+    private let likeButton = LikeButton(color: .myAppMain)
+    private let likeCountLabel = RegularLabel(text: "0",
+                                              font: Font.regular13,
+                                              color: .myAppBlack)
+    private let receiptButton: UIButton = {
+        let button = UIButton()
+        let newSize = CGSize(width: 24, height: 24)
+        if let receiptImage = UIImage(named: "receipt")?.resizableImage(withCapInsets: .zero, resizingMode: .stretch) {
+            let resizedImage = UIGraphicsImageRenderer(size: newSize).image { _ in
+                receiptImage.draw(in: CGRect(origin: .zero, size: newSize))
+            }
+            button.setBackgroundImage(resizedImage, for: .normal)
+        }
+        return button
+    }()
+    private let receiptLabel = RegularLabel(text: AppText.Etc.recipet,
+                                            font: Font.regular13,
+                                            color: .myAppBlack)
+    private let buyPriceFieldView = ShadowView(color: .myAppMain,
+                                               corner: 28)
+    private let buyPriceImageFieldView = BoundarView(.white)
+    private let buyPriceLabel = RegularLabel(text: AppText.PostProduct.buyPrice,
+                                             color: .white)
+    private let buyPriceWonLabel = RegularLabel(text: AppText.PostProduct.won,
+                                                font: Font.regular15,
+                                                color: .white)
+    private let buyCountFieldView = ShadowView(color: .myAppMain,
+                                               corner: 28)
+    private let buyCountImageFieldView = BoundarView(.white)
+    private let buyCountLabel = RegularLabel(text: AppText.PostProduct.buyCount,
+                                             color: .white)
+    private let buyCountPCSLabel = RegularLabel(text: AppText.PostProduct.count,
+                                                font: Font.regular15,
+                                                color: .white)
+    private let sharePriceFieldView = ShadowView(color: .myAppMain,
+                                                 corner: 28)
+    private let sharePriceImageFieldView = BoundarView(.white)
+    private let sharePriceLabel = RegularLabel(text: AppText.PostProduct.sharePrice,
+                                               color: .white)
+    private let sharePriceWonLabel = RegularLabel(text: AppText.PostProduct.won,
+                                                  font: Font.regular15,
+                                                  color: .white)
+    private let shareCountFieldView = ShadowView(color: .myAppMain,
+                                                 corner: 28)
+    private let shareCountImageFieldView = BoundarView(.white)
+    private let shareCountLabel = RegularLabel(text: AppText.PostProduct.shareCount,
+                                               color: .white)
+    private let shareCountPCSLabel = RegularLabel(text: AppText.PostProduct.count,
+                                                  font: Font.regular15,
+                                                  color: .white)
+    private let detailView = ShadowView()
+    private let detailLabel = AndongLabel(text: AppText.PostProduct.detailExplain,
+                                          color: .myAppMain)
+    private let contentLabel = RegularLabel(text: "상세 내용입니다",
+                                            font: Font.regular17,
+                                            color: .myAppBlack)
+    private let placeView = ShadowView()
+    private let placeLabel = AndongLabel(text: AppText.PostProduct.sharePlace,
+                                         color: .myAppMain)
+    private let callButton = CommonButton(title: .call,
+                                          corner: 20,
+                                          backgroundColor: .myAppMain,
+                                          textColor: .white)
+    
+    override func configureHierarchy() {
+        addSubview(scrollView)
+        [contentView, callButton].forEach { scrollView.addSubview($0) }
+        [productImagesScrollView, productFieldView].forEach { contentView.addSubview($0) }
+        [profileImageView, nicknameLabel,
+         titleLabel, boundarView,
+         buyDateExplainLabel, buyDateLabel,
+         likeButton, likeCountLabel,
+         receiptButton, receiptLabel,
+         buyPriceFieldView, buyCountFieldView,
+         sharePriceFieldView, shareCountFieldView,
+         detailView, placeView].forEach { productFieldView.addSubview($0) }
+        [buyPriceImageFieldView, buyPriceLabel,
+         buyPriceWonLabel].forEach { buyPriceFieldView.addSubview($0) }
+        [buyCountImageFieldView, buyCountLabel,
+         buyCountPCSLabel].forEach { buyCountFieldView.addSubview($0) }
+        [sharePriceImageFieldView, sharePriceLabel,
+         sharePriceWonLabel].forEach { sharePriceFieldView.addSubview($0) }
+        [shareCountImageFieldView, shareCountLabel,
+         shareCountPCSLabel].forEach { shareCountFieldView.addSubview($0) }
+        [detailLabel, contentLabel].forEach { detailView.addSubview($0) }
+        [placeLabel].forEach { placeView.addSubview($0) }
+        
+    }
+    
+    override func configureLayout() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.width.equalTo(scrollView.snp.width)
+            make.verticalEdges.equalTo(scrollView)
+        }
+        
+        productImagesScrollView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(contentView)
+            make.height.equalTo(260)
+        }
+        
+        productFieldView.snp.makeConstraints { make in
+            make.top.equalTo(productImagesScrollView.snp.bottom).offset(-12)
+            make.horizontalEdges.bottom.equalTo(contentView)
+        }
+        
+        profileImageView.snp.makeConstraints { make in
+            make.size.equalTo(60)
+            make.top.equalTo(productFieldView).inset(16)
+            make.leading.equalTo(productFieldView).inset(20)
+        }
+        
+        nicknameLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.bottom).offset(4)
+            make.centerX.equalTo(profileImageView)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView).inset(4)
+            make.leading.equalTo(productFieldView.snp.trailing).offset(20)
+        }
+        
+        boundarView.snp.makeConstraints { make in
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(4)
+            make.horizontalEdges.equalTo(productFieldView)
+            make.height.equalTo(1)
+        }
+        
+        buyDateExplainLabel.snp.makeConstraints { make in
+            make.top.equalTo(boundarView.snp.bottom).offset(16)
+            make.centerX.equalTo((Device.screenWidth)/5)
+        }
+        
+        buyDateLabel.snp.makeConstraints { make in
+            make.top.equalTo(buyDateExplainLabel.snp.bottom).offset(8)
+            make.centerX.equalTo(buyDateExplainLabel)
+        }
+        
+        likeButton.snp.makeConstraints { make in
+            make.top.equalTo(boundarView.snp.bottom).offset(16)
+            make.centerX.equalTo(productFieldView)
+            make.size.equalTo(CGSize(width: 24, height: 24))
+        }
+        
+        likeCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(likeButton.snp.bottom).offset(4)
+            make.centerX.equalTo(likeButton)
+        }
+        
+        receiptButton.snp.makeConstraints { make in
+            make.top.equalTo(boundarView.snp.bottom).offset(16)
+            make.centerX.equalTo((Device.screenWidth)*4/5)
+        }
+        
+        receiptLabel.snp.makeConstraints { make in
+            make.top.equalTo(receiptButton.snp.bottom).offset(4)
+            make.centerX.equalTo(receiptButton)
+        }
+        
+        buyPriceFieldView.snp.makeConstraints { make in
+            make.top.equalTo(buyDateLabel.snp.bottom).offset(16)
+            make.leading.equalTo(productFieldView).inset(20)
+            make.trailing.equalTo(productFieldView.snp.centerX).offset(-16)
+            make.height.equalTo(72)
+        }
+        
+        buyCountFieldView.snp.makeConstraints { make in
+            make.top.equalTo(buyDateLabel.snp.bottom).offset(16)
+            make.leading.equalTo(productFieldView.snp.centerX).offset(16)
+            make.trailing.equalTo(productFieldView).inset(20)
+            make.height.equalTo(72)
+        }
+        
+        sharePriceFieldView.snp.makeConstraints { make in
+            make.top.equalTo(buyCountFieldView.snp.bottom).offset(12)
+            make.leading.equalTo(productFieldView).inset(20)
+            make.trailing.equalTo(productFieldView.snp.centerX).offset(-16)
+            make.height.equalTo(72)
+        }
+        
+        shareCountFieldView.snp.makeConstraints { make in
+            make.top.equalTo(buyCountFieldView.snp.bottom).offset(12)
+            make.leading.equalTo(productFieldView.snp.centerX).offset(16)
+            make.trailing.equalTo(productFieldView).inset(20)
+            make.height.equalTo(72)
+        }
+        
+        buyPriceImageFieldView.snp.makeConstraints { make in
+            make.centerY.equalTo(buyPriceFieldView)
+            make.horizontalEdges.leading.equalTo(buyPriceFieldView).inset(20)
+            make.width.equalTo(40)
+        }
+        
+        detailView.snp.makeConstraints { make in
+            make.top.equalTo(sharePriceFieldView.snp.bottom).offset(20)
+            make.horizontalEdges.equalTo(productFieldView)
+            make.height.equalTo(200)
+        }
+        
+        detailLabel.snp.makeConstraints { make in
+            make.top.equalTo(detailView).inset(16)
+            make.leading.equalTo(detailView).inset(20)
+        }
+        
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(detailLabel.snp.bottom).offset(20)
+            make.horizontalEdges.bottom.equalTo(detailView).inset(20)
+        }
+        
+        placeView.snp.makeConstraints { make in
+            make.top.equalTo(detailView.snp.bottom).offset(20)
+            make.horizontalEdges.equalTo(productFieldView)
+            make.height.equalTo(200)
+            make.bottom.equalTo(productFieldView).offset(-20)
+        }
+        
+        placeLabel.snp.makeConstraints { make in
+            make.top.equalTo(placeView).inset(16)
+            make.leading.equalTo(placeView).inset(20)
+        }
+        
+        callButton.snp.makeConstraints { make in
+//            make.top.equalTo(placeView.snp.bottom).offset(20)
+            make.horizontalEdges.equalTo(contentView).inset(28)
+            make.height.equalTo(48)
+            make.bottom.equalTo(contentView).offset(-20)
+        }
+        
+    }
+    
+    override func configureView() {
+        productImagesScrollView.backgroundColor = .black
+        profileImageView.backgroundColor = .red
+    }
+    
+}

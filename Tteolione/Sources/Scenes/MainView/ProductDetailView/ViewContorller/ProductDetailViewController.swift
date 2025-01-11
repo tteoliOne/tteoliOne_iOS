@@ -1,5 +1,5 @@
 //
-//  ProdcutDetailViewController.swift
+//  ProductDetailViewController.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/11/25.
@@ -9,7 +9,7 @@ import UIKit
 import ReactorKit
 import RxCocoa
 
-final class ProdcutDetailViewController: BaseViewController<ProductDetailView> {
+final class ProductDetailViewController: BaseViewController<ProductDetailView> {
     
     var disposeBag = DisposeBag()
     
