@@ -9,12 +9,12 @@ import UIKit
 
 class LikeButton: UIButton {
     
-    init() {
+    init(color: UIColor) {
         super.init(frame: .zero)
         
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
         setImage(UIImage(systemName: "heart", withConfiguration: imageConfig)?
-            .withTintColor(.myAppLikeButton, renderingMode: .alwaysOriginal), for: .normal)
+            .withTintColor(color, renderingMode: .alwaysOriginal), for: .normal)
         imageView?.contentMode = .scaleAspectFit
         
     }

@@ -55,7 +55,7 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         label.font = Font.regular13
         return label
     }()
-    let likeButton = LikeButton()
+    let likeButton = LikeButton(color: .myAppLikeButton)
     private let likeCountLable: UILabel = {
         let label = UILabel()
         label.text = "0"

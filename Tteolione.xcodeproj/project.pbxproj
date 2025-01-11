@@ -151,6 +151,12 @@
 		72361FC02D30E964009BEF12 /* SymbolImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */; };
 		72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC12D30EA0C009BEF12 /* ShadowView.swift */; };
 		72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC32D30F8D2009BEF12 /* RegularLabel.swift */; };
+		72361FC62D315B08009BEF12 /* PostReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC52D315B08009BEF12 /* PostReceiptViewController.swift */; };
+		72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC72D315B59009BEF12 /* PostReceiptView.swift */; };
+		72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC92D315B6A009BEF12 /* PostReceiptReactor.swift */; };
+		72361FD02D316F7A009BEF12 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FCF2D316F7A009BEF12 /* ProductDetailViewController.swift */; };
+		72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FD12D316F8A009BEF12 /* ProdcutDetailView.swift */; };
+		72361FD42D316F98009BEF12 /* ProdcutDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FD32D316F98009BEF12 /* ProdcutDetailReactor.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -323,6 +329,12 @@
 		72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolImageButton.swift; sourceTree = "<group>"; };
 		72361FC12D30EA0C009BEF12 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		72361FC32D30F8D2009BEF12 /* RegularLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularLabel.swift; sourceTree = "<group>"; };
+		72361FC52D315B08009BEF12 /* PostReceiptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReceiptViewController.swift; sourceTree = "<group>"; };
+		72361FC72D315B59009BEF12 /* PostReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReceiptView.swift; sourceTree = "<group>"; };
+		72361FC92D315B6A009BEF12 /* PostReceiptReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReceiptReactor.swift; sourceTree = "<group>"; };
+		72361FCF2D316F7A009BEF12 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
+		72361FD12D316F8A009BEF12 /* ProdcutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdcutDetailView.swift; sourceTree = "<group>"; };
+		72361FD32D316F98009BEF12 /* ProdcutDetailReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdcutDetailReactor.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -831,6 +843,7 @@
 				72361F952D2F8EAB009BEF12 /* View */,
 				72361F962D2F8EB1009BEF12 /* Reactor */,
 				72361FB12D30DBC0009BEF12 /* PostView */,
+				72361FCB2D316F1F009BEF12 /* ProductDetailView */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -891,6 +904,7 @@
 			isa = PBXGroup;
 			children = (
 				72361FB52D30DBFE009BEF12 /* PostViewController.swift */,
+				72361FC52D315B08009BEF12 /* PostReceiptViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -899,6 +913,7 @@
 			isa = PBXGroup;
 			children = (
 				72361FB72D30DC05009BEF12 /* PostView.swift */,
+				72361FC72D315B59009BEF12 /* PostReceiptView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -907,6 +922,41 @@
 			isa = PBXGroup;
 			children = (
 				72361FB92D30DC0D009BEF12 /* PostReactor.swift */,
+				72361FC92D315B6A009BEF12 /* PostReceiptReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		72361FCB2D316F1F009BEF12 /* ProductDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				72361FCC2D316F47009BEF12 /* ViewContorller */,
+				72361FCD2D316F4E009BEF12 /* View */,
+				72361FCE2D316F51009BEF12 /* Reactor */,
+			);
+			path = ProductDetailView;
+			sourceTree = "<group>";
+		};
+		72361FCC2D316F47009BEF12 /* ViewContorller */ = {
+			isa = PBXGroup;
+			children = (
+				72361FCF2D316F7A009BEF12 /* ProductDetailViewController.swift */,
+			);
+			path = ViewContorller;
+			sourceTree = "<group>";
+		};
+		72361FCD2D316F4E009BEF12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				72361FD12D316F8A009BEF12 /* ProdcutDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72361FCE2D316F51009BEF12 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				72361FD32D316F98009BEF12 /* ProdcutDetailReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -1233,8 +1283,10 @@
 				72361ECA2D27AA2B009BEF12 /* FindIDResultReactor.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
+				72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
+				72361FC62D315B08009BEF12 /* PostReceiptViewController.swift in Sources */,
 				72361F3E2D2EA226009BEF12 /* ProductQueryParameters.swift in Sources */,
 				72361FA82D2F96BC009BEF12 /* LikeButton.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
@@ -1268,6 +1320,7 @@
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
 				72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
+				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
 				72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */,
@@ -1293,6 +1346,7 @@
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
 				72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */,
 				72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */,
+				72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */,
 				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
 				72361F662D2EBA2C009BEF12 /* ChatListDTO.swift in Sources */,
 				72361F3A2D2EA1F4009BEF12 /* QueryStringProtocol.swift in Sources */,
@@ -1323,6 +1377,7 @@
 				72361F282D2E576C009BEF12 /* ProductServiceAPI.swift in Sources */,
 				72361F572D2EB404009BEF12 /* ReportRequestBody.swift in Sources */,
 				72361F512D2EB134009BEF12 /* OtherUserDTO.swift in Sources */,
+				72361FD02D316F7A009BEF12 /* ProductDetailViewController.swift in Sources */,
 				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
 				72361F0E2D2E370A009BEF12 /* SocialAPI.swift in Sources */,
 				72361F142D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift in Sources */,
@@ -1386,6 +1441,7 @@
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
 				72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */,
 				72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */,
+				72361FD42D316F98009BEF12 /* ProdcutDetailReactor.swift in Sources */,
 				72361E8D2D140585009BEF12 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

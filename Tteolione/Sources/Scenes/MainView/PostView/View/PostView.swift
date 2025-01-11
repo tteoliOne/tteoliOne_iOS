@@ -168,7 +168,7 @@ final class PostView: BaseView, UITextViewDelegate {
                                            textColor: .myAppBlack,
                                            font: Font.regular15)
     //MARK: - 다음버튼
-    private let netxButton = CommonButton(title: .next,
+    let nextButton = CommonButton(title: .next,
                                           corner: 24,
                                           backgroundColor: .myAppMain,
                                           textColor: .white)
@@ -181,7 +181,7 @@ final class PostView: BaseView, UITextViewDelegate {
          titleView, purchaseView,
          shareView, dateView,
          categoryView, descriptionView,
-         placeView, netxButton].forEach { contentView.addSubview($0) }
+         placeView, nextButton].forEach { contentView.addSubview($0) }
         photoScrollView.addSubview(productPhotoButton)
         [titleLabel, titleTextField,
          titleTextFieldBoundarLineView,
@@ -510,7 +510,7 @@ final class PostView: BaseView, UITextViewDelegate {
             make.height.equalTo(32)
         }
         
-        netxButton.snp.makeConstraints { make in
+        nextButton.snp.makeConstraints { make in
             make.top.equalTo(placeView.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(contentView).inset(28)
             make.height.equalTo(48)

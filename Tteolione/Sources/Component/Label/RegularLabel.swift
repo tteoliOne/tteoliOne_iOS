@@ -9,11 +9,11 @@ import UIKit
 
 class RegularLabel: UILabel {
     
-    init(text: String, color: UIColor) {
+    init(text: String, font: UIFont? = Font.regular16, color: UIColor) {
         super.init(frame: .zero)
         
         self.text = text
-        font = Font.regular16
+        self.font = font
         textColor = color
         
     }
