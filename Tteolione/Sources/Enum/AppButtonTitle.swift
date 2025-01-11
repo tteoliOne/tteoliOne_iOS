@@ -29,4 +29,5 @@ enum AppButtonTitle: String {
     case etc = "기타"
     case selectPlace = "장소 선택하기"
     case register = "등록"
+    case call = "연락하기"
 }

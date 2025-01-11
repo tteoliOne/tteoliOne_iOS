@@ -79,4 +79,8 @@ enum AppText {
         static let recipetDetailExplain = "1. 다른 정보가 보이지 않도록 찍는다\n2. 상품명, 수량, 금액이 보이도록 찍는다\n3. 영수증 아닌 사진은 금한다"
     }
     
+    enum Etc {
+        static let recipet = "영수증"
+    }
+    
 }
