@@ -14,10 +14,19 @@ final class TabBarController: UITabBarController {
             nibName: nil,
             bundle: nil
         )
+        configureTabBarAppearance()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.shadowColor = UIColor.lightGray.withAlphaComponent(0.3)
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
     }
     
 }
