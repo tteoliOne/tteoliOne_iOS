@@ -33,7 +33,7 @@ extension TabBarCoordinator {
         tabBarController.viewControllers = viewControllers
         tabBarController.tabBar.tintColor = .myAppBlack
         tabBarController.tabBar.unselectedItemTintColor = .gray
-        
+        navigationController.isNavigationBarHidden = true
         navigationController.setViewControllers([tabBarController], animated: true)
     }
     
@@ -53,7 +53,8 @@ extension TabBarCoordinator {
         return navigationController
     }
     
-    private func setupChildCoordinator(for tabBase: TabBase, navigationController: UINavigationController) {
+    private func setupChildCoordinator(for tabBase: TabBase,
+                                       navigationController: UINavigationController) {
         let coordinator: Coordinator
         
         switch tabBase {
@@ -61,10 +62,10 @@ extension TabBarCoordinator {
             coordinator = MainCoordinator(navigationController: navigationController)
             
         case .chat:
-            coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator = MainCoordinator(navigationController: navigationController)//아직 안만들어서 임시 코디네이터임
             
         case .myProfile:
-            coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator = MainCoordinator(navigationController: navigationController)//아직 안만들어서 임시 코디네이터임
         }
         
         coordinator.parentCoordinator = self
