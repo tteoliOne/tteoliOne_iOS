@@ -20,6 +20,7 @@ class CircleImageView: UIImageView {
         layer.borderWidth = border
         backgroundColor = .clear
         contentMode = .scaleAspectFit
+        layer.masksToBounds = true
         clipsToBounds = true
     }
     
