@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+enum NavigationTitle {
+    case main
+    
+    var title: String {
+        switch self {
+        case .main:
+            return "31"
+        }
+    }
+}
