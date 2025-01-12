@@ -40,7 +40,7 @@ final class ProductDetailView: BaseView {
     private let receiptButton: UIButton = {
         let button = UIButton()
         let newSize = CGSize(width: 24, height: 24)
-        if let receiptImage = UIImage(named: "receipt")?.resizableImage(withCapInsets: .zero, resizingMode: .stretch) {
+        if let receiptImage = UIImage(named: "receiptPhoto")?.resizableImage(withCapInsets: .zero, resizingMode: .stretch) {
             let resizedImage = UIGraphicsImageRenderer(size: newSize).image { _ in
                 receiptImage.draw(in: CGRect(origin: .zero, size: newSize))
             }
@@ -51,38 +51,51 @@ final class ProductDetailView: BaseView {
     private let receiptLabel = RegularLabel(text: AppText.Etc.recipet,
                                             font: Font.regular13,
                                             color: .myAppBlack)
+    
     private let buyPriceFieldView = ShadowView(color: .myAppMain,
                                                corner: 28)
-    private let buyPriceImageFieldView = BoundarView(.white)
+    private let buyPriceImageView = CircleImageView(joinImage: .buyPrice,
+                                                    corner: 20,
+                                                    border: 0)
     private let buyPriceLabel = RegularLabel(text: AppText.PostProduct.buyPrice,
                                              color: .white)
     private let buyPriceWonLabel = RegularLabel(text: AppText.PostProduct.won,
                                                 font: Font.regular15,
                                                 color: .white)
+    
     private let buyCountFieldView = ShadowView(color: .myAppMain,
                                                corner: 28)
-    private let buyCountImageFieldView = BoundarView(.white)
+    private let buyCountImageView = CircleImageView(joinImage: .buyCount,
+                                                    corner: 15,
+                                                    border: 0)
     private let buyCountLabel = RegularLabel(text: AppText.PostProduct.buyCount,
                                              color: .white)
     private let buyCountPCSLabel = RegularLabel(text: AppText.PostProduct.count,
                                                 font: Font.regular15,
                                                 color: .white)
+    
     private let sharePriceFieldView = ShadowView(color: .myAppMain,
                                                  corner: 28)
-    private let sharePriceImageFieldView = BoundarView(.white)
+    private let sharePriceImageView = CircleImageView(joinImage: .sharePrice,
+                                                      corner: 15,
+                                                      border: 0)
     private let sharePriceLabel = RegularLabel(text: AppText.PostProduct.sharePrice,
                                                color: .white)
     private let sharePriceWonLabel = RegularLabel(text: AppText.PostProduct.won,
                                                   font: Font.regular15,
                                                   color: .white)
+    
     private let shareCountFieldView = ShadowView(color: .myAppMain,
                                                  corner: 28)
-    private let shareCountImageFieldView = BoundarView(.white)
+    private let shareCountImageView = CircleImageView(joinImage: .shareCount,
+                                                      corner: 15,
+                                                      border: 0)
     private let shareCountLabel = RegularLabel(text: AppText.PostProduct.shareCount,
                                                color: .white)
     private let shareCountPCSLabel = RegularLabel(text: AppText.PostProduct.count,
                                                   font: Font.regular15,
                                                   color: .white)
+    
     private let detailView = ShadowView()
     private let detailLabel = AndongLabel(text: AppText.PostProduct.detailExplain,
                                           color: .myAppMain)
@@ -98,8 +111,8 @@ final class ProductDetailView: BaseView {
                                           textColor: .white)
     
     override func configureHierarchy() {
-        addSubview(scrollView)
-        [contentView, callButton].forEach { scrollView.addSubview($0) }
+        [scrollView, callButton].forEach { addSubview($0) }
+        [contentView].forEach { scrollView.addSubview($0) }
         [productImagesScrollView, productFieldView].forEach { contentView.addSubview($0) }
         [profileImageView, nicknameLabel,
          titleLabel, boundarView,
@@ -109,13 +122,13 @@ final class ProductDetailView: BaseView {
          buyPriceFieldView, buyCountFieldView,
          sharePriceFieldView, shareCountFieldView,
          detailView, placeView].forEach { productFieldView.addSubview($0) }
-        [buyPriceImageFieldView, buyPriceLabel,
+        [buyPriceImageView, buyPriceLabel,
          buyPriceWonLabel].forEach { buyPriceFieldView.addSubview($0) }
-        [buyCountImageFieldView, buyCountLabel,
+        [buyCountImageView, buyCountLabel,
          buyCountPCSLabel].forEach { buyCountFieldView.addSubview($0) }
-        [sharePriceImageFieldView, sharePriceLabel,
+        [sharePriceImageView, sharePriceLabel,
          sharePriceWonLabel].forEach { sharePriceFieldView.addSubview($0) }
-        [shareCountImageFieldView, shareCountLabel,
+        [shareCountImageView, shareCountLabel,
          shareCountPCSLabel].forEach { shareCountFieldView.addSubview($0) }
         [detailLabel, contentLabel].forEach { detailView.addSubview($0) }
         [placeLabel].forEach { placeView.addSubview($0) }
@@ -139,7 +152,8 @@ final class ProductDetailView: BaseView {
         
         productFieldView.snp.makeConstraints { make in
             make.top.equalTo(productImagesScrollView.snp.bottom).offset(-12)
-            make.horizontalEdges.bottom.equalTo(contentView)
+            make.width.equalTo(contentView.snp.width)
+            make.bottom.equalTo(contentView)
         }
         
         profileImageView.snp.makeConstraints { make in
@@ -154,8 +168,8 @@ final class ProductDetailView: BaseView {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView).inset(4)
-            make.leading.equalTo(productFieldView.snp.trailing).offset(20)
+            make.top.equalTo(productFieldView).inset(16)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(20)
         }
         
         boundarView.snp.makeConstraints { make in
@@ -202,11 +216,43 @@ final class ProductDetailView: BaseView {
             make.height.equalTo(72)
         }
         
+        buyPriceImageView.snp.makeConstraints { make in
+            make.size.equalTo(40)
+            make.leading.equalTo(buyPriceFieldView).inset(20)
+            make.centerY.equalTo(buyPriceFieldView)
+        }
+        
+        buyPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(buyPriceImageView)
+            make.leading.equalTo(buyPriceImageView.snp.trailing).offset(8)
+        }
+        
+        buyPriceWonLabel.snp.makeConstraints { make in
+            make.top.equalTo(buyPriceLabel.snp.bottom).offset(4)
+            make.centerX.equalTo(buyPriceLabel)
+        }
+        
         buyCountFieldView.snp.makeConstraints { make in
             make.top.equalTo(buyDateLabel.snp.bottom).offset(16)
             make.leading.equalTo(productFieldView.snp.centerX).offset(16)
             make.trailing.equalTo(productFieldView).inset(20)
             make.height.equalTo(72)
+        }
+        
+        buyCountImageView.snp.makeConstraints { make in
+            make.size.equalTo(40)
+            make.leading.equalTo(buyCountFieldView).inset(20)
+            make.centerY.equalTo(buyCountFieldView)
+        }
+        
+        buyCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(buyCountImageView)
+            make.leading.equalTo(buyCountImageView.snp.trailing).offset(8)
+        }
+        
+        buyCountPCSLabel.snp.makeConstraints { make in
+            make.top.equalTo(buyCountLabel.snp.bottom).offset(4)
+            make.centerX.equalTo(buyCountLabel)
         }
         
         sharePriceFieldView.snp.makeConstraints { make in
@@ -216,6 +262,22 @@ final class ProductDetailView: BaseView {
             make.height.equalTo(72)
         }
         
+        sharePriceImageView.snp.makeConstraints { make in
+            make.size.equalTo(40)
+            make.leading.equalTo(sharePriceFieldView).inset(20)
+            make.centerY.equalTo(sharePriceFieldView)
+        }
+        
+        sharePriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(sharePriceImageView)
+            make.leading.equalTo(sharePriceImageView.snp.trailing).offset(8)
+        }
+        
+        sharePriceWonLabel.snp.makeConstraints { make in
+            make.top.equalTo(sharePriceLabel.snp.bottom).offset(4)
+            make.centerX.equalTo(sharePriceLabel)
+        }
+        
         shareCountFieldView.snp.makeConstraints { make in
             make.top.equalTo(buyCountFieldView.snp.bottom).offset(12)
             make.leading.equalTo(productFieldView.snp.centerX).offset(16)
@@ -223,15 +285,25 @@ final class ProductDetailView: BaseView {
             make.height.equalTo(72)
         }
         
-        buyPriceImageFieldView.snp.makeConstraints { make in
-            make.centerY.equalTo(buyPriceFieldView)
-            make.horizontalEdges.leading.equalTo(buyPriceFieldView).inset(20)
-            make.width.equalTo(40)
+        shareCountImageView.snp.makeConstraints { make in
+            make.size.equalTo(40)
+            make.leading.equalTo(shareCountFieldView).inset(20)
+            make.centerY.equalTo(shareCountFieldView)
+        }
+        
+        shareCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(shareCountImageView)
+            make.leading.equalTo(shareCountImageView.snp.trailing).offset(8)
+        }
+        
+        shareCountPCSLabel.snp.makeConstraints { make in
+            make.top.equalTo(shareCountLabel.snp.bottom).offset(4)
+            make.centerX.equalTo(shareCountLabel)
         }
         
         detailView.snp.makeConstraints { make in
             make.top.equalTo(sharePriceFieldView.snp.bottom).offset(20)
-            make.horizontalEdges.equalTo(productFieldView)
+            make.horizontalEdges.equalTo(productFieldView).inset(20)
             make.height.equalTo(200)
         }
         
@@ -247,9 +319,9 @@ final class ProductDetailView: BaseView {
         
         placeView.snp.makeConstraints { make in
             make.top.equalTo(detailView.snp.bottom).offset(20)
-            make.horizontalEdges.equalTo(productFieldView)
+            make.horizontalEdges.equalTo(productFieldView).inset(20)
             make.height.equalTo(200)
-            make.bottom.equalTo(productFieldView).offset(-20)
+            make.bottom.equalTo(productFieldView).offset(-88)
         }
         
         placeLabel.snp.makeConstraints { make in
@@ -258,17 +330,19 @@ final class ProductDetailView: BaseView {
         }
         
         callButton.snp.makeConstraints { make in
-//            make.top.equalTo(placeView.snp.bottom).offset(20)
-            make.horizontalEdges.equalTo(contentView).inset(28)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(28)
             make.height.equalTo(48)
-            make.bottom.equalTo(contentView).offset(-20)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
         }
         
     }
     
     override func configureView() {
         productImagesScrollView.backgroundColor = .black
-        profileImageView.backgroundColor = .red
+        buyPriceImageView.backgroundColor = .white
+        buyCountImageView.backgroundColor = .white
+        sharePriceImageView.backgroundColor = .white
+        shareCountImageView.backgroundColor = .white
     }
     
 }
