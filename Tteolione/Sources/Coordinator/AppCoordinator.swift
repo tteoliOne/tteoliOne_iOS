@@ -18,7 +18,11 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        showLoginViewController()
+//        showLoginViewController()
+        
+        let tabBarCoordinator = TabBarCoordinator(navigationController: navigationController)
+        childCoordinators.append(tabBarCoordinator)
+        tabBarCoordinator.start()
     }
     
     private func showLoginViewController() {
