@@ -168,6 +168,10 @@
 		72361FF52D353680009BEF12 /* SearchSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF42D353680009BEF12 /* SearchSuggestionsViewController.swift */; };
 		72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF62D353693009BEF12 /* SearchResultsViewController.swift */; };
 		72361FF92D353B87009BEF12 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF82D353B87009BEF12 /* SearchView.swift */; };
+		72361FFF2D35417C009BEF12 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FFE2D35417C009BEF12 /* ProfileViewController.swift */; };
+		723620012D3541A5009BEF12 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620002D3541A5009BEF12 /* ProfileView.swift */; };
+		723620032D354246009BEF12 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620022D354246009BEF12 /* ProfileCoordinator.swift */; };
+		723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620042D355502009BEF12 /* ProfileListTableViewCell.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -357,6 +361,10 @@
 		72361FF42D353680009BEF12 /* SearchSuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsViewController.swift; sourceTree = "<group>"; };
 		72361FF62D353693009BEF12 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		72361FF82D353B87009BEF12 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		72361FFE2D35417C009BEF12 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		723620002D3541A5009BEF12 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		723620022D354246009BEF12 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		723620042D355502009BEF12 /* ProfileListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileListTableViewCell.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1033,6 +1041,7 @@
 		72361FE22D3417AD009BEF12 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				723620022D354246009BEF12 /* ProfileCoordinator.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1079,6 +1088,40 @@
 			children = (
 			);
 			path = Reactor;
+			sourceTree = "<group>";
+		};
+		72361FFA2D353F7E009BEF12 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				72361FFD2D353F9F009BEF12 /* ViewController */,
+				72361FFC2D353F9B009BEF12 /* View */,
+				72361FFB2D353F95009BEF12 /* Reactor */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		72361FFB2D353F95009BEF12 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		72361FFC2D353F9B009BEF12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				723620002D3541A5009BEF12 /* ProfileView.swift */,
+				723620042D355502009BEF12 /* ProfileListTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72361FFD2D353F9F009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72361FFE2D35417C009BEF12 /* ProfileViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -1168,6 +1211,7 @@
 				72361FD72D3411DB009BEF12 /* TabBar */,
 				724DECA02D0181B000171F44 /* LoginView */,
 				72361F932D2F8E90009BEF12 /* MainView */,
+				72361FFA2D353F7E009BEF12 /* ProfileView */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1406,6 +1450,7 @@
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
 				72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */,
+				723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361FF92D353B87009BEF12 /* SearchView.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
@@ -1439,6 +1484,7 @@
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
+				72361FFF2D35417C009BEF12 /* ProfileViewController.swift in Sources */,
 				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
@@ -1458,6 +1504,7 @@
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
+				723620032D354246009BEF12 /* ProfileCoordinator.swift in Sources */,
 				72361E242D02D1E8009BEF12 /* LineTextField.swift in Sources */,
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
 				72361F9C2D2F8EF1009BEF12 /* MainReactor.swift in Sources */,
@@ -1568,6 +1615,7 @@
 				72361FEB2D3441BE009BEF12 /* SideMenuViewController.swift in Sources */,
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				72361FBE2D30E5D6009BEF12 /* DeviceLenth.swift in Sources */,
+				723620012D3541A5009BEF12 /* ProfileView.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 				72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,

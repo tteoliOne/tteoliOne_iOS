@@ -30,4 +30,7 @@ enum AppButtonTitle: String {
     case selectPlace = "장소 선택하기"
     case register = "등록"
     case call = "연락하기"
+    
+    case logout = "로그아웃"
+    case withdrawal = "회원탈퇴"
 }
