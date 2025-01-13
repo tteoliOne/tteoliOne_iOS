@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainCoordinator: Coordinator {
+final class MainCoordinator: NSObject, Coordinator {
     
     var childCoordinators: [Coordinator] = []
     weak var parentCoordinator: Coordinator?
@@ -50,7 +50,7 @@ extension MainCoordinator {
         leftButton.setTitleColor(.black, for: .normal)
         leftButton.showsMenuAsPrimaryAction = true
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
-        
+        leftButton.addTarget(self, action: #selector(didTapLeftButton), for: .touchUpInside)
         let rightButton = UIBarButtonItem(
             image: UIImage(systemName: "magnifyingglass"),
             style: .plain,
@@ -62,4 +62,31 @@ extension MainCoordinator {
         viewController.navigationItem.largeTitleDisplayMode = .never
     }
     
+    @objc private func didTapLeftButton() {
+        showSideMenu()
+    }
+    
+}
+
+extension MainCoordinator {
+    func showSideMenu() {
+        let sideMenuVC = SideMenuViewController()
+        sideMenuVC.modalPresentationStyle = .custom
+        sideMenuVC.transitioningDelegate = self
+        navigationController.present(sideMenuVC, animated: true)
+    }
+}
+
+extension MainCoordinator: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SideMenuAnimator(isPresenting: true)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SideMenuAnimator(isPresenting: false)
+    }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return SideMenuPresentationController(presentedViewController: presented, presenting: presenting)
+    }
 }

@@ -162,6 +162,7 @@
 		72361FDF2D3415A5009BEF12 /* TabBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FDE2D3415A5009BEF12 /* TabBase.swift */; };
 		72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FE32D3417E2009BEF12 /* MainCoordinator.swift */; };
 		72361FE82D3425C5009BEF12 /* NavigationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FE72D3425C5009BEF12 /* NavigationTitle.swift */; };
+		72361FEB2D3441BE009BEF12 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -345,6 +346,7 @@
 		72361FDE2D3415A5009BEF12 /* TabBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBase.swift; sourceTree = "<group>"; };
 		72361FE32D3417E2009BEF12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		72361FE72D3425C5009BEF12 /* NavigationTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitle.swift; sourceTree = "<group>"; };
+		72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -857,6 +859,7 @@
 				72361F962D2F8EB1009BEF12 /* Reactor */,
 				72361FB12D30DBC0009BEF12 /* PostView */,
 				72361FCB2D316F1F009BEF12 /* ProductDetailView */,
+				72361FE92D3441A0009BEF12 /* SideMenuViewController */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -1021,6 +1024,14 @@
 			children = (
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		72361FE92D3441A0009BEF12 /* SideMenuViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */,
+			);
+			path = SideMenuViewController;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -1502,6 +1513,7 @@
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
 				72361F6E2D2EBFF2009BEF12 /* ChatContentDTO.swift in Sources */,
 				72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */,
+				72361FEB2D3441BE009BEF12 /* SideMenuViewController.swift in Sources */,
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				72361FBE2D30E5D6009BEF12 /* DeviceLenth.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
