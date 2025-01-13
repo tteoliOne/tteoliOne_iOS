@@ -875,10 +875,6 @@
 				72361F942D2F8EA3009BEF12 /* ViewController */,
 				72361F952D2F8EAB009BEF12 /* View */,
 				72361F962D2F8EB1009BEF12 /* Reactor */,
-				72361FB12D30DBC0009BEF12 /* PostView */,
-				72361FCB2D316F1F009BEF12 /* ProductDetailView */,
-				72361FE92D3441A0009BEF12 /* SideMenuView */,
-				72361FEC2D3535A7009BEF12 /* SearchView */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -1210,7 +1206,13 @@
 			children = (
 				72361FD72D3411DB009BEF12 /* TabBar */,
 				724DECA02D0181B000171F44 /* LoginView */,
+				724DECC02D02CB1600171F44 /* JoinView */,
+				72361EB42D26B65E009BEF12 /* FindAccountView */,
 				72361F932D2F8E90009BEF12 /* MainView */,
+				72361FCB2D316F1F009BEF12 /* ProductDetailView */,
+				72361FE92D3441A0009BEF12 /* SideMenuView */,
+				72361FB12D30DBC0009BEF12 /* PostView */,
+				72361FEC2D3535A7009BEF12 /* SearchView */,
 				72361FFA2D353F7E009BEF12 /* ProfileView */,
 			);
 			path = Scenes;
@@ -1223,8 +1225,6 @@
 				724DECA22D01834800171F44 /* View */,
 				724DECA12D01832800171F44 /* Reactor */,
 				72361E812D12BFBC009BEF12 /* Mediator */,
-				724DECC02D02CB1600171F44 /* JoinView */,
-				72361EB42D26B65E009BEF12 /* FindAccountView */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
