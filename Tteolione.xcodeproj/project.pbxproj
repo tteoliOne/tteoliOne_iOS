@@ -163,6 +163,11 @@
 		72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FE32D3417E2009BEF12 /* MainCoordinator.swift */; };
 		72361FE82D3425C5009BEF12 /* NavigationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FE72D3425C5009BEF12 /* NavigationTitle.swift */; };
 		72361FEB2D3441BE009BEF12 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */; };
+		72361FF12D35364C009BEF12 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF02D35364C009BEF12 /* SearchViewController.swift */; };
+		72361FF32D353665009BEF12 /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF22D353665009BEF12 /* RecentSearchViewController.swift */; };
+		72361FF52D353680009BEF12 /* SearchSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF42D353680009BEF12 /* SearchSuggestionsViewController.swift */; };
+		72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF62D353693009BEF12 /* SearchResultsViewController.swift */; };
+		72361FF92D353B87009BEF12 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FF82D353B87009BEF12 /* SearchView.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -347,6 +352,11 @@
 		72361FE32D3417E2009BEF12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		72361FE72D3425C5009BEF12 /* NavigationTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitle.swift; sourceTree = "<group>"; };
 		72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		72361FF02D35364C009BEF12 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		72361FF22D353665009BEF12 /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
+		72361FF42D353680009BEF12 /* SearchSuggestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsViewController.swift; sourceTree = "<group>"; };
+		72361FF62D353693009BEF12 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		72361FF82D353B87009BEF12 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -859,7 +869,8 @@
 				72361F962D2F8EB1009BEF12 /* Reactor */,
 				72361FB12D30DBC0009BEF12 /* PostView */,
 				72361FCB2D316F1F009BEF12 /* ProductDetailView */,
-				72361FE92D3441A0009BEF12 /* SideMenuViewController */,
+				72361FE92D3441A0009BEF12 /* SideMenuView */,
+				72361FEC2D3535A7009BEF12 /* SearchView */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -1026,12 +1037,48 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		72361FE92D3441A0009BEF12 /* SideMenuViewController */ = {
+		72361FE92D3441A0009BEF12 /* SideMenuView */ = {
 			isa = PBXGroup;
 			children = (
 				72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */,
 			);
-			path = SideMenuViewController;
+			path = SideMenuView;
+			sourceTree = "<group>";
+		};
+		72361FEC2D3535A7009BEF12 /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				72361FEE2D3535C3009BEF12 /* ViewController */,
+				72361FED2D3535B8009BEF12 /* View */,
+				72361FEF2D3535CC009BEF12 /* Reactor */,
+			);
+			path = SearchView;
+			sourceTree = "<group>";
+		};
+		72361FED2D3535B8009BEF12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				72361FF82D353B87009BEF12 /* SearchView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72361FEE2D3535C3009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72361FF02D35364C009BEF12 /* SearchViewController.swift */,
+				72361FF22D353665009BEF12 /* RecentSearchViewController.swift */,
+				72361FF42D353680009BEF12 /* SearchSuggestionsViewController.swift */,
+				72361FF62D353693009BEF12 /* SearchResultsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		72361FEF2D3535CC009BEF12 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reactor;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -1350,6 +1397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72361FF52D353680009BEF12 /* SearchSuggestionsViewController.swift in Sources */,
 				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
 				72361FB02D2FF219009BEF12 /* PostButton.swift in Sources */,
 				72361F532D2EB276009BEF12 /* MyReviewDTO.swift in Sources */,
@@ -1359,9 +1407,11 @@
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
 				72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
+				72361FF92D353B87009BEF12 /* SearchView.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
 				72361FC62D315B08009BEF12 /* PostReceiptViewController.swift in Sources */,
 				72361F3E2D2EA226009BEF12 /* ProductQueryParameters.swift in Sources */,
+				72361FF32D353665009BEF12 /* RecentSearchViewController.swift in Sources */,
 				72361FA82D2F96BC009BEF12 /* LikeButton.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
 				72361EE02D295C9D009BEF12 /* FindAccountDelegate.swift in Sources */,
@@ -1400,6 +1450,7 @@
 				72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
+				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
@@ -1494,6 +1545,7 @@
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
 				72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */,
 				72361EAF2D1FE757009BEF12 /* NameView.swift in Sources */,
+				72361FF12D35364C009BEF12 /* SearchViewController.swift in Sources */,
 				72361F4D2D2EAF0C009BEF12 /* UpdateMyProfileRequestBody.swift in Sources */,
 				72361F312D2E963C009BEF12 /* RegistDTO.swift in Sources */,
 				72361E982D17D38A009BEF12 /* SignUpDelegate.swift in Sources */,
