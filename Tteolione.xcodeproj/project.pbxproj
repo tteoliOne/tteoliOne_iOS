@@ -172,6 +172,9 @@
 		723620012D3541A5009BEF12 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620002D3541A5009BEF12 /* ProfileView.swift */; };
 		723620032D354246009BEF12 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620022D354246009BEF12 /* ProfileCoordinator.swift */; };
 		723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620042D355502009BEF12 /* ProfileListTableViewCell.swift */; };
+		7236200B2D356DE2009BEF12 /* AddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7236200A2D356DE2009BEF12 /* AddressViewController.swift */; };
+		7236200D2D356DE8009BEF12 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7236200C2D356DE8009BEF12 /* AddressView.swift */; };
+		7236200F2D3571F6009BEF12 /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7236200E2D3571F6009BEF12 /* AddressTableViewCell.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -365,6 +368,9 @@
 		723620002D3541A5009BEF12 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		723620022D354246009BEF12 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		723620042D355502009BEF12 /* ProfileListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileListTableViewCell.swift; sourceTree = "<group>"; };
+		7236200A2D356DE2009BEF12 /* AddressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewController.swift; sourceTree = "<group>"; };
+		7236200C2D356DE8009BEF12 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		7236200E2D3571F6009BEF12 /* AddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTableViewCell.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1120,6 +1126,40 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		723620062D356C54009BEF12 /* AddressView */ = {
+			isa = PBXGroup;
+			children = (
+				723620072D356C76009BEF12 /* ViewController */,
+				723620082D356C7D009BEF12 /* View */,
+				723620092D356C81009BEF12 /* Reactor */,
+			);
+			path = AddressView;
+			sourceTree = "<group>";
+		};
+		723620072D356C76009BEF12 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7236200A2D356DE2009BEF12 /* AddressViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		723620082D356C7D009BEF12 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7236200C2D356DE8009BEF12 /* AddressView.swift */,
+				7236200E2D3571F6009BEF12 /* AddressTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		723620092D356C81009BEF12 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -1206,6 +1246,7 @@
 			children = (
 				72361FD72D3411DB009BEF12 /* TabBar */,
 				724DECA02D0181B000171F44 /* LoginView */,
+				723620062D356C54009BEF12 /* AddressView */,
 				724DECC02D02CB1600171F44 /* JoinView */,
 				72361EB42D26B65E009BEF12 /* FindAccountView */,
 				72361F932D2F8E90009BEF12 /* MainView */,
@@ -1470,6 +1511,7 @@
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
 				72361F242D2E5129009BEF12 /* ReissueTokenRequestBody.swift in Sources */,
 				72361EA42D1E9041009BEF12 /* SignUpFinshViewController.swift in Sources */,
+				7236200D2D356DE8009BEF12 /* AddressView.swift in Sources */,
 				72361E542D0BF5F7009BEF12 /* ProfileSetView.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
@@ -1517,6 +1559,7 @@
 				72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */,
 				72361ECC2D27C510009BEF12 /* ResetPasswordCheckViewController.swift in Sources */,
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
+				7236200F2D3571F6009BEF12 /* AddressTableViewCell.swift in Sources */,
 				72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */,
 				72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */,
 				72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */,
@@ -1567,6 +1610,7 @@
 				72361F552D2EB336009BEF12 /* ReportQueryParameters.swift in Sources */,
 				72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */,
 				72361E7D2D12B7BC009BEF12 /* OnBoardingReactor.swift in Sources */,
+				7236200B2D356DE2009BEF12 /* AddressViewController.swift in Sources */,
 				72361EB32D1FF7C3009BEF12 /* NameCoordinator.swift in Sources */,
 				72361E662D0C2D30009BEF12 /* NetworkProvider.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
