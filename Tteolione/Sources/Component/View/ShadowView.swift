@@ -13,11 +13,12 @@ class ShadowView: UIView {
     private let roundedView = UIView()
 
     init(color: UIColor? = .white,
-         corner: CGFloat? = 20) {
+         corner: CGFloat? = 20,
+         shadowColor: CGColor? = UIColor.myAppBlack.cgColor) {
         super.init(frame: .zero)
 
         backgroundColor = .clear
-        layer.shadowColor = UIColor.myAppBlack.cgColor
+        layer.shadowColor = shadowColor
         layer.shadowOffset = CGSize(width: 0, height: 4)
         layer.shadowRadius = 5
         layer.shadowOpacity = 0.3

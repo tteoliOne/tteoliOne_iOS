@@ -81,6 +81,8 @@ enum AppText {
     
     enum Etc {
         static let recipet = "영수증"
+        static let nickname = "닉네임"
+        static let thumb = "따봉"
     }
     
 }

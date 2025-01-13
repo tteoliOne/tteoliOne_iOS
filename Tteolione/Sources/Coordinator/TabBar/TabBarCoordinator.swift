@@ -65,7 +65,7 @@ extension TabBarCoordinator {
             coordinator = MainCoordinator(navigationController: navigationController)//아직 안만들어서 임시 코디네이터임
             
         case .myProfile:
-            coordinator = MainCoordinator(navigationController: navigationController)//아직 안만들어서 임시 코디네이터임
+            coordinator = ProfileCoordinator(navigationController: navigationController)
         }
         
         coordinator.parentCoordinator = self
