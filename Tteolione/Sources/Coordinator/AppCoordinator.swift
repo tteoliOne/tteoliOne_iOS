@@ -12,14 +12,18 @@ final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
+    private let userDefaultManager = UserDefaultsManager.shared
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
     
     func start() {
-//        showLoginViewController()
-        startTabBar()
+        if userDefaultManager.token.isEmpty {
+            showLoginVC()
+        } else {
+            startTabBar()
+        }
     }
     
     private func startTabBar() {
@@ -29,9 +33,10 @@ final class AppCoordinator: Coordinator {
         tabBarCoordinator.start()
     }
     
-    private func showLoginViewController() {
+    private func showLoginVC() {
         let loginCoordinator = LoginCoordinator(navigationController: navigationController)
         loginCoordinator.delegate = self
+        loginCoordinator.parentCoordinator = self
         addChildCoordinator(loginCoordinator)
         loginCoordinator.start()
     }
