@@ -34,31 +34,10 @@ final class AppCoordinator: Coordinator {
     }
     
     private func showLoginVC() {
-        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
-        loginCoordinator.delegate = self
+        let loginCoordinator = LoginCoordinator(navigationController: navigationController,
+                                                dependency: AppDependency.shared)
         loginCoordinator.parentCoordinator = self
         addChildCoordinator(loginCoordinator)
         loginCoordinator.start()
     }
-}
-
-extension AppCoordinator: LoginCoordinatorDelegate {
-    
-    func didRequestSignUp(_ coordinator: LoginCoordinator) {
-        let signUpCoordinator = EmailAuthCoordinator(
-            navigationController: navigationController,
-            dependency: AppDependency.shared
-        )
-        addChildCoordinator(signUpCoordinator)
-        signUpCoordinator.start()
-    }
-    
-    func didRequestFindID(_ coordinator: LoginCoordinator) {
-        let findIDCoordinator = FindIDCoordinator(
-            navigationController: navigationController,
-            dependency: AppDependency.shared)
-        addChildCoordinator(findIDCoordinator)
-        findIDCoordinator.start()
-    }
-    
 }

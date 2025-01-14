@@ -12,32 +12,44 @@ protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
     var parentCoordinator: Coordinator? { get set }
+    
     func start()
-    func popToPreviousScreen()
-    func show<T: UIViewController>(_ viewController: T)
+    func finsh()
+    func popVC()
+    func dismissVC()
+    func show<T: UIViewController>(_ viewController: T, as style: PresentationStyle)
 }
 
 extension Coordinator {
     func addChildCoordinator(_ coordinator: Coordinator) {
         childCoordinators.append(coordinator)
     }
-
-    func removeChildCoordinators<T>(ofType type: T.Type) {
-            childCoordinators.removeAll { $0 is T }
-        }
-        
-    func removeChildCoordinators(ofTypes types: [Coordinator.Type]) {
-        childCoordinators.removeAll { coordinator in
-            types.contains(where: { $0 == type(of: coordinator) })
+    
+    func finsh() {
+        parentCoordinator?.childDidFinish(self)
+    }
+    
+    func childDidFinish(_ coordinator: Coordinator) {
+        if let index = childCoordinators.firstIndex(where: { $0 === coordinator }) {
+            childCoordinators.remove(at: index)
         }
     }
     
-    func popToPreviousScreen() {
+    func popVC() {
         navigationController.popViewController(animated: true)
     }
     
-    func show<T: UIViewController>(_ viewController: T) {
-        navigationController.pushViewController(viewController, animated: true)
+    func dismissVC() {
+        navigationController.dismiss(animated: true)
+    }
+    
+    func show<T: UIViewController>(_ viewController: T, as style: PresentationStyle = .push) {
+        switch style {
+        case .push:
+            navigationController.pushViewController(viewController, animated: true)
+        case .present:
+            navigationController.present(viewController, animated: true)
+        }
     }
 }
 
@@ -56,4 +68,9 @@ extension Coordinator {
 protocol DelegateOwner {
     associatedtype Delegate
     var delegate: Delegate? { get set }
+}
+
+enum PresentationStyle {
+    case push
+    case present
 }
