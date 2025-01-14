@@ -84,7 +84,7 @@ final class LoginView: BaseView {
     // MARK: - 로그인버튼
     lazy var loginButton = CommonButton(title: .login,
                                         corner: 8,
-                                        backgroundColor: .myAppLightGray,
+                                        backgroundColor: .myAppDarkGray,
                                         textColor: .white)
     
     // 이메일, 패스워드, 로그인버튼 스택뷰에 배치
