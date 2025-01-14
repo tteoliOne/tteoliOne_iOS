@@ -62,7 +62,7 @@ extension IDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popToPreviousScreen()
+                owner.delegate?.popVC()
             }
             .disposed(by: disposeBag)
         
