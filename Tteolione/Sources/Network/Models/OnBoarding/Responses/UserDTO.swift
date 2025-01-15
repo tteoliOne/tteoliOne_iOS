@@ -9,9 +9,9 @@ import Foundation
 
 struct UserDTO: Decodable {
     
-    let exsitsUser: Bool
+    let existsUser: Bool
     let nickname: String
-    let userId: String
+    let userId: Int
     let accessToken: String
     let refreshToken: String
     let appleRefreshToken: String?
