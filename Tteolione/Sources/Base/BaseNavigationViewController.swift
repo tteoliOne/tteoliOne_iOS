@@ -21,12 +21,19 @@ class BaseNavigationViewController<RootView: UIView>: BaseViewController<RootVie
     }
     
     func setNavigation() {
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.setBackgroundImage(
-            UIImage(),
-            for: .default
-        )
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor.myAppMain,
+            .font: Font.Andong20
+        ]
+        navigationBarAppearance.backgroundColor = .white
         
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+        
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .black
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: nil,
@@ -35,4 +42,5 @@ class BaseNavigationViewController<RootView: UIView>: BaseViewController<RootVie
             action: nil
         )
     }
+
 }
