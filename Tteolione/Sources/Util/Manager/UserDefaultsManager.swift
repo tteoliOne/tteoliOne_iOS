@@ -25,7 +25,7 @@ final class UserDefaultsManager {
     
     static let shared = UserDefaultsManager()
     
-    private init() { }
+    init() { }
     
     var token: String {
         get {
