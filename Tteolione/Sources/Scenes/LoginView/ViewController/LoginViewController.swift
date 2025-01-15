@@ -5,14 +5,14 @@
 //  Created by 전준영 on 12/5/24.
 //
 
-import UIKit
+//import UIKit
 import ReactorKit
 import RxCocoa
 
-final class LoginViewController: BaseViewController<LoginView> {
+final class LoginViewController: BaseNavigationViewController<LoginView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: LoginCoordinatorDelegate?
+    var delegate: LoginCoordinatorDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -29,6 +29,16 @@ extension LoginViewController: View {
     }
     
     private func bindAction(_ reactor: LoginReactor) {
+        rootView.emailTextField.rx.text.orEmpty
+            .map { LoginReactor.Action.updateId($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.passwordTextField.rx.text.orEmpty
+            .map { LoginReactor.Action.updatePassword($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.emailTextField.rx.controlEvent(.touchDown)
             .map { LoginReactor.Action.emailTextFieldTapBegin }
             .bind(to: reactor.action)
@@ -61,6 +71,11 @@ extension LoginViewController: View {
         
         rootView.idSearchButton.rx.tap
             .map { LoginReactor.Action.idSearchButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.loginButton.rx.tap
+            .map { LoginReactor.Action.loginButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -97,6 +112,14 @@ extension LoginViewController: View {
             }
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.isLoginButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, isEnabled in
+                let isAllEnabled = isEnabled.allSatisfy { $0 }
+                owner.rootView.setButton(isAllEnabled)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     private func bindNavigation(_ reactor: LoginReactor) {
@@ -115,6 +138,16 @@ extension LoginViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.showFindIDView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoginToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                print("isLoginToNext triggered.")
+                owner.delegate?.showAddressView()
             }
             .disposed(by: disposeBag)
     }

@@ -18,6 +18,9 @@ final class LoginReactor: Reactor {
         case passwordSecureButtonTap
         case signUpButtonTap
         case idSearchButtonTap
+        case loginButtonTap
+        case updateId(String)
+        case updatePassword(String)
     }
     
     enum Mutation {
@@ -26,6 +29,11 @@ final class LoginReactor: Reactor {
         case togglePasswordSecureMode
         case setSignUpToNext(Bool)
         case setFindIDToNext(Bool)
+        case setLoginButtonEnabled([Bool])
+        case setLoginToNext(Bool)
+        case setId(String)
+        case setPassword(String)
+        case showError(NetworkError)
     }
 
     struct State {
@@ -34,9 +42,18 @@ final class LoginReactor: Reactor {
         var isPasswordSecure: Bool = true
         var isSignUpToNext: Bool = false
         var isFindIDToNext: Bool = false
+        var isLoginButtonEnabled: [Bool] = [false, false]
+        var isLoginToNext: Bool = false
+        var id: String = ""
+        var password: String = ""
+        var errorMessage: String?
     }
     
+    private let networkProvider: NetworkProvider<UserSessionAPI>
     let initialState: State = State()
+    init(networkProvider: NetworkProvider<UserSessionAPI>) {
+        self.networkProvider = networkProvider
+    }
     
 }
 
@@ -70,6 +87,28 @@ extension LoginReactor {
                 .just(.setFindIDToNext(true)),
                 .just(.setFindIDToNext(false))
             ])
+            
+        case .updateId(let id):
+            return .concat([
+                .just(.setLoginButtonEnabled(updateLoginButtonState(at: 0, isValid: isValidCount(id)))),
+                .just(.setId(id))
+            ])
+                
+            
+        case .updatePassword(let password):
+            return .concat([
+                .just(.setLoginButtonEnabled(updateLoginButtonState(at: 1, isValid: isValidCount(password)))),
+                .just(.setPassword(password))
+            ])
+            
+        case .loginButtonTap:
+            guard currentState.isLoginButtonEnabled.allSatisfy({ $0 }) else { return .empty() }
+            let id = currentState.id
+            let password = currentState.password
+            return .concat([
+                performLogin(id: id,
+                             password: password)
+            ])
         }
     }
     
@@ -95,9 +134,62 @@ extension LoginReactor {
             
         case let .setFindIDToNext(isNavi):
             newState.isFindIDToNext = isNavi
+            
+        case let .setId(id):
+            newState.id = id
+            
+        case let .setPassword(password):
+            newState.password = password
+            
+        case let .setLoginButtonEnabled(isEnabled):
+            newState.isLoginButtonEnabled = isEnabled
+            
+        case let .setLoginToNext(isNavi):
+            newState.isLoginToNext = isNavi
+            
+        case let .showError(error):
+            newState.errorMessage = error.errorDescription
         }
         
         return newState
+    }
+    
+}
+
+extension LoginReactor {
+    
+    private func performLogin(id: String,
+                              password: String) -> Observable<Mutation> {
+        let body = LoginRequestBody(loginId: id,
+                                    password: password,
+                                    targetToken: "")
+        return networkProvider.request(.login(body: body),
+                                       decodingType: ServerResponse<UserDTO>.self)
+        .asObservable()
+        .flatMap { [weak self] response -> Observable<Mutation> in
+            guard self != nil else {
+                return .empty()
+            }
+            switch handleResponse(response) {
+            case .success(let message):
+                return .concat([
+                    .just(.setLoginToNext(true)),
+                    .just(.setLoginToNext(false))
+                ])
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func updateLoginButtonState(at index: Int, isValid: Bool) -> [Bool] {
+        var loginButtonEnabled = currentState.isLoginButtonEnabled
+        loginButtonEnabled[index] = isValid
+        return loginButtonEnabled
+    }
+    
+    private func isValidCount(_ str: String) -> Bool {
+        return str.count >= 1
     }
     
 }
