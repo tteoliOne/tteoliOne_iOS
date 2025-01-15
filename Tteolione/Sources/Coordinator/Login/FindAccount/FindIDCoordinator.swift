@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FindIDCoordinator: FindIDViewControllerDelegate {
+final class FindIDCoordinator: FindIDCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -35,13 +35,13 @@ final class FindIDCoordinator: FindIDViewControllerDelegate {
     }
     
     func showFindAuth() {
-        let authNumCoordinator = AuthCoordinator(
+        let coordinator = AuthCoordinator(
             navigationController: navigationController,
             dependency: dependency
         )
-        
-        addChildCoordinator(authNumCoordinator)
-        authNumCoordinator.start()
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
 }

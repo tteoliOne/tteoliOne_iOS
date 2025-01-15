@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class AuthCoordinator: AuthViewControllerDelegate {
+final class AuthCoordinator: AuthCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var parentCoordinator: Coordinator?
+    var parentCoordinator: Coordinator?
     private let dependency: AppDependency
     
     init(navigationController: UINavigationController,
@@ -34,15 +34,20 @@ final class AuthCoordinator: AuthViewControllerDelegate {
         show(viewController)
     }
     
-    func showFindIDResult(with dto: FindIDDTO) {
-        let authNumCoordinator = FindIDResultCoordinator(
+    func showFindIDResult(with resultData: FindIDDTO) {
+        let coordinator = FindIDResultCoordinator(
             navigationController: navigationController,
             dependency: dependency,
-            dto: dto
+            dto: resultData
         )
-        
-        addChildCoordinator(authNumCoordinator)
-        authNumCoordinator.start()
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
+    func finish() {
+        parentCoordinator?.childDidFinish(self)
+        parentCoordinator?.finish()
     }
     
 }

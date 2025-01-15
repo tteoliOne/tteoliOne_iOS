@@ -14,9 +14,10 @@ protocol Coordinator: AnyObject {
     var parentCoordinator: Coordinator? { get set }
     
     func start()
-    func finsh()
+    func finish()
     func popVC()
     func dismissVC()
+    func finishAllChildren()
     func show<T: UIViewController>(_ viewController: T, as style: PresentationStyle)
 }
 
@@ -25,21 +26,26 @@ extension Coordinator {
         childCoordinators.append(coordinator)
     }
     
-    func finsh() {
+    func finish() {
         parentCoordinator?.childDidFinish(self)
     }
     
-    func childDidFinish(_ coordinator: Coordinator) {
-        if let index = childCoordinators.firstIndex(where: { $0 === coordinator }) {
-            childCoordinators.remove(at: index)
+    func childDidFinish(_ child: Coordinator) {
+        for (index, coordinator) in childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                break
+            }
         }
     }
     
     func popVC() {
+        parentCoordinator?.childDidFinish(self)
         navigationController.popViewController(animated: true)
     }
     
     func dismissVC() {
+        parentCoordinator?.childDidFinish(self)
         navigationController.dismiss(animated: true)
     }
     
@@ -50,6 +56,14 @@ extension Coordinator {
         case .present:
             navigationController.present(viewController, animated: true)
         }
+    }
+    
+    func finishAllChildren() {
+        for child in childCoordinators {
+            child.finishAllChildren()
+        }
+        childCoordinators.removeAll()
+        finish()
     }
 }
 

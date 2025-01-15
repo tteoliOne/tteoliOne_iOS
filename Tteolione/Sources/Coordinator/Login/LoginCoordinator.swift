@@ -11,7 +11,6 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
     var parentCoordinator: Coordinator?
-//    var delegate: LoginCoordinatorDelegate?
     var navigationController: UINavigationController
     private let dependency: AppDependency
     

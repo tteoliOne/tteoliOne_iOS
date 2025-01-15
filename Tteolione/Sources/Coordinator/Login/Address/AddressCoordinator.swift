@@ -29,7 +29,7 @@ final class AddressCoordinator: AddressCoordinatorDelegate {
     }
     
     func changeToMain() {
-        finsh()
+        finish()
         parentCoordinator?.start()
     }
 }
