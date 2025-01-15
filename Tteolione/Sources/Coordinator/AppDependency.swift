@@ -11,6 +11,7 @@ final class AppDependency {
     
     static let shared = AppDependency()
     let onboardingReactor = OnBoardingReactor()
+    let userSessionProvider = NetworkProvider<UserSessionAPI>()
     let joinNetworkProvider = NetworkProvider<JoinAPI>()
     let accountNetworkProvider = NetworkProvider<FindAccountAPI>()
     lazy var onboardingMediator = DefaultOnBoardingMediator(signUpReactor: onboardingReactor)

@@ -57,7 +57,7 @@ extension Coordinator {
     func createViewController<T: UIViewController & ReactorKit.View & DelegateOwner,
                               R: Reactor>(ofType type: T.Type,
                                           with reactor: R,
-                                          delegate: T.Delegate?) -> T where T.Reactor == R {
+                                          delegate: T.Delegate) -> T where T.Reactor == R {
         var viewController = T()
         viewController.reactor = reactor
         viewController.delegate = delegate

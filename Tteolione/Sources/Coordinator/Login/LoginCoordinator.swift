@@ -22,7 +22,7 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = LoginReactor()
+        let reactor = LoginReactor(networkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: LoginViewController.self,
             with: reactor,
@@ -34,14 +34,18 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
 
     func showSignUpView() {
         let coordinator = EmailAuthCoordinator(navigationController: navigationController,
-                                                      dependency: dependency)
+                                               dependency: dependency)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()
     }
     
     func showFindIDView() {
-        
+        let coordinator = FindIDCoordinator(navigationController: navigationController,
+                                            dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
     func showFindPasswordView() {
@@ -49,7 +53,10 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func showAddressView() {
-        
+        let coordinator = AddressCoordinator(navigationController: navigationController)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
 }

@@ -11,7 +11,7 @@ protocol EmailAuthCoordinatorDelegate {
     func showAuthNum(_ coordinator: AuthNumCoordinator)
 }
 
-protocol EmailAuthViewControllerDelegate: AnyObject, Coordinator {
+protocol EmailAuthViewControllerDelegate: Coordinator {
     func showAuthNum()
 }
 
