@@ -5,14 +5,13 @@
 //  Created by 전준영 on 12/5/24.
 //
 
-//import UIKit
 import ReactorKit
 import RxCocoa
 
 final class LoginViewController: BaseNavigationViewController<LoginView> {
     
     var disposeBag = DisposeBag()
-    var delegate: LoginCoordinatorDelegate?
+    weak var delegate: LoginCoordinatorDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -146,7 +145,6 @@ extension LoginViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                print("isLoginToNext triggered.")
                 owner.delegate?.showAddressView()
             }
             .disposed(by: disposeBag)

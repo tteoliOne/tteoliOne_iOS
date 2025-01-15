@@ -11,7 +11,6 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
     var parentCoordinator: Coordinator?
-//    var delegate: LoginCoordinatorDelegate?
     var navigationController: UINavigationController
     private let dependency: AppDependency
     
@@ -22,7 +21,8 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = LoginReactor(networkProvider: dependency.userSessionProvider)
+        let reactor = LoginReactor(networkProvider: dependency.userSessionProvider,
+                                   ud: dependency.ud)
         let viewController = createViewController(
             ofType: LoginViewController.self,
             with: reactor,

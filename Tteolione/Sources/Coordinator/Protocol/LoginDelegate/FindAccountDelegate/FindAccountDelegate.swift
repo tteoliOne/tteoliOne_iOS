@@ -7,14 +7,15 @@
 
 import Foundation
 
-protocol FindIDViewControllerDelegate: AnyObject, Coordinator {
+protocol FindIDCoordinatorDelegate: Coordinator {
     func showFindAuth()
 }
 
-protocol AuthViewControllerDelegate: AnyObject, Coordinator {
-    func showFindIDResult(with dto: FindIDDTO)
+protocol AuthCoordinatorDelegate: Coordinator {
+    func showFindIDResult(with resultData: FindIDDTO)
 }
 
-protocol FindIDResultViewControllerDelegate: AnyObject, Coordinator {
-    func showFindIDResult()
+protocol FindIDResultCoordinatorDelegate: Coordinator {
+    func showPasswordResetView()
+    func goToLogin()
 }

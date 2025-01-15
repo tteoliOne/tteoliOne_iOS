@@ -7,17 +7,18 @@
 
 import UIKit
 
-final class FindIDResultCoordinator: FindIDResultViewControllerDelegate {
+final class FindIDResultCoordinator: FindIDResultCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var parentCoordinator: Coordinator?
+    var parentCoordinator: Coordinator?
     private let dependency: AppDependency
     private let dto: FindIDDTO
     
     init(navigationController: UINavigationController,
          dependency: AppDependency,
-         dto: FindIDDTO) {
+         dto: FindIDDTO
+    ) {
         self.navigationController = navigationController
         self.dependency = dependency
         self.dto = dto
@@ -38,7 +39,7 @@ final class FindIDResultCoordinator: FindIDResultViewControllerDelegate {
         show(viewController)
     }
     
-    func showFindIDResult() {
+    func showPasswordResetView() {
         let authNumCoordinator = AuthNumCoordinator(
             navigationController: navigationController,
             dependency: dependency
@@ -48,4 +49,10 @@ final class FindIDResultCoordinator: FindIDResultViewControllerDelegate {
         authNumCoordinator.start()
     }
     
+    func goToLogin() {
+        finishAllChildren()
+        parentCoordinator?.finish()
+        navigationController.popToRootViewController(animated: true)
+    }
+
 }

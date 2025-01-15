@@ -27,7 +27,7 @@ extension UIViewController {
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
             completion?()
         }
-        
+        okAction.setValue(UIColor.myAppMain, forKey: "titleTextColor")
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }

@@ -21,7 +21,7 @@ final class FindIDReactor: Reactor {
     enum Mutation {
         case setUsername(String)
         case setEmail(String)
-        case setButtonEnabled(Bool)
+        case setButtonEnabled([Bool])
         case setNavigateToNext(Bool)
         case setNavigateBack(Bool)
         case showError(NetworkError)
@@ -30,7 +30,7 @@ final class FindIDReactor: Reactor {
     struct State {
         var username: String = ""
         var email: String = ""
-        var isButtonEnabled: Bool = false
+        var isButtonEnabled: [Bool] = [false, false]
         var navigateToNext: Bool = false
         var navigateBack: Bool = false
         var errorMessage: String?
@@ -55,13 +55,13 @@ extension FindIDReactor {
         case .updateUsername(let username):
             return .concat([
                 .just(.setUsername(username)),
-                .just(.setButtonEnabled(isValidName(username)))
+                .just(.setButtonEnabled(updateButtonState(at: 0, isValid: isValidName(username))))
             ])
             
         case .updateEmail(let email):
             return .concat([
                 .just(.setEmail(email)),
-                .just(.setButtonEnabled(isValidEmail(email)))
+                .just(.setButtonEnabled(updateButtonState(at: 1, isValid: isValidEmail(email))))
             ])
             
         case .backButtonTap:
@@ -71,7 +71,7 @@ extension FindIDReactor {
             ])
             
         case .sendAuthButtonTap:
-            guard currentState.isButtonEnabled else { return .empty() }
+            guard currentState.isButtonEnabled.allSatisfy({ $0 }) else { return .empty() }
             let email = currentState.email
             let username = currentState.username
             return .concat([
@@ -127,7 +127,7 @@ extension FindIDReactor {
                     return .empty()
                 }
                 switch handleResponse(response) {
-                case .success(let message):
+                case .success(_):
                     self.mediator.update(email, action: OnBoardingReactor.Action.updateEmail)
                     self.mediator.update(username, action: OnBoardingReactor.Action.updateUsername)
                     return .concat([
@@ -138,6 +138,12 @@ extension FindIDReactor {
                     return .just(.showError(error))
                 }
             }
+    }
+    
+    private func updateButtonState(at index: Int, isValid: Bool) -> [Bool] {
+        var buttonEnabled = currentState.isButtonEnabled
+        buttonEnabled[index] = isValid
+        return buttonEnabled
     }
     
     private func isValidEmail(_ email: String) -> Bool {

@@ -50,9 +50,13 @@ final class LoginReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<UserSessionAPI>
+    private let ud: UserDefaultsManager
     let initialState: State = State()
-    init(networkProvider: NetworkProvider<UserSessionAPI>) {
+    
+    init(networkProvider: NetworkProvider<UserSessionAPI>,
+         ud: UserDefaultsManager) {
         self.networkProvider = networkProvider
+        self.ud = ud
     }
     
 }
@@ -167,11 +171,16 @@ extension LoginReactor {
                                        decodingType: ServerResponse<UserDTO>.self)
         .asObservable()
         .flatMap { [weak self] response -> Observable<Mutation> in
-            guard self != nil else {
+            guard let self = self else {
                 return .empty()
             }
             switch handleResponse(response) {
-            case .success(let message):
+            case .success(let result):
+                self.ud.nickname = result.nickname
+                self.ud.token = result.accessToken
+                self.ud.refreshToken = result.refreshToken
+                self.ud.userID = result.userId
+                self.ud.typeLogin = .local
                 return .concat([
                     .just(.setLoginToNext(true)),
                     .just(.setLoginToNext(false))

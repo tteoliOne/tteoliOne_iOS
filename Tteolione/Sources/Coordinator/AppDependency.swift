@@ -10,6 +10,7 @@ import Foundation
 final class AppDependency {
     
     static let shared = AppDependency()
+    let ud = UserDefaultsManager()
     let onboardingReactor = OnBoardingReactor()
     let userSessionProvider = NetworkProvider<UserSessionAPI>()
     let joinNetworkProvider = NetworkProvider<JoinAPI>()

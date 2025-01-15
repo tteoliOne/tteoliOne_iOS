@@ -5,17 +5,17 @@
 //  Created by 전준영 on 1/2/25.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class AuthViewController: BaseViewController<AuthView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: AuthViewControllerDelegate?
+    weak var delegate: AuthCoordinatorDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reactor?.action.onNext(.startTimer)
     }
     
 }
@@ -69,18 +69,20 @@ extension AuthViewController: View {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.navigateToNext }
-//            .distinctUntilChanged()
-//            .filter { $0 }
-            .compactMap{ $0 }
+        reactor.state
+            .map { ($0.navigateToNext, $0.resultId) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, dto in
-                owner.delegate?.showFindIDResult(with: dto)
+            .bind(with: self) { owner, data in
+                guard let resultId = data.1 else { return }
+                owner.delegate?.showFindIDResult(with: resultId)
             }
             .disposed(by: disposeBag)
+        
     }
 }
 
 extension AuthViewController: DelegateOwner {
-    typealias Delegate = AuthViewControllerDelegate
+    typealias Delegate = AuthCoordinatorDelegate
 }

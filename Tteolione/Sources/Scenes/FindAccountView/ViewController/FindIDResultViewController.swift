@@ -12,7 +12,7 @@ import RxCocoa
 final class FindIDResultViewController: BaseViewController<FindIDResultView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: FindIDResultViewControllerDelegate?
+    weak var delegate: FindIDResultCoordinatorDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,19 +56,19 @@ extension FindIDResultViewController: View {
 //                owner.delegate?.popToPreviousScreen()
 //            }
 //            .disposed(by: disposeBag)
-//        
-//        reactor.state.map { $0.navigateToNext }
-//            .distinctUntilChanged()
-//            .filter { $0 }
-//            .observe(on: MainScheduler.instance)
-//            .bind(with: self) { owner, _ in
-//                owner.delegate?.showFindIDResult()
-//            }
-//            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.goToLogin()
+            }
+            .disposed(by: disposeBag)
     }
     
 }
 
 extension FindIDResultViewController: DelegateOwner {
-    typealias Delegate = FindIDResultViewControllerDelegate
+    typealias Delegate = FindIDResultCoordinatorDelegate
 }
