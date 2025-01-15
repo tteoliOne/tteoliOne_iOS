@@ -5,7 +5,6 @@
 //  Created by 전준영 on 1/2/25.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
@@ -14,14 +13,6 @@ final class FindIDViewController: BaseViewController<FindIDView> {
     var disposeBag = DisposeBag()
     weak var delegate: FindIDViewControllerDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
 }
 
 extension FindIDViewController: View {
@@ -39,7 +30,7 @@ extension FindIDViewController: View {
             .disposed(by: disposeBag)
         
         rootView.emailInputTextField.rx.text.orEmpty
-            .map { FindIDReactor.Action.updateUsername($0) }
+            .map { FindIDReactor.Action.updateEmail($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -58,7 +49,8 @@ extension FindIDViewController: View {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
-                owner.rootView.setButton(isEnabled)
+                let isAllEnabled = isEnabled.allSatisfy { $0 }
+                owner.rootView.setButton(isAllEnabled)
             }
             .disposed(by: disposeBag)
         
