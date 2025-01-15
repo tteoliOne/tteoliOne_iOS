@@ -5,14 +5,13 @@
 //  Created by 전준영 on 12/5/24.
 //
 
-//import UIKit
 import ReactorKit
 import RxCocoa
 
 final class LoginViewController: BaseNavigationViewController<LoginView> {
     
     var disposeBag = DisposeBag()
-    var delegate: LoginCoordinatorDelegate?
+    weak var delegate: LoginCoordinatorDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
