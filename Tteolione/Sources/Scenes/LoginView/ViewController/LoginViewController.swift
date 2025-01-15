@@ -146,7 +146,6 @@ extension LoginViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                print("isLoginToNext triggered.")
                 owner.delegate?.showAddressView()
             }
             .disposed(by: disposeBag)
