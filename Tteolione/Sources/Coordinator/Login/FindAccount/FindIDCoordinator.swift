@@ -11,7 +11,7 @@ final class FindIDCoordinator: FindIDViewControllerDelegate {
     
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    weak var parentCoordinator: Coordinator?
+    var parentCoordinator: Coordinator?
     private let dependency: AppDependency
     
     init(navigationController: UINavigationController,

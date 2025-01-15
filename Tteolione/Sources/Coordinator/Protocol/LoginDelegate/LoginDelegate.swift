@@ -7,12 +7,9 @@
 
 import Foundation
 
-protocol LoginCoordinatorDelegate {
-    func didRequestSignUp(_ coordinator: LoginCoordinator)
-    func didRequestFindID(_ coordinator: LoginCoordinator)
-}
-
-protocol LoginViewControllerDelegate: AnyObject, Coordinator {
+protocol LoginCoordinatorDelegate: Coordinator {
     func showSignUpView()
     func showFindIDView()
+    func showFindPasswordView()
+    func showAddressView()
 }

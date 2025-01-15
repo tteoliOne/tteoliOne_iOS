@@ -7,19 +7,22 @@
 
 import UIKit
 
-final class LoginCoordinator: LoginViewControllerDelegate {
+final class LoginCoordinator: LoginCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
-    weak var parentCoordinator: Coordinator?
-    var delegate: LoginCoordinatorDelegate?
+    var parentCoordinator: Coordinator?
+//    var delegate: LoginCoordinatorDelegate?
     var navigationController: UINavigationController
-
-    init(navigationController: UINavigationController) {
+    private let dependency: AppDependency
+    
+    init(navigationController: UINavigationController,
+         dependency: AppDependency) {
         self.navigationController = navigationController
+        self.dependency = dependency
     }
     
     func start() {
-        let reactor = LoginReactor()
+        let reactor = LoginReactor(networkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: LoginViewController.self,
             with: reactor,
@@ -30,11 +33,30 @@ final class LoginCoordinator: LoginViewControllerDelegate {
     }
 
     func showSignUpView() {
-        delegate?.didRequestSignUp(self)
+        let coordinator = EmailAuthCoordinator(navigationController: navigationController,
+                                               dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
     func showFindIDView() {
-        delegate?.didRequestFindID(self)
+        let coordinator = FindIDCoordinator(navigationController: navigationController,
+                                            dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
-
+    
+    func showFindPasswordView() {
+        
+    }
+    
+    func showAddressView() {
+        let coordinator = AddressCoordinator(navigationController: navigationController)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
 }

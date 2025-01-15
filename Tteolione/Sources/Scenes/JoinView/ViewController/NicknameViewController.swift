@@ -1,61 +1,51 @@
 //
-//  AuthNumViewController.swift
+//  NicknameViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/7/24.
+//  Created by 전준영 on 12/13/24.
 //
 
 import UIKit
 import ReactorKit
 import RxCocoa
 
-final class AuthNumViewController: BaseViewController<AuthNumView> {
+final class NicknameViewController: BaseViewController<NicknameView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: AuthNumViewControllerDelegate?
+    weak var delegate: NicknameViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        reactor?.action.onNext(.startTimer)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        reactor?.action.onNext(.stopTimer)
-    }
-    
 }
 
-extension AuthNumViewController: View {
+extension NicknameViewController: View {
     
-    func bind(reactor: AuthNumReactor) {
+    func bind(reactor: NicknameReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    private func bindAction(_ reactor: AuthNumReactor) {
-        rootView.topBarView.backButton.rx.tap
-            .map { AuthNumReactor.Action.backButtonTap }
+    private func bindAction(_ reactor: NicknameReactor) {
+        rootView.nicknameInputTextField.rx.text.orEmpty
+            .map { NicknameReactor.Action.nicknameInputChanged($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.authNumInputTextField.rx.text.orEmpty
-            .map { AuthNumReactor.Action.authNumTextChanged($0) }
+        rootView.topBarView.backButton.rx.tap
+            .map { NicknameReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.joinButton.rx.tap
-            .map { AuthNumReactor.Action.authCheckButtonTap }
+            .map { NicknameReactor.Action.nicknameCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    private func bindState(_ reactor: AuthNumReactor) {
+    private func bindState(_ reactor: NicknameReactor) {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
@@ -64,20 +54,15 @@ extension AuthNumViewController: View {
                 owner.rootView.joinButton.isEnabled = isEnabled
             }
             .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.remainingTime }
-            .distinctUntilChanged()
-            .bind(to: rootView.explanationLabel.rx.text)
-            .disposed(by: disposeBag)
     }
     
-    private func bindNavigation(_ reactor: AuthNumReactor) {
+    private func bindNavigation(_ reactor: NicknameReactor) {
         reactor.state.map { $0.navigateBack }
             .distinctUntilChanged()
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popToPreviousScreen()
+                owner.delegate?.popVC()
             }
             .disposed(by: disposeBag)
         
@@ -86,12 +71,12 @@ extension AuthNumViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showName()
+                owner.delegate?.showProfileSet()
             }
             .disposed(by: disposeBag)
     }
 }
 
-extension AuthNumViewController: DelegateOwner {
-    typealias Delegate = AuthNumViewControllerDelegate
+extension NicknameViewController: DelegateOwner {
+    typealias Delegate = NicknameViewControllerDelegate
 }

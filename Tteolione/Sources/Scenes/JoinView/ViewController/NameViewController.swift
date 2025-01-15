@@ -1,18 +1,18 @@
 //
-//  EmailAuthViewController.swift
+//  NameViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/6/24.
+//  Created by 전준영 on 12/28/24.
 //
 
 import UIKit
 import ReactorKit
 import RxCocoa
 
-final class EmailAuthViewController: BaseViewController<EmailAuthView> {
+final class NameViewController: BaseViewController<NameView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: EmailAuthViewControllerDelegate?
+    weak var delegate: NameViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,32 +20,32 @@ final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
 }
 
-extension EmailAuthViewController: View {
+extension NameViewController: View {
     
-    func bind(reactor: EmailAuthReactor) {
+    func bind(reactor: NameReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    private func bindAction(_ reactor: EmailAuthReactor) {
-        rootView.emailInputTextField.rx.text.orEmpty
-            .map { EmailAuthReactor.Action.emailInputChanged($0) }
+    private func bindAction(_ reactor: NameReactor) {
+        rootView.nameInputTextField.rx.text.orEmpty
+            .map { NameReactor.Action.usernameInputChanged($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.topBarView.backButton.rx.tap
-            .map { EmailAuthReactor.Action.backButtonTap }
+            .map { NameReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.joinButton.rx.tap
-            .map { EmailAuthReactor.Action.emailCheckButtonTap }
+            .map { NameReactor.Action.usernameCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    private func bindState(_ reactor: EmailAuthReactor) {
+    private func bindState(_ reactor: NameReactor) {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
@@ -54,24 +54,15 @@ extension EmailAuthViewController: View {
                 owner.rootView.joinButton.isEnabled = isEnabled
             }
             .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.errorMessage }
-            .distinctUntilChanged()
-            .compactMap { $0 }
-            .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, errorMessage in
-                owner.showAlert(message: errorMessage)
-            }
-            .disposed(by: disposeBag)
     }
     
-    private func bindNavigation(_ reactor: EmailAuthReactor) {
+    private func bindNavigation(_ reactor: NameReactor) {
         reactor.state.map { $0.navigateBack }
             .distinctUntilChanged()
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popToPreviousScreen()
+                owner.delegate?.popVC()
             }
             .disposed(by: disposeBag)
         
@@ -80,13 +71,12 @@ extension EmailAuthViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showAuthNum()
+                owner.delegate?.showID()
             }
             .disposed(by: disposeBag)
     }
-    
 }
 
-extension EmailAuthViewController: DelegateOwner {
-    typealias Delegate = EmailAuthViewControllerDelegate
+extension NameViewController: DelegateOwner {
+    typealias Delegate = NameViewControllerDelegate
 }

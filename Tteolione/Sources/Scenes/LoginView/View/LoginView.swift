@@ -82,10 +82,10 @@ final class LoginView: BaseView {
     }()
     
     // MARK: - 로그인버튼
-    lazy var loginButton = CommonButton(title: .login,
-                                        corner: 8,
-                                        backgroundColor: .myAppLightGray,
-                                        textColor: .white)
+    let loginButton = CommonButton(title: .login,
+                                   corner: 8,
+                                   backgroundColor: .myAppDarkGray,
+                                   textColor: .white)
     
     // 이메일, 패스워드, 로그인버튼 스택뷰에 배치
     private lazy var loginStackView: UIStackView = {
@@ -284,4 +284,11 @@ extension LoginView {
         }
     }
     
+}
+
+extension LoginView {
+    func setButton(_ isEnabled: Bool) {
+        loginButton.backgroundColor = isEnabled ? .myAppMain : .myAppDarkGray
+        loginButton.isEnabled = isEnabled
+    }
 }

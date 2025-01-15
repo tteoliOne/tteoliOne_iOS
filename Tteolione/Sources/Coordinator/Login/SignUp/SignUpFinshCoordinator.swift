@@ -24,16 +24,16 @@ final class SignUpFinshCoordinator: SignUpFinshViewControllerDelegate {
     }
     
     func showLogin() {
-        parentCoordinator?.removeChildCoordinators(ofTypes: [
-            EmailAuthCoordinator.self,
-            AuthNumCoordinator.self,
-            NameCoordinator.self,
-            IDCoordinator.self,
-            PasswordCoordinator.self,
-            NicknameCoordinator.self,
-            ProfileSetCoordinator.self,
-            SignUpFinshCoordinator.self
-        ])
+//        parentCoordinator?.removeChildCoordinators(ofTypes: [
+//            EmailAuthCoordinator.self,
+//            AuthNumCoordinator.self,
+//            NameCoordinator.self,
+//            IDCoordinator.self,
+//            PasswordCoordinator.self,
+//            NicknameCoordinator.self,
+//            ProfileSetCoordinator.self,
+//            SignUpFinshCoordinator.self
+//        ])
         
         navigationController.popToRootViewController(animated: true)
     }

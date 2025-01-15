@@ -1,64 +1,57 @@
 //
-//  FindIDViewController.swift
+//  EmailAuthViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 1/2/25.
+//  Created by 전준영 on 12/6/24.
 //
 
 import UIKit
 import ReactorKit
 import RxCocoa
 
-final class FindIDViewController: BaseViewController<FindIDView> {
+final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: FindIDViewControllerDelegate?
+    weak var delegate: EmailAuthViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
 }
 
-extension FindIDViewController: View {
+extension EmailAuthViewController: View {
     
-    func bind(reactor: FindIDReactor) {
+    func bind(reactor: EmailAuthReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    func bindAction(_ reactor: FindIDReactor) {
-        rootView.userNameInputTextField.rx.text.orEmpty
-            .map { FindIDReactor.Action.updateUsername($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
+    private func bindAction(_ reactor: EmailAuthReactor) {
         rootView.emailInputTextField.rx.text.orEmpty
-            .map { FindIDReactor.Action.updateUsername($0) }
+            .map { EmailAuthReactor.Action.emailInputChanged($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.topBarView.backButton.rx.tap
-            .map { FindIDReactor.Action.backButtonTap }
+            .map { EmailAuthReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.checkButton.rx.tap
-            .map { FindIDReactor.Action.sendAuthButtonTap }
+        rootView.joinButton.rx.tap
+            .map { EmailAuthReactor.Action.emailCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    func bindState(_ reactor: FindIDReactor) {
+    private func bindState(_ reactor: EmailAuthReactor) {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
-                owner.rootView.setButton(isEnabled)
+                owner.rootView.joinButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+                owner.rootView.joinButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+                owner.rootView.joinButton.isEnabled = isEnabled
             }
             .disposed(by: disposeBag)
         
@@ -72,13 +65,13 @@ extension FindIDViewController: View {
             .disposed(by: disposeBag)
     }
     
-    func bindNavigation(_ reactor: FindIDReactor) {
+    private func bindNavigation(_ reactor: EmailAuthReactor) {
         reactor.state.map { $0.navigateBack }
             .distinctUntilChanged()
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popToPreviousScreen()
+                owner.delegate?.popVC()
             }
             .disposed(by: disposeBag)
         
@@ -87,12 +80,13 @@ extension FindIDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showFindAuth()
+                owner.delegate?.showAuthNum()
             }
             .disposed(by: disposeBag)
     }
+    
 }
 
-extension FindIDViewController: DelegateOwner {
-    typealias Delegate = FindIDViewControllerDelegate
+extension EmailAuthViewController: DelegateOwner {
+    typealias Delegate = EmailAuthViewControllerDelegate
 }
