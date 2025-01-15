@@ -179,6 +179,7 @@
 		723620142D364BBE009BEF12 /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620132D364BBE009BEF12 /* AddressCoordinator.swift */; };
 		723620172D364C10009BEF12 /* AddressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620162D364C10009BEF12 /* AddressDelegate.swift */; };
 		723620192D364CAD009BEF12 /* AddressReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620182D364CAD009BEF12 /* AddressReactor.swift */; };
+		7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246F9F72D3792DA00EE6B5E /* SearchCompleterWrapper.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -379,6 +380,7 @@
 		723620132D364BBE009BEF12 /* AddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinator.swift; sourceTree = "<group>"; };
 		723620162D364C10009BEF12 /* AddressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDelegate.swift; sourceTree = "<group>"; };
 		723620182D364CAD009BEF12 /* AddressReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressReactor.swift; sourceTree = "<group>"; };
+		7246F9F72D3792DA00EE6B5E /* SearchCompleterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompleterWrapper.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 		72361F172D2E46A5009BEF12 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				7246F9F62D3792CD00EE6B5E /* Wrapper */,
 				72361FA02D2F90D6009BEF12 /* Protocol */,
 				724DECA92D0184DF00171F44 /* Enum */,
 				72361FDD2D341564009BEF12 /* Manager */,
@@ -1187,6 +1190,14 @@
 			path = AddressDelegate;
 			sourceTree = "<group>";
 		};
+		7246F9F62D3792CD00EE6B5E /* Wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				7246F9F72D3792DA00EE6B5E /* SearchCompleterWrapper.swift */,
+			);
+			path = Wrapper;
+			sourceTree = "<group>";
+		};
 		724DEC622D0091B700171F44 = {
 			isa = PBXGroup;
 			children = (
@@ -1601,6 +1612,7 @@
 				72361E9C2D1DA455009BEF12 /* IDCoordinator.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
 				72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */,
+				7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
 				72361FD92D3411EA009BEF12 /* TabBarController.swift in Sources */,
 				72361F332D2E98BF009BEF12 /* ProductDTO.swift in Sources */,
@@ -1845,6 +1857,10 @@
 				DEVELOPMENT_TEAM = QQN262X7KM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범에서 사진 선택합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1877,6 +1893,10 @@
 				DEVELOPMENT_TEAM = QQN262X7KM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범에서 사진 선택합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
