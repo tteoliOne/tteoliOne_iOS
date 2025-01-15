@@ -27,7 +27,11 @@ final class AddressView: BaseView {
     }()
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(AddressTableViewCell.self, forCellReuseIdentifier: AddressTableViewCell.identifier)
+        tableView.register(AddressTableViewCell.self,
+                           forCellReuseIdentifier: AddressTableViewCell.identifier)
+        tableView.rowHeight = 66
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
+        tableView.contentMode = .scaleAspectFill
         return tableView
     }()
     
