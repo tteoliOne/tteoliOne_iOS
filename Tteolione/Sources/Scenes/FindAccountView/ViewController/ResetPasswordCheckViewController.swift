@@ -13,14 +13,6 @@ final class ResetPasswordCheckViewController: BaseViewController<ResetPasswordCh
     
     var disposeBag = DisposeBag()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-    }
 }
 
 extension ResetPasswordCheckViewController: View {

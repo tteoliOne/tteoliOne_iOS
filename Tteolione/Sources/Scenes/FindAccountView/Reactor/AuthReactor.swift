@@ -5,7 +5,6 @@
 //  Created by 전준영 on 1/2/25.
 //
 
-import Foundation
 import ReactorKit
 import RxSwift
 
@@ -16,7 +15,6 @@ final class AuthReactor: Reactor {
         case authCheckButtonTap
         case backButtonTap
         case startTimer
-        case stopTimer
     }
     
     enum Mutation {
@@ -25,8 +23,9 @@ final class AuthReactor: Reactor {
         case updateTimer(String)
         case stopTimer
         case showError(NetworkError)
-        case setNavigateToNext(FindIDDTO?)
+        case setNavigateToNext(Bool)
         case setNavigateBack(Bool)
+        case setResultId(FindIDDTO)
     }
     
     struct State {
@@ -34,13 +33,16 @@ final class AuthReactor: Reactor {
         var isButtonEnabled: Bool = false
         var remainingTime: String = AppText.Join.joinAuthTime
         var errorMessage: String?
-        var navigateToNext: FindIDDTO? = nil
+        var navigateToNext: Bool = false
         var navigateBack: Bool = false
+        var resultId: FindIDDTO?
     }
     
+    private let stopTimerSubject = PublishSubject<Void>()
     private var timerDisposable: Disposable?
     private let networkProvider: NetworkProvider<FindAccountAPI>
     private let mediator: OnBoardingMediator
+    private let totalSeconds = 180
     let initialState = State()
     
     init(networkProvider: NetworkProvider<FindAccountAPI>,
@@ -63,13 +65,14 @@ extension AuthReactor {
             ])
             
         case .authCheckButtonTap:
-            guard currentState.isButtonEnabled else { return .empty() }
             stopTimer()
+            guard currentState.isButtonEnabled else { return .empty() }
             return .concat([
                 performAuthCheck(code: currentState.authNum)
             ])
             
         case .backButtonTap:
+            stopTimer()
             return .concat([
                 .just(.setNavigateBack(true)),
                 .just(.setNavigateBack(false))
@@ -77,10 +80,6 @@ extension AuthReactor {
             
         case .startTimer:
             return startTimer()
-            
-        case .stopTimer:
-            stopTimer()
-            return .just(.stopTimer)
         }
     }
     
@@ -102,7 +101,7 @@ extension AuthReactor {
             newState.remainingTime = timeString
             
         case .stopTimer:
-            break
+            newState.remainingTime = "남은시간 0:00"
             
         case let .showError(error):
             newState.errorMessage = error.errorDescription
@@ -112,6 +111,9 @@ extension AuthReactor {
             
         case let .setNavigateBack(navigateBack):
             newState.navigateBack = navigateBack
+            
+        case let .setResultId(resultId):
+            newState.resultId = resultId
         }
         
         return newState
@@ -135,8 +137,9 @@ extension AuthReactor {
                 switch handleResponse(response) {
                 case .success(let dto):
                     return .concat([
-                        .just(.setNavigateToNext(dto)),
-                        .just(.setNavigateToNext(nil))
+                        .just(.setResultId(dto)),
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
                     ])
                 case .failure(let error):
                     return .just(.showError(error))
@@ -145,44 +148,35 @@ extension AuthReactor {
     }
     
     private func startTimer() -> Observable<Mutation> {
-        guard timerDisposable == nil else {
-            return .empty()
-        }
+        guard timerDisposable == nil else { return .empty() }
         
-        let totalSeconds = 15
-        let timerObservable = Observable<Int>.interval(
-            .seconds(1),
-            scheduler: MainScheduler.instance)
-            .map { totalSeconds - $0 - 1 }
-            .take(while: { $0 >= 0 })
-            .flatMap { remainingSeconds -> Observable<Mutation> in
+        return Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+            .take(totalSeconds + 1)
+            .take(until: stopTimerSubject)
+            .map { [weak self] elapsedSeconds in
+                guard let self = self else { return .updateTimer("남은시간 0:00") }
+                let remainingSeconds = self.totalSeconds - elapsedSeconds
                 let minutes = remainingSeconds / 60
                 let seconds = remainingSeconds % 60
                 let timeString = String(format: "남은시간 %d:%02d", minutes, seconds)
+                
                 if remainingSeconds == 0 {
-                    return .concat([
-                        .just(.updateTimer("남은시간 0:00")),
-                        .just(.setNavigateBack(true)),
-                        .just(.setNavigateBack(false))
-                    ])
+                    return .setNavigateBack(true)
                 }
-                return .just(.updateTimer(timeString))
+                return .updateTimer(timeString)
             }
-        
-        timerDisposable = timerObservable
-            .subscribe(onNext: { _ in},
-                       onError: { [weak self] _ in
-                self?.stopTimer()
-            },
-                       onCompleted: { [weak self] in
-                self?.stopTimer()
+            .do(onSubscribe: { print("타이머 시작") },
+                onDispose: { [weak self] in
+                self?.resetTimerState()
             })
-        
-        return timerObservable
     }
     
     private func stopTimer() {
-        timerDisposable?.dispose()
+        stopTimerSubject.onNext(())
+        stopTimerSubject.onCompleted()
+    }
+    
+    private func resetTimerState() {
         timerDisposable = nil
     }
     

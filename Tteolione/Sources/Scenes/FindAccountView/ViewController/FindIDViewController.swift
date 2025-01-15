@@ -11,7 +11,7 @@ import RxCocoa
 final class FindIDViewController: BaseViewController<FindIDView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: FindIDViewControllerDelegate?
+    weak var delegate: FindIDCoordinatorDelegate?
     
 }
 
@@ -86,5 +86,5 @@ extension FindIDViewController: View {
 }
 
 extension FindIDViewController: DelegateOwner {
-    typealias Delegate = FindIDViewControllerDelegate
+    typealias Delegate = FindIDCoordinatorDelegate
 }

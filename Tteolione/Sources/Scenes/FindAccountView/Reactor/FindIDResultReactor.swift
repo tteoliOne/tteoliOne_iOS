@@ -33,7 +33,8 @@ final class FindIDResultReactor: Reactor {
     
     init(networkProvider: NetworkProvider<FindAccountAPI>,
          mediator: OnBoardingMediator,
-         dto: FindIDDTO) {
+         dto: FindIDDTO
+    ) {
         self.networkProvider = networkProvider
         self.mediator = mediator
         self.initialState = State(resultID: dto.loginId)
