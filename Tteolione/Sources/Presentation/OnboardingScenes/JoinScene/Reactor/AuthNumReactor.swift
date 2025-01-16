@@ -13,10 +13,9 @@ final class AuthNumReactor: Reactor {
     
     enum Action {
         case backButtonTap
-        case authNumTextChanged(String)
+        case updateAuthNum(String)
         case authCheckButtonTap
         case startTimer
-        case stopTimer
     }
     
     enum Mutation {
@@ -38,9 +37,11 @@ final class AuthNumReactor: Reactor {
         var navigateBack: Bool = false
     }
     
+    private let stopTimerSubject = PublishSubject<Void>()
     private var timerDisposable: Disposable?
     private let networkProvider: NetworkProvider<JoinAPI>
     private let mediator: OnBoardingMediator
+    private let totalSeconds = 180
     
     let initialState: State = State()
     
@@ -62,7 +63,7 @@ extension AuthNumReactor {
                 .just(.setNavigateBack(false))
             ])
             
-        case let .authNumTextChanged(authNum):
+        case let .updateAuthNum(authNum):
             let isEnabled = !authNum.isEmpty
             return Observable.concat([
                 .just(.setAuthNum(authNum)),
@@ -70,6 +71,7 @@ extension AuthNumReactor {
             ])
             
         case .authCheckButtonTap:
+            stopTimer()
             guard currentState.isButtonEnabled else { return .empty() }
             stopTimer()
             return .concat([
@@ -78,10 +80,6 @@ extension AuthNumReactor {
             
         case .startTimer:
             return startTimer()
-            
-        case .stopTimer:
-            stopTimer()
-            return .just(.stopTimer)
         }
     }
     
@@ -103,7 +101,7 @@ extension AuthNumReactor {
             newState.remainingTime = timeString
             
         case .stopTimer:
-            break
+            newState.remainingTime = "남은시간 0:00"
             
         case let .showError(error):
             newState.errorMessage = error.errorDescription
@@ -128,7 +126,8 @@ extension AuthNumReactor {
         return networkProvider
             .request(.validateEmail(body: body), decodingType: ServerResponse<String>.self)
             .asObservable()
-            .flatMap { response -> Observable<Mutation> in
+            .flatMap { [weak self] response -> Observable<Mutation> in
+                guard let self = self else { return .empty() }
                 switch handleResponse(response) {
                 case .success(_):
                     self.mediator.update(code,
@@ -143,41 +142,36 @@ extension AuthNumReactor {
             }
     }
     
-}
-
-extension AuthNumReactor {
-    
     private func startTimer() -> Observable<Mutation> {
-        guard timerDisposable == nil else {
-            return .empty()
-        }
-
-        let totalSeconds = 15
-        let timerObservable = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
-            .map { totalSeconds - $0 - 1 }
-            .take(while: { $0 >= 0 })
-            .flatMap { remainingSeconds -> Observable<Mutation> in
+        guard timerDisposable == nil else { return .empty() }
+        
+        return Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+            .take(totalSeconds + 1)
+            .take(until: stopTimerSubject)
+            .map { [weak self] elapsedSeconds in
+                guard let self = self else { return .updateTimer("남은시간 0:00") }
+                let remainingSeconds = self.totalSeconds - elapsedSeconds
                 let minutes = remainingSeconds / 60
                 let seconds = remainingSeconds % 60
                 let timeString = String(format: "남은시간 %d:%02d", minutes, seconds)
+                
                 if remainingSeconds == 0 {
-                    return .concat([
-                        .just(.updateTimer("남은시간 0:00")),
-                        .just(.setNavigateBack(true)),
-                        .just(.setNavigateBack(false))
-                    ])
+                    return .setNavigateBack(true)
                 }
-                return .just(.updateTimer(timeString))
+                return .updateTimer(timeString)
             }
-
-        timerDisposable = timerObservable
-            .subscribe()
-
-        return timerObservable
+            .do(onSubscribe: { print("타이머 시작") },
+                onDispose: { [weak self] in
+                self?.resetTimerState()
+            })
     }
-
+    
     private func stopTimer() {
-        timerDisposable?.dispose()
+        stopTimerSubject.onNext(())
+        stopTimerSubject.onCompleted()
+    }
+    
+    private func resetTimerState() {
         timerDisposable = nil
     }
     

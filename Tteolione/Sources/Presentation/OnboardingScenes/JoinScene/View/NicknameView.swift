@@ -33,11 +33,11 @@ final class NicknameView: BaseView {
         label.numberOfLines = 0
         return label
     }()
-    let joinButton = JoinButton(title: .next)
+    let checkButton = JoinButton(title: .next)
     
     override func configureHierarchy() {
         [topBarView, iconWithLabelView,
-         boundarView, joinButton,
+         boundarView, checkButton,
          nicknameInputTextField, explanationLabel].forEach { addSubview($0) }
     }
     
@@ -74,7 +74,7 @@ final class NicknameView: BaseView {
             make.leading.top.equalTo(boundarView).inset(4)
         }
         
-        joinButton.snp.makeConstraints { make in
+        checkButton.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(48)
         }
@@ -84,6 +84,16 @@ final class NicknameView: BaseView {
     override func configureView() {
         iconWithLabelView.configure(icon: .nickname,
                                     text: AppText.Join.joinNickname)
+    }
+    
+}
+
+extension NicknameView {
+    
+    func setButton(_ isEnabled: Bool) {
+        checkButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+        checkButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+        checkButton.isEnabled = isEnabled
     }
     
 }

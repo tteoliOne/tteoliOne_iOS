@@ -5,18 +5,13 @@
 //  Created by 전준영 on 12/12/24.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class PasswordViewController: BaseViewController<PasswordView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: PasswordViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: JoinCoordinatorDelegate?
     
 }
 
@@ -40,7 +35,7 @@ extension PasswordViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.joinButton.rx.tap
+        rootView.checkButton.rx.tap
             .map { PasswordReactor.Action.passwordCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -56,9 +51,7 @@ extension PasswordViewController: View {
                     view.updateState(isValid: isValid)
                 }
                 let allValid = validations.allSatisfy { $0 }
-                owner.rootView.joinButton.backgroundColor = allValid ? .myAppMain : .myAppLightGray2
-                owner.rootView.joinButton.setTitleColor(allValid ? .white : .myAppBlack, for: .normal)
-                owner.rootView.joinButton.isEnabled = allValid
+                owner.rootView.setButton(allValid)
             })
             .disposed(by: disposeBag)
     }
@@ -78,12 +71,12 @@ extension PasswordViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showNickname()
+                owner.delegate?.pushNicknameViewController()
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension PasswordViewController: DelegateOwner {
-    typealias Delegate = PasswordViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }

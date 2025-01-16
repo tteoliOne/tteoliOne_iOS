@@ -5,18 +5,13 @@
 //  Created by 전준영 on 12/10/24.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class IDViewController: BaseViewController<IDView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: IDViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: JoinCoordinatorDelegate?
     
 }
 
@@ -39,7 +34,7 @@ extension IDViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.joinButton.rx.tap
+        rootView.checkButton.rx.tap
             .map { IDReactor.Action.idCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -49,9 +44,16 @@ extension IDViewController: View {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
-                owner.rootView.joinButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
-                owner.rootView.joinButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
-                owner.rootView.joinButton.isEnabled = isEnabled
+                owner.rootView.setButton(isEnabled)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(message: errorMessage)
             }
             .disposed(by: disposeBag)
     }
@@ -71,12 +73,12 @@ extension IDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showPassword()
+                owner.delegate?.pushPasswordViewController()
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension IDViewController: DelegateOwner {
-    typealias Delegate = IDViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }

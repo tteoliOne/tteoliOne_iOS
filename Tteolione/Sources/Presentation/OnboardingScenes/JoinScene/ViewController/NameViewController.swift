@@ -5,18 +5,13 @@
 //  Created by 전준영 on 12/28/24.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class NameViewController: BaseViewController<NameView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: NameViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: JoinCoordinatorDelegate?
     
 }
 
@@ -39,7 +34,7 @@ extension NameViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.joinButton.rx.tap
+        rootView.checkButton.rx.tap
             .map { NameReactor.Action.usernameCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -49,9 +44,7 @@ extension NameViewController: View {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
-                owner.rootView.joinButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
-                owner.rootView.joinButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
-                owner.rootView.joinButton.isEnabled = isEnabled
+                owner.rootView.setButton(isEnabled)
             }
             .disposed(by: disposeBag)
     }
@@ -62,7 +55,7 @@ extension NameViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popVC()
+                owner.delegate?.twoViewPop()
             }
             .disposed(by: disposeBag)
         
@@ -71,12 +64,12 @@ extension NameViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showID()
+                owner.delegate?.pushIdViewController()
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension NameViewController: DelegateOwner {
-    typealias Delegate = NameViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }

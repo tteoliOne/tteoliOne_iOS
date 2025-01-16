@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+protocol JoinCoordinatorDelegate: Coordinator {
+    func pushEmailAuthViewController()
+    func pushAuthNumViewController()
+    func pushNameViewController()
+    func pushIdViewController()
+    func pushPasswordViewController()
+    func pushNicknameViewController()
+    func pushProfileSetViewController()
+    func pushSignUpFinshViewController()
+    func twoViewPop()
+    func finishView()
+}

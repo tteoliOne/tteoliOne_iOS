@@ -5,18 +5,13 @@
 //  Created by 전준영 on 12/27/24.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class SignUpFinshViewController: BaseViewController<SignUpFinshView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: SignUpFinshViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: JoinCoordinatorDelegate?
     
 }
 
@@ -40,7 +35,7 @@ extension SignUpFinshViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showLogin()
+                owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
     }
@@ -48,5 +43,5 @@ extension SignUpFinshViewController: View {
 }
 
 extension SignUpFinshViewController: DelegateOwner {
-    typealias Delegate = SignUpFinshViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }

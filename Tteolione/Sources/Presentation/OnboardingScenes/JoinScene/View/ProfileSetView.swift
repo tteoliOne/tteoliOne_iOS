@@ -76,4 +76,8 @@ final class ProfileSetView: BaseView {
         }
     }
     
+    override func configureView() {
+        joinButton.backgroundColor = .myAppMain
+        joinButton.setTitleColor(.white, for: .normal)
+    }
 }

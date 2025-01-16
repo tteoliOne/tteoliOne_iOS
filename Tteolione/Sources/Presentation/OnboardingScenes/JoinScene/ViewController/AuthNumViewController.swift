@@ -5,27 +5,17 @@
 //  Created by 전준영 on 12/7/24.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class AuthNumViewController: BaseViewController<AuthNumView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: AuthNumViewControllerDelegate?
+    weak var delegate: JoinCoordinatorDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         reactor?.action.onNext(.startTimer)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        reactor?.action.onNext(.stopTimer)
     }
     
 }
@@ -45,11 +35,11 @@ extension AuthNumViewController: View {
             .disposed(by: disposeBag)
         
         rootView.authNumInputTextField.rx.text.orEmpty
-            .map { AuthNumReactor.Action.authNumTextChanged($0) }
+            .map { AuthNumReactor.Action.updateAuthNum($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.joinButton.rx.tap
+        rootView.checkButton.rx.tap
             .map { AuthNumReactor.Action.authCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -59,15 +49,22 @@ extension AuthNumViewController: View {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
-                owner.rootView.joinButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
-                owner.rootView.joinButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
-                owner.rootView.joinButton.isEnabled = isEnabled
+                owner.rootView.setButton(isEnabled)
             }
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.remainingTime }
             .distinctUntilChanged()
             .bind(to: rootView.explanationLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(message: errorMessage)
+            }
             .disposed(by: disposeBag)
     }
     
@@ -86,12 +83,12 @@ extension AuthNumViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showName()
+                owner.delegate?.pushNameViewController()
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension AuthNumViewController: DelegateOwner {
-    typealias Delegate = AuthNumViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }
