@@ -5,18 +5,13 @@
 //  Created by 전준영 on 1/3/25.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class FindIDResultViewController: BaseViewController<FindIDResultView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: FindIDResultCoordinatorDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: ResetPasswordCoordinator?
     
 }
 
@@ -48,21 +43,21 @@ extension FindIDResultViewController: View {
     }
     
     private func bindNavigation(_ reactor: FindIDResultReactor) {
-//        reactor.state.map { $0.navigateBack }
-//            .distinctUntilChanged()
-//            .filter { $0 }
-//            .observe(on: MainScheduler.instance)
-//            .bind(with: self) { owner, _ in
-//                owner.delegate?.popToPreviousScreen()
-//            }
-//            .disposed(by: disposeBag)
-        
         reactor.state.map { $0.navigateToNext }
             .distinctUntilChanged()
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.goToLogin()
+                owner.delegate?.pushResetPasswordChcekViewController(viewType: .idInPassword)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.navigateToLogin }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
     }
@@ -70,5 +65,5 @@ extension FindIDResultViewController: View {
 }
 
 extension FindIDResultViewController: DelegateOwner {
-    typealias Delegate = FindIDResultCoordinatorDelegate
+    typealias Delegate = ResetPasswordCoordinator
 }

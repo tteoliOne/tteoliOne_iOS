@@ -87,4 +87,13 @@ extension AuthView {
         checkButton.isEnabled = isEnabled
     }
     
+    func setTitle(_ type: AccountCoordinator){
+        switch type {
+        case .id:
+            topBarView.joinLabel.text = AppText.Account.findId
+            
+        case .idInPassword, .password:
+            topBarView.joinLabel.text = AppText.Account.resetPassword
+        }
+    }
 }

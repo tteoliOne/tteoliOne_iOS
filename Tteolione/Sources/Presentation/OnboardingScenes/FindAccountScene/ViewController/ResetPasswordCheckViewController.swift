@@ -1,51 +1,56 @@
 //
-//  FindIDViewController.swift
+//  ResetPasswordCheckViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 1/2/25.
+//  Created by 전준영 on 1/3/25.
 //
 
 import ReactorKit
 import RxCocoa
 
-final class FindIDViewController: BaseViewController<FindIDView> {
+final class ResetPasswordCheckViewController: BaseViewController<ResetPasswordCheckView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: FindIDCoordinatorDelegate?
+    weak var delegate: FindAccountCoordinatorDelegate?
     
 }
 
-extension FindIDViewController: View {
+extension ResetPasswordCheckViewController: View {
     
-    func bind(reactor: FindIDReactor) {
+    func bind(reactor: ResetPasswordCheckReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    func bindAction(_ reactor: FindIDReactor) {
+    func bindAction(_ reactor: ResetPasswordCheckReactor) {
         rootView.userNameInputTextField.rx.text.orEmpty
-            .map { FindIDReactor.Action.updateUsername($0) }
+            .map { ResetPasswordCheckReactor.Action.updateUsername($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.idInputTextField.rx.text.orEmpty
+            .map { ResetPasswordCheckReactor.Action.updateId($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.emailInputTextField.rx.text.orEmpty
-            .map { FindIDReactor.Action.updateEmail($0) }
+            .map { ResetPasswordCheckReactor.Action.updateEmail($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.topBarView.backButton.rx.tap
-            .map { FindIDReactor.Action.backButtonTap }
+            .map { ResetPasswordCheckReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.checkButton.rx.tap
-            .map { FindIDReactor.Action.sendAuthButtonTap }
+            .map { ResetPasswordCheckReactor.Action.sendAuthButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    func bindState(_ reactor: FindIDReactor) {
+    func bindState(_ reactor: ResetPasswordCheckReactor) {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
@@ -64,13 +69,20 @@ extension FindIDViewController: View {
             .disposed(by: disposeBag)
     }
     
-    func bindNavigation(_ reactor: FindIDReactor) {
-        reactor.state.map { $0.navigateBack }
-            .distinctUntilChanged()
-            .filter { $0 }
+    func bindNavigation(_ reactor: ResetPasswordCheckReactor) {
+        reactor.state
+            .map { ($0.navigateBack, $0.viewType) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, _ in
-                owner.delegate?.popVC()
+            .bind(with: self) { owner, data in
+                guard let viewType = data.1 else { return }
+                switch viewType {
+                case .id, .idInPassword:
+                    owner.delegate?.popVC()
+                case .password:
+                    owner.delegate?.finishView()
+                }
             }
             .disposed(by: disposeBag)
         
@@ -79,12 +91,12 @@ extension FindIDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showFindAuth()
+                owner.delegate?.pushAuthViewController(viewType: .password)
             }
             .disposed(by: disposeBag)
     }
 }
 
-extension FindIDViewController: DelegateOwner {
-    typealias Delegate = FindIDCoordinatorDelegate
+extension ResetPasswordCheckViewController: DelegateOwner {
+    typealias Delegate = FindAccountCoordinatorDelegate
 }

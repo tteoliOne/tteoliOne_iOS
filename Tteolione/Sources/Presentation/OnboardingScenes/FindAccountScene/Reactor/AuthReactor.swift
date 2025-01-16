@@ -35,6 +35,7 @@ final class AuthReactor: Reactor {
         var errorMessage: String?
         var navigateToNext: Bool = false
         var navigateBack: Bool = false
+        var viewType: AccountCoordinator?
         var resultId: FindIDDTO?
     }
     
@@ -42,13 +43,18 @@ final class AuthReactor: Reactor {
     private var timerDisposable: Disposable?
     private let networkProvider: NetworkProvider<FindAccountAPI>
     private let mediator: OnBoardingMediator
+    private let viewType: AccountCoordinator
     private let totalSeconds = 180
-    let initialState = State()
+    
+    var initialState = State()
     
     init(networkProvider: NetworkProvider<FindAccountAPI>,
-         mediator: OnBoardingMediator) {
+         mediator: OnBoardingMediator,
+         viewType: AccountCoordinator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
+        self.viewType = viewType
+        self.initialState = State(viewType: viewType)
     }
     
 }
@@ -67,10 +73,17 @@ extension AuthReactor {
         case .authCheckButtonTap:
             stopTimer()
             guard currentState.isButtonEnabled else { return .empty() }
-            return .concat([
-                performAuthCheck(code: currentState.authNum)
-            ])
-            
+            switch viewType {
+            case .id:
+                return .concat([
+                    performAuthCheckToId(code: currentState.authNum)
+                ])
+            case .idInPassword, .password:
+                return .concat([
+                    performAuthCheckToPassword(code: currentState.authNum)
+                ])
+            }
+        
         case .backButtonTap:
             stopTimer()
             return .concat([
@@ -123,12 +136,38 @@ extension AuthReactor {
 
 extension AuthReactor {
     
-    private func performAuthCheck(code: String) -> Observable<Mutation> {
+    private func performAuthCheckToId(code: String) -> Observable<Mutation> {
         let email = mediator.get(\.email)
         let username = mediator.get(\.username)
         let body = FindAccountRequestBody(email: email,
                                           authCode: code,
                                           username: username)
+        return networkProvider
+            .request(.validateIdEmail(body: body),
+                     decodingType: ServerResponse<FindIDDTO>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let dto):
+                    return .concat([
+                        .just(.setResultId(dto)),
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
+    
+    private func performAuthCheckToPassword(code: String) -> Observable<Mutation> {
+        let email = mediator.get(\.email)
+        let username = mediator.get(\.username)
+        let id = mediator.get(\.loginId)
+        let body = FindAccountRequestBody(email: email,
+                                          authCode: code,
+                                          username: username,
+                                          loginId: id)
         return networkProvider
             .request(.validateIdEmail(body: body),
                      decodingType: ServerResponse<FindIDDTO>.self)

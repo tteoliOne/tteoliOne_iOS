@@ -11,7 +11,7 @@ import RxCocoa
 final class AuthViewController: BaseViewController<AuthView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: AuthCoordinatorDelegate?
+    weak var delegate: ResetPasswordCoordinator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +57,14 @@ extension AuthViewController: View {
             .distinctUntilChanged()
             .bind(to: rootView.explanationLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.viewType }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, type in
+                guard let type = type else { return }
+                owner.rootView.setTitle(type)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindNavigation(_ reactor: AuthReactor) {
@@ -70,13 +78,20 @@ extension AuthViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .map { ($0.navigateToNext, $0.resultId) }
+            .map { ($0.navigateToNext, $0.resultId, $0.viewType) }
             .distinctUntilChanged { $0.0 == $1.0 }
             .filter { $0.0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, data in
                 guard let resultId = data.1 else { return }
-                owner.delegate?.showFindIDResult(with: resultId)
+                switch data.2 {
+                case .id:
+                    owner.delegate?.pushResultIdViewController(with: resultId)
+                case .idInPassword, .password:
+                    owner.delegate?.pushResetPasswordViewController()
+                case .none:
+                    break
+                }
             }
             .disposed(by: disposeBag)
         
@@ -84,5 +99,5 @@ extension AuthViewController: View {
 }
 
 extension AuthViewController: DelegateOwner {
-    typealias Delegate = AuthCoordinatorDelegate
+    typealias Delegate = ResetPasswordCoordinator
 }

@@ -73,6 +73,11 @@ extension LoginViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.passwordResetButton.rx.tap
+            .map { LoginReactor.Action.resetPasswordButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.loginButton.rx.tap
             .map { LoginReactor.Action.loginButtonTap }
             .bind(to: reactor.action)
@@ -137,6 +142,15 @@ extension LoginViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.showFindIDView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isPasswordToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.showFindPasswordView()
             }
             .disposed(by: disposeBag)
         

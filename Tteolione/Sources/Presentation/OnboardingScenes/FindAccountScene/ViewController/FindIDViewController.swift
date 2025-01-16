@@ -1,0 +1,90 @@
+//
+//  FindIDViewController.swift
+//  Tteolione
+//
+//  Created by 전준영 on 1/2/25.
+//
+
+import ReactorKit
+import RxCocoa
+
+final class FindIDViewController: BaseViewController<FindIDView> {
+    
+    var disposeBag = DisposeBag()
+    weak var delegate: ResetPasswordCoordinator?
+    
+}
+
+extension FindIDViewController: View {
+    
+    func bind(reactor: FindIDReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+        bindNavigation(reactor)
+    }
+    
+    func bindAction(_ reactor: FindIDReactor) {
+        rootView.userNameInputTextField.rx.text.orEmpty
+            .map { FindIDReactor.Action.updateUsername($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.emailInputTextField.rx.text.orEmpty
+            .map { FindIDReactor.Action.updateEmail($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.topBarView.backButton.rx.tap
+            .map { FindIDReactor.Action.backButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.checkButton.rx.tap
+            .map { FindIDReactor.Action.sendAuthButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: FindIDReactor) {
+        reactor.state.map { $0.isButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, isEnabled in
+                let isAllEnabled = isEnabled.allSatisfy { $0 }
+                owner.rootView.setButton(isAllEnabled)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(message: errorMessage)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindNavigation(_ reactor: FindIDReactor) {
+        reactor.state.map { $0.navigateBack }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.finishView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.navigateToNext }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushAuthViewController(viewType: .id)
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension FindIDViewController: DelegateOwner {
+    typealias Delegate = ResetPasswordCoordinator
+}
