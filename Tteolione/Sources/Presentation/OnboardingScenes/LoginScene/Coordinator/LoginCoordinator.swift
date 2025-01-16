@@ -41,15 +41,25 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func showFindIDView() {
-        let coordinator = FindIDCoordinator(navigationController: navigationController,
-                                            dependency: dependency)
+        let coordinator = ResetPasswordCoordinator(navigationController: navigationController,
+                                 dependency: dependency,
+                                 type: .id)
+//        let coordinator = FindIDCoordinator(navigationController: navigationController,
+//                                            dependency: dependency)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()
     }
     
     func showFindPasswordView() {
-        
+        let coordinator = ResetPasswordCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   type: .password)
+//        let coordinator = FindIDCoordinator(navigationController: navigationController,
+//                                            dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
     func showAddressView() {

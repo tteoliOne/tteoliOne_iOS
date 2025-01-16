@@ -110,3 +110,13 @@ final class ResetPasswordView: BaseView {
     }
     
 }
+
+extension ResetPasswordView {
+    
+    func setButton(_ isEnabled: Bool) {
+        completeResetButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+        completeResetButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+        completeResetButton.isEnabled = isEnabled
+    }
+    
+}

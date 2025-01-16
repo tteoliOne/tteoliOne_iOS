@@ -11,7 +11,7 @@ import RxCocoa
 final class FindIDViewController: BaseViewController<FindIDView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: FindIDCoordinatorDelegate?
+    weak var delegate: ResetPasswordCoordinator?
     
 }
 
@@ -79,12 +79,13 @@ extension FindIDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showFindAuth()
+//                owner.delegate?.showFindAuth()
+                owner.delegate?.pushAuthViewController(viewType: .id)
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension FindIDViewController: DelegateOwner {
-    typealias Delegate = FindIDCoordinatorDelegate
+    typealias Delegate = ResetPasswordCoordinator
 }

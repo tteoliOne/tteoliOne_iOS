@@ -18,6 +18,7 @@ final class LoginReactor: Reactor {
         case passwordSecureButtonTap
         case signUpButtonTap
         case idSearchButtonTap
+        case resetPasswordButtonTap
         case loginButtonTap
         case updateId(String)
         case updatePassword(String)
@@ -29,6 +30,7 @@ final class LoginReactor: Reactor {
         case togglePasswordSecureMode
         case setSignUpToNext(Bool)
         case setFindIDToNext(Bool)
+        case setPasswordToNext(Bool)
         case setLoginButtonEnabled([Bool])
         case setLoginToNext(Bool)
         case setId(String)
@@ -42,6 +44,7 @@ final class LoginReactor: Reactor {
         var isPasswordSecure: Bool = true
         var isSignUpToNext: Bool = false
         var isFindIDToNext: Bool = false
+        var isPasswordToNext: Bool = false
         var isLoginButtonEnabled: [Bool] = [false, false]
         var isLoginToNext: Bool = false
         var id: String = ""
@@ -92,6 +95,12 @@ extension LoginReactor {
                 .just(.setFindIDToNext(false))
             ])
             
+        case .resetPasswordButtonTap:
+            return .concat([
+                .just(.setPasswordToNext(true)),
+                .just(.setPasswordToNext(false))
+            ])
+            
         case .updateId(let id):
             return .concat([
                 .just(.setLoginButtonEnabled(updateLoginButtonState(at: 0, isValid: isValidCount(id)))),
@@ -138,6 +147,9 @@ extension LoginReactor {
             
         case let .setFindIDToNext(isNavi):
             newState.isFindIDToNext = isNavi
+            
+        case let .setPasswordToNext(isNavi):
+            newState.isPasswordToNext = isNavi
             
         case let .setId(id):
             newState.id = id

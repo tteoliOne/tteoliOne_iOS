@@ -1,47 +1,47 @@
+////
+////  FindIDCoordinator.swift
+////  Tteolione
+////
+////  Created by 전준영 on 1/4/25.
+////
 //
-//  FindIDCoordinator.swift
-//  Tteolione
+//import UIKit
 //
-//  Created by 전준영 on 1/4/25.
-//
-
-import UIKit
-
-final class FindIDCoordinator: FindIDCoordinatorDelegate {
-    
-    var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
-    var parentCoordinator: Coordinator?
-    private let dependency: AppDependency
-    
-    init(navigationController: UINavigationController,
-         dependency: AppDependency) {
-        self.navigationController = navigationController
-        self.dependency = dependency
-    }
-    
-    func start() {
-        let reactor = FindIDReactor(
-            networkProvider: dependency.accountNetworkProvider,
-            mediator: dependency.onboardingMediator
-        )
-        let viewController = createViewController(
-            ofType: FindIDViewController.self,
-            with: reactor,
-            delegate: self
-        )
-        
-        show(viewController)
-    }
-    
-    func showFindAuth() {
-        let coordinator = AuthCoordinator(
-            navigationController: navigationController,
-            dependency: dependency
-        )
-        coordinator.parentCoordinator = self
-        addChildCoordinator(coordinator)
-        coordinator.start()
-    }
-    
-}
+//final class FindIDCoordinator: FindIDCoordinatorDelegate {
+//    
+//    var childCoordinators: [Coordinator] = []
+//    var navigationController: UINavigationController
+//    var parentCoordinator: Coordinator?
+//    private let dependency: AppDependency
+//    
+//    init(navigationController: UINavigationController,
+//         dependency: AppDependency) {
+//        self.navigationController = navigationController
+//        self.dependency = dependency
+//    }
+//    
+//    func start() {
+//        let reactor = FindIDReactor(
+//            networkProvider: dependency.accountNetworkProvider,
+//            mediator: dependency.onboardingMediator
+//        )
+//        let viewController = createViewController(
+//            ofType: FindIDViewController.self,
+//            with: reactor,
+//            delegate: self
+//        )
+//        
+//        show(viewController)
+//    }
+//    
+//    func showFindAuth() {
+//        let coordinator = AuthCoordinator(
+//            navigationController: navigationController,
+//            dependency: dependency
+//        )
+//        coordinator.parentCoordinator = self
+//        addChildCoordinator(coordinator)
+//        coordinator.start()
+//    }
+//    
+//}
