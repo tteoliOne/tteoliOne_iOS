@@ -5,7 +5,6 @@
 //  Created by 전준영 on 1/3/25.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
@@ -49,7 +48,7 @@ extension FindIDResultViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.pushResetPasswordChcekViewController()
+                owner.delegate?.pushResetPasswordChcekViewController(viewType: .idInPassword)
             }
             .disposed(by: disposeBag)
         
@@ -58,7 +57,7 @@ extension FindIDResultViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.finish()
+                owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
     }

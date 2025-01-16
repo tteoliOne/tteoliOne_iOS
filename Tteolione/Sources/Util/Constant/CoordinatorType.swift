@@ -13,5 +13,5 @@ enum CoordinatorType {
 }
 
 enum AccountCoordinator {
-    case id, password
+    case id, password, idInPassword
 }

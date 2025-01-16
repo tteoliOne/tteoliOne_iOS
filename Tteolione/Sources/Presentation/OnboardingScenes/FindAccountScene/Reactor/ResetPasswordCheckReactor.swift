@@ -37,16 +37,19 @@ final class ResetPasswordCheckReactor: Reactor {
         var navigateToNext: Bool = false
         var navigateBack: Bool = false
         var errorMessage: String?
+        var viewType: AccountCoordinator?
     }
     
     private let networkProvider: NetworkProvider<FindAccountAPI>
     private let mediator: OnBoardingMediator
-    let initialState = State()
+    var initialState = State()
     
     init(networkProvider: NetworkProvider<FindAccountAPI>,
-         mediator: OnBoardingMediator) {
+         mediator: OnBoardingMediator,
+         viewType: AccountCoordinator) {
         self.networkProvider = networkProvider
         self.mediator = mediator
+        self.initialState = State(viewType: viewType)
     }
     
 }

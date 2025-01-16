@@ -70,12 +70,19 @@ extension ResetPasswordCheckViewController: View {
     }
     
     func bindNavigation(_ reactor: ResetPasswordCheckReactor) {
-        reactor.state.map { $0.navigateBack }
-            .distinctUntilChanged()
-            .filter { $0 }
+        reactor.state
+            .map { ($0.navigateBack, $0.viewType) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, _ in
-                owner.delegate?.popVC()
+            .bind(with: self) { owner, data in
+                guard let viewType = data.1 else { return }
+                switch viewType {
+                case .id, .idInPassword:
+                    owner.delegate?.popVC()
+                case .password:
+                    owner.delegate?.finishView()
+                }
             }
             .disposed(by: disposeBag)
         

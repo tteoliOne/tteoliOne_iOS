@@ -71,7 +71,7 @@ extension ResetPasswordViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.finish()
+                owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
     }

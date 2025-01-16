@@ -57,6 +57,14 @@ extension AuthViewController: View {
             .distinctUntilChanged()
             .bind(to: rootView.explanationLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.viewType }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, type in
+                guard let type = type else { return }
+                owner.rootView.setTitle(type)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindNavigation(_ reactor: AuthReactor) {
@@ -79,7 +87,7 @@ extension AuthViewController: View {
                 switch data.2 {
                 case .id:
                     owner.delegate?.pushResultIdViewController(with: resultId)
-                case .password:
+                case .idInPassword, .password:
                     owner.delegate?.pushResetPasswordViewController()
                 case .none:
                     break

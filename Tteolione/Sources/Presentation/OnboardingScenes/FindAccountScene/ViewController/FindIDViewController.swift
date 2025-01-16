@@ -70,7 +70,7 @@ extension FindIDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popVC()
+                owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
         
@@ -79,7 +79,6 @@ extension FindIDViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-//                owner.delegate?.showFindAuth()
                 owner.delegate?.pushAuthViewController(viewType: .id)
             }
             .disposed(by: disposeBag)

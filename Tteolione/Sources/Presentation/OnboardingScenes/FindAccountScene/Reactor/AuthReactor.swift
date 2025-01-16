@@ -10,11 +10,6 @@ import RxSwift
 
 final class AuthReactor: Reactor {
     
-    enum ViewType {
-        case id
-        case password
-    }
-    
     enum Action {
         case updateAuthNum(String)
         case authCheckButtonTap
@@ -83,7 +78,7 @@ extension AuthReactor {
                 return .concat([
                     performAuthCheckToId(code: currentState.authNum)
                 ])
-            case .password:
+            case .idInPassword, .password:
                 return .concat([
                     performAuthCheckToPassword(code: currentState.authNum)
                 ])

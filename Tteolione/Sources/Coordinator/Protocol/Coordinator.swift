@@ -40,12 +40,11 @@ extension Coordinator {
     }
     
     func popVC() {
-        parentCoordinator?.childDidFinish(self)
         navigationController.popViewController(animated: true)
     }
     
     func dismissVC() {
-        parentCoordinator?.childDidFinish(self)
+//        parentCoordinator?.childDidFinish(self)
         navigationController.dismiss(animated: true)
     }
     

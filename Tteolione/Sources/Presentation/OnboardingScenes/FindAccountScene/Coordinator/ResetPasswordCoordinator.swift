@@ -29,7 +29,10 @@ final class ResetPasswordCoordinator: FindAccountCoordinatorDelegate {
             pushFindIdViewController()
             
         case .password:
-            pushResetPasswordChcekViewController()
+            pushResetPasswordChcekViewController(viewType: .password)
+            
+        case .idInPassword:
+            pushResetPasswordChcekViewController(viewType: .idInPassword)
         }
     }
     
@@ -66,9 +69,10 @@ extension ResetPasswordCoordinator {
         show(viewController)
     }
     
-    func pushResetPasswordChcekViewController() {
+    func pushResetPasswordChcekViewController(viewType: AccountCoordinator) {
         let reactor = ResetPasswordCheckReactor(networkProvider: dependency.accountNetworkProvider,
-                                                mediator: dependency.onboardingMediator)
+                                                mediator: dependency.onboardingMediator,
+                                                viewType: viewType)
         let viewController = createViewController(
             ofType: ResetPasswordCheckViewController.self,
             with: reactor,
@@ -103,6 +107,11 @@ extension ResetPasswordCoordinator {
         )
         
         show(viewController)
+    }
+    
+    func finishView() {
+        finishAllChildren()
+        navigationController.popToRootViewController(animated: true)
     }
     
 }
