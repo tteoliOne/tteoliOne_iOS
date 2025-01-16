@@ -1,5 +1,5 @@
 //
-//  ResetPasswordCoordinator.swift
+//  FindAccountCoordinator.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/16/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ResetPasswordCoordinator: FindAccountCoordinatorDelegate {
+final class FindAccountCoordinator: FindAccountCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
     var parentCoordinator: Coordinator?
@@ -38,7 +38,7 @@ final class ResetPasswordCoordinator: FindAccountCoordinatorDelegate {
     
 }
 
-extension ResetPasswordCoordinator {
+extension FindAccountCoordinator {
     
     func pushFindIdViewController() {
         let reactor = FindIDReactor(

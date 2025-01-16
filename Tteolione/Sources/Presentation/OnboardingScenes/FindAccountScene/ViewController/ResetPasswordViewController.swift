@@ -11,7 +11,7 @@ import RxCocoa
 final class ResetPasswordViewController: BaseViewController<ResetPasswordView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: ResetPasswordCoordinator?
+    weak var delegate: FindAccountCoordinator?
     
 }
 
@@ -78,5 +78,5 @@ extension ResetPasswordViewController: View {
 }
 
 extension ResetPasswordViewController: DelegateOwner {
-    typealias Delegate = ResetPasswordCoordinator
+    typealias Delegate = FindAccountCoordinator
 }

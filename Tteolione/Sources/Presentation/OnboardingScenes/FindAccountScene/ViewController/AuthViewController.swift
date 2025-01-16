@@ -11,7 +11,7 @@ import RxCocoa
 final class AuthViewController: BaseViewController<AuthView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: ResetPasswordCoordinator?
+    weak var delegate: FindAccountCoordinator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,5 +99,5 @@ extension AuthViewController: View {
 }
 
 extension AuthViewController: DelegateOwner {
-    typealias Delegate = ResetPasswordCoordinator
+    typealias Delegate = FindAccountCoordinator
 }
