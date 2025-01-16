@@ -131,23 +131,25 @@ final class LoginView: BaseView {
     }()
     
     //MARK: - 소셜로그인
-    let appleLoginButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.layer.cornerRadius = 24
-        button.backgroundColor = .white
-        button.setImage(UIImage(systemName: "applelogo"), for: .normal)
-        button.setTitle(" Sign in with Apple", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = Font.regular17
-        button.imageView?.tintColor = .myAppBlack
-        button.layer.borderWidth = 0.5
-        return button
-    }()
+    let appleLoginButton = CommonButton(title: .apple,
+                                        corner: 12,
+                                        backgroundColor: .myAppBlack,
+                                        textColor: .white,
+                                        font: Font.regular17,
+                                        symbol: UIImage(systemName: "applelogo"),
+                                        symbolTintColor: .white)
+    let kakaoLoginButton = CommonButton(title: .kakao,
+                                        corner: 12,
+                                        backgroundColor: .myAppYellow,
+                                        textColor: .myAppBlack,
+                                        font: Font.regular17,
+                                        symbol: UIImage(systemName: "message.fill"),
+                                        symbolTintColor: .myAppBlack)
     
     override func configureHierarchy() {
         [logoStackView, loginStackView,
          signStackView, orStackView,
-         appleLoginButton]
+         appleLoginButton, kakaoLoginButton]
             .forEach { addSubview($0) }
         
         [emailInfoLabel, emailTextField]
@@ -249,7 +251,13 @@ final class LoginView: BaseView {
         appleLoginButton.snp.makeConstraints { make in
             make.top.equalTo(orStackView.snp.bottom).offset(20)
             make.height.equalTo(48)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(16)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(40)
+        }
+        
+        kakaoLoginButton.snp.makeConstraints { make in
+            make.top.equalTo(appleLoginButton.snp.bottom).offset(20)
+            make.height.equalTo(48)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(40)
         }
     }
     

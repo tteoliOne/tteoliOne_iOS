@@ -22,6 +22,7 @@ final class LoginReactor: Reactor {
         case loginButtonTap
         case updateId(String)
         case updatePassword(String)
+        case kakaoButtonTap
     }
     
     enum Mutation {
@@ -36,6 +37,10 @@ final class LoginReactor: Reactor {
         case setId(String)
         case setPassword(String)
         case showError(NetworkError)
+        case setKakaoLoginToAddress(Bool)
+        case setKakaoLoginToProfile(Bool)
+        case setKakaoToken(String?)
+        case setKakaoErrorMessage(String)
     }
 
     struct State {
@@ -50,14 +55,20 @@ final class LoginReactor: Reactor {
         var id: String = ""
         var password: String = ""
         var errorMessage: String?
+        var isKakaoLoginToAddress: Bool = false
+        var isKakaoLoginToProfile: Bool = false
+        var kakaoProfileToken: String = ""
     }
     
+    private let kakaoAuthVM: KakaoAuthVM
     private let networkProvider: NetworkProvider<UserSessionAPI>
     private let ud: UserDefaultsManager
     let initialState: State = State()
     
-    init(networkProvider: NetworkProvider<UserSessionAPI>,
+    init(kakaoAuthVM: KakaoAuthVM,
+         networkProvider: NetworkProvider<UserSessionAPI>,
          ud: UserDefaultsManager) {
+        self.kakaoAuthVM = kakaoAuthVM
         self.networkProvider = networkProvider
         self.ud = ud
     }
@@ -122,6 +133,29 @@ extension LoginReactor {
                 performLogin(id: id,
                              password: password)
             ])
+            
+        case .kakaoButtonTap:
+            return kakaoAuthVM.loginWithKakao()
+                .asObservable()
+                .flatMap { result -> Observable<Mutation> in
+                    switch result {
+                    case .existingUser:
+                        return .concat([
+                            .just(.setKakaoLoginToAddress(true)),
+                            .just(.setKakaoLoginToAddress(false))
+                        ])
+                        
+                    case .newUser(let accessToken):
+                        return .concat([
+                            .just(.setKakaoToken(accessToken)),
+                            .just(.setKakaoLoginToProfile(true)),
+                            .just(.setKakaoLoginToProfile(false))
+                        ])
+                        
+                    case .failure(let message):
+                        return .just(.setKakaoErrorMessage(message))
+                    }
+                }
         }
     }
     
@@ -165,6 +199,18 @@ extension LoginReactor {
             
         case let .showError(error):
             newState.errorMessage = error.errorDescription
+            
+        case let .setKakaoLoginToAddress(isNavi):
+            newState.isKakaoLoginToAddress = isNavi
+            
+        case let .setKakaoLoginToProfile(isNavi):
+            newState.isKakaoLoginToProfile = isNavi
+            
+        case let .setKakaoErrorMessage(message):
+            newState.errorMessage = message
+
+        case let .setKakaoToken(token):
+            newState.kakaoProfileToken = token ?? ""
         }
         
         return newState
@@ -188,10 +234,10 @@ extension LoginReactor {
             }
             switch handleResponse(response) {
             case .success(let result):
-                self.ud.nickname = result.nickname
-                self.ud.token = result.accessToken
-                self.ud.refreshToken = result.refreshToken
-                self.ud.userID = result.userId
+                self.ud.nickname = result.nickname ?? ""
+                self.ud.token = result.accessToken ?? ""
+                self.ud.refreshToken = result.refreshToken ?? ""
+                self.ud.userID = result.userId ?? 0
                 self.ud.typeLogin = .local
                 return .concat([
                     .just(.setLoginToNext(true)),

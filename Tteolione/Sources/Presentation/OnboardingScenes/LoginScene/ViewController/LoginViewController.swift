@@ -82,6 +82,11 @@ extension LoginViewController: View {
             .map { LoginReactor.Action.loginButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.kakaoLoginButton.rx.tap
+            .map { LoginReactor.Action.kakaoButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: LoginReactor) {
@@ -123,7 +128,6 @@ extension LoginViewController: View {
                 owner.rootView.setButton(isAllEnabled)
             }
             .disposed(by: disposeBag)
-        
     }
     
     private func bindNavigation(_ reactor: LoginReactor) {
@@ -159,6 +163,26 @@ extension LoginViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
+                owner.delegate?.showAddressView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isKakaoLoginToAddress }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.showAddressView()
+            }
+            .disposed(by: disposeBag)
+
+        reactor.state
+            .map { ($0.isKakaoLoginToProfile, $0.kakaoProfileToken) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, data in
+                let token = data.1
                 owner.delegate?.showAddressView()
             }
             .disposed(by: disposeBag)

@@ -3,6 +3,8 @@
 
 .DS_Store
 APIKey.swift
+*.xcconfig
+GoogleService-Info.plist
 
 ### Swift ###
 # Xcode
