@@ -642,7 +642,6 @@
 		72361E922D155D05009BEF12 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				72361E902D1411D9009BEF12 /* LoginCoordinator.swift */,
 				72361E882D13FC2D009BEF12 /* SignUp */,
 				72361EDB2D295C16009BEF12 /* FindAccount */,
 				723620122D364BAA009BEF12 /* Address */,
@@ -653,7 +652,6 @@
 		72361E932D155D49009BEF12 /* LoginDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				72361E942D155D61009BEF12 /* LoginDelegate.swift */,
 				72361E962D17D363009BEF12 /* SignUpDelegate */,
 				72361EDE2D295C6A009BEF12 /* FindAccountDelegate */,
 				723620152D364BDD009BEF12 /* AddressDelegate */,
@@ -669,14 +667,14 @@
 			path = SignUpDelegate;
 			sourceTree = "<group>";
 		};
-		72361EB42D26B65E009BEF12 /* FindAccountView */ = {
+		72361EB42D26B65E009BEF12 /* FindAccountScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361EBF2D26BCA3009BEF12 /* ViewController */,
 				72361EB52D26B698009BEF12 /* View */,
 				72361EB62D26B69E009BEF12 /* Reactor */,
 			);
-			path = FindAccountView;
+			path = FindAccountScene;
 			sourceTree = "<group>";
 		};
 		72361EB52D26B698009BEF12 /* View */ = {
@@ -888,14 +886,14 @@
 			path = Responses;
 			sourceTree = "<group>";
 		};
-		72361F932D2F8E90009BEF12 /* MainView */ = {
+		72361F932D2F8E90009BEF12 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361F942D2F8EA3009BEF12 /* ViewController */,
 				72361F952D2F8EAB009BEF12 /* View */,
 				72361F962D2F8EB1009BEF12 /* Reactor */,
 			);
-			path = MainView;
+			path = MainScene;
 			sourceTree = "<group>";
 		};
 		72361F942D2F8EA3009BEF12 /* ViewController */ = {
@@ -940,14 +938,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		72361FB12D30DBC0009BEF12 /* PostView */ = {
+		72361FB12D30DBC0009BEF12 /* PostScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361FB22D30DBD5009BEF12 /* ViewController */,
 				72361FB32D30DBDD009BEF12 /* View */,
 				72361FB42D30DBE1009BEF12 /* Reactor */,
 			);
-			path = PostView;
+			path = PostScene;
 			sourceTree = "<group>";
 		};
 		72361FB22D30DBD5009BEF12 /* ViewController */ = {
@@ -977,14 +975,14 @@
 			path = Reactor;
 			sourceTree = "<group>";
 		};
-		72361FCB2D316F1F009BEF12 /* ProductDetailView */ = {
+		72361FCB2D316F1F009BEF12 /* ProductDetailScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361FCC2D316F47009BEF12 /* ViewContorller */,
 				72361FCD2D316F4E009BEF12 /* View */,
 				72361FCE2D316F51009BEF12 /* Reactor */,
 			);
-			path = ProductDetailView;
+			path = ProductDetailScene;
 			sourceTree = "<group>";
 		};
 		72361FCC2D316F47009BEF12 /* ViewContorller */ = {
@@ -1061,22 +1059,22 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		72361FE92D3441A0009BEF12 /* SideMenuView */ = {
+		72361FE92D3441A0009BEF12 /* SideMenuScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */,
 			);
-			path = SideMenuView;
+			path = SideMenuScene;
 			sourceTree = "<group>";
 		};
-		72361FEC2D3535A7009BEF12 /* SearchView */ = {
+		72361FEC2D3535A7009BEF12 /* SearchScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361FEE2D3535C3009BEF12 /* ViewController */,
 				72361FED2D3535B8009BEF12 /* View */,
 				72361FEF2D3535CC009BEF12 /* Reactor */,
 			);
-			path = SearchView;
+			path = SearchScene;
 			sourceTree = "<group>";
 		};
 		72361FED2D3535B8009BEF12 /* View */ = {
@@ -1105,14 +1103,14 @@
 			path = Reactor;
 			sourceTree = "<group>";
 		};
-		72361FFA2D353F7E009BEF12 /* ProfileView */ = {
+		72361FFA2D353F7E009BEF12 /* ProfileScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361FFD2D353F9F009BEF12 /* ViewController */,
 				72361FFC2D353F9B009BEF12 /* View */,
 				72361FFB2D353F95009BEF12 /* Reactor */,
 			);
-			path = ProfileView;
+			path = ProfileScene;
 			sourceTree = "<group>";
 		};
 		72361FFB2D353F95009BEF12 /* Reactor */ = {
@@ -1139,14 +1137,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		723620062D356C54009BEF12 /* AddressView */ = {
+		723620062D356C54009BEF12 /* AddressSetScene */ = {
 			isa = PBXGroup;
 			children = (
 				723620072D356C76009BEF12 /* ViewController */,
 				723620082D356C7D009BEF12 /* View */,
 				723620092D356C81009BEF12 /* Reactor */,
 			);
-			path = AddressView;
+			path = AddressSetScene;
 			sourceTree = "<group>";
 		};
 		723620072D356C76009BEF12 /* ViewController */ = {
@@ -1196,6 +1194,65 @@
 				7246F9F72D3792DA00EE6B5E /* SearchCompleterWrapper.swift */,
 			);
 			path = Wrapper;
+			sourceTree = "<group>";
+		};
+		7246F9F92D38BBC300EE6B5E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				72361FD72D3411DB009BEF12 /* TabBar */,
+				7246F9FC2D38BD3B00EE6B5E /* OnboardingScenes */,
+				7246F9FD2D38BDDA00EE6B5E /* MainScenes */,
+				7246F9FE2D38BDE300EE6B5E /* ProfileScenes */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		7246F9FA2D38BC5000EE6B5E /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				7246F9FB2D38BCEC00EE6B5E /* Protocol */,
+				72361E902D1411D9009BEF12 /* LoginCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		7246F9FB2D38BCEC00EE6B5E /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				72361E942D155D61009BEF12 /* LoginDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		7246F9FC2D38BD3B00EE6B5E /* OnboardingScenes */ = {
+			isa = PBXGroup;
+			children = (
+				724DECA02D0181B000171F44 /* LoginScene */,
+				724DECC02D02CB1600171F44 /* JoinScene */,
+				72361EB42D26B65E009BEF12 /* FindAccountScene */,
+				723620062D356C54009BEF12 /* AddressSetScene */,
+			);
+			path = OnboardingScenes;
+			sourceTree = "<group>";
+		};
+		7246F9FD2D38BDDA00EE6B5E /* MainScenes */ = {
+			isa = PBXGroup;
+			children = (
+				72361F932D2F8E90009BEF12 /* MainScene */,
+				72361FB12D30DBC0009BEF12 /* PostScene */,
+				72361FEC2D3535A7009BEF12 /* SearchScene */,
+				72361FCB2D316F1F009BEF12 /* ProductDetailScene */,
+				72361FE92D3441A0009BEF12 /* SideMenuScene */,
+			);
+			path = MainScenes;
+			sourceTree = "<group>";
+		};
+		7246F9FE2D38BDE300EE6B5E /* ProfileScenes */ = {
+			isa = PBXGroup;
+			children = (
+				72361FFA2D353F7E009BEF12 /* ProfileScene */,
+			);
+			path = ProfileScenes;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -1248,12 +1305,12 @@
 		724DEC862D00933400171F44 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7246F9F92D38BBC300EE6B5E /* Presentation */,
 				72361F172D2E46A5009BEF12 /* Util */,
 				72361E852D13FB99009BEF12 /* Coordinator */,
 				72361E5C2D0C22E3009BEF12 /* Network */,
 				72361E342D087600009BEF12 /* Extension */,
 				724DECAC2D0186A200171F44 /* Component */,
-				724DEC9F2D0180CE00171F44 /* Scenes */,
 				724DEC952D01732200171F44 /* Base */,
 			);
 			path = Sources;
@@ -1280,32 +1337,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		724DEC9F2D0180CE00171F44 /* Scenes */ = {
+		724DECA02D0181B000171F44 /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
-				72361FD72D3411DB009BEF12 /* TabBar */,
-				724DECA02D0181B000171F44 /* LoginView */,
-				723620062D356C54009BEF12 /* AddressView */,
-				724DECC02D02CB1600171F44 /* JoinView */,
-				72361EB42D26B65E009BEF12 /* FindAccountView */,
-				72361F932D2F8E90009BEF12 /* MainView */,
-				72361FCB2D316F1F009BEF12 /* ProductDetailView */,
-				72361FE92D3441A0009BEF12 /* SideMenuView */,
-				72361FB12D30DBC0009BEF12 /* PostView */,
-				72361FEC2D3535A7009BEF12 /* SearchView */,
-				72361FFA2D353F7E009BEF12 /* ProfileView */,
-			);
-			path = Scenes;
-			sourceTree = "<group>";
-		};
-		724DECA02D0181B000171F44 /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
+				7246F9FA2D38BC5000EE6B5E /* Coordinator */,
 				72361EC02D26BCAC009BEF12 /* ViewController */,
 				724DECA22D01834800171F44 /* View */,
 				724DECA12D01832800171F44 /* Reactor */,
 			);
-			path = LoginView;
+			path = LoginScene;
 			sourceTree = "<group>";
 		};
 		724DECA12D01832800171F44 /* Reactor */ = {
@@ -1393,7 +1433,7 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		724DECC02D02CB1600171F44 /* JoinView */ = {
+		724DECC02D02CB1600171F44 /* JoinScene */ = {
 			isa = PBXGroup;
 			children = (
 				72361E2D2D042716009BEF12 /* ViewController */,
@@ -1402,7 +1442,7 @@
 				724DECC12D02CB1C00171F44 /* Reactor */,
 				72361E1B2D02D07A009BEF12 /* Component */,
 			);
-			path = JoinView;
+			path = JoinScene;
 			sourceTree = "<group>";
 		};
 		724DECC12D02CB1C00171F44 /* Reactor */ = {
