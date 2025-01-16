@@ -12,11 +12,7 @@ import RxCocoa
 final class ProfileSetViewController: BaseViewController<ProfileSetView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: ProfileSetViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: JoinCoordinatorDelegate?
     
 }
 
@@ -55,6 +51,15 @@ extension ProfileSetViewController: View {
                 view.profileImage.configure(setImage: image)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(message: errorMessage)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindNavigation(_ reactor: ProfileSetReactor) {
@@ -72,7 +77,7 @@ extension ProfileSetViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showFinshSignUp()
+                owner.delegate?.pushSignUpFinshViewController()
             }
             .disposed(by: disposeBag)
     }
@@ -90,5 +95,5 @@ extension ProfileSetViewController: UIImagePickerControllerDelegate, UINavigatio
 }
 
 extension ProfileSetViewController: DelegateOwner {
-    typealias Delegate = ProfileSetViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }

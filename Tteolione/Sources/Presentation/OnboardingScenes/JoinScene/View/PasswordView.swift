@@ -30,11 +30,11 @@ final class PasswordView: BaseView {
         stackView.alignment = .fill
         return stackView
     }()
-    let joinButton = JoinButton(title: .next)
+    let checkButton = JoinButton(title: .next)
     
     override func configureHierarchy() {
         [topBarView, iconWithLabelView,
-         boundarView, joinButton,
+         boundarView, checkButton,
          passwordInputTextField, explanationStackView].forEach { addSubview($0) }
     }
     
@@ -72,7 +72,7 @@ final class PasswordView: BaseView {
             make.top.equalTo(boundarView.snp.bottom).offset(16)
         }
         
-        joinButton.snp.makeConstraints { make in
+        checkButton.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(48)
         }
@@ -106,6 +106,16 @@ final class PasswordView: BaseView {
             
             explanationStackView.addArrangedSubview(horizontalStackView)
         }
+    }
+    
+}
+
+extension PasswordView {
+    
+    func setButton(_ isEnabled: Bool) {
+        checkButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+        checkButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+        checkButton.isEnabled = isEnabled
     }
     
 }

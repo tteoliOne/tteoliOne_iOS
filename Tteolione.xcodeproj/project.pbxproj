@@ -51,25 +51,16 @@
 		72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E7F2D12BFAC009BEF12 /* OnBoardingMediator.swift */; };
 		72361E832D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E822D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift */; };
 		72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E862D13FBC2009BEF12 /* AppCoordinator.swift */; };
-		72361E8A2D13FC49009BEF12 /* EmailAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */; };
 		72361E8D2D140585009BEF12 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E8C2D140585009BEF12 /* Coordinator.swift */; };
 		72361E8F2D140C9E009BEF12 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E8E2D140C9E009BEF12 /* AppDependency.swift */; };
 		72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E902D1411D9009BEF12 /* LoginCoordinator.swift */; };
 		72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E942D155D61009BEF12 /* LoginDelegate.swift */; };
-		72361E982D17D38A009BEF12 /* SignUpDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E972D17D38A009BEF12 /* SignUpDelegate.swift */; };
-		72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */; };
-		72361E9C2D1DA455009BEF12 /* IDCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */; };
-		72361E9E2D1E6677009BEF12 /* PasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */; };
-		72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */; };
-		72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA12D1E669A009BEF12 /* ProfileSetCoordinator.swift */; };
 		72361EA42D1E9041009BEF12 /* SignUpFinshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA32D1E9041009BEF12 /* SignUpFinshViewController.swift */; };
 		72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA52D1E904D009BEF12 /* SignUpFinshView.swift */; };
 		72361EA82D1E921A009BEF12 /* SignUpFinshReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA72D1E921A009BEF12 /* SignUpFinshReactor.swift */; };
-		72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EA92D1E9584009BEF12 /* SignUpFinshCoordinator.swift */; };
 		72361EAD2D1FE748009BEF12 /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EAC2D1FE748009BEF12 /* NameViewController.swift */; };
 		72361EAF2D1FE757009BEF12 /* NameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EAE2D1FE757009BEF12 /* NameView.swift */; };
 		72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB02D1FE764009BEF12 /* NameReactor.swift */; };
-		72361EB32D1FF7C3009BEF12 /* NameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB22D1FF7C3009BEF12 /* NameCoordinator.swift */; };
 		72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB72D26B6D3009BEF12 /* FindIDView.swift */; };
 		72361EBA2D26B6E1009BEF12 /* FindIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EB92D26B6E1009BEF12 /* FindIDViewController.swift */; };
 		72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361EBB2D26B6F1009BEF12 /* FindIDReactor.swift */; };
@@ -176,9 +167,11 @@
 		723620172D364C10009BEF12 /* AddressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620162D364C10009BEF12 /* AddressDelegate.swift */; };
 		723620192D364CAD009BEF12 /* AddressReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723620182D364CAD009BEF12 /* AddressReactor.swift */; };
 		7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246F9F72D3792DA00EE6B5E /* SearchCompleterWrapper.swift */; };
-		7246FA012D38C04C00EE6B5E /* ResetPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA002D38C04C00EE6B5E /* ResetPasswordCoordinator.swift */; };
+		7246FA012D38C04C00EE6B5E /* FindAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */; };
 		7246FA072D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA062D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift */; };
 		7246FA0A2D38D22600EE6B5E /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA092D38D22500EE6B5E /* CoordinatorType.swift */; };
+		7246FA0D2D38EA7800EE6B5E /* JoinCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */; };
+		7246FA102D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -251,25 +244,16 @@
 		72361E7F2D12BFAC009BEF12 /* OnBoardingMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingMediator.swift; sourceTree = "<group>"; };
 		72361E822D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnBoardingMediator.swift; sourceTree = "<group>"; };
 		72361E862D13FBC2009BEF12 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
-		72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthCoordinator.swift; sourceTree = "<group>"; };
 		72361E8C2D140585009BEF12 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		72361E8E2D140C9E009BEF12 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
 		72361E902D1411D9009BEF12 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
 		72361E942D155D61009BEF12 /* LoginDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDelegate.swift; sourceTree = "<group>"; };
-		72361E972D17D38A009BEF12 /* SignUpDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDelegate.swift; sourceTree = "<group>"; };
-		72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNumCoordinator.swift; sourceTree = "<group>"; };
-		72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDCoordinator.swift; sourceTree = "<group>"; };
-		72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCoordinator.swift; sourceTree = "<group>"; };
-		72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameCoordinator.swift; sourceTree = "<group>"; };
-		72361EA12D1E669A009BEF12 /* ProfileSetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetCoordinator.swift; sourceTree = "<group>"; };
 		72361EA32D1E9041009BEF12 /* SignUpFinshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshViewController.swift; sourceTree = "<group>"; };
 		72361EA52D1E904D009BEF12 /* SignUpFinshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshView.swift; sourceTree = "<group>"; };
 		72361EA72D1E921A009BEF12 /* SignUpFinshReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshReactor.swift; sourceTree = "<group>"; };
-		72361EA92D1E9584009BEF12 /* SignUpFinshCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFinshCoordinator.swift; sourceTree = "<group>"; };
 		72361EAC2D1FE748009BEF12 /* NameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
 		72361EAE2D1FE757009BEF12 /* NameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameView.swift; sourceTree = "<group>"; };
 		72361EB02D1FE764009BEF12 /* NameReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameReactor.swift; sourceTree = "<group>"; };
-		72361EB22D1FF7C3009BEF12 /* NameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCoordinator.swift; sourceTree = "<group>"; };
 		72361EB72D26B6D3009BEF12 /* FindIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDView.swift; sourceTree = "<group>"; };
 		72361EB92D26B6E1009BEF12 /* FindIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDViewController.swift; sourceTree = "<group>"; };
 		72361EBB2D26B6F1009BEF12 /* FindIDReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDReactor.swift; sourceTree = "<group>"; };
@@ -376,9 +360,11 @@
 		723620162D364C10009BEF12 /* AddressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDelegate.swift; sourceTree = "<group>"; };
 		723620182D364CAD009BEF12 /* AddressReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressReactor.swift; sourceTree = "<group>"; };
 		7246F9F72D3792DA00EE6B5E /* SearchCompleterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompleterWrapper.swift; sourceTree = "<group>"; };
-		7246FA002D38C04C00EE6B5E /* ResetPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordCoordinator.swift; sourceTree = "<group>"; };
+		7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountCoordinator.swift; sourceTree = "<group>"; };
 		7246FA062D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindAccountCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		7246FA092D38D22500EE6B5E /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
+		7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCoordinator.swift; sourceTree = "<group>"; };
+		7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -613,21 +599,6 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		72361E882D13FC2D009BEF12 /* SignUp */ = {
-			isa = PBXGroup;
-			children = (
-				72361E892D13FC49009BEF12 /* EmailAuthCoordinator.swift */,
-				72361E992D1D3683009BEF12 /* AuthNumCoordinator.swift */,
-				72361EB22D1FF7C3009BEF12 /* NameCoordinator.swift */,
-				72361E9B2D1DA455009BEF12 /* IDCoordinator.swift */,
-				72361E9D2D1E6677009BEF12 /* PasswordCoordinator.swift */,
-				72361E9F2D1E6688009BEF12 /* NicknameCoordinator.swift */,
-				72361EA12D1E669A009BEF12 /* ProfileSetCoordinator.swift */,
-				72361EA92D1E9584009BEF12 /* SignUpFinshCoordinator.swift */,
-			);
-			path = SignUp;
-			sourceTree = "<group>";
-		};
 		72361E8B2D140576009BEF12 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,7 +611,6 @@
 		72361E922D155D05009BEF12 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				72361E882D13FC2D009BEF12 /* SignUp */,
 				723620122D364BAA009BEF12 /* Address */,
 			);
 			path = Login;
@@ -649,18 +619,9 @@
 		72361E932D155D49009BEF12 /* LoginDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				72361E962D17D363009BEF12 /* SignUpDelegate */,
 				723620152D364BDD009BEF12 /* AddressDelegate */,
 			);
 			path = LoginDelegate;
-			sourceTree = "<group>";
-		};
-		72361E962D17D363009BEF12 /* SignUpDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				72361E972D17D38A009BEF12 /* SignUpDelegate.swift */,
-			);
-			path = SignUpDelegate;
 			sourceTree = "<group>";
 		};
 		72361EB42D26B65E009BEF12 /* FindAccountScene */ = {
@@ -1207,6 +1168,7 @@
 		7246F9FC2D38BD3B00EE6B5E /* OnboardingScenes */ = {
 			isa = PBXGroup;
 			children = (
+				72361E812D12BFBC009BEF12 /* Mediator */,
 				724DECA02D0181B000171F44 /* LoginScene */,
 				724DECC02D02CB1600171F44 /* JoinScene */,
 				72361EB42D26B65E009BEF12 /* FindAccountScene */,
@@ -1239,7 +1201,7 @@
 			isa = PBXGroup;
 			children = (
 				7246FA022D38C06A00EE6B5E /* Protocol */,
-				7246FA002D38C04C00EE6B5E /* ResetPasswordCoordinator.swift */,
+				7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1258,6 +1220,23 @@
 				7246FA092D38D22500EE6B5E /* CoordinatorType.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		7246FA0B2D38EA4D00EE6B5E /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				7246FA0E2D38EAD900EE6B5E /* Protocol */,
+				7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		7246FA0E2D38EAD900EE6B5E /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		724DEC622D0091B700171F44 = {
@@ -1441,9 +1420,9 @@
 		724DECC02D02CB1600171F44 /* JoinScene */ = {
 			isa = PBXGroup;
 			children = (
+				7246FA0B2D38EA4D00EE6B5E /* Coordinator */,
 				72361E2D2D042716009BEF12 /* ViewController */,
 				724DECC22D02CB2200171F44 /* View */,
-				72361E812D12BFBC009BEF12 /* Mediator */,
 				724DECC12D02CB1C00171F44 /* Reactor */,
 				72361E1B2D02D07A009BEF12 /* Component */,
 			);
@@ -1589,7 +1568,6 @@
 				72361F352D2E9BCD009BEF12 /* SavedProdcutDTO.swift in Sources */,
 				72361F982D2F8EDD009BEF12 /* MainViewController.swift in Sources */,
 				72361E332D0427F7009BEF12 /* AuthNumReactor.swift in Sources */,
-				72361E9A2D1D3683009BEF12 /* AuthNumCoordinator.swift in Sources */,
 				724DECBC2D0192EE00171F44 /* LabelButton.swift in Sources */,
 				72361EA82D1E921A009BEF12 /* SignUpFinshReactor.swift in Sources */,
 				72361E282D02D233009BEF12 /* JoinButton.swift in Sources */,
@@ -1614,7 +1592,6 @@
 				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
-				72361EAA2D1E9584009BEF12 /* SignUpFinshCoordinator.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
@@ -1645,7 +1622,6 @@
 				72361ECC2D27C510009BEF12 /* ResetPasswordCheckViewController.swift in Sources */,
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
 				7236200F2D3571F6009BEF12 /* AddressTableViewCell.swift in Sources */,
-				72361EA22D1E669A009BEF12 /* ProfileSetCoordinator.swift in Sources */,
 				72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */,
 				72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */,
 				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
@@ -1655,9 +1631,7 @@
 				72361F592D2EB55E009BEF12 /* WithdrawalRequestBody.swift in Sources */,
 				72361F492D2EAB7A009BEF12 /* NewPasswordRequestBody.swift in Sources */,
 				7246FA0A2D38D22600EE6B5E /* CoordinatorType.swift in Sources */,
-				72361E9C2D1DA455009BEF12 /* IDCoordinator.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
-				72361EA02D1E6688009BEF12 /* NicknameCoordinator.swift in Sources */,
 				7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
 				72361FD92D3411EA009BEF12 /* TabBarController.swift in Sources */,
@@ -1700,7 +1674,6 @@
 				72361E3A2D087B82009BEF12 /* IDViewController.swift in Sources */,
 				72361E7D2D12B7BC009BEF12 /* OnBoardingReactor.swift in Sources */,
 				7236200B2D356DE2009BEF12 /* AddressViewController.swift in Sources */,
-				72361EB32D1FF7C3009BEF12 /* NameCoordinator.swift in Sources */,
 				72361E662D0C2D30009BEF12 /* NetworkProvider.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
@@ -1708,15 +1681,15 @@
 				72361F9F2D2F906E009BEF12 /* ProductCollectionViewCell.swift in Sources */,
 				72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */,
 				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
-				72361E8A2D13FC49009BEF12 /* EmailAuthCoordinator.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
+				7246FA0D2D38EA7800EE6B5E /* JoinCoordinator.swift in Sources */,
 				72361F622D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift in Sources */,
 				72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */,
 				72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
 				72361FDF2D3415A5009BEF12 /* TabBase.swift in Sources */,
 				72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */,
-				7246FA012D38C04C00EE6B5E /* ResetPasswordCoordinator.swift in Sources */,
+				7246FA012D38C04C00EE6B5E /* FindAccountCoordinator.swift in Sources */,
 				72361FC02D30E964009BEF12 /* SymbolImageButton.swift in Sources */,
 				72361F5D2D2EB75D009BEF12 /* ChatAPI.swift in Sources */,
 				72361FA22D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift in Sources */,
@@ -1728,10 +1701,8 @@
 				72361FF12D35364C009BEF12 /* SearchViewController.swift in Sources */,
 				72361F4D2D2EAF0C009BEF12 /* UpdateMyProfileRequestBody.swift in Sources */,
 				72361F312D2E963C009BEF12 /* RegistDTO.swift in Sources */,
-				72361E982D17D38A009BEF12 /* SignUpDelegate.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
 				72361F402D2EA3B3009BEF12 /* ProductFilterListDTO.swift in Sources */,
-				72361E9E2D1E6677009BEF12 /* PasswordCoordinator.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
@@ -1748,6 +1719,7 @@
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				72361FBE2D30E5D6009BEF12 /* DeviceLenth.swift in Sources */,
 				723620012D3541A5009BEF12 /* ProfileView.swift in Sources */,
+				7246FA102D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift in Sources */,
 				724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */,
 				72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,

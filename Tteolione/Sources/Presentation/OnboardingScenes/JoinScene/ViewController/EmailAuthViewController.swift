@@ -5,18 +5,13 @@
 //  Created by 전준영 on 12/6/24.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class EmailAuthViewController: BaseViewController<EmailAuthView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: EmailAuthViewControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    weak var delegate: JoinCoordinatorDelegate?
     
 }
 
@@ -39,7 +34,7 @@ extension EmailAuthViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.joinButton.rx.tap
+        rootView.checkButton.rx.tap
             .map { EmailAuthReactor.Action.emailCheckButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -49,9 +44,7 @@ extension EmailAuthViewController: View {
         reactor.state.map { $0.isButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, isEnabled in
-                owner.rootView.joinButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
-                owner.rootView.joinButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
-                owner.rootView.joinButton.isEnabled = isEnabled
+                owner.rootView.setButton(isEnabled)
             }
             .disposed(by: disposeBag)
         
@@ -71,7 +64,7 @@ extension EmailAuthViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.popVC()
+                owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
         
@@ -80,7 +73,7 @@ extension EmailAuthViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showAuthNum()
+                owner.delegate?.pushAuthNumViewController()
             }
             .disposed(by: disposeBag)
     }
@@ -88,5 +81,5 @@ extension EmailAuthViewController: View {
 }
 
 extension EmailAuthViewController: DelegateOwner {
-    typealias Delegate = EmailAuthViewControllerDelegate
+    typealias Delegate = JoinCoordinatorDelegate
 }

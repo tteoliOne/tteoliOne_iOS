@@ -23,11 +23,11 @@ final class EmailAuthView: BaseView {
         label.textColor = .myAppBlack
         return label
     }()
-    let joinButton = JoinButton(title: .email)
+    let checkButton = JoinButton(title: .email)
     
     override func configureHierarchy() {
         [topBarView, iconWithLabelView,
-         boundarView, joinButton,
+         boundarView, checkButton,
          emailInputTextField, explanationLabel].forEach { addSubview($0) }
     }
     
@@ -64,7 +64,7 @@ final class EmailAuthView: BaseView {
             make.leading.top.equalTo(boundarView).inset(4)
         }
         
-        joinButton.snp.makeConstraints { make in
+        checkButton.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(48)
         }
@@ -74,6 +74,16 @@ final class EmailAuthView: BaseView {
     override func configureView() {
         iconWithLabelView.configure(icon: .email,
                                     text: AppText.Join.joinEmail)
+    }
+    
+}
+
+extension EmailAuthView {
+    
+    func setButton(_ isEnabled: Bool) {
+        checkButton.backgroundColor = isEnabled ? .myAppMain : .myAppLightGray2
+        checkButton.setTitleColor(isEnabled ? .white : .myAppBlack, for: .normal)
+        checkButton.isEnabled = isEnabled
     }
     
 }

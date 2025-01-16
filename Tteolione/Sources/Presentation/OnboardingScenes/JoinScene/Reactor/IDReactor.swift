@@ -120,7 +120,8 @@ extension IDReactor {
             .request(.validateID(body: body),
                      decodingType: ServerResponse<String>.self)
             .asObservable()
-            .flatMap { response -> Observable<Mutation> in
+            .flatMap { [weak self] response -> Observable<Mutation> in
+                guard let self = self else { return .empty() }
                 switch handleResponse(response) {
                 case .success(let message):
                     self.mediator.update(id, action: OnBoardingReactor.Action.updateID)
