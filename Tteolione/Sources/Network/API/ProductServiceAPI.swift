@@ -10,8 +10,7 @@ import Moya
 
 enum ProductServiceAPI {
     case productRegistration(body: ProductRegistRequestBody)
-    case getMainProduct(longitude: Double,
-                        latitude: Double)
+    case getMainProduct(query: ProductQueryParameters)
     case likeProduct(productId: Int)
     case likeMyProductList
     case getDetailProduct(productId: Int)
@@ -32,8 +31,8 @@ extension ProductServiceAPI: TargetType {
         case .productRegistration:
             return "/api/products"
             
-        case let .getMainProduct(longitude, latitude):
-            return "/api/products/simple?longitude=\(longitude)&latitude=\(latitude)"
+        case .getMainProduct:
+            return "/api/products/simple"
             
         case let .likeProduct(productId):
             return "/api/products/\(productId)/likes"
@@ -47,29 +46,25 @@ extension ProductServiceAPI: TargetType {
         case let .deleteProduct(productId):
             return "/api/products/\(productId)"
             
-        case let .getListSpecificProductList(query):
-            var components = URLComponents(string: "/api/products")!
-            components.queryItems = query.asQueryItems()
-            return components.url!.path
+        case .getListSpecificProductList:
+            return "/api/products"
             
         case let .editProduct(productId, _):
             return "/api/products/\(productId)"
             
-        case let .searchProduct(query):
-            var components = URLComponents(string: "/api/search")!
-            components.queryItems = query.asQueryItems()
-            return components.url!.path
+        case .searchProduct:
+            return "/api/search"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .productRegistration, .getMainProduct,
-                .likeProduct:
+        case .productRegistration, .likeProduct:
             return .post
             
-        case .likeMyProductList, .getDetailProduct,
-                .getListSpecificProductList, .searchProduct:
+        case .likeMyProductList, .getMainProduct,
+                .getDetailProduct, .getListSpecificProductList,
+                .searchProduct:
             return .get
             
         case .deleteProduct:
@@ -86,10 +81,14 @@ extension ProductServiceAPI: TargetType {
             let .editProduct(_, body):
             return .uploadMultipart(body.toMultipartFormData())
             
-        case .getMainProduct, .likeProduct,
-                .likeMyProductList, .getDetailProduct,
-                .deleteProduct, .getListSpecificProductList,
-                .searchProduct:
+        case .getMainProduct(let query),
+                .getListSpecificProductList(let query),
+                .searchProduct(let query):
+            return .requestParameters(parameters: query.asQueryItems(),
+                                      encoding: URLEncoding.queryString)
+            
+        case .likeProduct, .likeMyProductList,
+                .getDetailProduct, .deleteProduct:
             return .requestPlain
         }
     }

@@ -40,15 +40,11 @@ extension UserAPI: TargetType {
         case .changePassword:
             return "/api/users/change/password"
             
-        case let .myShareProducts(query):
-            var components = URLComponents(string: "/api/products/me")!
-            components.queryItems = query.asQueryItems()
-            return components.url!.path
+        case .myShareProducts:
+            return "/api/products/me"
             
-        case let .myLikeProducts(query):
-            var components = URLComponents(string: "/api/products/me/saved")!
-            components.queryItems = query.asQueryItems()
-            return components.url!.path
+        case .myLikeProducts:
+            return "/api/products/me/saved"
             
         case .updateMyProfile:
             return "/api/users"
@@ -59,18 +55,14 @@ extension UserAPI: TargetType {
         case let .getOtherUserProfile(userId):
             return "/api/users/\(userId)/simple"
             
-        case let .getOtherUserProduct(userId, query):
-            var components = URLComponents(string: "/api/products/users/\(userId)")!
-            components.queryItems = query.asQueryItems()
-            return components.url!.path
+        case let .getOtherUserProduct(userId, _):
+            return "/api/products/users/\(userId)"
             
         case let .getMyReview(userId):
-            return "/api/reviews/\((userId))"
+            return "/api/reviews/\(userId)"
             
-        case let .reports(reportType, id, query, _):
-            var components = URLComponents(string: " /api/reports/\(reportType)/\(id)")!
-            components.queryItems = query.asQueryItems()
-            return components.url!.path
+        case let .reports(reportType, id, _, _):
+            return "/api/reports/\(reportType)/\(id)"
             
         case let .withdrawal(userId, _):
             return "/api/users/\(userId)"
@@ -101,8 +93,13 @@ extension UserAPI: TargetType {
         case let .changePassword(body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
-        case let .reports(_, _, _, body):
-            return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
+        case let .reports(_, _, query, body):
+            var parameters = query.asQueryItems()
+               if let bodyData = try? JSONEncoder().encode(body),
+                  let bodyDict = try? JSONSerialization.jsonObject(with: bodyData) as? [String: Any] {
+                   parameters.merge(bodyDict) { (_, new) in new }
+               }
+               return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
             
         case let .withdrawal(_, body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
@@ -110,9 +107,14 @@ extension UserAPI: TargetType {
         case let .updateMyProfile(body):
             return .uploadMultipart(body.toMultipartFormData())
             
-        case .myShareProducts, .myLikeProducts,
-                .getMyProfile, .getOtherUserProfile,
-                .getOtherUserProduct, .getMyReview:
+        case let .myShareProducts(query),
+            let .myLikeProducts(query),
+            let .getOtherUserProduct( _, query):
+            return .requestParameters(parameters: query.asQueryItems(),
+                                      encoding: URLEncoding.queryString)
+            
+        case .getMyProfile, .getOtherUserProfile,
+                .getMyReview:
             return .requestPlain
         }
     }

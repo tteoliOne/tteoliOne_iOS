@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct ProductDTO: Decodable {
+struct ProductDTO: Equatable, Decodable {
     
     let list: [ProductListDTO]
     
 }
 
-struct ProductListDTO: Decodable {
+struct ProductListDTO: Equatable, Decodable {
     
     let categoryId: Int
     let categoryName: String
@@ -21,7 +21,7 @@ struct ProductListDTO: Decodable {
     
 }
 
-struct ProductPreviewDTO: Decodable {
+struct ProductPreviewDTO: Equatable, Decodable {
     
     let productId: Int
     let imageUrl: String
