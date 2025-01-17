@@ -21,7 +21,9 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = LoginReactor(networkProvider: dependency.userSessionProvider,
+        let reactor = LoginReactor(kakaoAuthVM: dependency.kakaoManager,
+                                   appleAuthManager: dependency.appleManager,
+                                   networkProvider: dependency.userSessionProvider,
                                    ud: dependency.ud)
         let viewController = createViewController(
             ofType: LoginViewController.self,
@@ -58,11 +60,53 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
         coordinator.start()
     }
     
-    func showAddressView() {
-        let coordinator = AddressCoordinator(navigationController: navigationController)
-        coordinator.parentCoordinator = self
-        addChildCoordinator(coordinator)
-        coordinator.start()
+    func pushAddressView() {
+        let reactor = AddressReactor(ud: dependency.ud)
+        let viewController = createViewController(
+            ofType: AddressViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
+    }
+    
+    func pushKakaoSetProfileView(with token: String) {
+        let reactor = ProfileSetReactor(loginType: .kakao(dependency.socialNetworkProvider),
+                                        mediator: dependency.onboardingMediator,
+                                        ud: dependency.ud,
+                                        token: token)
+        let viewController = createViewController(
+            ofType: SocialProfileSetViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
+    }
+    
+    func pushAppleSetProfileView(with token: String) {
+        let reactor = ProfileSetReactor(loginType: .apple(dependency.socialNetworkProvider),
+                                        mediator: dependency.onboardingMediator,
+                                        ud: dependency.ud,
+                                        token: token)
+        let viewController = createViewController(
+            ofType: SocialProfileSetViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
+    }
+    
+    func finishView() {
+        finishAllChildren()
+        navigationController.popToRootViewController(animated: true)
+    }
+    
+    func goHome() {
+        finishAllChildren()
+        parentCoordinator?.start()
     }
     
 }

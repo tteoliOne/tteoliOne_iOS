@@ -20,6 +20,8 @@ enum AppButtonTitle: String {
     case complete = "완료"
     case profile = "프로필 변경하기"
     case finshSignUp = "로그인하러 가기"
+    case kakao = "카카오톡으로 계속하기"
+    case apple = "Apple로 계속하기"
     
     case vegetable = "야채"
     case fruit = "과일"

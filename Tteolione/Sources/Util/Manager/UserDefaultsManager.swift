@@ -15,6 +15,8 @@ final class UserDefaultsManager {
         case userID
         case nickname
         case typeLogin
+        case latitude
+        case longitude
     }
     
     enum LoginTypeKey: String {
@@ -76,4 +78,27 @@ final class UserDefaultsManager {
         }
     }
     
+    var latitude: Double {
+        get {
+            UserDefaults.standard.double(forKey: UserDefaultsKey.latitude.rawValue)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.latitude.rawValue)
+        }
+    }
+    
+    var longitude: Double {
+        get {
+            UserDefaults.standard.double(forKey: UserDefaultsKey.longitude.rawValue)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.longitude.rawValue)
+        }
+    }
+    
+    func clearAllData() {
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            UserDefaults.standard.removeObject(forKey: key.description)
+        }
+    }
 }
