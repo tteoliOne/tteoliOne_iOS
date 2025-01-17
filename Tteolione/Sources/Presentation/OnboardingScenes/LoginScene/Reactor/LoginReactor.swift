@@ -40,7 +40,7 @@ final class LoginReactor: Reactor {
         case showError(NetworkError)
         case setKakaoLoginToAddress(Bool)
         case setKakaoLoginToProfile(Bool)
-        case setKakaoToken(String?)
+        case setToken(String?)
         case setKakaoErrorMessage(String)
         case setAppleLoginToAddress(Bool)
         case setAppleLoginToProfile(Bool)
@@ -61,7 +61,7 @@ final class LoginReactor: Reactor {
         var errorMessage: String?
         var isKakaoLoginToAddress: Bool = false
         var isKakaoLoginToProfile: Bool = false
-        var kakaoProfileToken: String = ""
+        var token: String = ""
         var isAppleLoginToAddress: Bool = false
         var isAppleLoginToProfile: Bool = false
     }
@@ -156,7 +156,7 @@ extension LoginReactor {
                         
                     case .newUser(let accessToken):
                         return .concat([
-                            .just(.setKakaoToken(accessToken)),
+                            .just(.setToken(accessToken)),
                             .just(.setKakaoLoginToProfile(true)),
                             .just(.setKakaoLoginToProfile(false))
                         ])
@@ -177,8 +177,9 @@ extension LoginReactor {
                             .just(.setAppleLoginToAddress(false))
                         ])
                         
-                    case .newUser(_):
+                    case .newUser(let accessToken):
                         return .concat([
+                            .just(.setToken(accessToken)),
                             .just(.setAppleLoginToProfile(true)),
                             .just(.setAppleLoginToProfile(false))
                         ])
@@ -240,8 +241,8 @@ extension LoginReactor {
         case let .setKakaoErrorMessage(message):
             newState.errorMessage = message
 
-        case let .setKakaoToken(token):
-            newState.kakaoProfileToken = token ?? ""
+        case let .setToken(token):
+            newState.token = token ?? ""
             
         case let .setAppleLoginToAddress(isNavi):
             newState.isAppleLoginToAddress = isNavi

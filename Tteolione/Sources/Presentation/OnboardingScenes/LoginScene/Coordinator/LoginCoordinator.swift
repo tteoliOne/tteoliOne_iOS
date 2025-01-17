@@ -67,4 +67,37 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
         coordinator.start()
     }
     
+    func pushKakaoSetProfileView(with token: String) {
+        let reactor = ProfileSetReactor(loginType: .kakao(dependency.socialNetworkProvider),
+                                        mediator: dependency.onboardingMediator,
+                                        ud: dependency.ud,
+                                        token: token)
+        let viewController = createViewController(
+            ofType: SocialProfileSetViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
+    }
+    
+    func pushAppleSetProfileView(with token: String) {
+        let reactor = ProfileSetReactor(loginType: .apple(dependency.socialNetworkProvider),
+                                        mediator: dependency.onboardingMediator,
+                                        ud: dependency.ud,
+                                        token: token)
+        let viewController = createViewController(
+            ofType: SocialProfileSetViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        
+        show(viewController)
+    }
+    
+    func finishView() {
+        finishAllChildren()
+        navigationController.popToRootViewController(animated: true)
+    }
+    
 }

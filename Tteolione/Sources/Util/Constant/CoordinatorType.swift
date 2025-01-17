@@ -15,3 +15,7 @@ enum CoordinatorType {
 enum AccountCoordinator {
     case id, password, idInPassword
 }
+
+enum LoginTypeCoordinator {
+    case local, kakao, apple
+}

@@ -182,13 +182,13 @@ extension LoginViewController: View {
             .disposed(by: disposeBag)
 
         reactor.state
-            .map { ($0.isKakaoLoginToProfile, $0.kakaoProfileToken) }
+            .map { ($0.isKakaoLoginToProfile, $0.token) }
             .distinctUntilChanged { $0.0 == $1.0 }
             .filter { $0.0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, data in
                 let token = data.1
-                owner.delegate?.showAddressView()
+                owner.delegate?.pushKakaoSetProfileView(with: token)
             }
             .disposed(by: disposeBag)
         
@@ -201,12 +201,14 @@ extension LoginViewController: View {
             }
             .disposed(by: disposeBag)
 
-        reactor.state.map { $0.isAppleLoginToProfile }
-            .distinctUntilChanged()
-            .filter { $0 }
+        reactor.state
+            .map { ($0.isAppleLoginToProfile, $0.token) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, _ in
-                owner.delegate?.showAddressView()
+            .bind(with: self) { owner, data in
+                let token = data.1
+                owner.delegate?.pushAppleSetProfileView(with: token)
             }
             .disposed(by: disposeBag)
     }

@@ -101,8 +101,9 @@ extension JoinCoordinator {
     }
     
     func pushProfileSetViewController() {
-        let reactor = ProfileSetReactor(networkProvider: dependency.joinNetworkProvider,
-                                        mediator: dependency.onboardingMediator)
+        let reactor = ProfileSetReactor(loginType: .local(dependency.joinNetworkProvider),
+                                        mediator: dependency.onboardingMediator,
+                                        ud: dependency.ud)
         let viewController = createViewController(
             ofType: ProfileSetViewController.self,
             with: reactor,
@@ -129,14 +130,12 @@ extension JoinCoordinator {
     }
     
     func twoViewPop() {
-        // 현재 `navigationController`의 visibleViewController 확인
         guard let currentViewController = navigationController.visibleViewController,
               let currentIndex = navigationController.viewControllers.firstIndex(of: currentViewController) else {
             navigationController.popViewController(animated: true)
             return
         }
-
-        // 두 단계 뒤로 갈 타겟 ViewController 결정
+        
         let targetIndex = max(currentIndex - 2, 0)
         let targetViewController = navigationController.viewControllers[targetIndex]
         navigationController.popToViewController(targetViewController, animated: true)

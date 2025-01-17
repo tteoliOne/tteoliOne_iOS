@@ -29,16 +29,28 @@ final class ProfileSetReactor: Reactor {
         var navigateToNext: Bool = false
         var navigateBack: Bool = false
         var errorMessage: String?
+        var token: String? = ""
     }
     
-    private let networkProvider: NetworkProvider<JoinAPI>
-    private let mediator: OnBoardingMediator
-    let initialState: State = State()
+    enum LoginType {
+        case local(NetworkProvider<JoinAPI>)
+        case kakao(NetworkProvider<SocialAPI>)
+        case apple(NetworkProvider<SocialAPI>)
+    }
     
-    init(networkProvider: NetworkProvider<JoinAPI>,
-         mediator: OnBoardingMediator) {
-        self.networkProvider = networkProvider
+    private let loginType: LoginType
+    private let mediator: OnBoardingMediator
+    private let ud: UserDefaultsManager
+    var initialState: State = State()
+    
+    init(loginType: LoginType,
+         mediator: OnBoardingMediator,
+         ud: UserDefaultsManager,
+         token: String? = "") {
+        self.loginType = loginType
         self.mediator = mediator
+        self.ud = ud
+        self.initialState = State(token: token)
     }
     
 }
@@ -62,7 +74,21 @@ extension ProfileSetReactor {
             guard let profileImage = currentState.profileImage else {
                 return .just(.showError(NetworkError.invalidInputImage))
             }
-            return performSetImageProfile(profile: profileImage)
+//            return performLocalSetImageProfile(profile: profileImage)
+            switch loginType {
+            case .local(let network):
+                return performLocalSetImageProfile(networkProvider: network,
+                                                   profile: profileImage)
+            case .kakao(let network):
+                return performKakaoSetImageProfile(networkProvider: network,
+                                                   token: currentState.token ?? "",
+                                                   profile: profileImage)
+            case .apple(let network):
+                return performAppleSetImageProfile(networkProvider: network,
+                                                   token: currentState.token ?? "",
+                                                   profile: profileImage)
+                
+            }
         }
     }
 }
@@ -92,7 +118,8 @@ extension ProfileSetReactor {
 
 extension ProfileSetReactor {
     
-    private func performSetImageProfile(profile: UIImage) -> Observable<Mutation> {
+    private func performLocalSetImageProfile(networkProvider: NetworkProvider<JoinAPI>,
+                                             profile: UIImage) -> Observable<Mutation> {
         
         let email = mediator.get(\OnBoardingReactor.State.email)
         let username = mediator.get(\OnBoardingReactor.State.username)
@@ -123,6 +150,72 @@ extension ProfileSetReactor {
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(let message):
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
+    
+    private func performKakaoSetImageProfile(networkProvider: NetworkProvider<SocialAPI>,
+                                             token: String,
+                                             profile: UIImage) -> Observable<Mutation> {
+        guard let profileImageData = profile.jpegData(compressionQuality: 0.8) else {
+            return .just(.showError(NetworkError.invalidInputImage))
+        }
+        let signUpRequest = SocialRequestBody(accessToken: token)
+        let body = SocialProfileImageRequestBody(socialRequest: signUpRequest,
+                                                 image: profileImageData,
+                                                 requestName: "oAuth2KakaoRequest")
+        
+        return networkProvider
+            .request(.kakaoProfile(body: body), decodingType: ServerResponse<UserDTO>.self)
+            .asObservable()
+            .flatMap { [weak self] response -> Observable<Mutation> in
+                guard let self = self else { return .empty() }
+                switch handleResponse(response) {
+                case .success(let result):
+                    self.ud.nickname = result.nickname ?? ""
+                    self.ud.token = result.accessToken ?? ""
+                    self.ud.refreshToken = result.refreshToken ?? ""
+                    self.ud.userID = result.userId ?? 0
+                    self.ud.typeLogin = .local
+                    return .concat([
+                        .just(.setNavigateToNext(true)),
+                        .just(.setNavigateToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
+    
+    private func performAppleSetImageProfile(networkProvider: NetworkProvider<SocialAPI>,
+                                             token: String,
+                                             profile: UIImage) -> Observable<Mutation> {
+        guard let profileImageData = profile.jpegData(compressionQuality: 0.8) else {
+            return .just(.showError(NetworkError.invalidInputImage))
+        }
+        let signUpRequest = SocialRequestBody(appleRefreshToken: token)
+        let body = SocialProfileImageRequestBody(socialRequest: signUpRequest,
+                                                 image: profileImageData,
+                                                 requestName: "oAuth2AppleRequest")
+        
+        return networkProvider
+            .request(.appleProfile(body: body), decodingType: ServerResponse<UserDTO>.self)
+            .asObservable()
+            .flatMap { [weak self] response -> Observable<Mutation> in
+                guard let self = self else { return .empty() }
+                switch handleResponse(response) {
+                case .success(let result):
+                    self.ud.nickname = result.nickname ?? ""
+                    self.ud.token = result.accessToken ?? ""
+                    self.ud.refreshToken = result.refreshToken ?? ""
+                    self.ud.userID = result.userId ?? 0
+                    self.ud.typeLogin = .local
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))

@@ -74,7 +74,7 @@ extension AppleAuthManager: ASAuthorizationControllerDelegate, ASAuthorizationCo
             case .success(let data):
                 if data.existsUser {
                     return .just(.existingUser)
-                } else if let token = data.accessToken {
+                } else if let token = data.appleRefreshToken {
                     return .just(.newUser(accessToken: token))
                 } else {
                     return .just(.failure(message: "Access token is missing for a new user."))
