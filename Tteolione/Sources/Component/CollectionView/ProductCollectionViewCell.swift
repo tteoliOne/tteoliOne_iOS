@@ -136,10 +136,10 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         layer.shadowOpacity = 0.3
     }
 
-    func configure(with product: Product) {
-        titleLabel.text = product.name
-        unitPriceLabel.text = "\(product.price)원"
-        distanceLabel.text = product.distance
+    func configure(with product: ProductPreviewDTO) {
+        titleLabel.text = product.title
+        unitPriceLabel.text = "\(product.unitPrice)원"
+        distanceLabel.text = "\(product.walkingDistance)"
     }
     
 }

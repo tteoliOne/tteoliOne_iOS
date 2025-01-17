@@ -63,44 +63,35 @@ final class MainTableViewCell: BaseTableViewCell {
         }
     }
     
-    func configure(category: String, products: [Product]) {
-        categoryLabel.text = category
-        let productsWithButton = products + [Product(name: "NextButton", price: 0, distance: "")]
-        Observable.just(productsWithButton)
+    func configure(productList: ProductListDTO) {
+        categoryLabel.text = productList.categoryName
+        let displayProducts = productList.products.prefix(5)
+
+        Observable.just(Array(displayProducts))
             .bind(to: collectionView.rx.items) { collectionView, index, product in
-                if product.name == "NextButton" {
-                    let buttonCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: NextButtonCollectionViewCell.identifier,
-                        for: IndexPath(item: index, section: 0)
-                    ) as! NextButtonCollectionViewCell
-                    buttonCell.configureButton()
-                    return buttonCell
-                } else {
-                    let productCell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: ProductCollectionViewCell.identifier,
-                        for: IndexPath(item: index, section: 0)
-                    ) as! ProductCollectionViewCell
-                    productCell.configure(with: product)
-                    return productCell
-                }
+                let productCell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: ProductCollectionViewCell.identifier,
+                    for: IndexPath(item: index, section: 0)
+                ) as! ProductCollectionViewCell
+                productCell.configure(with: product)
+                return productCell
             }
             .disposed(by: disposeBag)
+
+        let buttonIndex = displayProducts.count
+        let buttonCell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: NextButtonCollectionViewCell.identifier,
+            for: IndexPath(item: buttonIndex, section: 0)
+        ) as! NextButtonCollectionViewCell
+        buttonCell.configureButton()
+
+        DispatchQueue.main.async {
+            self.collectionView.insertSubview(buttonCell, at: buttonIndex)
+        }
     }
 
-    
     override func configureView() {
         
     }
     
-}
-
-struct Product {
-    let name: String
-    let price: Int
-    let distance: String
-}
-
-struct MainSectionModel {
-    let category: String
-    let products: [Product]
 }

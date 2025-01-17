@@ -11,10 +11,10 @@ struct ReportQueryParameters: QueryStringProtocol {
     
     let reportCategory: String
     
-    func asQueryItems() -> [URLQueryItem] {
-        var items: [URLQueryItem] = []
+    func asQueryItems() -> [String : Any] {
+        var items: [String : Any] = [:]
         
-        items.append(URLQueryItem(name: "reportCategory", value: "\(reportCategory)"))
+        items["reportCategory"] = reportCategory
         
         return items
     }

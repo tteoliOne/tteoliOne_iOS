@@ -9,6 +9,6 @@ import Foundation
 
 protocol QueryStringProtocol {
     
-    func asQueryItems() -> [URLQueryItem]
+    func asQueryItems() -> [String : Any]
     
 }

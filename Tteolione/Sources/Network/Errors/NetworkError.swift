@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkError: LocalizedError {
+public enum NetworkError: LocalizedError,Equatable {
     
     case connectionError // 네트워크 연결 문제
     case serverError(code: Int, message: String?) // 서버에서 반환한 에러
@@ -15,6 +15,7 @@ public enum NetworkError: LocalizedError {
     case notModified // Not Modified
     case unknownError // 알 수 없는 에러
     case invalidInputImage // 이미지 입력 실패
+    case invalidRefreshToken // 리프레시 토큰 유효성 실패 (추가)
     
     public var errorDescription: String? {
         switch self {
@@ -35,7 +36,20 @@ public enum NetworkError: LocalizedError {
             
         case .invalidInputImage:
             return "이미지가 잘못되었습니다."
+            
+        case .invalidRefreshToken:
+            return "유효하지 않은 리프레시 토큰입니다. 다시 로그인해주세요."
         }
+    }
+    
+    public var isInvalidRefreshToken: Bool {
+        if case .invalidRefreshToken = self {
+            return true
+        }
+        if case let .serverError(code, _) = self, code == 112 {
+            return true
+        }
+        return false
     }
     
 }
@@ -57,6 +71,9 @@ extension NetworkError {
     static func fromServerResponse(success: Bool,
                                    code: Int,
                                    message: String?) -> NetworkError {
+        if code == 112 {
+            return .invalidRefreshToken
+        }
         if success {
             return .unknownError
         } else {

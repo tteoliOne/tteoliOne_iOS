@@ -10,8 +10,9 @@ import UIKit
 final class TabBarCoordinator: Coordinator {
     
     var childCoordinators: [Coordinator] = []
-    weak var parentCoordinator: Coordinator?
+    var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
+    private let dependency = AppDependency.shared
     private let tabBarController: TabBarController
     
     init(navigationController: UINavigationController) {
@@ -59,10 +60,11 @@ extension TabBarCoordinator {
         
         switch tabBase {
         case .main:
-            coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator = MainCoordinator(navigationController: navigationController,
+                                          dependency: dependency)
             
         case .chat:
-            coordinator = MainCoordinator(navigationController: navigationController)//아직 안만들어서 임시 코디네이터임
+            coordinator = ProfileCoordinator(navigationController: navigationController)//아직 안만들어서 임시 코디네이터임
             
         case .myProfile:
             coordinator = ProfileCoordinator(navigationController: navigationController)

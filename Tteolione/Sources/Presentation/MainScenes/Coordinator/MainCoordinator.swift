@@ -7,21 +7,30 @@
 
 import UIKit
 
-final class MainCoordinator: NSObject, Coordinator {
+final class MainCoordinator: NSObject, MainCoordinatorDelegate {
     
     var childCoordinators: [Coordinator] = []
-    weak var parentCoordinator: Coordinator?
+    var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
+    private let dependency: AppDependency
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         dependency: AppDependency) {
         self.navigationController = navigationController
+        self.dependency = dependency
     }
     
     func start() {
-        let mainViewController = MainViewController()
+        let reactor = MainReactor(networkProvider: dependency.productServiceProvider,
+                                  ud: dependency.ud)
+        let viewController = createViewController(
+            ofType: MainViewController.self,
+            with: reactor,
+            delegate: self
+        )
         configureNavBarAppearance()
-        configureNavBarButtons(for: mainViewController)
-        navigationController.setViewControllers([mainViewController], animated: false)
+        configureNavBarButtons(for: viewController)
+        show(viewController)
     }
 }
 

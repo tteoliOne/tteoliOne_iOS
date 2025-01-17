@@ -11,6 +11,6 @@ struct ReissueTokenRequestBody: Encodable {
     
     let accessToken: String
     let refreshToken: String
-    let targetToken: String
+    let targetToken: String?
     
 }
