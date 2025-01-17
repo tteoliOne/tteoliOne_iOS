@@ -642,7 +642,6 @@
 		72361EB42D26B65E009BEF12 /* FindAccountScene */ = {
 			isa = PBXGroup;
 			children = (
-				7246F9FF2D38BFDD00EE6B5E /* Coordinator */,
 				72361EBF2D26BCA3009BEF12 /* ViewController */,
 				72361EB52D26B698009BEF12 /* View */,
 				72361EB62D26B69E009BEF12 /* Reactor */,
@@ -1169,6 +1168,8 @@
 			children = (
 				7246F9FB2D38BCEC00EE6B5E /* Protocol */,
 				72361E902D1411D9009BEF12 /* LoginCoordinator.swift */,
+				7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */,
+				7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1177,6 +1178,8 @@
 			isa = PBXGroup;
 			children = (
 				72361E942D155D61009BEF12 /* LoginDelegate.swift */,
+				7246FA062D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift */,
+				7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1184,6 +1187,7 @@
 		7246F9FC2D38BD3B00EE6B5E /* OnboardingScenes */ = {
 			isa = PBXGroup;
 			children = (
+				7246F9FA2D38BC5000EE6B5E /* Coordinator */,
 				72361E812D12BFBC009BEF12 /* Mediator */,
 				724DECA02D0181B000171F44 /* LoginScene */,
 				724DECC02D02CB1600171F44 /* JoinScene */,
@@ -1213,46 +1217,12 @@
 			path = ProfileScenes;
 			sourceTree = "<group>";
 		};
-		7246F9FF2D38BFDD00EE6B5E /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				7246FA022D38C06A00EE6B5E /* Protocol */,
-				7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */,
-			);
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		7246FA022D38C06A00EE6B5E /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				7246FA062D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
 		7246FA082D38D21600EE6B5E /* Constant */ = {
 			isa = PBXGroup;
 			children = (
 				7246FA092D38D22500EE6B5E /* CoordinatorType.swift */,
 			);
 			path = Constant;
-			sourceTree = "<group>";
-		};
-		7246FA0B2D38EA4D00EE6B5E /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				7246FA0E2D38EAD900EE6B5E /* Protocol */,
-				7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */,
-			);
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		7246FA0E2D38EAD900EE6B5E /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		7246FA1C2D396F0C00EE6B5E /* Social */ = {
@@ -1351,7 +1321,6 @@
 		724DECA02D0181B000171F44 /* LoginScene */ = {
 			isa = PBXGroup;
 			children = (
-				7246F9FA2D38BC5000EE6B5E /* Coordinator */,
 				72361EC02D26BCAC009BEF12 /* ViewController */,
 				724DECA22D01834800171F44 /* View */,
 				724DECA12D01832800171F44 /* Reactor */,
@@ -1447,7 +1416,6 @@
 		724DECC02D02CB1600171F44 /* JoinScene */ = {
 			isa = PBXGroup;
 			children = (
-				7246FA0B2D38EA4D00EE6B5E /* Coordinator */,
 				72361E2D2D042716009BEF12 /* ViewController */,
 				724DECC22D02CB2200171F44 /* View */,
 				724DECC12D02CB1C00171F44 /* Reactor */,
