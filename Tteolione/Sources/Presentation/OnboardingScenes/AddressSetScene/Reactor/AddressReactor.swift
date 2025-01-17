@@ -13,28 +13,33 @@ final class AddressReactor: Reactor {
     
     enum Action {
         case updateSearchWord(String)
+        case myLocationButtonTap
         case selectSearchResult(MKLocalSearchCompletion)
         case updateSearchResults([MKLocalSearchCompletion])
     }
     
     enum Mutation {
         case setSearchResults([MKLocalSearchCompletion])
-        case setSelectedLocation(String, String, Double, Double)
+        case setSelectedLocation(Bool)
+        case showError(String)
     }
     
     struct State {
         var searchResults: [MKLocalSearchCompletion] = []
-        var selectedLocation: (name: String,
-                               address: String,
-                               latitude: Double,
-                               longitude: Double)? = nil
+        var isLocationSelected: Bool = false
+        var errorMessage: String?
     }
     
     private let searchCompleterWrapper = SearchCompleterWrapper()
+    private var locationManagerDelegate: LocationManagerDelegate?
+    private let locationManager = CLLocationManager()
+    private let ud: UserDefaultsManager
     private let disposeBag = DisposeBag()
     let initialState: State = State()
     
-    init() {
+    init(ud: UserDefaultsManager) {
+        self.ud = ud
+        
         searchCompleterWrapper.results
             .map { Action.updateSearchResults($0) }
             .bind(to: action)
@@ -42,9 +47,11 @@ final class AddressReactor: Reactor {
         
         searchCompleterWrapper.error
             .bind { error in
-                print("error: \(error.localizedDescription)")
+                print("Search Completer Error: \(error.localizedDescription)")
             }
             .disposed(by: disposeBag)
+        
+        locationManager.requestWhenInUseAuthorization()
     }
 }
 
@@ -60,28 +67,64 @@ extension AddressReactor {
                 return .empty()
             }
             
+        case .myLocationButtonTap:
+            let authorizationStatus = CLLocationManager.authorizationStatus()
+            if authorizationStatus == .denied || authorizationStatus == .restricted {
+                return .just(.showError("위치 권한이 비활성화되어 있습니다. 설정에서 권한을 활성화해주세요."))
+            } else if authorizationStatus == .notDetermined {
+                locationManager.requestWhenInUseAuthorization()
+                return .empty()
+            } else {
+                self.locationManagerDelegate = LocationManagerDelegate(
+                    success: { [weak self] location in
+                        guard let self = self else { return }
+                        print("aaaaa: \(location.coordinate.latitude), bbbbb: \(location.coordinate.longitude)")
+                        self.saveLocationToUserDefaults(latitude: location.coordinate.latitude,
+                                                        longitude: location.coordinate.longitude)
+                    },
+                    failure: { error in
+                        print("위치 가져오기 실패: \(error.localizedDescription)")
+                    }
+                )
+                self.locationManager.delegate = self.locationManagerDelegate
+                self.locationManager.requestLocation()
+                
+                return .concat([
+                    .just(.setSelectedLocation(true)),
+                    .just(.setSelectedLocation(false))
+                ])
+            }
+            
         case .updateSearchResults(let results):
             return .just(.setSearchResults(results))
             
         case .selectSearchResult(let completion):
             let searchRequest = createSearchRequest(for: completion)
-            return Observable.create { observer in
-                let localSearch = MKLocalSearch(request: searchRequest)
+            let localSearch = MKLocalSearch(request: searchRequest)
+            
+            return Observable<Mutation>.create { observer in
                 localSearch.start { response, error in
-                    guard let place = response?.mapItems.first, error == nil else { return }
-                    observer.onNext(.setSelectedLocation(
-                        place.name ?? "",
-                        place.placemark.title ?? "",
-                        place.placemark.coordinate.latitude,
-                        place.placemark.coordinate.longitude
-                    ))
+                    guard let place = response?.mapItems.first, error == nil else {
+                        observer.onError(NSError(domain: "AddressError", code: -1, userInfo: [NSLocalizedDescriptionKey: "위치를 가져올 수 없습니다."]))
+                        return
+                    }
+                    
+                    self.saveLocationToUserDefaults(latitude: place.placemark.coordinate.latitude,
+                                                    longitude: place.placemark.coordinate.longitude)
+                    observer.onNext(.setSelectedLocation(true))
                     observer.onCompleted()
                 }
                 return Disposables.create()
             }
+            .flatMap { _ in
+                Observable.concat([
+                    .just(.setSelectedLocation(true)),
+                    .just(.setSelectedLocation(false))
+                ])
+            }
+            
         }
     }
-    
 }
 
 extension AddressReactor {
@@ -93,13 +136,15 @@ extension AddressReactor {
         case .setSearchResults(let results):
             newState.searchResults = results
             
-        case let .setSelectedLocation(name, address, latitude, longitude):
-            newState.selectedLocation = (name, address, latitude, longitude)
+        case .setSelectedLocation(let isSelected):
+            newState.isLocationSelected = isSelected
+            
+        case .showError(let errorMessage):
+            newState.errorMessage = errorMessage
         }
         
         return newState
     }
-    
 }
 
 extension AddressReactor {
@@ -113,4 +158,8 @@ extension AddressReactor {
         return searchRequest
     }
     
+    private func saveLocationToUserDefaults(latitude: Double, longitude: Double) {
+        ud.latitude = latitude
+        ud.longitude = longitude
+    }
 }

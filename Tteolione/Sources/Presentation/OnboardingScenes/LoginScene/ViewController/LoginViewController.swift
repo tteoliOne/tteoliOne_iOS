@@ -168,7 +168,7 @@ extension LoginViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showAddressView()
+                owner.delegate?.pushAddressView()
             }
             .disposed(by: disposeBag)
         
@@ -177,7 +177,7 @@ extension LoginViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showAddressView()
+                owner.delegate?.pushAddressView()
             }
             .disposed(by: disposeBag)
 
@@ -197,7 +197,7 @@ extension LoginViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showAddressView()
+                owner.delegate?.pushAddressView()
             }
             .disposed(by: disposeBag)
 

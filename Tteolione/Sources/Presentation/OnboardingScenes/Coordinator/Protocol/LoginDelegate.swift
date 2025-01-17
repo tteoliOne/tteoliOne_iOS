@@ -11,8 +11,9 @@ protocol LoginCoordinatorDelegate: Coordinator {
     func showSignUpView()
     func showFindIDView()
     func showFindPasswordView()
-    func showAddressView()
+    func pushAddressView()
     func pushKakaoSetProfileView(with token: String)
     func pushAppleSetProfileView(with token: String)
     func finishView()
+    func goHome()
 }
