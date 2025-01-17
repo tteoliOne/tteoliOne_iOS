@@ -22,6 +22,7 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     
     func start() {
         let reactor = LoginReactor(kakaoAuthVM: dependency.kakaoManager,
+                                   appleAuthManager: dependency.appleManager,
                                    networkProvider: dependency.userSessionProvider,
                                    ud: dependency.ud)
         let viewController = createViewController(

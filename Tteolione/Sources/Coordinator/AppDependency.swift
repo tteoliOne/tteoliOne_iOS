@@ -11,6 +11,7 @@ final class AppDependency {
     
     static let shared = AppDependency()
     let kakaoManager = KakaoAuthVM(networkManager: NetworkProvider<SocialAPI>())
+    let appleManager = AppleAuthManager(networkProvider: NetworkProvider<SocialAPI>())
     let ud = UserDefaultsManager()
     let onboardingReactor = OnBoardingReactor()
     let userSessionProvider = NetworkProvider<UserSessionAPI>()

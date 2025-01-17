@@ -87,6 +87,11 @@ extension LoginViewController: View {
             .map { LoginReactor.Action.kakaoButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.appleLoginButton.rx.tap
+            .map { LoginReactor.Action.appleButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: LoginReactor) {
@@ -183,6 +188,24 @@ extension LoginViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, data in
                 let token = data.1
+                owner.delegate?.showAddressView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isAppleLoginToAddress }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.showAddressView()
+            }
+            .disposed(by: disposeBag)
+
+        reactor.state.map { $0.isAppleLoginToProfile }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
                 owner.delegate?.showAddressView()
             }
             .disposed(by: disposeBag)

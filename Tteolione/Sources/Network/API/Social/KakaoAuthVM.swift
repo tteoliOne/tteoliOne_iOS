@@ -10,7 +10,7 @@ import RxCocoa
 import KakaoSDKAuth
 import KakaoSDKUser
 
-enum KakaoLoginResult {
+enum SocialLoginResult {
     case existingUser
     case newUser(accessToken: String)
     case failure(message: String)
@@ -32,7 +32,7 @@ final class KakaoAuthVM {
     }
     
     // MARK: - Login with Kakao
-    func loginWithKakao() -> Observable<KakaoLoginResult> {
+    func loginWithKakao() -> Observable<SocialLoginResult> {
         let loginObservable: Observable<OAuthToken?>
         
         if UserApi.isKakaoTalkLoginAvailable() {
@@ -42,7 +42,7 @@ final class KakaoAuthVM {
         }
         
         return loginObservable
-            .flatMapLatest { [weak self] oauthToken -> Observable<KakaoLoginResult> in
+            .flatMapLatest { [weak self] oauthToken -> Observable<SocialLoginResult> in
                 guard let oauthToken = oauthToken else {
                     return Observable.just(.failure(message: "카카오 로그인 토큰 없음"))
                 }
@@ -81,13 +81,13 @@ final class KakaoAuthVM {
         }
     }
     
-    private func handlePostLogin(oauthToken: OAuthToken) -> Single<KakaoLoginResult> {
+    private func handlePostLogin(oauthToken: OAuthToken) -> Single<SocialLoginResult> {
         let accessToken = oauthToken.accessToken
         let body = SocialRequestBody(accessToken: accessToken)
         
         return networkManager.request(.kakaoLogin(body: body),
                                       decodingType: ServerResponse<UserDTO>.self)
-            .flatMap { response -> Single<KakaoLoginResult> in
+            .flatMap { response -> Single<SocialLoginResult> in
                 switch handleResponse(response) {
                 case .success(let data):
                     if data.existsUser {

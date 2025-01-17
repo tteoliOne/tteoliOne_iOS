@@ -23,6 +23,7 @@ final class LoginReactor: Reactor {
         case updateId(String)
         case updatePassword(String)
         case kakaoButtonTap
+        case appleButtonTap
     }
     
     enum Mutation {
@@ -41,6 +42,9 @@ final class LoginReactor: Reactor {
         case setKakaoLoginToProfile(Bool)
         case setKakaoToken(String?)
         case setKakaoErrorMessage(String)
+        case setAppleLoginToAddress(Bool)
+        case setAppleLoginToProfile(Bool)
+        case setAppleErrorMessage(String)
     }
 
     struct State {
@@ -58,17 +62,22 @@ final class LoginReactor: Reactor {
         var isKakaoLoginToAddress: Bool = false
         var isKakaoLoginToProfile: Bool = false
         var kakaoProfileToken: String = ""
+        var isAppleLoginToAddress: Bool = false
+        var isAppleLoginToProfile: Bool = false
     }
     
     private let kakaoAuthVM: KakaoAuthVM
+    private let appleAuthManager: AppleAuthManager
     private let networkProvider: NetworkProvider<UserSessionAPI>
     private let ud: UserDefaultsManager
     let initialState: State = State()
     
     init(kakaoAuthVM: KakaoAuthVM,
+         appleAuthManager: AppleAuthManager,
          networkProvider: NetworkProvider<UserSessionAPI>,
          ud: UserDefaultsManager) {
         self.kakaoAuthVM = kakaoAuthVM
+        self.appleAuthManager = appleAuthManager
         self.networkProvider = networkProvider
         self.ud = ud
     }
@@ -156,6 +165,28 @@ extension LoginReactor {
                         return .just(.setKakaoErrorMessage(message))
                     }
                 }
+            
+        case .appleButtonTap:
+            return appleAuthManager.handleAppleSignIn()
+                .asObservable()
+                .flatMap { result -> Observable<Mutation> in
+                    switch result {
+                    case .existingUser:
+                        return .concat([
+                            .just(.setAppleLoginToAddress(true)),
+                            .just(.setAppleLoginToAddress(false))
+                        ])
+                        
+                    case .newUser(_):
+                        return .concat([
+                            .just(.setAppleLoginToProfile(true)),
+                            .just(.setAppleLoginToProfile(false))
+                        ])
+                        
+                    case .failure(let message):
+                        return .just(.setAppleErrorMessage(message))
+                    }
+                }
         }
     }
     
@@ -211,6 +242,15 @@ extension LoginReactor {
 
         case let .setKakaoToken(token):
             newState.kakaoProfileToken = token ?? ""
+            
+        case let .setAppleLoginToAddress(isNavi):
+            newState.isAppleLoginToAddress = isNavi
+            
+        case let .setAppleLoginToProfile(isNavi):
+            newState.isAppleLoginToProfile = isNavi
+            
+        case let .setAppleErrorMessage(message):
+            newState.errorMessage = message
         }
         
         return newState
