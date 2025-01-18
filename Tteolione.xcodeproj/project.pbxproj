@@ -84,7 +84,7 @@
 		72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F112D2E3951009BEF12 /* UserDTO.swift */; };
 		72361F142D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */; };
 		72361F162D2E40DF009BEF12 /* UserSessionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */; };
-		72361F192D2E46BF009BEF12 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */; };
+		72361F192D2E46BF009BEF12 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F182D2E46BF009BEF12 /* UserDefaultsStorage.swift */; };
 		72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */; };
 		72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F1C2D2E502C009BEF12 /* TokenAPI.swift */; };
 		72361F242D2E5129009BEF12 /* ReissueTokenRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F232D2E5129009BEF12 /* ReissueTokenRequestBody.swift */; };
@@ -179,6 +179,7 @@
 		7246FA262D3A492200EE6B5E /* LocationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA252D3A492200EE6B5E /* LocationManagerDelegate.swift */; };
 		7246FA2A2D3A817400EE6B5E /* MainCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA292D3A817400EE6B5E /* MainCoordinatorDelegate.swift */; };
 		7246FA2E2D3AC76C00EE6B5E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA2D2D3AC76C00EE6B5E /* Constants.swift */; };
+		7246FA302D3AD46300EE6B5E /* AccessTokenRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246FA2F2D3AD46300EE6B5E /* AccessTokenRetrier.swift */; };
 		724DEC6F2D0091B700171F44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC6E2D0091B700171F44 /* AppDelegate.swift */; };
 		724DEC712D0091B700171F44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DEC702D0091B700171F44 /* SceneDelegate.swift */; };
 		724DEC782D0091B800171F44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 724DEC772D0091B800171F44 /* Assets.xcassets */; };
@@ -284,7 +285,7 @@
 		72361F112D2E3951009BEF12 /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		72361F132D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialProfileImageRequestBody.swift; sourceTree = "<group>"; };
 		72361F152D2E40DF009BEF12 /* UserSessionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionAPI.swift; sourceTree = "<group>"; };
-		72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		72361F182D2E46BF009BEF12 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		72361F1A2D2E4AB2009BEF12 /* LoginRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestBody.swift; sourceTree = "<group>"; };
 		72361F1C2D2E502C009BEF12 /* TokenAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAPI.swift; sourceTree = "<group>"; };
 		72361F232D2E5129009BEF12 /* ReissueTokenRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReissueTokenRequestBody.swift; sourceTree = "<group>"; };
@@ -378,6 +379,7 @@
 		7246FA252D3A492200EE6B5E /* LocationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerDelegate.swift; sourceTree = "<group>"; };
 		7246FA292D3A817400EE6B5E /* MainCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		7246FA2D2D3AC76C00EE6B5E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7246FA2F2D3AD46300EE6B5E /* AccessTokenRetrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenRetrier.swift; sourceTree = "<group>"; };
 		724DEC6B2D0091B700171F44 /* Tteolione.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tteolione.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		724DEC6E2D0091B700171F44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		724DEC702D0091B700171F44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 		72361E5F2D0C2340009BEF12 /* Interceptors */ = {
 			isa = PBXGroup;
 			children = (
+				7246FA2F2D3AD46300EE6B5E /* AccessTokenRetrier.swift */,
 			);
 			path = Interceptors;
 			sourceTree = "<group>";
@@ -970,7 +973,7 @@
 		72361FDD2D341564009BEF12 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				72361F182D2E46BF009BEF12 /* UserDefaultsManager.swift */,
+				72361F182D2E46BF009BEF12 /* UserDefaultsStorage.swift */,
 				7246FA252D3A492200EE6B5E /* LocationManagerDelegate.swift */,
 			);
 			path = Manager;
@@ -1619,7 +1622,7 @@
 				72361FA42D2F926F009BEF12 /* BaseCollectionViewCell.swift in Sources */,
 				72361FDC2D3413CC009BEF12 /* TabBarCoordinator.swift in Sources */,
 				7246FA1A2D39418E00EE6B5E /* KakaoAuthVM.swift in Sources */,
-				72361F192D2E46BF009BEF12 /* UserDefaultsManager.swift in Sources */,
+				72361F192D2E46BF009BEF12 /* UserDefaultsStorage.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361FB82D30DC05009BEF12 /* PostView.swift in Sources */,
 				72361F6A2D2EBE22009BEF12 /* ShareRequestBody.swift in Sources */,
@@ -1683,6 +1686,7 @@
 				72361FF12D35364C009BEF12 /* SearchViewController.swift in Sources */,
 				72361F4D2D2EAF0C009BEF12 /* UpdateMyProfileRequestBody.swift in Sources */,
 				72361F312D2E963C009BEF12 /* RegistDTO.swift in Sources */,
+				7246FA302D3AD46300EE6B5E /* AccessTokenRetrier.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
 				72361F402D2EA3B3009BEF12 /* ProductFilterListDTO.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
