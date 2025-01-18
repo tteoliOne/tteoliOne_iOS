@@ -16,11 +16,11 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        productImageView.image = nil
     }
     
-    private let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
+    private let productImageView: LoadImageView = {
+        let imageView = LoadImageView()
         imageView.layer.cornerRadius = 12
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return imageView
@@ -122,8 +122,6 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         cellView()
-        productImageView.backgroundColor = .yellow
-        
     }
     
     private func cellView() {
@@ -138,8 +136,20 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
 
     func configure(with product: ProductPreviewDTO) {
         titleLabel.text = product.title
-        unitPriceLabel.text = "\(product.unitPrice)원"
-        distanceLabel.text = "\(product.walkingDistance)"
+        unitPriceLabel.text = "\(FormatterManager.shared.numberFormatter(product.unitPrice))원"
+        distanceLabel.text = String(format: "%.fkm 도보 \(product.walkingTime)분", product.walkingDistance / 1000)
+        likeCountLable.text = "\(product.totalLikes)"
+        thumbUpSet(product.liked)
+        if let imageUrl = URL(string: product.imageUrl) {
+            productImageView.loadImage(from: imageUrl)
+        } else {
+            productImageView.image = nil
+        }
+    }
+    
+    private func thumbUpSet(_ isLike: Bool) {
+        let likeName = isLike ? "heart.fill" : "heart"
+        likeButton.setImage(UIImage(systemName: likeName), for: .normal)
     }
     
 }
