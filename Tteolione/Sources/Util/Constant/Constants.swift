@@ -19,3 +19,9 @@ struct Constants {
     ]
     
 }
+
+enum LoginTypeKey: String {
+    case kakao
+    case apple
+    case local
+}
