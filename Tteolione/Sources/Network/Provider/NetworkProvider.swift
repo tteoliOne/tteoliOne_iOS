@@ -12,10 +12,10 @@ import RxMoya
 final class NetworkProvider<T: TargetType> {
     
     private let provider: MoyaProvider<T>
+    private let tokenRetrier = AccessTokenRetrier()
     
     init(interceptor: RequestInterceptor? = nil) {
-        let session = Session(interceptor: interceptor)
-//        let plugins: [PluginType] = [NetworkLoggerPlugin()]
+        let session = Session(interceptor: tokenRetrier)
         let plugins: [PluginType] = [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         self.provider = MoyaProvider<T>(session: session,
                                         plugins: plugins)
@@ -41,4 +41,10 @@ final class NetworkProvider<T: TargetType> {
             }
     }
     
+}
+
+extension TargetType {
+    var validationType: ValidationType {
+        return .successCodes
+    }
 }
