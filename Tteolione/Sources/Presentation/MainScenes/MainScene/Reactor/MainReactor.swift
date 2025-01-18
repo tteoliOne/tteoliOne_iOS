@@ -21,7 +21,6 @@ final class MainReactor: Reactor {
     }
 
     struct State {
-        var categories: [String] = Constants.productCategories
         var products: [ProductDTO] = []
         var errorMessage: String?
     }
