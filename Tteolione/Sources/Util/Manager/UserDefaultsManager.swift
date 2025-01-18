@@ -7,98 +7,57 @@
 
 import Foundation
 
-final class UserDefaultsManager {
+@propertyWrapper
+struct UserDefault<T> {
+    let key: String
+    let defaultValue: T
+
+    var wrappedValue: T {
+        get {
+            UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: key)
+        }
+    }
+}
+
+enum UserDefaultsStorage {
     
-    private enum UserDefaultsKey: String {
-        case access
-        case refresh
+    enum Keys: String, CaseIterable {
+        case accessToken
+        case refreshToken
         case userID
         case nickname
         case typeLogin
         case latitude
         case longitude
     }
-    
-    enum LoginTypeKey: String {
-        case kakao
-        case apple
-        case local
-    }
-    
-    static let shared = UserDefaultsManager()
-    
-    init() { }
-    
-    var token: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultsKey.access.rawValue) ?? ""
-        }
-        set{
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.access.rawValue)
-        }
-    }
-    
-    var refreshToken: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultsKey.refresh.rawValue) ?? ""
-        }
-        set{
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.refresh.rawValue)
-        }
-    }
-    
-    var userID: Int {
-        get {
-            UserDefaults.standard.integer(forKey: UserDefaultsKey.userID.rawValue)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.userID.rawValue)
-        }
-    }
-    
-    var nickname: String {
-        get {
-            UserDefaults.standard.string(forKey: UserDefaultsKey.nickname.rawValue) ?? ""
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.nickname.rawValue)
-        }
-    }
-    
-    var typeLogin: LoginTypeKey {
-        get {
-            if let rawValue = UserDefaults.standard.string(forKey: UserDefaultsKey.typeLogin.rawValue),
-               let loginType = LoginTypeKey(rawValue: rawValue) {
-                return loginType
-            }
-            return .local
-        }
-        set {
-            UserDefaults.standard.set(newValue.rawValue, forKey: UserDefaultsKey.typeLogin.rawValue)
-        }
-    }
-    
-    var latitude: Double {
-        get {
-            UserDefaults.standard.double(forKey: UserDefaultsKey.latitude.rawValue)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.latitude.rawValue)
-        }
-    }
-    
-    var longitude: Double {
-        get {
-            UserDefaults.standard.double(forKey: UserDefaultsKey.longitude.rawValue)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsKey.longitude.rawValue)
-        }
-    }
-    
-    func clearAllData() {
-        for key in UserDefaults.standard.dictionaryRepresentation().keys {
-            UserDefaults.standard.removeObject(forKey: key.description)
+
+    @UserDefault(key: Keys.accessToken.rawValue, defaultValue: "")
+    static var token: String
+
+    @UserDefault(key: Keys.refreshToken.rawValue, defaultValue: "")
+    static var refreshToken: String
+
+    @UserDefault(key: Keys.userID.rawValue, defaultValue: 0)
+    static var userID: Int
+
+    @UserDefault(key: Keys.nickname.rawValue, defaultValue: "")
+    static var nickname: String
+
+    @UserDefault(key: Keys.typeLogin.rawValue, defaultValue: LoginTypeKey.local.rawValue)
+    static var typeLogin: String
+
+    @UserDefault(key: Keys.latitude.rawValue, defaultValue: 0.0)
+    static var latitude: Double
+
+    @UserDefault(key: Keys.longitude.rawValue, defaultValue: 0.0)
+    static var longitude: Double
+
+    static func deleteAll() {
+        Keys.allCases.forEach {
+            UserDefaults.standard.removeObject(forKey: $0.rawValue)
         }
     }
 }

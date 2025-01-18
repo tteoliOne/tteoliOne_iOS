@@ -12,7 +12,7 @@ final class AppCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
-    private let userDefaultManager = UserDefaultsManager.shared
+    private let userDefaultManager = UserDefaultsStorage.self
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -22,6 +22,7 @@ final class AppCoordinator: Coordinator {
         if userDefaultManager.token.isEmpty {
             showLoginVC()
         } else {
+//            showLoginVC()
             startTabBar()
         }
     }

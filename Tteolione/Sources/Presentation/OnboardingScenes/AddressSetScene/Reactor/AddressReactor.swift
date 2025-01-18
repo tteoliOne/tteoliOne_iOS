@@ -33,13 +33,10 @@ final class AddressReactor: Reactor {
     private let searchCompleterWrapper = SearchCompleterWrapper()
     private var locationManagerDelegate: LocationManagerDelegate?
     private let locationManager = CLLocationManager()
-    private let ud: UserDefaultsManager
     private let disposeBag = DisposeBag()
     let initialState: State = State()
     
-    init(ud: UserDefaultsManager) {
-        self.ud = ud
-        
+    init() {
         searchCompleterWrapper.results
             .map { Action.updateSearchResults($0) }
             .bind(to: action)
@@ -159,7 +156,7 @@ extension AddressReactor {
     }
     
     private func saveLocationToUserDefaults(latitude: Double, longitude: Double) {
-        ud.latitude = latitude
-        ud.longitude = longitude
+        UserDefaultsStorage.latitude = latitude
+        UserDefaultsStorage.longitude = longitude
     }
 }

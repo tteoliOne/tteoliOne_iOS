@@ -33,7 +33,7 @@ enum Header {
             return "multipart/form-data"
             
         case .authorization:
-            let token = UserDefaultsManager.shared.token
+            let token = UserDefaultsStorage.token
             return "Bearer \(token)"
         }
         

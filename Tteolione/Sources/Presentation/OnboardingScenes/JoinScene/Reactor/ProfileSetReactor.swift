@@ -40,16 +40,13 @@ final class ProfileSetReactor: Reactor {
     
     private let loginType: LoginType
     private let mediator: OnBoardingMediator
-    private let ud: UserDefaultsManager
     var initialState: State = State()
     
     init(loginType: LoginType,
          mediator: OnBoardingMediator,
-         ud: UserDefaultsManager,
          token: String? = "") {
         self.loginType = loginType
         self.mediator = mediator
-        self.ud = ud
         self.initialState = State(token: token)
     }
     
@@ -174,15 +171,14 @@ extension ProfileSetReactor {
         return networkProvider
             .request(.kakaoProfile(body: body), decodingType: ServerResponse<UserDTO>.self)
             .asObservable()
-            .flatMap { [weak self] response -> Observable<Mutation> in
-                guard let self = self else { return .empty() }
+            .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(let result):
-                    self.ud.nickname = result.nickname ?? ""
-                    self.ud.token = result.accessToken ?? ""
-                    self.ud.refreshToken = result.refreshToken ?? ""
-                    self.ud.userID = result.userId ?? 0
-                    self.ud.typeLogin = .local
+                    UserDefaultsStorage.nickname = result.nickname ?? ""
+                    UserDefaultsStorage.token = result.accessToken ?? ""
+                    UserDefaultsStorage.refreshToken = result.refreshToken ?? ""
+                    UserDefaultsStorage.userID = result.userId ?? 0
+                    UserDefaultsStorage.typeLogin = LoginTypeKey.kakao.rawValue
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))
@@ -207,15 +203,14 @@ extension ProfileSetReactor {
         return networkProvider
             .request(.appleProfile(body: body), decodingType: ServerResponse<UserDTO>.self)
             .asObservable()
-            .flatMap { [weak self] response -> Observable<Mutation> in
-                guard let self = self else { return .empty() }
+            .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(let result):
-                    self.ud.nickname = result.nickname ?? ""
-                    self.ud.token = result.accessToken ?? ""
-                    self.ud.refreshToken = result.refreshToken ?? ""
-                    self.ud.userID = result.userId ?? 0
-                    self.ud.typeLogin = .local
+                    UserDefaultsStorage.nickname = result.nickname ?? ""
+                    UserDefaultsStorage.token = result.accessToken ?? ""
+                    UserDefaultsStorage.refreshToken = result.refreshToken ?? ""
+                    UserDefaultsStorage.userID = result.userId ?? 0
+                    UserDefaultsStorage.typeLogin = LoginTypeKey.apple.rawValue
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))

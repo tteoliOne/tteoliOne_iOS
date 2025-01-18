@@ -102,8 +102,7 @@ extension JoinCoordinator {
     
     func pushProfileSetViewController() {
         let reactor = ProfileSetReactor(loginType: .local(dependency.joinNetworkProvider),
-                                        mediator: dependency.onboardingMediator,
-                                        ud: dependency.ud)
+                                        mediator: dependency.onboardingMediator)
         let viewController = createViewController(
             ofType: ProfileSetViewController.self,
             with: reactor,

@@ -21,8 +21,7 @@ final class MainCoordinator: NSObject, MainCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = MainReactor(networkProvider: dependency.productServiceProvider,
-                                  ud: dependency.ud)
+        let reactor = MainReactor(networkProvider: dependency.productServiceProvider)
         let viewController = createViewController(
             ofType: MainViewController.self,
             with: reactor,

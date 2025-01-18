@@ -27,13 +27,10 @@ final class MainReactor: Reactor {
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
-    private let ud: UserDefaultsManager
     let initialState: State = State()
     
-    init(networkProvider: NetworkProvider<ProductServiceAPI>,
-         ud: UserDefaultsManager) {
+    init(networkProvider: NetworkProvider<ProductServiceAPI>) {
         self.networkProvider = networkProvider
-        self.ud = ud
     }
     
 }
@@ -72,8 +69,8 @@ extension MainReactor {
 extension MainReactor {
     
     private func fetchProductsPost() -> Observable<Mutation> {
-        let longitude = ud.longitude
-        let latitude = ud.latitude
+        let longitude = UserDefaultsStorage.longitude
+        let latitude = UserDefaultsStorage.latitude
         let query = ProductQueryParameters(longitude: longitude,
                                            latitude: latitude)
         return networkProvider.request(.getMainProduct(query: query),

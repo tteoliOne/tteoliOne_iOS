@@ -69,17 +69,14 @@ final class LoginReactor: Reactor {
     private let kakaoAuthVM: KakaoAuthVM
     private let appleAuthManager: AppleAuthManager
     private let networkProvider: NetworkProvider<UserSessionAPI>
-    private let ud: UserDefaultsManager
     let initialState: State = State()
     
     init(kakaoAuthVM: KakaoAuthVM,
          appleAuthManager: AppleAuthManager,
-         networkProvider: NetworkProvider<UserSessionAPI>,
-         ud: UserDefaultsManager) {
+         networkProvider: NetworkProvider<UserSessionAPI>) {
         self.kakaoAuthVM = kakaoAuthVM
         self.appleAuthManager = appleAuthManager
         self.networkProvider = networkProvider
-        self.ud = ud
     }
     
 }
@@ -269,17 +266,14 @@ extension LoginReactor {
         return networkProvider.request(.login(body: body),
                                        decodingType: ServerResponse<UserDTO>.self)
         .asObservable()
-        .flatMap { [weak self] response -> Observable<Mutation> in
-            guard let self = self else {
-                return .empty()
-            }
+        .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(let result):
-                self.ud.nickname = result.nickname ?? ""
-                self.ud.token = result.accessToken ?? ""
-                self.ud.refreshToken = result.refreshToken ?? ""
-                self.ud.userID = result.userId ?? 0
-                self.ud.typeLogin = .local
+                UserDefaultsStorage.nickname = result.nickname ?? ""
+                UserDefaultsStorage.token = result.accessToken ?? ""
+                UserDefaultsStorage.refreshToken = result.refreshToken ?? ""
+                UserDefaultsStorage.userID = result.userId ?? 0
+                UserDefaultsStorage.typeLogin = LoginTypeKey.local.rawValue
                 return .concat([
                     .just(.setLoginToNext(true)),
                     .just(.setLoginToNext(false))

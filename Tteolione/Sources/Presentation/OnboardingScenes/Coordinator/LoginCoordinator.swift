@@ -23,8 +23,7 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     func start() {
         let reactor = LoginReactor(kakaoAuthVM: dependency.kakaoManager,
                                    appleAuthManager: dependency.appleManager,
-                                   networkProvider: dependency.userSessionProvider,
-                                   ud: dependency.ud)
+                                   networkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: LoginViewController.self,
             with: reactor,
@@ -61,7 +60,7 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func pushAddressView() {
-        let reactor = AddressReactor(ud: dependency.ud)
+        let reactor = AddressReactor()
         let viewController = createViewController(
             ofType: AddressViewController.self,
             with: reactor,
@@ -74,7 +73,6 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     func pushKakaoSetProfileView(with token: String) {
         let reactor = ProfileSetReactor(loginType: .kakao(dependency.socialNetworkProvider),
                                         mediator: dependency.onboardingMediator,
-                                        ud: dependency.ud,
                                         token: token)
         let viewController = createViewController(
             ofType: SocialProfileSetViewController.self,
@@ -88,7 +86,6 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     func pushAppleSetProfileView(with token: String) {
         let reactor = ProfileSetReactor(loginType: .apple(dependency.socialNetworkProvider),
                                         mediator: dependency.onboardingMediator,
-                                        ud: dependency.ud,
                                         token: token)
         let viewController = createViewController(
             ofType: SocialProfileSetViewController.self,
