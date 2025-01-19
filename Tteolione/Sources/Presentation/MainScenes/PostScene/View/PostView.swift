@@ -7,15 +7,19 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 final class PostView: BaseView, UITextViewDelegate {
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     //MARK: - 상품사진등록
+    let productPhotoPicker = UIImagePickerController()
+    private var productImageViews: [UIImageView] = []
     private let productImageLabel = AndongLabel(text: AppText.PostProduct.photoImage,
                                                 color: .myAppBlack)
     private let photoScrollView = UIScrollView()
+    private let photoContentView = UIView()
     let productPhotoButton = SymbolImageButton(name: "camera")
     
     //MARK: - 제목
@@ -34,42 +38,42 @@ final class PostView: BaseView, UITextViewDelegate {
     //MARK: - 구입
     private let purchaseView = ShadowView()
     private let purchasePriceLabel = AndongLabel(text: AppText.PostProduct.buyPrice,
-                                         color: .myAppMain)
+                                                 color: .myAppMain)
     private let purchaseCountLabel = AndongLabel(text: AppText.PostProduct.buyCount,
-                                         color: .myAppMain)
+                                                 color: .myAppMain)
     private let purchaseSlashLabel = SlashLabel(font: Font.regular28)
     private let purchaseWonLabel = RegularLabel(text: AppText.PostProduct.won,
                                                 color: .myAppBlack)
     private let purchasePCSLabel = RegularLabel(text: AppText.PostProduct.count,
                                                 color: .myAppBlack)
     let purchasePriceTextField = LineTextField(text: .noting,
-                                       keboard: .default,
-                                       isSecure: nil)
+                                               keboard: .default,
+                                               isSecure: nil)
     let purchaseCountTextField = LineTextField(text: .noting,
-                                       keboard: .default,
-                                       isSecure: nil)
+                                               keboard: .default,
+                                               isSecure: nil)
     private let purchasePriceTextFieldBoundarLineView = BoundarView(.myAppBlack)
     private let purchaseCountTextFieldBoundarLineView = BoundarView(.myAppBlack)
     let purchaseSpaceWarningLabel = RegularLabel(text: AppText.PostProduct.spaceWarning,
-                                              color: .myAppRed)
+                                                 color: .myAppRed)
     
     //MARK: - 공유
     private let shareView = ShadowView()
     private let sharePriceLabel = AndongLabel(text: AppText.PostProduct.sharePrice,
-                                         color: .myAppMain)
+                                              color: .myAppMain)
     private let shareCountLabel = AndongLabel(text: AppText.PostProduct.sharePrice,
-                                         color: .myAppMain)
+                                              color: .myAppMain)
     private let shareSlashLabel = SlashLabel(font: Font.regular28)
     private let shareWonLabel = RegularLabel(text: AppText.PostProduct.won,
-                                                color: .myAppBlack)
+                                             color: .myAppBlack)
     private let sharePCSLabel = RegularLabel(text: AppText.PostProduct.count,
-                                                color: .myAppBlack)
+                                             color: .myAppBlack)
     let sharePriceTextField = LineTextField(text: .noting,
-                                       keboard: .default,
-                                       isSecure: nil)
+                                            keboard: .default,
+                                            isSecure: nil)
     let shareCountTextField = LineTextField(text: .noting,
-                                       keboard: .default,
-                                       isSecure: nil)
+                                            keboard: .default,
+                                            isSecure: nil)
     private let sharePriceTextFieldBoundarLineView = BoundarView(.myAppBlack)
     private let shareCountTextFieldBoundarLineView = BoundarView(.myAppBlack)
     let shareSpaceWarningLabel = RegularLabel(text: AppText.PostProduct.spaceWarning,
@@ -78,7 +82,7 @@ final class PostView: BaseView, UITextViewDelegate {
     //MARK: - 구매일자
     private let dateView = ShadowView()
     private let dateLabel = AndongLabel(text: AppText.PostProduct.buyDay,
-                                       color: .myAppMain)
+                                        color: .myAppMain)
     private let datePick: UIDatePicker = {
         let datePicker = UIDatePicker()
         
@@ -106,7 +110,7 @@ final class PostView: BaseView, UITextViewDelegate {
     //MARK: - 카테고리
     private let categoryView = ShadowView()
     private let categoryLabel = AndongLabel(text: AppText.PostProduct.category,
-                                       color: .myAppMain)
+                                            color: .myAppMain)
     private let vegetableButton = CommonButton(title: .vegetable,
                                                corner: 20,
                                                backgroundColor: .myAppLightGray,
@@ -141,7 +145,7 @@ final class PostView: BaseView, UITextViewDelegate {
     //MARK: - 상세설명
     private let descriptionView = ShadowView()
     private let descriptionLabel = AndongLabel(text: AppText.PostProduct.detailExplain,
-                                          color: .myAppMain)
+                                               color: .myAppMain)
     private let textViewPlaceHolder = AppText.PostProduct.detailPlaceholder
     private lazy var descriptionTextView: UITextView = {
         let view = UITextView()
@@ -161,28 +165,38 @@ final class PostView: BaseView, UITextViewDelegate {
     //MARK: - 희망공유장소
     private let placeView = ShadowView()
     private let placeLabel = AndongLabel(text: AppText.PostProduct.sharePlace,
-                                          color: .myAppMain)
+                                         color: .myAppMain)
     private let placeButton = CommonButton(title: .selectPlace,
                                            corner: 10,
                                            backgroundColor: .myAppLightGray2,
                                            textColor: .myAppBlack,
                                            font: Font.regular15)
+    private let mapView: MKMapView = {
+        let map = MKMapView()
+        map.layer.cornerRadius = 10
+        map.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        map.showsUserLocation = false
+        map.isZoomEnabled = true
+        map.isScrollEnabled = true
+        map.isRotateEnabled = false
+        return map
+    }()
     //MARK: - 다음버튼
     let nextButton = CommonButton(title: .next,
-                                          corner: 24,
-                                          backgroundColor: .myAppMain,
-                                          textColor: .white)
-    
+                                  corner: 24,
+                                  backgroundColor: .myAppMain,
+                                  textColor: .white)
     
     override func configureHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         [productImageLabel, photoScrollView,
+         productPhotoButton,
          titleView, purchaseView,
          shareView, dateView,
          categoryView, descriptionView,
          placeView, nextButton].forEach { contentView.addSubview($0) }
-        photoScrollView.addSubview(productPhotoButton)
+        photoScrollView.addSubview(photoContentView)
         [titleLabel, titleTextField,
          titleTextFieldBoundarLineView,
          titleSpaceWarningLabel,
@@ -208,7 +222,8 @@ final class PostView: BaseView, UITextViewDelegate {
          etcButton].forEach { categoryView.addSubview($0) }
         [descriptionLabel, descriptionTextView,
          remainCountLabel].forEach { descriptionView.addSubview($0) }
-        [placeLabel, placeButton].forEach { placeView.addSubview($0) }
+        [placeLabel, placeButton,
+         mapView].forEach { placeView.addSubview($0) }
     }
     
     override func configureLayout() {
@@ -226,17 +241,22 @@ final class PostView: BaseView, UITextViewDelegate {
             make.top.equalTo(contentView).inset(20)
         }
         
-        photoScrollView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(contentView).inset(28)
-            make.top.equalTo(productImageLabel.snp.bottom).offset(20)
-            make.height.equalTo((Device.screenWidth)/4)
-        }
-        
         productPhotoButton.snp.makeConstraints { make in
-            make.centerY.equalTo(photoScrollView)
-            make.leading.equalTo(photoScrollView).inset(8)
+            make.top.equalTo(productImageLabel.snp.bottom).offset(20)
+            make.leading.equalTo(contentView).inset(28)
             make.height.equalTo((Device.screenWidth - 80)/4)
             make.width.equalTo((Device.screenWidth - 86)/4)
+        }
+        
+        photoScrollView.snp.makeConstraints { make in
+            make.leading.equalTo(productPhotoButton.snp.trailing).offset(12)
+            make.trailing.equalTo(contentView).inset(28)
+            make.top.height.equalTo(productPhotoButton)
+        }
+        
+        photoContentView.snp.makeConstraints { make in
+            make.height.equalTo(photoScrollView.snp.height)
+            make.horizontalEdges.equalTo(photoScrollView)
         }
         
         titleView.snp.makeConstraints { make in
@@ -282,7 +302,7 @@ final class PostView: BaseView, UITextViewDelegate {
             make.top.equalTo(purchaseView).inset(12)
             make.centerX.equalTo(purchaseView.snp.leading).inset((Device.screenWidth - 56) / 4)
         }
-
+        
         purchaseCountLabel.snp.makeConstraints { make in
             make.top.equalTo(purchaseView).inset(12)
             make.centerX.equalTo(purchaseView.snp.leading).inset((Device.screenWidth - 56) * 3 / 4)
@@ -346,7 +366,7 @@ final class PostView: BaseView, UITextViewDelegate {
             make.top.equalTo(shareView).inset(12)
             make.centerX.equalTo(shareView.snp.leading).inset((Device.screenWidth - 56) / 4)
         }
-
+        
         shareCountLabel.snp.makeConstraints { make in
             make.top.equalTo(shareView).inset(12)
             make.centerX.equalTo(shareView.snp.leading).inset((Device.screenWidth - 56) * 3 / 4)
@@ -510,6 +530,11 @@ final class PostView: BaseView, UITextViewDelegate {
             make.height.equalTo(32)
         }
         
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(placeButton.snp.bottom).offset(8)
+            make.horizontalEdges.bottom.equalTo(placeView)
+        }
+        
         nextButton.snp.makeConstraints { make in
             make.top.equalTo(placeView.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(contentView).inset(28)
@@ -520,7 +545,56 @@ final class PostView: BaseView, UITextViewDelegate {
     }
     
     override func configureView() {
+        configureMap()
+    }
+    
+}
+
+extension PostView {
+    
+    private func configureMap() {
+        let centerCoordinate = CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)
+        let region = MKCoordinateRegion(
+            center: centerCoordinate,
+            latitudinalMeters: 2000,
+            longitudinalMeters: 2000
+        )
+        mapView.setRegion(region, animated: false)
+        let pin = MKPointAnnotation()
+        pin.coordinate = centerCoordinate
+        mapView.addAnnotation(pin)
+    }
+    
+    func updatePhotoScrollView(with images: [UIImage]) {
+        productImageViews.forEach { $0.removeFromSuperview() }
+        productImageViews = []
         
+        var lastView: UIView = photoContentView
+        for image in images {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.image = image
+            imageView.layer.cornerRadius = 8
+            photoContentView.addSubview(imageView)
+            
+            imageView.snp.makeConstraints { make in
+                if lastView == photoContentView {
+                    make.leading.equalTo(photoContentView)
+                } else {
+                    make.leading.equalTo(lastView.snp.trailing).offset(12)
+                }
+                make.centerY.equalTo(photoContentView)
+                make.size.equalTo(productPhotoButton)
+            }
+            
+            lastView = imageView
+            productImageViews.append(imageView)
+        }
+        
+        lastView.snp.makeConstraints { make in
+            make.trailing.equalTo(photoContentView)
+        }
     }
     
 }
