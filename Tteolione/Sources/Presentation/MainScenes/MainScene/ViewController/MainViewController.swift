@@ -29,6 +29,11 @@ extension MainViewController: View {
             .map { _ in MainReactor.Action.fetchProducts }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.postButton.rx.tap
+            .map { MainReactor.Action.postButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: MainReactor) {
@@ -67,7 +72,14 @@ extension MainViewController: View {
     }
     
     func bindNavigation(_ reactor: MainReactor) {
-        
+        reactor.state.map { $0.navigateToPost }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushPostViewController()
+            }
+            .disposed(by: disposeBag)
     }
 }
 
