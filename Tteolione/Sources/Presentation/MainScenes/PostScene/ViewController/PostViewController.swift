@@ -29,6 +29,54 @@ extension PostViewController: View {
             .map { PostReactor.Action.productPhotoTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.titleTextField.rx.text.orEmpty
+            .map { $0.count <= 20 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+              if !isEditable {
+                self?.rootView.titleTextField.text = String(self?.rootView.titleTextField.text?.dropLast() ?? "")
+              }
+            })
+            .disposed(by: disposeBag)
+
+        rootView.titleTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updateTitle($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.purchasePriceTextField.rx.text.orEmpty
+            .map { $0.count <= 9 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+              if !isEditable {
+                self?.rootView.purchasePriceTextField.text = String(self?.rootView.purchasePriceTextField.text?.dropLast() ?? "")
+              }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.purchasePriceTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updatePurchasePrice($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.purchaseCountTextField.rx.text.orEmpty
+            .map { $0.count <= 9 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+              if !isEditable {
+                self?.rootView.purchaseCountTextField.text = String(self?.rootView.purchaseCountTextField.text?.dropLast() ?? "")
+              }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.purchaseCountTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updatePurchaseCount($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: PostReactor) {
@@ -46,6 +94,30 @@ extension PostViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, images in
                 owner.rootView.updatePhotoScrollView(with: images)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.title }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.titleTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.titleLengthText }
+            .distinctUntilChanged()
+            .bind(to: rootView.titleWordCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { !$0.isTitleValid }
+            .distinctUntilChanged()
+            .bind(to: rootView.titleSpaceWarningLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isPurchaseValid }
+            .distinctUntilChanged()
+            .bind(with: rootView) { owner, isValid in
+                let isAll = isValid.allSatisfy { $0 }
+                owner.purchaseSpaceWarningLabel.isHidden = isAll
             }
             .disposed(by: disposeBag)
     }
