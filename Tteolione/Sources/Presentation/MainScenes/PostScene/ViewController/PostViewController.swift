@@ -77,6 +77,84 @@ extension PostViewController: View {
             .map { PostReactor.Action.updatePurchaseCount($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.sharePriceTextField.rx.text.orEmpty
+            .map { $0.count <= 9 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+              if !isEditable {
+                self?.rootView.sharePriceTextField.text = String(self?.rootView.sharePriceTextField.text?.dropLast() ?? "")
+              }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.sharePriceTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updatePurchaseCount($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.shareCountTextField.rx.text.orEmpty
+            .map { $0.count <= 9 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+              if !isEditable {
+                self?.rootView.shareCountTextField.text = String(self?.rootView.shareCountTextField.text?.dropLast() ?? "")
+              }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.shareCountTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updatePurchaseCount($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.vegetableButton.rx.tap
+            .map { PostReactor.Action.vegetableButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.fruitButton.rx.tap
+            .map { PostReactor.Action.fruitButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.mealKitButton.rx.tap
+            .map { PostReactor.Action.mealKitButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.meatButton.rx.tap
+            .map { PostReactor.Action.meatButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.seaFoodButton.rx.tap
+            .map { PostReactor.Action.seaFoodButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.etcButton.rx.tap
+            .map { PostReactor.Action.etcButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.descriptionTextView.rx.text.orEmpty
+            .map { $0.count <= 100 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+              if !isEditable {
+                self?.rootView.descriptionTextView.text = String(self?.rootView.descriptionTextView.text?.dropLast() ?? "")
+              }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.descriptionTextView.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updateDescriptionText($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     private func bindState(_ reactor: PostReactor) {
@@ -119,6 +197,31 @@ extension PostViewController: View {
                 let isAll = isValid.allSatisfy { $0 }
                 owner.purchaseSpaceWarningLabel.isHidden = isAll
             }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isShareValid }
+            .distinctUntilChanged()
+            .bind(with: rootView) { owner, isValid in
+                let isAll = isValid.allSatisfy { $0 }
+                owner.shareSpaceWarningLabel.isHidden = isAll
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isCategorySelected }
+            .distinctUntilChanged()
+            .bind(with: rootView) { owner, isValid in
+                owner.setCategoryButton(isValid)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.descriptionPlaceholderText }
+            .distinctUntilChanged()
+            .bind(to: rootView.descriptionTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.descriptionLengthText }
+            .distinctUntilChanged()
+            .bind(to: rootView.remainCountLabel.rx.text)
             .disposed(by: disposeBag)
     }
     

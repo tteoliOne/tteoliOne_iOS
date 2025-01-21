@@ -87,7 +87,7 @@ final class PostView: BaseView, UITextViewDelegate {
         let datePicker = UIDatePicker()
         
         datePicker.date = Date()
-        
+        datePicker.maximumDate = Date()
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
         datePicker.setDate(Date(), animated: true)
@@ -111,32 +111,32 @@ final class PostView: BaseView, UITextViewDelegate {
     private let categoryView = ShadowView()
     private let categoryLabel = AndongLabel(text: AppText.PostProduct.category,
                                             color: .myAppMain)
-    private let vegetableButton = CommonButton(title: .vegetable,
+    let vegetableButton = CommonButton(title: .vegetable,
                                                corner: 20,
                                                backgroundColor: .myAppLightGray,
                                                textColor: .myAppBlack,
                                                font: Font.regular16)
-    private let fruitButton = CommonButton(title: .fruit,
+    let fruitButton = CommonButton(title: .fruit,
                                            corner: 20,
                                            backgroundColor: .myAppLightGray,
                                            textColor: .myAppBlack,
                                            font: Font.regular16)
-    private let mealKitButton = CommonButton(title: .mealKit,
+    let mealKitButton = CommonButton(title: .mealKit,
                                              corner: 20,
                                              backgroundColor: .myAppLightGray,
                                              textColor: .myAppBlack,
                                              font: Font.regular16)
-    private let meatButton = CommonButton(title: .meat,
+    let meatButton = CommonButton(title: .meat,
                                           corner: 20,
                                           backgroundColor: .myAppLightGray,
                                           textColor: .myAppBlack,
                                           font: Font.regular16)
-    private let seaFoodButton = CommonButton(title: .seaFood,
+    let seaFoodButton = CommonButton(title: .seaFood,
                                              corner: 20,
                                              backgroundColor: .myAppLightGray,
                                              textColor: .myAppBlack,
                                              font: Font.regular16)
-    private let etcButton = CommonButton(title: .etc,
+    let etcButton = CommonButton(title: .etc,
                                          corner: 20,
                                          backgroundColor: .myAppLightGray,
                                          textColor: .myAppBlack,
@@ -147,7 +147,7 @@ final class PostView: BaseView, UITextViewDelegate {
     private let descriptionLabel = AndongLabel(text: AppText.PostProduct.detailExplain,
                                                color: .myAppMain)
     private let textViewPlaceHolder = AppText.PostProduct.detailPlaceholder
-    private lazy var descriptionTextView: UITextView = {
+    lazy var descriptionTextView: UITextView = {
         let view = UITextView()
         view.font = Font.regular15
         view.layer.borderWidth = 1.0
@@ -160,7 +160,7 @@ final class PostView: BaseView, UITextViewDelegate {
         view.delegate = self
         return view
     }()
-    private var remainCountLabel = RegularLabel(text: AppText.PostProduct.detailWordCount, color: .myAppLightGray2)
+    var remainCountLabel = RegularLabel(text: AppText.PostProduct.detailWordCount, color: .myAppLightGray2)
     
     //MARK: - 희망공유장소
     private let placeView = ShadowView()
@@ -597,4 +597,20 @@ extension PostView {
         }
     }
     
+    func setCategoryButton(_ isSelected: [Bool]) {
+        let buttons = [
+            vegetableButton,
+            fruitButton,
+            mealKitButton,
+            meatButton,
+            seaFoodButton,
+            etcButton
+        ]
+        
+        for (index, button) in buttons.enumerated() {
+            button.backgroundColor = isSelected[index] ? .myAppMain : .myAppLightGray
+            button.setTitleColor(isSelected[index] ? .white : .myAppBlack, for: .normal)
+        }
+    }
+
 }
