@@ -46,7 +46,8 @@ extension MainCoordinator {
     }
     
     func pushProductDetailViewController(productId: Int) {
-        let reactor = ProductDetailReactor()
+        let reactor = ProductDetailReactor(networkProvider: dependency.productServiceProvider,
+                                           productId: productId)
         let viewController = createViewController(
             ofType: ProductDetailViewController.self,
             with: reactor,

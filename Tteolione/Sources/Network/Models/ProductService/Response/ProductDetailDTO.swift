@@ -12,8 +12,8 @@ struct ProductDetailDTO: Decodable {
     let productId: Int
     let categoryId: Int
     let images: [String]
-    let sellerPorfile: String
-    let sellerId: String
+    let sellerProfile: String
+    let sellerId: Int
     let sellerNickname: String
     let title: String
     let buyDate: String
@@ -26,7 +26,7 @@ struct ProductDetailDTO: Decodable {
     let longitude: Double
     let latitude: Double
     let likeId: Int?
-    let checkLicked: Bool
+    let checkLiked: Bool
     let checkOwner: Bool
     let soldStatus: String
     

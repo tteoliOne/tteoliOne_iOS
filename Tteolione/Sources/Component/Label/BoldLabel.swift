@@ -1,22 +1,20 @@
 //
-//  RegularLabel.swift
+//  BoldLabel.swift
 //  Tteolione
 //
-//  Created by 전준영 on 1/10/25.
+//  Created by 전준영 on 1/23/25.
 //
 
 import UIKit
 
-class RegularLabel: UILabel {
+class BoldLabel: UILabel {
     
-    init(text: String, font: UIFont? = Font.regular16, color: UIColor) {
+    init(text: String, font: UIFont? = Font.bold16, color: UIColor) {
         super.init(frame: .zero)
         
         self.text = text
         self.font = font
         textColor = color
-        adjustsFontSizeToFitWidth = true
-        minimumScaleFactor = 0.7
         
     }
     

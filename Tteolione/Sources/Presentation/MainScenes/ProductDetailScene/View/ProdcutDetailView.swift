@@ -18,15 +18,21 @@ final class ProductDetailView: BaseView {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
+    private let imagePageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPageIndicatorTintColor = .black
+        pageControl.pageIndicatorTintColor = .lightGray
+        return pageControl
+    }()
     private let productFieldView = UIView()
     private let profileImageView = CircleImageView(joinImage: .setProfile,
                                                    corner: 30,
                                                    border: 1)
     private let nicknameLabel = RegularLabel(text: "닉네임",
                                              color: .myAppBlack)
-    private let titleLabel = RegularLabel(text: "제목",
-                                          font: Font.regular20,
-                                          color: .myAppBlack)
+    private let titleLabel = BoldLabel(text: "제목",
+                                       font: Font.bold20,
+                                       color: .myAppBlack)
     private let boundarView = BoundarView(.myAppBlack)
     private let buyDateExplainLabel = AndongLabel(text: AppText.PostProduct.buyDay,
                                                   color: .myAppMain)
@@ -57,8 +63,8 @@ final class ProductDetailView: BaseView {
     private let buyPriceImageView = CircleImageView(joinImage: .buyPrice,
                                                     corner: 20,
                                                     border: 0)
-    private let buyPriceLabel = RegularLabel(text: AppText.PostProduct.buyPrice,
-                                             color: .white)
+    private let buyPriceLabel = BoldLabel(text: AppText.PostProduct.buyPrice,
+                                          color: .white)
     private let buyPriceWonLabel = RegularLabel(text: AppText.PostProduct.won,
                                                 font: Font.regular15,
                                                 color: .white)
@@ -68,8 +74,8 @@ final class ProductDetailView: BaseView {
     private let buyCountImageView = CircleImageView(joinImage: .buyCount,
                                                     corner: 15,
                                                     border: 0)
-    private let buyCountLabel = RegularLabel(text: AppText.PostProduct.buyCount,
-                                             color: .white)
+    private let buyCountLabel = BoldLabel(text: AppText.PostProduct.buyCount,
+                                          color: .white)
     private let buyCountPCSLabel = RegularLabel(text: AppText.PostProduct.count,
                                                 font: Font.regular15,
                                                 color: .white)
@@ -79,8 +85,8 @@ final class ProductDetailView: BaseView {
     private let sharePriceImageView = CircleImageView(joinImage: .sharePrice,
                                                       corner: 15,
                                                       border: 0)
-    private let sharePriceLabel = RegularLabel(text: AppText.PostProduct.sharePrice,
-                                               color: .white)
+    private let sharePriceLabel = BoldLabel(text: AppText.PostProduct.sharePrice,
+                                            color: .white)
     private let sharePriceWonLabel = RegularLabel(text: AppText.PostProduct.won,
                                                   font: Font.regular15,
                                                   color: .white)
@@ -90,8 +96,8 @@ final class ProductDetailView: BaseView {
     private let shareCountImageView = CircleImageView(joinImage: .shareCount,
                                                       corner: 15,
                                                       border: 0)
-    private let shareCountLabel = RegularLabel(text: AppText.PostProduct.shareCount,
-                                               color: .white)
+    private let shareCountLabel = BoldLabel(text: AppText.PostProduct.shareCount,
+                                            color: .white)
     private let shareCountPCSLabel = RegularLabel(text: AppText.PostProduct.count,
                                                   font: Font.regular15,
                                                   color: .white)
@@ -113,7 +119,8 @@ final class ProductDetailView: BaseView {
     override func configureHierarchy() {
         [scrollView, callButton].forEach { addSubview($0) }
         [contentView].forEach { scrollView.addSubview($0) }
-        [productImagesScrollView, productFieldView].forEach { contentView.addSubview($0) }
+        [productImagesScrollView, productFieldView,
+         imagePageControl].forEach { contentView.addSubview($0) }
         [profileImageView, nicknameLabel,
          titleLabel, boundarView,
          buyDateExplainLabel, buyDateLabel,
@@ -150,6 +157,12 @@ final class ProductDetailView: BaseView {
             make.height.equalTo(260)
         }
         
+        imagePageControl.snp.makeConstraints { make in
+            make.centerX.equalTo(contentView)
+            make.bottom.equalTo(productImagesScrollView).inset(8)
+            make.height.equalTo(20)
+        }
+        
         productFieldView.snp.makeConstraints { make in
             make.top.equalTo(productImagesScrollView.snp.bottom).offset(-12)
             make.width.equalTo(contentView.snp.width)
@@ -158,8 +171,7 @@ final class ProductDetailView: BaseView {
         
         profileImageView.snp.makeConstraints { make in
             make.size.equalTo(60)
-            make.top.equalTo(productFieldView).inset(16)
-            make.leading.equalTo(productFieldView).inset(20)
+            make.top.leading.equalTo(productFieldView).inset(24)
         }
         
         nicknameLabel.snp.makeConstraints { make in
@@ -168,8 +180,8 @@ final class ProductDetailView: BaseView {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(productFieldView).inset(16)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(20)
+            make.centerY.equalTo(profileImageView.snp.centerY)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(32)
         }
         
         boundarView.snp.makeConstraints { make in
@@ -338,11 +350,92 @@ final class ProductDetailView: BaseView {
     }
     
     override func configureView() {
-        productImagesScrollView.backgroundColor = .black
+        productImagesScrollView.delegate = self
+        
+        contentLabel.numberOfLines = 0
+        contentLabel.lineBreakMode = .byWordWrapping
+        
         buyPriceImageView.backgroundColor = .white
         buyCountImageView.backgroundColor = .white
         sharePriceImageView.backgroundColor = .white
         shareCountImageView.backgroundColor = .white
+    }
+    
+}
+
+extension ProductDetailView {
+    
+    func updateUI(with productDetail: ProductDetailDTO) {
+        updateScrollView(with: productDetail.images)
+        if let imageUrl = URL(string: productDetail.sellerProfile) {
+            profileImageView.loadImage(from: imageUrl)
+        } else {
+            profileImageView.image = nil
+        }
+        nicknameLabel.text = productDetail.sellerNickname
+        titleLabel.text = productDetail.title
+        buyDateLabel.text = FormatterManager.shared.formattedDate(from: productDetail.buyDate)
+        thumbUpSet(productDetail.checkLiked)
+        likeCountLabel.text = "\(productDetail.likeCount)"
+//        receiptButton.setImage(url: productDetail.receipt)
+        buyPriceWonLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.buyPrice))원"
+        buyCountPCSLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.buyCount))개"
+        sharePriceWonLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.sharePrice))원"
+        shareCountPCSLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.shareCount))개"
+        contentLabel.text = productDetail.description
+    }
+    
+}
+
+extension ProductDetailView {
+    
+    func updateScrollView(with imageUrls: [String]) {
+        productImagesScrollView.subviews.forEach { $0.removeFromSuperview() }
+        var previousImageView: UIView?
+        imagePageControl.numberOfPages = imageUrls.count
+        imagePageControl.currentPage = 0
+
+        for urlString in imageUrls {
+            guard let url = URL(string: urlString) else { continue }
+            let imageView = LoadImageView()
+            productImagesScrollView.addSubview(imageView)
+            imageView.loadImage(from: url)
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            
+            imageView.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.width.equalTo(Device.screenWidth)
+                make.height.equalTo(260)
+                if let previous = previousImageView {
+                    make.leading.equalTo(previous.snp.trailing)
+                } else {
+                    make.leading.equalToSuperview()
+                }
+            }
+
+            previousImageView = imageView
+        }
+
+        previousImageView?.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+        }
+        
+    }
+    
+    private func thumbUpSet(_ isLike: Bool) {
+        let likeName = isLike ? "heart.fill" : "heart"
+        likeButton.setImage(UIImage(systemName: likeName), for: .normal)
+    }
+    
+}
+
+extension ProductDetailView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageWidth = scrollView.bounds.width
+        let currentPage = Int((scrollView.contentOffset.x + pageWidth / 2) / pageWidth)
+        imagePageControl.currentPage = currentPage
     }
     
 }

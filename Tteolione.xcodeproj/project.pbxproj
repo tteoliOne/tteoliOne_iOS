@@ -212,6 +212,7 @@
 		724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC52D02CBC600171F44 /* EmailAuthView.swift */; };
 		724DECC82D02CBE400171F44 /* EmailAuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */; };
 		724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724DECC92D02CE2E00171F44 /* BackButton.swift */; };
+		725F817E2D421326002C4E1C /* BoldLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F817D2D421326002C4E1C /* BoldLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -415,6 +416,7 @@
 		724DECC52D02CBC600171F44 /* EmailAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthView.swift; sourceTree = "<group>"; };
 		724DECC72D02CBE400171F44 /* EmailAuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthReactor.swift; sourceTree = "<group>"; };
 		724DECC92D02CE2E00171F44 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		725F817D2D421326002C4E1C /* BoldLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoldLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1405,6 +1407,7 @@
 				724DECB62D01883B00171F44 /* SlashLabel.swift */,
 				72361FBB2D30DDF9009BEF12 /* AndongLabel.swift */,
 				72361FC32D30F8D2009BEF12 /* RegularLabel.swift */,
+				725F817D2D421326002C4E1C /* BoldLabel.swift */,
 			);
 			path = Label;
 			sourceTree = "<group>";
@@ -1637,6 +1640,7 @@
 				72361F662D2EBA2C009BEF12 /* ChatListDTO.swift in Sources */,
 				72361F3A2D2EA1F4009BEF12 /* QueryStringProtocol.swift in Sources */,
 				72361F162D2E40DF009BEF12 /* UserSessionAPI.swift in Sources */,
+				725F817E2D421326002C4E1C /* BoldLabel.swift in Sources */,
 				72361F592D2EB55E009BEF12 /* WithdrawalRequestBody.swift in Sources */,
 				72361F492D2EAB7A009BEF12 /* NewPasswordRequestBody.swift in Sources */,
 				7246FA0A2D38D22600EE6B5E /* CoordinatorType.swift in Sources */,
