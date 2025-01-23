@@ -13,16 +13,21 @@ final class MainReactor: Reactor {
     
     enum Action {
         case fetchProducts
+        case postButtonTap
     }
     
     enum Mutation {
         case setProducts(ProductDTO)
         case showError(NetworkError)
+        case setNavigateToPost(Bool)
+        case setProductId([Int])
     }
 
     struct State {
         var products: [ProductDTO] = []
         var errorMessage: String?
+        var navigateToPost: Bool = false
+        var productIds: [Int] = []
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
@@ -42,6 +47,12 @@ extension MainReactor {
             return .concat([
                 fetchProductsPost()
             ])
+            
+        case .postButtonTap:
+            return .concat([
+                .just(.setNavigateToPost(true)),
+                .just(.setNavigateToPost(false))
+            ])
         }
     }
     
@@ -58,6 +69,12 @@ extension MainReactor {
             
         case .showError(let error):
             newState.errorMessage = error.errorDescription
+            
+        case .setNavigateToPost(let isNavi):
+            newState.navigateToPost = isNavi
+            
+        case .setProductId(let ids):
+            newState.productIds = ids
         }
         
         return newState
@@ -78,7 +95,9 @@ extension MainReactor {
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(let dto):
+                let productIds = dto.list.flatMap { $0.products.map { $0.productId } }
                 return .concat([
+                    .just(.setProductId(productIds)),
                     .just(.setProducts(dto))
                 ])
             case .failure(let error):

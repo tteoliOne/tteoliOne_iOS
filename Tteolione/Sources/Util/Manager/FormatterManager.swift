@@ -10,8 +10,18 @@ import Foundation
 final class FormatterManager {
     
     static let shared = FormatterManager()
+    private let inputDateFormatter: DateFormatter
+    private let outputDateFormatter: DateFormatter
     
-    private init() { }
+    private init() {
+        self.inputDateFormatter = DateFormatter()
+        self.inputDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        self.inputDateFormatter.timeZone = TimeZone.current
+        
+        self.outputDateFormatter = DateFormatter()
+        self.outputDateFormatter.dateFormat = "yyyy.MM.dd(EEE)"
+        self.outputDateFormatter.timeZone = TimeZone.current
+    }
     
     func numberFormatter(_ data: Int) -> String {
         let format = NumberFormatter()
@@ -19,4 +29,11 @@ final class FormatterManager {
         return format.string(from: NSNumber(value: data)) ?? "\(data)"
     }
     
+    func formattedDate(from dateString: String) -> String {
+        if let date = inputDateFormatter.date(from: dateString) {
+            return outputDateFormatter.string(from: date)
+        } else {
+            return dateString
+        }
+    }
 }

@@ -10,6 +10,7 @@ import UIKit
 class CircleImageView: UIImageView {
     
     static let imageCache = NSCache<NSString, UIImage>()
+    private var currentImageURL: URL?
     
     init(joinImage: AppJoinImage,
          corner: CGFloat,
@@ -40,6 +41,16 @@ class CircleImageView: UIImageView {
                 DispatchQueue.main.async {
                     self?.image = setImage
                 }
+            }
+        }
+    }
+    
+    func loadImage(from url: URL) {
+        currentImageURL = url
+        Task {
+            let image = await ImageCacheManager.shared.loadImage(from: url)
+            if currentImageURL == url {
+                self.image = image
             }
         }
     }

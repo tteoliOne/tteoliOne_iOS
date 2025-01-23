@@ -51,4 +51,3 @@ final class SearchCompleterWrapper: NSObject, MKLocalSearchCompleterDelegate {
         return searchRequest
     }
 }
-

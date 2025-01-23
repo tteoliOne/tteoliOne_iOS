@@ -35,6 +35,27 @@ final class MainCoordinator: NSObject, MainCoordinatorDelegate {
 
 extension MainCoordinator {
     
+    func pushPostViewController() {
+        let reactor = PostReactor()
+        let viewController = createViewController(
+            ofType: PostViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        show(viewController)
+    }
+    
+    func pushProductDetailViewController(productId: Int) {
+        let reactor = ProductDetailReactor(networkProvider: dependency.productServiceProvider,
+                                           productId: productId)
+        let viewController = createViewController(
+            ofType: ProductDetailViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        show(viewController)
+    }
+    
     private func configureNavBarAppearance() {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
