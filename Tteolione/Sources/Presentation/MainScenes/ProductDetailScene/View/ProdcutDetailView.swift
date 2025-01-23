@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 final class ProductDetailView: BaseView {
     
@@ -111,6 +112,16 @@ final class ProductDetailView: BaseView {
     private let placeView = ShadowView()
     private let placeLabel = AndongLabel(text: AppText.PostProduct.sharePlace,
                                          color: .myAppMain)
+    private let mapView: MKMapView = {
+        let map = MKMapView()
+        map.layer.cornerRadius = 10
+        map.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        map.showsUserLocation = false
+        map.isZoomEnabled = true
+        map.isScrollEnabled = true
+        map.isRotateEnabled = false
+        return map
+    }()
     private let callButton = CommonButton(title: .call,
                                           corner: 20,
                                           backgroundColor: .myAppMain,
@@ -138,7 +149,7 @@ final class ProductDetailView: BaseView {
         [shareCountImageView, shareCountLabel,
          shareCountPCSLabel].forEach { shareCountFieldView.addSubview($0) }
         [detailLabel, contentLabel].forEach { detailView.addSubview($0) }
-        [placeLabel].forEach { placeView.addSubview($0) }
+        [placeLabel, mapView].forEach { placeView.addSubview($0) }
         
     }
     
@@ -332,13 +343,18 @@ final class ProductDetailView: BaseView {
         placeView.snp.makeConstraints { make in
             make.top.equalTo(detailView.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(productFieldView).inset(20)
-            make.height.equalTo(200)
+            make.height.equalTo(320)
             make.bottom.equalTo(productFieldView).offset(-88)
         }
         
         placeLabel.snp.makeConstraints { make in
             make.top.equalTo(placeView).inset(16)
             make.leading.equalTo(placeView).inset(20)
+        }
+        
+        mapView.snp.makeConstraints { make in
+            make.top.equalTo(placeLabel.snp.bottom).offset(12)
+            make.horizontalEdges.bottom.equalTo(placeView)
         }
         
         callButton.snp.makeConstraints { make in
@@ -377,12 +393,13 @@ extension ProductDetailView {
         buyDateLabel.text = FormatterManager.shared.formattedDate(from: productDetail.buyDate)
         thumbUpSet(productDetail.checkLiked)
         likeCountLabel.text = "\(productDetail.likeCount)"
-//        receiptButton.setImage(url: productDetail.receipt)
+        
         buyPriceWonLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.buyPrice))원"
         buyCountPCSLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.buyCount))개"
         sharePriceWonLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.sharePrice))원"
         shareCountPCSLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.shareCount))개"
         contentLabel.text = productDetail.description
+        updateMapView(latitude: productDetail.latitude, longitude: productDetail.longitude)
     }
     
 }
@@ -426,6 +443,21 @@ extension ProductDetailView {
     private func thumbUpSet(_ isLike: Bool) {
         let likeName = isLike ? "heart.fill" : "heart"
         likeButton.setImage(UIImage(systemName: likeName), for: .normal)
+    }
+    
+    private func updateMapView(latitude: Double, longitude: Double) {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = "공유 장소"
+        annotation.subtitle = "여기에서 만나요!"
+        mapView.addAnnotation(annotation)
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: 500,
+            longitudinalMeters: 500
+        )
+        mapView.setRegion(region, animated: true)
     }
     
 }
