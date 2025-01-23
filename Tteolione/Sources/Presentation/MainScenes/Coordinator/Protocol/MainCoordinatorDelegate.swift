@@ -9,4 +9,5 @@ import Foundation
 
 protocol MainCoordinatorDelegate: Coordinator {
     func pushPostViewController()
+    func pushProductDetailViewController(productId: Int)
 }

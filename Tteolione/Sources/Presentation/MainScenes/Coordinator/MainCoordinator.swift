@@ -45,6 +45,16 @@ extension MainCoordinator {
         show(viewController)
     }
     
+    func pushProductDetailViewController(productId: Int) {
+        let reactor = ProductDetailReactor()
+        let viewController = createViewController(
+            ofType: ProductDetailViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        show(viewController)
+    }
+    
     private func configureNavBarAppearance() {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()

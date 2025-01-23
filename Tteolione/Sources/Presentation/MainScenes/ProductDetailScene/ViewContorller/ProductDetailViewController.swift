@@ -5,16 +5,26 @@
 //  Created by 전준영 on 1/11/25.
 //
 
-import UIKit
 import ReactorKit
 import RxCocoa
 
 final class ProductDetailViewController: BaseViewController<ProductDetailView> {
     
     var disposeBag = DisposeBag()
+    weak var delegate: MainCoordinatorDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+}
+
+extension ProductDetailViewController: View {
+    
+    func bind(reactor: ProductDetailReactor) {
+//        bindAction(reactor)
+//        bindState(reactor)
+//        bindNavigation(reactor)
     }
     
+}
+
+extension ProductDetailViewController: DelegateOwner {
+    typealias Delegate = MainCoordinatorDelegate
 }

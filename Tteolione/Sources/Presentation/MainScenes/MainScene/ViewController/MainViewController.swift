@@ -49,6 +49,12 @@ extension MainViewController: View {
             )) { _, productList, cell in
                 cell.selectionStyle = .none
                 cell.configure(productList: productList)
+                cell.collectionView.rx.itemSelected
+                    .subscribe(onNext: { [weak self] indexPath in
+                        let selectedProduct = productList.products[indexPath.item]
+                        self?.delegate?.pushProductDetailViewController(productId: selectedProduct.productId)
+                    })
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
@@ -65,8 +71,8 @@ extension MainViewController: View {
         rootView.tableView.rx.contentOffset
             .map { $0.y }
             .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, offset in
-                owner.rootView.adjustButtonShape(forScrollOffset: offset)
+            .bind(with: rootView) { owner, offset in
+                owner.adjustButtonShape(forScrollOffset: offset)
             }
             .disposed(by: disposeBag)
     }
