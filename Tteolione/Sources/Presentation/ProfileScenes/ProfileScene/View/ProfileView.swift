@@ -59,12 +59,52 @@ final class ProfileView: BaseView {
                                             textColor: .myAppDarkGray,
                                             font: Font.regular17)
     
+    //MARK: - 프로필 변경시 화면
+    let profileSetButton = CommonButton(title: .profile,
+                                        corner: 0,
+                                        backgroundColor: .clear,
+                                        textColor: .black,
+                                        font: Font.Andong20)
+    private let setNicknameLabel = AndongLabel(text: AppText.Etc.nickname,
+                                               color: .myAppBlack)
+    private let setNicknameView = ShadowView(color: .white,
+                                             corner: (Device.screenHeight * 0.06) / 2,
+                                             shadowColor: UIColor(red: 0x58/255.0,
+                                                                  green: 0x8F/255.0,
+                                                                  blue: 0x11/255.0,
+                                                                  alpha: 1.0).cgColor)
+    private let setNicknameTextField = CommonTextField()
+    private let setNickErrorLabel = RegularLabel(text: "닉네임 중복입니다!!",
+                                              font: Font.regular13,
+                                              color: .myAppRed)
+    private let setIntroLabel = AndongLabel(text: AppText.Etc.intro,
+                                            color: .myAppBlack)
+    private let setIntroView = ShadowView(color: .white,
+                                          corner: (Device.screenHeight * 0.06) / 2,
+                                          shadowColor: UIColor(red: 0x58/255.0,
+                                                               green: 0x8F/255.0,
+                                                               blue: 0x11/255.0,
+                                                               alpha: 1.0).cgColor)
+    private let setIntroTextField = CommonTextField()
+    let setButton = CommonButton(title: .set,
+                                 corner: 24,
+                                 backgroundColor: .myAppMain,
+                                 textColor: .white)
+    
     override func configureHierarchy() {
         [profileFieldView, listView,
          logOutButton, slash,
          withdrawalButton].forEach { addSubview($0) }
+        
         [profileShadowView, nicknameView,
-         thumbView, oneLinerLabel].forEach { profileFieldView.addSubview($0) }
+         thumbView, oneLinerLabel,
+         profileSetButton, setNicknameLabel,
+         setNicknameView, setNickErrorLabel,
+         setIntroLabel, setIntroView,
+         setButton].forEach { profileFieldView.addSubview($0) }
+        [setNicknameTextField].forEach { setNicknameView.addSubview($0) }
+        [setIntroTextField].forEach { setIntroView.addSubview($0) }
+        
         [profileMyImage].forEach { profileShadowView.addSubview($0) }
         [nicknameLabel, nickname].forEach { nicknameView.addSubview($0) }
         [thumbLabel, thumbCount].forEach { thumbView.addSubview($0) }
@@ -157,6 +197,8 @@ final class ProfileView: BaseView {
     override func configureView() {
         slash.textColor = .myAppDarkGray
         tableView.rowHeight = ((Device.screenHeight * 0.44) - 40) / 5
+        setNicknameTextField.textAlignment = .center
+        setIntroTextField.textAlignment = .center
     }
 }
 
@@ -173,4 +215,114 @@ extension ProfileView {
         thumbCount.text = "\(value.thumbsUpScore)"
     }
     
+    private func updateVisibility(hiddenViews: [UIView], visibleViews: [UIView]) {
+        hiddenViews.forEach { $0.isHidden = true }
+        visibleViews.forEach { $0.isHidden = false }
+    }
+
+    func resetProfileField() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.profileFieldView.snp.updateConstraints { make in
+                make.height.equalTo(Device.screenHeight * 0.75)
+            }
+
+            self.profileShadowView.snp.remakeConstraints { make in
+                make.size.equalTo(Device.screenWidth * 0.33)
+                make.centerX.equalTo(self.profileFieldView)
+                make.top.equalTo(self.profileFieldView).inset(24)
+            }
+
+            self.profileSetButton.snp.makeConstraints { make in
+                make.top.equalTo(self.profileShadowView.snp.bottom).offset(16)
+                make.centerX.equalTo(self.profileFieldView)
+            }
+
+            self.setNicknameLabel.snp.makeConstraints { make in
+                make.top.equalTo(self.profileSetButton.snp.bottom).offset(20)
+                make.centerX.equalTo(self.profileFieldView)
+            }
+
+            self.setNicknameView.snp.makeConstraints { make in
+                make.top.equalTo(self.setNicknameLabel.snp.bottom).offset(8)
+                make.centerX.equalTo(self.profileFieldView)
+                make.height.equalTo(Device.screenHeight * 0.06)
+                make.width.equalTo(Device.screenWidth * 0.5)
+            }
+
+            self.setNicknameTextField.snp.makeConstraints { make in
+                make.edges.equalTo(self.setNicknameView)
+            }
+
+            self.setNickErrorLabel.snp.makeConstraints { make in
+                make.centerX.equalTo(self.profileFieldView)
+                make.top.equalTo(self.setNicknameView.snp.bottom).offset(8)
+            }
+            
+            self.setIntroLabel.snp.makeConstraints { make in
+                make.top.equalTo(self.setNickErrorLabel.snp.bottom).offset(20)
+                make.centerX.equalTo(self.profileFieldView)
+            }
+
+            self.setIntroView.snp.makeConstraints { make in
+                make.top.equalTo(self.setIntroLabel.snp.bottom).offset(12)
+                make.height.equalTo(Device.screenHeight * 0.06)
+                make.horizontalEdges.equalTo(self.profileFieldView).inset(28)
+                make.centerX.equalTo(self.profileFieldView)
+            }
+
+            self.setIntroTextField.snp.makeConstraints { make in
+                make.edges.equalTo(self.setIntroView)
+            }
+
+            self.setButton.snp.makeConstraints { make in
+                make.centerX.equalTo(self.profileFieldView)
+                make.bottom.equalTo(self.listView.snp.top).offset(-24)
+                make.height.equalTo(48)
+                make.horizontalEdges.equalTo(self.profileFieldView).inset(20)
+            }
+
+            let hiddenViews = [
+                self.nicknameView, self.thumbView, self.oneLinerLabel,
+                self.logOutButton, self.slash, self.withdrawalButton
+            ]
+            
+            let visibleViews: [UIView] = [
+                self.setButton, self.setIntroView, self.setIntroLabel,
+                self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
+                self.setNicknameView
+            ]
+            self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
+
+            self.layoutIfNeeded()
+        })
+    }
+
+    func resetProfile() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.profileFieldView.snp.updateConstraints { make in
+                make.height.equalTo(Device.screenHeight * 0.22)
+            }
+            
+            self.profileShadowView.snp.makeConstraints { make in
+                make.size.equalTo(Device.screenWidth * 0.22)
+                make.top.equalTo(self.profileFieldView).inset(28)
+                make.leading.equalTo(self.profileFieldView).inset(20)
+            }
+            
+            let visibleViews = [
+                self.nicknameView, self.thumbView, self.oneLinerLabel,
+                self.logOutButton, self.slash, self.withdrawalButton
+            ]
+            
+            let hiddenViews: [UIView] = [
+                self.setButton, self.setIntroView, self.setIntroLabel,
+                self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
+                self.setNicknameView
+            ]
+
+            self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
+            self.layoutIfNeeded()
+        })
+    }
+
 }

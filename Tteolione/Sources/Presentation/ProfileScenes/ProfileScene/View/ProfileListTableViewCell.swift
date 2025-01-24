@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class ProfileListTableViewCell: BaseTableViewCell {
+    
+    var disposeBag = DisposeBag()
     
     private let listTitleLabel = AndongLabel(text: "리스트",
                                              font: Font.Andong20,
@@ -21,6 +24,11 @@ final class ProfileListTableViewCell: BaseTableViewCell {
         imageView.tintColor = .white
         return imageView
     }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
 
     override func configureHierarchy() {
         [listTitleLabel, chevronImageView].forEach { contentView.addSubview($0) }

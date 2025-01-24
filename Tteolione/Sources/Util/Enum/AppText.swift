@@ -83,6 +83,7 @@ enum AppText {
         static let recipet = "영수증"
         static let nickname = "닉네임"
         static let thumb = "따봉"
+        static let intro = "소개"
     }
     
 }

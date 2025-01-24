@@ -35,4 +35,6 @@ enum AppButtonTitle: String {
     
     case logout = "로그아웃"
     case withdrawal = "회원탈퇴"
+    
+    case set = "저장"
 }
