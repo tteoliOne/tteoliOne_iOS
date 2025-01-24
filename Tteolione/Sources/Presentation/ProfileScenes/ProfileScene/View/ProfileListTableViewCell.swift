@@ -7,11 +7,14 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 final class ProfileListTableViewCell: BaseTableViewCell {
     
+    var disposeBag = DisposeBag()
+    
     private let listTitleLabel = AndongLabel(text: "리스트",
-                                             font: Font.Andong25,
+                                             font: Font.Andong20,
                                              color: .white)
     private let chevronImageView: UIImageView = {
         let imageView = UIImageView()
@@ -21,6 +24,11 @@ final class ProfileListTableViewCell: BaseTableViewCell {
         imageView.tintColor = .white
         return imageView
     }()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
 
     override func configureHierarchy() {
         [listTitleLabel, chevronImageView].forEach { contentView.addSubview($0) }
@@ -35,7 +43,15 @@ final class ProfileListTableViewCell: BaseTableViewCell {
         chevronImageView.snp.makeConstraints { make in
             make.centerY.equalTo(safeAreaLayoutGuide)
             make.trailing.equalTo(safeAreaLayoutGuide).inset(20)
-            make.size.equalTo(25)
+            make.size.equalTo(16)
         }
+    }
+    
+    override func configureView() {
+        contentView.backgroundColor = .myAppMain
+    }
+    
+    func configure(with item: ProfileMenuItem) {
+        listTitleLabel.text = item.title
     }
 }
