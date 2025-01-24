@@ -11,7 +11,7 @@ import SnapKit
 final class ProfileListTableViewCell: BaseTableViewCell {
     
     private let listTitleLabel = AndongLabel(text: "리스트",
-                                             font: Font.Andong25,
+                                             font: Font.Andong20,
                                              color: .white)
     private let chevronImageView: UIImageView = {
         let imageView = UIImageView()
@@ -35,7 +35,15 @@ final class ProfileListTableViewCell: BaseTableViewCell {
         chevronImageView.snp.makeConstraints { make in
             make.centerY.equalTo(safeAreaLayoutGuide)
             make.trailing.equalTo(safeAreaLayoutGuide).inset(20)
-            make.size.equalTo(25)
+            make.size.equalTo(16)
         }
+    }
+    
+    override func configureView() {
+        contentView.backgroundColor = .myAppMain
+    }
+    
+    func configure(with item: ProfileMenuItem) {
+        listTitleLabel.text = item.title
     }
 }

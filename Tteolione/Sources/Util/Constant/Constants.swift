@@ -12,3 +12,7 @@ enum LoginTypeKey: String {
     case apple
     case local
 }
+
+struct ProfileMenuItem: Equatable {
+    let title: String
+}
