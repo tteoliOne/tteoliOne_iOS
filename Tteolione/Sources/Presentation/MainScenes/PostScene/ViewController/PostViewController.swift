@@ -90,7 +90,7 @@ extension PostViewController: View {
         
         rootView.sharePriceTextField.rx.text.orEmpty
             .distinctUntilChanged()
-            .map { PostReactor.Action.updatePurchaseCount($0) }
+            .map { PostReactor.Action.updateSharePrice($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -106,7 +106,7 @@ extension PostViewController: View {
         
         rootView.shareCountTextField.rx.text.orEmpty
             .distinctUntilChanged()
-            .map { PostReactor.Action.updatePurchaseCount($0) }
+            .map { PostReactor.Action.updateShareCount($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -153,6 +153,22 @@ extension PostViewController: View {
         rootView.descriptionTextView.rx.text.orEmpty
             .distinctUntilChanged()
             .map { PostReactor.Action.updateDescriptionText($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.placeButton.rx.tap
+            .map { PostReactor.Action.mapViewButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.nextButton.rx.tap
+            .map { PostReactor.Action.nextButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.datePick.rx.date
+            .distinctUntilChanged()
+            .map { PostReactor.Action.updateDate($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -226,7 +242,25 @@ extension PostViewController: View {
     }
     
     private func bindNavigation(_ reactor: PostReactor) {
+        reactor.state.map { $0.isMapViewShown }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushMapViewController()
+            }
+            .disposed(by: disposeBag)
         
+        reactor.state.map { $0.nextViewData }
+            .distinctUntilChanged { $0?.0 == $1?.0 && $0?.1 == $1?.1 }
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, nextViewData in
+                let (productRequestBody, productImages) = nextViewData
+                owner.delegate?.pushPostReceiptViewController(with: productRequestBody,
+                                                              productImages: productImages)
+            }
+            .disposed(by: disposeBag)
     }
     
 }
@@ -270,6 +304,13 @@ extension PostViewController: PHPickerViewControllerDelegate {
     
 }
 
+extension PostViewController: MapViewControllerDelegate {
+    func didSelectLocation(latitude: Double, longitude: Double) {
+        rootView.configureMap(latitude: latitude,
+                              longitude: longitude)
+        self.reactor?.action.onNext(.updateLocation(latitude, longitude))
+    }
+}
 
 extension PostViewController: DelegateOwner {
     typealias Delegate = MainCoordinatorDelegate

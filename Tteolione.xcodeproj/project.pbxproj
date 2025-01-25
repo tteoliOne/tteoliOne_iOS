@@ -215,6 +215,10 @@
 		725F817E2D421326002C4E1C /* BoldLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F817D2D421326002C4E1C /* BoldLabel.swift */; };
 		725F81832D4347D7002C4E1C /* ProfileReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F81822D4347D7002C4E1C /* ProfileReactor.swift */; };
 		725F81852D43488D002C4E1C /* ProfileCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F81842D43488D002C4E1C /* ProfileCoordinatorDelegate.swift */; };
+		725F81882D43B2AB002C4E1C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F81872D43B2AB002C4E1C /* MapViewController.swift */; };
+		725F818A2D43B2B2002C4E1C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F81892D43B2B2002C4E1C /* MapView.swift */; };
+		725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F818B2D43B2BE002C4E1C /* MapReactor.swift */; };
+		725F818E2D44B55D002C4E1C /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F818D2D44B55D002C4E1C /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -421,6 +425,10 @@
 		725F817D2D421326002C4E1C /* BoldLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoldLabel.swift; sourceTree = "<group>"; };
 		725F81822D4347D7002C4E1C /* ProfileReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileReactor.swift; sourceTree = "<group>"; };
 		725F81842D43488D002C4E1C /* ProfileCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		725F81872D43B2AB002C4E1C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		725F81892D43B2B2002C4E1C /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		725F818B2D43B2BE002C4E1C /* MapReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapReactor.swift; sourceTree = "<group>"; };
+		725F818D2D44B55D002C4E1C /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -912,6 +920,7 @@
 			children = (
 				72361FB52D30DBFE009BEF12 /* PostViewController.swift */,
 				72361FC52D315B08009BEF12 /* PostReceiptViewController.swift */,
+				725F81872D43B2AB002C4E1C /* MapViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -921,6 +930,7 @@
 			children = (
 				72361FB72D30DC05009BEF12 /* PostView.swift */,
 				72361FC72D315B59009BEF12 /* PostReceiptView.swift */,
+				725F81892D43B2B2002C4E1C /* MapView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -930,6 +940,7 @@
 			children = (
 				72361FB92D30DC0D009BEF12 /* PostReactor.swift */,
 				72361FC92D315B6A009BEF12 /* PostReceiptReactor.swift */,
+				725F818B2D43B2BE002C4E1C /* MapReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -1106,6 +1117,7 @@
 			isa = PBXGroup;
 			children = (
 				723B09362D3BD67000F464A4 /* Reactive+Extension.swift */,
+				725F818D2D44B55D002C4E1C /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1572,6 +1584,7 @@
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361FF92D353B87009BEF12 /* SearchView.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
+				725F818A2D43B2B2002C4E1C /* MapView.swift in Sources */,
 				723B09302D3BCBC600F464A4 /* LoadImageView.swift in Sources */,
 				72361FC62D315B08009BEF12 /* PostReceiptViewController.swift in Sources */,
 				72361F3E2D2EA226009BEF12 /* ProductQueryParameters.swift in Sources */,
@@ -1641,6 +1654,7 @@
 				72361ECC2D27C510009BEF12 /* ResetPasswordCheckViewController.swift in Sources */,
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
 				7236200F2D3571F6009BEF12 /* AddressTableViewCell.swift in Sources */,
+				725F81882D43B2AB002C4E1C /* MapViewController.swift in Sources */,
 				72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */,
 				72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */,
 				72361E362D08761A009BEF12 /* ViewController+Extension.swift in Sources */,
@@ -1727,6 +1741,7 @@
 				7246FA302D3AD46300EE6B5E /* AccessTokenRetrier.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
 				72361F402D2EA3B3009BEF12 /* ProductFilterListDTO.swift in Sources */,
+				725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
@@ -1749,6 +1764,7 @@
 				72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */,
 				725F81832D4347D7002C4E1C /* ProfileReactor.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
+				725F818E2D44B55D002C4E1C /* UIView+Extension.swift in Sources */,
 				72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */,
 				72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */,
 				72361FD42D316F98009BEF12 /* ProductDetailReactor.swift in Sources */,

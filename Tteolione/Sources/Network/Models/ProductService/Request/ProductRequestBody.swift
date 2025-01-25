@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct ProductRequestBody: Encodable {
+struct ProductRequestBody: Encodable, Equatable {
     
-    let categoryId: String
+    let categoryId: Int
     let title: String
     let buyPrice: Int
     let buyCount: Int
@@ -20,4 +20,32 @@ struct ProductRequestBody: Encodable {
     let longitude: Double
     let latitude: Double
     
+    static func defaultValue() -> ProductRequestBody {
+        return ProductRequestBody(
+            categoryId: 0,
+            title: "",
+            buyPrice: 0,
+            buyCount: 0,
+            sharePrice: 0,
+            shareCount: 0,
+            buyDate: "",
+            description: "",
+            longitude: 0.0,
+            latitude: 0.0
+        )
+    }
+    
+    // Custom Equatable Implementation (if required)
+    static func == (lhs: ProductRequestBody, rhs: ProductRequestBody) -> Bool {
+        return lhs.categoryId == rhs.categoryId &&
+               lhs.title == rhs.title &&
+               lhs.buyPrice == rhs.buyPrice &&
+               lhs.buyCount == rhs.buyCount &&
+               lhs.sharePrice == rhs.sharePrice &&
+               lhs.shareCount == rhs.shareCount &&
+               lhs.buyDate == rhs.buyDate &&
+               lhs.description == rhs.description &&
+               lhs.longitude == rhs.longitude &&
+               lhs.latitude == rhs.latitude
+    }
 }
