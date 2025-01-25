@@ -11,18 +11,19 @@ import SnapKit
 final class PostReceiptView: BaseView {
     
     private let receiptLabel = AndongLabel(text: AppText.PostProduct.recipetImage,
-                                   font: Font.Andong25,
-                                   color: .myAppMain)
-    private let photoButton = SymbolImageButton(name: "camera.on.rectangle.fill")
+                                           font: Font.Andong25,
+                                           color: .myAppMain)
+    let photoButton = SymbolImageButton(name: "camera.on.rectangle.fill")
     private let receiptExplainLabel = RegularLabel(text: AppText.PostProduct.recipetExplain,
                                                    font: Font.regular20,
                                                    color: .myAppBlack)
     private let receiptDetailExplainLabel = RegularLabel(text: AppText.PostProduct.recipetDetailExplain,
                                                          color: .myAppBlack)
-    private let registerButton = CommonButton(title: .register,
-                                              corner: 20,
-                                              backgroundColor: .myAppMain,
-                                              textColor: .white)
+    let registerButton = CommonButton(title: .register,
+                                      corner: 20,
+                                      backgroundColor: .myAppMain,
+                                      textColor: .white)
+    private var imageView: UIImageView?
     
     override func configureHierarchy() {
         [receiptLabel, photoButton,
@@ -62,6 +63,36 @@ final class PostReceiptView: BaseView {
     
     override func configureView() {
         receiptDetailExplainLabel.numberOfLines = 0
+        setupImageView()
     }
     
+}
+
+extension PostReceiptView {
+    
+    private func setupImageView() {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalTo(photoButton)
+        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(handleImageViewTap))
+        imageView.addGestureRecognizer(tapGesture)
+        
+        self.imageView = imageView
+    }
+
+    @objc private func handleImageViewTap() {
+        photoButton.sendActions(for: .touchUpInside)
+    }
+    
+    func updateImage(_ image: UIImage) {
+        imageView?.image = image
+    }
 }

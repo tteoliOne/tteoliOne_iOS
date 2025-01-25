@@ -56,6 +56,58 @@ extension MainCoordinator {
         show(viewController)
     }
     
+    func pushMapViewController() {
+        let reactor = MapReactor()
+        let viewController = createViewController(
+            ofType: MapViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        if let postViewController = navigationController.viewControllers.last as? PostViewController {
+            viewController.delegates = postViewController
+        }
+        let rightButton = UIBarButtonItem(title: "완료",
+                                          style: .done,
+                                          target: self,
+                                          action: #selector(didTapDoneButton))
+        viewController.navigationItem.rightBarButtonItem = rightButton
+        show(viewController)
+    }
+    
+    func pushPostReceiptViewController(with productRequestBody: ProductRequestBody,
+                                       productImages: [UIImage]) {
+        let reactor = PostReceiptReactor(networkProvider: dependency.productServiceProvider,
+                                         response: productRequestBody,
+                                         images: productImages)
+        let viewController = createViewController(
+            ofType: PostReceiptViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.modalPresentationStyle = .pageSheet
+        
+        if let sheet = viewController.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.preferredCornerRadius = 20
+            sheet.largestUndimmedDetentIdentifier = .large
+        }
+        show(viewController, as: .present)
+    }
+    
+    func dismissAndPop() {
+        navigationController.presentingViewController?.dismiss(animated: true) { [weak navigationController] in
+            guard let navigationController = navigationController else { return }
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
+    @objc private func didTapDoneButton() {
+        if let mapViewController = navigationController.viewControllers.last as? MapViewController {
+            mapViewController.completeSelection()
+        }
+        navigationController.popViewController(animated: true)
+    }
+    
     private func configureNavBarAppearance() {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()

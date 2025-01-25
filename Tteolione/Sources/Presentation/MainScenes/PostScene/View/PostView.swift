@@ -83,7 +83,7 @@ final class PostView: BaseView, UITextViewDelegate {
     private let dateView = ShadowView()
     private let dateLabel = AndongLabel(text: AppText.PostProduct.buyDay,
                                         color: .myAppMain)
-    private let datePick: UIDatePicker = {
+    let datePick: UIDatePicker = {
         let datePicker = UIDatePicker()
         
         datePicker.date = Date()
@@ -112,35 +112,35 @@ final class PostView: BaseView, UITextViewDelegate {
     private let categoryLabel = AndongLabel(text: AppText.PostProduct.category,
                                             color: .myAppMain)
     let vegetableButton = CommonButton(title: .vegetable,
-                                               corner: 20,
-                                               backgroundColor: .myAppLightGray,
-                                               textColor: .myAppBlack,
-                                               font: Font.regular16)
+                                       corner: 20,
+                                       backgroundColor: .myAppLightGray,
+                                       textColor: .myAppBlack,
+                                       font: Font.regular16)
     let fruitButton = CommonButton(title: .fruit,
-                                           corner: 20,
-                                           backgroundColor: .myAppLightGray,
-                                           textColor: .myAppBlack,
-                                           font: Font.regular16)
+                                   corner: 20,
+                                   backgroundColor: .myAppLightGray,
+                                   textColor: .myAppBlack,
+                                   font: Font.regular16)
     let mealKitButton = CommonButton(title: .mealKit,
-                                             corner: 20,
-                                             backgroundColor: .myAppLightGray,
-                                             textColor: .myAppBlack,
-                                             font: Font.regular16)
+                                     corner: 20,
+                                     backgroundColor: .myAppLightGray,
+                                     textColor: .myAppBlack,
+                                     font: Font.regular16)
     let meatButton = CommonButton(title: .meat,
-                                          corner: 20,
-                                          backgroundColor: .myAppLightGray,
-                                          textColor: .myAppBlack,
-                                          font: Font.regular16)
+                                  corner: 20,
+                                  backgroundColor: .myAppLightGray,
+                                  textColor: .myAppBlack,
+                                  font: Font.regular16)
     let seaFoodButton = CommonButton(title: .seaFood,
-                                             corner: 20,
-                                             backgroundColor: .myAppLightGray,
-                                             textColor: .myAppBlack,
-                                             font: Font.regular16)
+                                     corner: 20,
+                                     backgroundColor: .myAppLightGray,
+                                     textColor: .myAppBlack,
+                                     font: Font.regular16)
     let etcButton = CommonButton(title: .etc,
-                                         corner: 20,
-                                         backgroundColor: .myAppLightGray,
-                                         textColor: .myAppBlack,
-                                         font: Font.regular16)
+                                 corner: 20,
+                                 backgroundColor: .myAppLightGray,
+                                 textColor: .myAppBlack,
+                                 font: Font.regular16)
     
     //MARK: - 상세설명
     private let descriptionView = ShadowView()
@@ -166,11 +166,11 @@ final class PostView: BaseView, UITextViewDelegate {
     private let placeView = ShadowView()
     private let placeLabel = AndongLabel(text: AppText.PostProduct.sharePlace,
                                          color: .myAppMain)
-    private let placeButton = CommonButton(title: .selectPlace,
-                                           corner: 10,
-                                           backgroundColor: .myAppLightGray2,
-                                           textColor: .myAppBlack,
-                                           font: Font.regular15)
+    let placeButton = CommonButton(title: .selectPlace,
+                                   corner: 10,
+                                   backgroundColor: .myAppLightGray2,
+                                   textColor: .myAppBlack,
+                                   font: Font.regular15)
     private let mapView: MKMapView = {
         let map = MKMapView()
         map.layer.cornerRadius = 10
@@ -545,23 +545,24 @@ final class PostView: BaseView, UITextViewDelegate {
     }
     
     override func configureView() {
-        configureMap()
+        configureMap(latitude: 37.5665, longitude: 126.9780)
     }
     
 }
 
 extension PostView {
     
-    private func configureMap() {
-        let centerCoordinate = CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)
+    func configureMap(latitude: Double, longitude: Double) {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let region = MKCoordinateRegion(
-            center: centerCoordinate,
-            latitudinalMeters: 2000,
-            longitudinalMeters: 2000
+            center: coordinate,
+            latitudinalMeters: 1000,
+            longitudinalMeters: 1000
         )
-        mapView.setRegion(region, animated: false)
+        mapView.setRegion(region, animated: true)
+        mapView.removeAnnotations(mapView.annotations)
         let pin = MKPointAnnotation()
-        pin.coordinate = centerCoordinate
+        pin.coordinate = coordinate
         mapView.addAnnotation(pin)
     }
     
@@ -612,5 +613,5 @@ extension PostView {
             button.setTitleColor(isSelected[index] ? .white : .myAppBlack, for: .normal)
         }
     }
-
+    
 }

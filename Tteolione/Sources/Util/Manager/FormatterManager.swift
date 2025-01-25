@@ -12,6 +12,7 @@ final class FormatterManager {
     static let shared = FormatterManager()
     private let inputDateFormatter: DateFormatter
     private let outputDateFormatter: DateFormatter
+    private let buyDateFormatter: DateFormatter
     
     private init() {
         self.inputDateFormatter = DateFormatter()
@@ -21,6 +22,10 @@ final class FormatterManager {
         self.outputDateFormatter = DateFormatter()
         self.outputDateFormatter.dateFormat = "yyyy.MM.dd(EEE)"
         self.outputDateFormatter.timeZone = TimeZone.current
+        
+        self.buyDateFormatter = DateFormatter()
+        self.buyDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        self.buyDateFormatter.timeZone = TimeZone.current
     }
     
     func numberFormatter(_ data: Int) -> String {
@@ -35,5 +40,9 @@ final class FormatterManager {
         } else {
             return dateString
         }
+    }
+    
+    func formattedBuyDate(from date: Date) -> String {
+        return buyDateFormatter.string(from: date)
     }
 }

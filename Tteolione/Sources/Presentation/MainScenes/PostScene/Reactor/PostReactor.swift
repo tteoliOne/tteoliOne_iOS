@@ -26,6 +26,10 @@ final class PostReactor: Reactor {
         case seaFoodButtonTap
         case etcButtonTap
         case updateDescriptionText(String)
+        case mapViewButtonTap
+        case updateLocation(Double, Double)
+        case nextButtonTap
+        case updateDate(Date)
     }
     
     enum Mutation {
@@ -45,8 +49,13 @@ final class PostReactor: Reactor {
         case setDescriptionText(String)
         case setDescriptionLengthText(String)
         case setDescriptionPlaceholderText(String)
+        case setMapViewButtonTapped(Bool)
+        case setLocation(Double, Double)
+        case setDate(Date)
+        case updateNextViewShown([Bool])
+        case setNextViewData(ProductRequestBody, [UIImage])
     }
-
+    
     struct State {
         var isProductImagePickerShown: Bool = false
         var productImages: [UIImage] = []
@@ -64,6 +73,12 @@ final class PostReactor: Reactor {
         var descriptionText: String = ""
         var descriptionLengthText: String = "0/100"
         var descriptionPlaceholderText: String = ""
+        var longitude: Double = 0
+        var latitude: Double = 0
+        var isMapViewShown: Bool = false
+        var selectedDate: Date = Date()
+        var nextViewShown: [Bool] = [false, false, false, false, false, false]
+        var nextViewData: (ProductRequestBody, [UIImage])? = nil
     }
     
     let initialState: State = State()
@@ -165,6 +180,54 @@ extension PostReactor {
                 .just(.setDescriptionLengthText(textLengthText)),
                 .just(.setDescriptionPlaceholderText(""))
             ])
+            
+        case .mapViewButtonTap:
+            return .concat([
+                .just(.setMapViewButtonTapped(true)),
+                .just(.setMapViewButtonTapped(false))
+            ])
+            
+        case .nextButtonTap:
+            let productImagesValid = !currentState.productImages.isEmpty
+            let titleValid = !currentState.title.isEmpty
+            let purchaseValid = currentState.isPurchaseValid.allSatisfy { $0 }
+            let shareValid = currentState.isShareValid.allSatisfy { $0 }
+            let categoryValid = currentState.isCategorySelected.contains(true)
+            let descriptionValid = !currentState.descriptionText.isEmpty
+            
+            let nextViewShown = [
+                productImagesValid,
+                titleValid,
+                purchaseValid,
+                shareValid,
+                categoryValid,
+                descriptionValid
+            ]
+            
+            let productRequestBody = ProductRequestBody(
+                categoryId: currentState.isSelectedNum,
+                title: currentState.title,
+                buyPrice: currentState.purchasePrice,
+                buyCount: currentState.purchaseCount,
+                sharePrice: currentState.sharePrice,
+                shareCount: currentState.shareCount,
+                buyDate: FormatterManager.shared.formattedBuyDate(from: currentState.selectedDate),
+                description: currentState.descriptionText,
+                longitude: currentState.longitude,
+                latitude: currentState.latitude
+            )
+            
+            return .concat([
+                .just(.updateNextViewShown(nextViewShown)),
+                .just(.setNextViewData(productRequestBody,
+                                       currentState.productImages))
+            ])
+            
+        case let .updateLocation(latitude, longitude):
+            return .just(.setLocation(latitude, longitude))
+            
+        case let .updateDate(date):
+            return .just(.setDate(date))
         }
     }
     
@@ -223,6 +286,22 @@ extension PostReactor {
             
         case .setDescriptionPlaceholderText(let placeholder):
             newState.descriptionPlaceholderText = placeholder
+            
+        case .setMapViewButtonTapped(let isShown):
+            newState.isMapViewShown = isShown
+            
+        case .updateNextViewShown(let nextViewShown):
+            newState.nextViewShown = nextViewShown
+            
+        case .setNextViewData(let requestBody, let photos):
+            newState.nextViewData = (requestBody, photos)
+            
+        case .setLocation(let latitude, let longitude):
+            newState.latitude = latitude
+            newState.longitude = longitude
+            
+        case .setDate(let date):
+            newState.selectedDate = date
         }
         
         return newState
