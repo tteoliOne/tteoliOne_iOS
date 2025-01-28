@@ -33,3 +33,21 @@ extension UIViewController {
     }
     
 }
+
+extension UIViewController {
+    
+    func addChild(_ childVC: UIViewController, to containerView: UIView) {
+        addChild(childVC)
+        containerView.addSubview(childVC.view)
+        childVC.view.frame = containerView.bounds
+        childVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        childVC.didMove(toParent: self)
+    }
+    
+    func removeChild(_ childVC: UIViewController) {
+        childVC.willMove(toParent: nil)
+        childVC.view.removeFromSuperview()
+        childVC.removeFromParent()
+    }
+    
+}
