@@ -136,11 +136,19 @@ extension MainCoordinator {
             image: UIImage(systemName: "magnifyingglass"),
             style: .plain,
             target: self,
-            action: nil
+            action: #selector(didSearchViewButton)
         )
         viewController.navigationItem.rightBarButtonItem = rightButton
         viewController.title = NavigationTitle.main.title
         viewController.navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    @objc private func didSearchViewButton() {
+        let coordinator = SearchCoordinator(navigationController: navigationController,
+                                          dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
     @objc private func didTapLeftButton() {

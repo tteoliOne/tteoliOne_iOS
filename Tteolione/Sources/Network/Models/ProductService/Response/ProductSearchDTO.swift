@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductSearchDTO: Decodable {
+struct ProductSearchDTO: Equatable, Decodable {
     
     let q: String
     let list: ProductFilterListDTO

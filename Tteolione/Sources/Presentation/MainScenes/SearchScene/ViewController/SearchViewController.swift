@@ -8,86 +8,85 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import ReactorKit
 
 final class SearchViewController: BaseViewController<SearchView> {
     
-    private let disposeBag = DisposeBag()
-    
-    private let recentSearchVC = RecentSearchViewController()
-    private let searchSuggestionsVC = SearchSuggestionsViewController()
-    private let searchResultsVC = SearchResultsViewController()
-    private let searchController = UISearchController(searchResultsController: nil)
+    var disposeBag = DisposeBag()
+    weak var delegate: SearchCoordinatorDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupSearchController()
-        setupInitialChildView()
-        bindSearchController()
     }
     
     private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search..."
-        searchController.hidesNavigationBarDuringPresentation = false
+        rootView.searchBar.frame = CGRect(x: 0, y: 0, width: Device.screenWidth - 28, height: 20)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rootView.searchBar)
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.definesPresentationContext = true
+        rootView.searchBar.placeholder = "검색어를 입력하세요"
+    }
+}
+
+extension SearchViewController: View {
+    
+    func bind(reactor: SearchReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+        bindNavigation(reactor)
+    }
+    
+    func bindAction(_ reactor: SearchReactor) {
+        rootView.searchBar.rx.text.orEmpty
+                .distinctUntilChanged()
+                .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+                .do(onNext: { query in
+                    print("Search Query: \(query)") // 디버깅용
+                })
+                .map { SearchReactor.Action.updateQuery($0) }
+                .bind(to: reactor.action)
+                .disposed(by: disposeBag)
         
-        navigationItem.searchController = searchController
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = "검색"
-        definesPresentationContext = true
+        rootView.searchBar.rx.searchButtonClicked
+            .withLatestFrom(reactor.state.map { $0.query })
+            .map { SearchReactor.Action.performSearch($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
-    private func setupInitialChildView() {
-        add(childVC: recentSearchVC)
-    }
-    
-    private func add(childVC: UIViewController) {
-        addChild(childVC)
-        rootView.setChildView(childVC.view)
-        childVC.didMove(toParent: self)
-    }
-    
-    private func remove(childVC: UIViewController) {
-        childVC.willMove(toParent: nil)
-        childVC.view.removeFromSuperview()
-        childVC.removeFromParent()
-    }
-    
-    private func switchTo(_ newVC: UIViewController) {
-        for child in children {
-            remove(childVC: child)
-        }
-        add(childVC: newVC)
-    }
-    
-    private func bindSearchController() {
-        searchController.searchBar.rx.text.orEmpty
+    func bindState(_ reactor: SearchReactor) {
+        reactor.state.map { $0.suggestions }
             .distinctUntilChanged()
-            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] query in
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] suggestions in
                 guard let self = self else { return }
-                if query.isEmpty {
-                    self.switchTo(self.recentSearchVC)
-                } else {
-                    self.searchSuggestionsVC.updateSearchQuery(query)
-                    self.switchTo(self.searchSuggestionsVC)
-                }
+                self.delegate?.switchToSuggestions(with: suggestions, in: self)
             })
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.results }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] results in
+                guard let self = self else { return }
+                self.delegate?.switchToResults(with: results, in: self)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindNavigation(_ reactor: SearchReactor) {
+        
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text, !query.isEmpty else { return }
-        searchResultsVC.performSearch(with: query)
-        switchTo(searchResultsVC)
+        delegate?.switchToResults(with: [], in: self)
     }
 }
 
-extension SearchViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        
-    }
+extension SearchViewController: DelegateOwner {
+    typealias Delegate = SearchCoordinatorDelegate
 }

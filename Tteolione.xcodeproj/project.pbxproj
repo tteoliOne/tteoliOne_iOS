@@ -219,6 +219,16 @@
 		725F818A2D43B2B2002C4E1C /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F81892D43B2B2002C4E1C /* MapView.swift */; };
 		725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F818B2D43B2BE002C4E1C /* MapReactor.swift */; };
 		725F818E2D44B55D002C4E1C /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F818D2D44B55D002C4E1C /* UIView+Extension.swift */; };
+		72977EBE2D48943300D1FDE7 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EBD2D48943300D1FDE7 /* SearchCoordinator.swift */; };
+		72977EC02D48950000D1FDE7 /* SearchCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EBF2D48950000D1FDE7 /* SearchCoordinatorDelegate.swift */; };
+		72977EC22D48957900D1FDE7 /* SearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EC12D48957900D1FDE7 /* SearchReactor.swift */; };
+		72977EC52D48984900D1FDE7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EC42D48984900D1FDE7 /* SearchBar.swift */; };
+		72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EC62D489AF400D1FDE7 /* RecentSearchView.swift */; };
+		72977ECB2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ECA2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift */; };
+		72977ECD2D489CD600D1FDE7 /* XButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ECC2D489CD600D1FDE7 /* XButton.swift */; };
+		72977ECF2D48A3E700D1FDE7 /* SearchSuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */; };
+		72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */; };
+		72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -429,6 +439,16 @@
 		725F81892D43B2B2002C4E1C /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		725F818B2D43B2BE002C4E1C /* MapReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapReactor.swift; sourceTree = "<group>"; };
 		725F818D2D44B55D002C4E1C /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		72977EBD2D48943300D1FDE7 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		72977EBF2D48950000D1FDE7 /* SearchCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		72977EC12D48957900D1FDE7 /* SearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReactor.swift; sourceTree = "<group>"; };
+		72977EC42D48984900D1FDE7 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		72977EC62D489AF400D1FDE7 /* RecentSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchView.swift; sourceTree = "<group>"; };
+		72977ECA2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
+		72977ECC2D489CD600D1FDE7 /* XButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XButton.swift; sourceTree = "<group>"; };
+		72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsView.swift; sourceTree = "<group>"; };
+		72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1021,6 +1041,11 @@
 			isa = PBXGroup;
 			children = (
 				72361FF82D353B87009BEF12 /* SearchView.swift */,
+				72977EC62D489AF400D1FDE7 /* RecentSearchView.swift */,
+				72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */,
+				72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */,
+				72977ECA2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift */,
+				72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1039,6 +1064,7 @@
 		72361FEF2D3535CC009BEF12 /* Reactor */ = {
 			isa = PBXGroup;
 			children = (
+				72977EC12D48957900D1FDE7 /* SearchReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -1221,6 +1247,7 @@
 			children = (
 				7246FA282D3A805C00EE6B5E /* Protocol */,
 				72361FE32D3417E2009BEF12 /* MainCoordinator.swift */,
+				72977EBD2D48943300D1FDE7 /* SearchCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1229,6 +1256,7 @@
 			isa = PBXGroup;
 			children = (
 				7246FA292D3A817400EE6B5E /* MainCoordinatorDelegate.swift */,
+				72977EBF2D48950000D1FDE7 /* SearchCoordinatorDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1361,6 +1389,7 @@
 		724DECAC2D0186A200171F44 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				72977EC32D48983900D1FDE7 /* UISearchBar */,
 				72361F9D2D2F9056009BEF12 /* CollectionView */,
 				72361E1E2D02D184009BEF12 /* ImageView */,
 				724DECB82D0188AC00171F44 /* View */,
@@ -1390,6 +1419,7 @@
 				72361FA72D2F96BC009BEF12 /* LikeButton.swift */,
 				72361FAF2D2FF219009BEF12 /* PostButton.swift */,
 				72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */,
+				72977ECC2D489CD600D1FDE7 /* XButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -1478,6 +1508,14 @@
 				72361FDB2D3413CC009BEF12 /* TabBarCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		72977EC32D48983900D1FDE7 /* UISearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				72977EC42D48984900D1FDE7 /* SearchBar.swift */,
+			);
+			path = UISearchBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1577,6 +1615,7 @@
 				72361F532D2EB276009BEF12 /* MyReviewDTO.swift in Sources */,
 				72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */,
 				72361ECA2D27AA2B009BEF12 /* FindIDResultReactor.swift in Sources */,
+				72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
 				72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */,
@@ -1636,8 +1675,10 @@
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
 				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
+				72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
+				72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */,
 				723620032D354246009BEF12 /* ProfileCoordinator.swift in Sources */,
 				72361E242D02D1E8009BEF12 /* LineTextField.swift in Sources */,
 				724DECB22D01876B00171F44 /* CommonButton.swift in Sources */,
@@ -1646,6 +1687,7 @@
 				723B092E2D3BC77800F464A4 /* FormatterManager.swift in Sources */,
 				72361E382D087B50009BEF12 /* IDView.swift in Sources */,
 				72361F372D2E9EEB009BEF12 /* ProductDetailDTO.swift in Sources */,
+				72977EC22D48957900D1FDE7 /* SearchReactor.swift in Sources */,
 				72361E642D0C24C2009BEF12 /* NetworkError.swift in Sources */,
 				7246FA2E2D3AC76C00EE6B5E /* Constants.swift in Sources */,
 				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
@@ -1674,11 +1716,13 @@
 				72361FA42D2F926F009BEF12 /* BaseCollectionViewCell.swift in Sources */,
 				72361FDC2D3413CC009BEF12 /* TabBarCoordinator.swift in Sources */,
 				7246FA1A2D39418E00EE6B5E /* KakaoAuthVM.swift in Sources */,
+				72977EC52D48984900D1FDE7 /* SearchBar.swift in Sources */,
 				72361F192D2E46BF009BEF12 /* UserDefaultsStorage.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361FB82D30DC05009BEF12 /* PostView.swift in Sources */,
 				72361F6A2D2EBE22009BEF12 /* ShareRequestBody.swift in Sources */,
 				7246FA262D3A492200EE6B5E /* LocationManagerDelegate.swift in Sources */,
+				72977ECD2D489CD600D1FDE7 /* XButton.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
 				72361F102D2E38E1009BEF12 /* SocialRequestBody.swift in Sources */,
@@ -1723,6 +1767,7 @@
 				72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */,
 				7246FA2A2D3A817400EE6B5E /* MainCoordinatorDelegate.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
+				72977ECB2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift in Sources */,
 				72361FDF2D3415A5009BEF12 /* TabBase.swift in Sources */,
 				72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */,
 				7246FA012D38C04C00EE6B5E /* FindAccountCoordinator.swift in Sources */,
@@ -1753,8 +1798,10 @@
 				72361E4C2D0BEEBD009BEF12 /* NicknameViewController.swift in Sources */,
 				72361FB62D30DBFE009BEF12 /* PostViewController.swift in Sources */,
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
+				72977ECF2D48A3E700D1FDE7 /* SearchSuggestionsView.swift in Sources */,
 				72361F6E2D2EBFF2009BEF12 /* ChatContentDTO.swift in Sources */,
 				72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */,
+				72977EC02D48950000D1FDE7 /* SearchCoordinatorDelegate.swift in Sources */,
 				72361FEB2D3441BE009BEF12 /* SideMenuViewController.swift in Sources */,
 				72361EC42D26BCD8009BEF12 /* AuthReactor.swift in Sources */,
 				72361FBE2D30E5D6009BEF12 /* DeviceLenth.swift in Sources */,
@@ -1766,6 +1813,7 @@
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
 				725F818E2D44B55D002C4E1C /* UIView+Extension.swift in Sources */,
 				72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */,
+				72977EBE2D48943300D1FDE7 /* SearchCoordinator.swift in Sources */,
 				72361EC82D27AA1F009BEF12 /* FindIDResultViewController.swift in Sources */,
 				72361FD42D316F98009BEF12 /* ProductDetailReactor.swift in Sources */,
 				72361E8D2D140585009BEF12 /* Coordinator.swift in Sources */,
