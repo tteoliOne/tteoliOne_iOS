@@ -95,7 +95,7 @@ extension MainCoordinator {
     }
     
     func dismissAndPop() {
-        navigationController.presentingViewController?.dismiss(animated: true) { [weak navigationController] in
+        navigationController.dismiss(animated: true) { [weak navigationController] in
             guard let navigationController = navigationController else { return }
             navigationController.popViewController(animated: true)
         }
