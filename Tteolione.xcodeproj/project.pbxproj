@@ -229,6 +229,8 @@
 		72977ECF2D48A3E700D1FDE7 /* SearchSuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */; };
 		72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */; };
 		72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */; };
+		72977ED62D4A984300D1FDE7 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */; };
+		72977ED82D4AA2D300D1FDE7 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -449,6 +451,8 @@
 		72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsView.swift; sourceTree = "<group>"; };
 		72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
+		72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1030,6 +1034,7 @@
 		72361FEC2D3535A7009BEF12 /* SearchScene */ = {
 			isa = PBXGroup;
 			children = (
+				72977ED42D4A983000D1FDE7 /* Protocol */,
 				72361FEE2D3535C3009BEF12 /* ViewController */,
 				72361FED2D3535B8009BEF12 /* View */,
 				72361FEF2D3535CC009BEF12 /* Reactor */,
@@ -1144,6 +1149,7 @@
 			children = (
 				723B09362D3BD67000F464A4 /* Reactive+Extension.swift */,
 				725F818D2D44B55D002C4E1C /* UIView+Extension.swift */,
+				72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1518,6 +1524,14 @@
 			path = UISearchBar;
 			sourceTree = "<group>";
 		};
+		72977ED42D4A983000D1FDE7 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1768,8 +1782,10 @@
 				7246FA2A2D3A817400EE6B5E /* MainCoordinatorDelegate.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
 				72977ECB2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift in Sources */,
+				72977ED62D4A984300D1FDE7 /* SearchDelegate.swift in Sources */,
 				72361FDF2D3415A5009BEF12 /* TabBase.swift in Sources */,
 				72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */,
+				72977ED82D4AA2D300D1FDE7 /* Notification+Extension.swift in Sources */,
 				7246FA012D38C04C00EE6B5E /* FindAccountCoordinator.swift in Sources */,
 				72361FC02D30E964009BEF12 /* SymbolImageButton.swift in Sources */,
 				72361F5D2D2EB75D009BEF12 /* ChatAPI.swift in Sources */,

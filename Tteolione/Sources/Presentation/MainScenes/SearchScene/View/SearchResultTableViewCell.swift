@@ -23,7 +23,7 @@ final class SearchResultTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.text = "양파 100개 공유합니다~!!"
         label.textColor = .myAppBlack
-        label.font = Font.regular16
+        label.font = Font.bold18
         return label
     }()
     private let markImageView = MappinImageView()
@@ -75,13 +75,13 @@ final class SearchResultTableViewCell: BaseTableViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(containerView).inset(12)
+            make.top.equalTo(containerView).inset(20)
             make.leading.equalTo(productImageView.snp.trailing).offset(12)
         }
         
         markImageView.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.bottom.equalTo(containerView).inset(20)
         }
         
         distanceLabel.snp.makeConstraints { make in
@@ -90,12 +90,14 @@ final class SearchResultTableViewCell: BaseTableViewCell {
         }
         
         unitPriceLabel.snp.makeConstraints { make in
-            make.trailing.bottom.equalTo(containerView).inset(12)
+            make.trailing.equalTo(containerView).inset(12)
+            make.bottom.equalTo(containerView).inset(8)
         }
         
         likeButton.snp.makeConstraints { make in
             make.centerY.equalTo(containerView)
             make.trailing.equalTo(containerView).inset(12)
+            make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
         likeCountLabel.snp.makeConstraints { make in
@@ -111,8 +113,9 @@ final class SearchResultTableViewCell: BaseTableViewCell {
             productImageView.image = nil
         }
         titleLabel.text = data.title
-        distanceLabel.text = "\(data.walkingDistance)m 도보 \(data.walkingTime)분"
-        unitPriceLabel.text = "개당 \(data.unitPrice)원"
+        distanceLabel.text = String(format: "%.fkm 도보 \(data.walkingTime)분",
+                                    data.walkingDistance / 1000)
+        unitPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(data.unitPrice))원"
         likeCountLabel.text = "\(data.totalLikes)"
         likeButton.isSelected = data.liked
     }

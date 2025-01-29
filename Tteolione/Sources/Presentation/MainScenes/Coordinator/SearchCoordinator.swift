@@ -40,17 +40,28 @@ extension SearchCoordinator {
             delegate: self
         )
         viewController.delegate = self
+        configureSearchBar(for: viewController)
         show(viewController)
         
         viewController.addChild(recentSearchVC, to: viewController.rootView.childContainerView)
     }
     
+    private func configureSearchBar(for viewController: SearchViewController) {
+        viewController.rootView.searchBar.frame = CGRect(x: 0, y: 0, width: Device.screenWidth - 28, height: 20)
+        viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: viewController.rootView.searchBar)
+        viewController.navigationItem.hidesSearchBarWhenScrolling = false
+        viewController.definesPresentationContext = true
+        viewController.rootView.searchBar.placeholder = "검색어를 입력하세요"
+    }
+    
     func switchToRecentSearch(in viewController: SearchViewController) {
+        recentSearchVC.delegate = viewController
         switchChildViewController(to: recentSearchVC, in: viewController)
     }
     
     func switchToSuggestions(with suggestions: [String], in viewController: SearchViewController) {
         searchSuggestionsVC.updateSearchQuery(with: suggestions)
+        searchSuggestionsVC.delegate = viewController
         switchChildViewController(to: searchSuggestionsVC, in: viewController)
     }
 

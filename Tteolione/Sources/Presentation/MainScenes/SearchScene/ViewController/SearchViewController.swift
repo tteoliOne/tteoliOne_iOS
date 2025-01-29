@@ -15,18 +15,6 @@ final class SearchViewController: BaseViewController<SearchView> {
     var disposeBag = DisposeBag()
     weak var delegate: SearchCoordinatorDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupSearchController()
-    }
-    
-    private func setupSearchController() {
-        rootView.searchBar.frame = CGRect(x: 0, y: 0, width: Device.screenWidth - 28, height: 20)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rootView.searchBar)
-        self.navigationItem.hidesSearchBarWhenScrolling = false
-        self.definesPresentationContext = true
-        rootView.searchBar.placeholder = "검색어를 입력하세요"
-    }
 }
 
 extension SearchViewController: View {
@@ -34,19 +22,27 @@ extension SearchViewController: View {
     func bind(reactor: SearchReactor) {
         bindAction(reactor)
         bindState(reactor)
-        bindNavigation(reactor)
     }
     
     func bindAction(_ reactor: SearchReactor) {
         rootView.searchBar.rx.text.orEmpty
             .distinctUntilChanged()
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .do(onNext: { query in
+                if query.isEmpty {
+                    self.delegate?.switchToRecentSearch(in: self)
+                }
+            })
             .map { SearchReactor.Action.updateQuery($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.searchBar.rx.searchButtonClicked
             .withLatestFrom(reactor.state.map { $0.query })
+            .do(onNext: { query in
+                UserDefaultsStorage.addRecentSearch(query)
+                NotificationCenter.default.post(name: .recentSearchUpdated, object: nil)
+            })
             .map { SearchReactor.Action.performSearch($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -72,9 +68,6 @@ extension SearchViewController: View {
             .disposed(by: disposeBag)
     }
     
-    func bindNavigation(_ reactor: SearchReactor) {
-        
-    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -86,4 +79,19 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: DelegateOwner {
     typealias Delegate = SearchCoordinatorDelegate
+}
+
+extension SearchViewController: SearchSuggestionsDelegate {
+    func didSelectSuggestion(_ suggestion: String) {
+        rootView.searchBar.text = suggestion
+        UserDefaultsStorage.addRecentSearch(suggestion)
+        reactor?.action.onNext(.performSearch(suggestion))
+    }
+}
+
+extension SearchViewController: RecentSearchDelegate {
+    func didSelectRecentSearch(_ query: String) {
+        rootView.searchBar.text = query
+        reactor?.action.onNext(.performSearch(query))
+    }
 }

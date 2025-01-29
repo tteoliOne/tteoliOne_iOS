@@ -56,7 +56,8 @@ extension SearchReactor {
         case .performSearch(let query):
             return .concat([
                 .just(.setLoading(true)),
-                fetchSearchResults(for: query, isSuggestion: false),
+                fetchSearchResults(for: query, isSuggestion: false)
+                    .ifEmpty(switchTo: Observable.just(.setResults([]))),
                 .just(.setLoading(false))
             ])
         }

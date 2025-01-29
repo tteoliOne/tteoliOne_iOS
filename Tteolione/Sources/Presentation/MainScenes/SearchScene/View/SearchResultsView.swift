@@ -16,7 +16,7 @@ final class SearchResultsView: BaseView {
         let tableView = UITableView()
         tableView.register(SearchResultTableViewCell.self,
                            forCellReuseIdentifier: SearchResultTableViewCell.identifier)
-        tableView.rowHeight = 300
+        tableView.rowHeight = 140
         tableView.separatorStyle = .none
         return tableView
     }()

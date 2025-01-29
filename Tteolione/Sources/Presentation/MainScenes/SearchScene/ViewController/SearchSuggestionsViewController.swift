@@ -13,6 +13,7 @@ final class SearchSuggestionsViewController: BaseViewController<SearchSuggestion
     
     private let disposeBag = DisposeBag()
     private let suggestions = BehaviorRelay<[String]>(value: [])
+    weak var delegate: SearchSuggestionsDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +22,17 @@ final class SearchSuggestionsViewController: BaseViewController<SearchSuggestion
     
     private func setupBindings() {
         suggestions
-            .bind(to: rootView.tableView.rx.items(cellIdentifier: "SuggestionCell", cellType: UITableViewCell.self)) { _, element, cell in
+            .bind(to: rootView.tableView.rx.items(
+                cellIdentifier: "SuggestionCell",
+                cellType: UITableViewCell.self)) { _, element, cell in
                 cell.textLabel?.text = element
             }
+            .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(String.self)
+            .subscribe(onNext: { [weak self] suggestion in
+                self?.delegate?.didSelectSuggestion(suggestion)
+            })
             .disposed(by: disposeBag)
     }
     

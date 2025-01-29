@@ -14,7 +14,7 @@ final class RecentSearchTableViewCell: BaseTableViewCell {
     var disposeBag = DisposeBag()
     private let recentLabel = RegularLabel(text: "최근검색어",
                                            color: .myAppBlack)
-    private let deleteButton = XButton(color: .myAppBlack)
+    let deleteButton = XButton(color: .myAppBlack)
     
     override func prepareForReuse() {
         super.prepareForReuse()
