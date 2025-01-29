@@ -28,6 +28,7 @@ final class SearchSuggestionsViewController: BaseViewController<SearchSuggestion
     }
     
     func updateSearchQuery(with suggestions: [String]) {
-        self.suggestions.accept(suggestions) // 배열 업데이트
+        self.suggestions.accept(suggestions)
     }
+    
 }

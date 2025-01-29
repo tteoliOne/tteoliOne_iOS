@@ -96,14 +96,12 @@ extension SearchReactor {
     private func fetchSearchResults(for query: String, isSuggestion: Bool) -> Observable<Mutation> {
         let longitude = UserDefaultsStorage.longitude
         let latitude = UserDefaultsStorage.latitude
-
         let queryParams = ProductQueryParameters(longitude: longitude,
                                                  latitude: latitude,
                                                  page: 0,
                                                  size: 5,
                                                  sort: "createAt-desc",
                                                  q: query)
-        print("Query Parameters: \(queryParams)")
         return networkProvider.request(.searchProduct(query: queryParams),
                                        decodingType: ServerResponse<ProductSearchDTO>.self)
         .asObservable()

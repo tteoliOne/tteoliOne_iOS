@@ -39,14 +39,11 @@ extension SearchViewController: View {
     
     func bindAction(_ reactor: SearchReactor) {
         rootView.searchBar.rx.text.orEmpty
-                .distinctUntilChanged()
-                .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
-                .do(onNext: { query in
-                    print("Search Query: \(query)") // 디버깅용
-                })
-                .map { SearchReactor.Action.updateQuery($0) }
-                .bind(to: reactor.action)
-                .disposed(by: disposeBag)
+            .distinctUntilChanged()
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .map { SearchReactor.Action.updateQuery($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
         rootView.searchBar.rx.searchButtonClicked
             .withLatestFrom(reactor.state.map { $0.query })

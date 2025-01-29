@@ -31,4 +31,5 @@ final class SearchResultsViewController: BaseViewController<SearchResultsView> {
     func updateSearchResults(with results: [ProductPreviewDTO]) {
         self.results.accept(results)
     }
+
 }

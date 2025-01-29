@@ -53,16 +53,23 @@ extension SearchCoordinator {
         searchSuggestionsVC.updateSearchQuery(with: suggestions)
         switchChildViewController(to: searchSuggestionsVC, in: viewController)
     }
-    
+
     func switchToResults(with results: [ProductPreviewDTO], in viewController: SearchViewController) {
         searchResultsVC.updateSearchResults(with: results)
         switchChildViewController(to: searchResultsVC, in: viewController)
     }
     
     private func switchChildViewController(to newVC: UIViewController, in parentVC: SearchViewController) {
-        for child in parentVC.children {
-            parentVC.removeChild(child)
+        parentVC.children.forEach { childVC in
+            childVC.willMove(toParent: nil)
+            childVC.view.removeFromSuperview()
+            childVC.removeFromParent()
         }
-        parentVC.addChild(newVC, to: parentVC.rootView.childContainerView)
+        parentVC.addChild(newVC)
+        newVC.view.frame = parentVC.rootView.childContainerView.bounds
+        newVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        parentVC.rootView.childContainerView.addSubview(newVC.view)
+        
+        newVC.didMove(toParent: parentVC)
     }
 }
