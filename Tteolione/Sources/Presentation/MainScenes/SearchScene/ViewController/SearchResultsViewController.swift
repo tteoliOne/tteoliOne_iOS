@@ -6,32 +6,30 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class SearchResultsViewController: UIViewController, UITableViewDataSource {
+final class SearchResultsViewController: BaseViewController<SearchResultsView> {
     
-    private let tableView = UITableView()
-    private var results: [String] = []
+    private let disposeBag = DisposeBag()
+    private let results = BehaviorRelay<[ProductPreviewDTO]>(value: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        view.addSubview(tableView)
-        tableView.frame = view.bounds
+        setupBindings()
     }
     
-    func performSearch(with query: String) {
-        results = ["Result for \(query) 1", "Result for \(query) 2", "Result for \(query) 3"]
-        tableView.reloadData()
+    private func setupBindings() {
+        results.bind(to: rootView.tableView.rx.items(
+                cellIdentifier: SearchResultTableViewCell.identifier,
+                cellType: SearchResultTableViewCell.self)) { _, element, cell in
+                cell.configure(with: element)
+            }
+                .disposed(by: disposeBag)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return results.count
+    func updateSearchResults(with results: [ProductPreviewDTO]) {
+        self.results.accept(results)
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = results[indexPath.row]
-        return cell
-    }
-    
+
 }

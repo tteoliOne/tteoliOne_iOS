@@ -10,14 +10,15 @@ import SnapKit
 
 final class SearchView: BaseView {
     
-    private let containerView = UIView()
+    let searchBar = SearchBar()
+    let childContainerView = UIView()
     
     override func configureHierarchy() {
-        addSubview(containerView)
+        addSubview(childContainerView)
     }
     
     override func configureLayout() {
-        containerView.snp.makeConstraints { make in
+        childContainerView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
@@ -30,8 +31,8 @@ final class SearchView: BaseView {
 extension SearchView {
     
     func setChildView(_ childView: UIView) {
-        containerView.subviews.forEach { $0.removeFromSuperview() }
-        containerView.addSubview(childView)
+        childContainerView.subviews.forEach { $0.removeFromSuperview() }
+        childContainerView.addSubview(childView)
         childView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

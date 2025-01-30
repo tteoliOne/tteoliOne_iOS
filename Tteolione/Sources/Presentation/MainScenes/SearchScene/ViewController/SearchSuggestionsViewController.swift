@@ -6,33 +6,38 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class SearchSuggestionsViewController: UIViewController, UITableViewDataSource {
+final class SearchSuggestionsViewController: BaseViewController<SearchSuggestionsView> {
     
-    private let tableView = UITableView()
-    private var suggestions: [String] = []
-
+    private let disposeBag = DisposeBag()
+    private let suggestions = BehaviorRelay<[String]>(value: [])
+    weak var delegate: SearchSuggestionsDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        view.addSubview(tableView)
-        tableView.frame = view.bounds
+        setupBindings()
     }
-
-    func updateSearchQuery(_ query: String) {
-        suggestions = ["\(query) 1", "\(query) 2", "\(query) 3"]
-        tableView.reloadData()
+    
+    private func setupBindings() {
+        suggestions
+            .bind(to: rootView.tableView.rx.items(
+                cellIdentifier: "SuggestionCell",
+                cellType: UITableViewCell.self)) { _, element, cell in
+                cell.textLabel?.text = element
+            }
+            .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(String.self)
+            .subscribe(onNext: { [weak self] suggestion in
+                self?.delegate?.didSelectSuggestion(suggestion)
+            })
+            .disposed(by: disposeBag)
     }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return suggestions.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = suggestions[indexPath.row]
-        return cell
+    
+    func updateSearchQuery(with suggestions: [String]) {
+        self.suggestions.accept(suggestions)
     }
     
 }
-
