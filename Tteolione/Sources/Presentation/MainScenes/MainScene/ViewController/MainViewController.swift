@@ -34,6 +34,20 @@ extension MainViewController: View {
             .map { MainReactor.Action.postButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.willDisplayCell
+            .compactMap { cell, indexPath -> MainTableViewCell? in
+                return cell as? MainTableViewCell
+            }
+            .subscribe(onNext: { tableViewCell in
+                tableViewCell.likeButtonTapped
+                    .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+                    .subscribe(onNext: { productId in
+                        reactor.action.onNext(.likeButtonTap(productId))
+                    })
+                    .disposed(by: tableViewCell.disposeBag)
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: MainReactor) {

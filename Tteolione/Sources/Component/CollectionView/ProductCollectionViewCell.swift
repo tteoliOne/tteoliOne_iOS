@@ -8,14 +8,21 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 
 final class ProductCollectionViewCell: BaseCollectionViewCell {
     
     var disposeBag = DisposeBag()
+    let likeButtonTapped = PublishRelay<Int>()
+    private var productId: Int?
+    var product: ProductPreviewDTO? {
+        didSet {
+            configureUIwithData()
+        }
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
         productImageView.image = nil
     }
     
@@ -56,7 +63,7 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         return label
     }()
     let likeButton = LikeButton(color: .myAppLikeButton)
-    private let likeCountLable: UILabel = {
+    private let likeCountLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
         label.textColor = .myAppBlack
@@ -68,8 +75,7 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         [productImageView, priceFieldView,
          titleLabel, markImageView,
          distanceLabel, likeButton,
-         likeCountLable].forEach { contentView.addSubview($0) }
-        
+         likeCountLabel].forEach { contentView.addSubview($0) }
         [unitPriceLabel].forEach { priceFieldView.addSubview($0) }
     }
     
@@ -114,7 +120,7 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
             make.size.equalTo(CGSize(width: 28, height: 28))
         }
         
-        likeCountLable.snp.makeConstraints { make in
+        likeCountLabel.snp.makeConstraints { make in
             make.centerX.equalTo(likeButton)
             make.top.equalTo(likeButton.snp.bottom).offset(4)
         }
@@ -122,6 +128,18 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         cellView()
+        
+        likeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self, let product = self.product else { return }
+                product.liked.toggle()
+                product.totalLikes = product.liked ? (product.totalLikes + 1) : (product.totalLikes - 1)
+                self.product = product
+                self.likeButtonTapped.accept(product.productId)
+                updateLikeButton(isLiked: product.liked, likeCount: product.totalLikes)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func cellView() {
@@ -133,13 +151,15 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         layer.shadowRadius = 4
         layer.shadowOpacity = 0.3
     }
-
-    func configure(with product: ProductPreviewDTO) {
+    
+    private func configureUIwithData() {
+        guard let product = product else { return }
+        productId = product.productId
         titleLabel.text = product.title
         unitPriceLabel.text = "\(FormatterManager.shared.numberFormatter(product.unitPrice))원"
         distanceLabel.text = String(format: "%.fkm 도보 \(product.walkingTime)분", product.walkingDistance / 1000)
-        likeCountLable.text = "\(product.totalLikes)"
-        thumbUpSet(product.liked)
+        likeCountLabel.text = "\(product.totalLikes)"
+        likeButton.updateLikeState(isLiked: product.liked)
         if let imageUrl = URL(string: product.imageUrl) {
             productImageView.loadImage(from: imageUrl)
         } else {
@@ -147,9 +167,9 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    private func thumbUpSet(_ isLike: Bool) {
-        let likeName = isLike ? "heart.fill" : "heart"
-        likeButton.setImage(UIImage(systemName: likeName), for: .normal)
+    private func updateLikeButton(isLiked: Bool, likeCount: Int) {
+        likeButton.updateLikeState(isLiked: isLiked)
+        likeCountLabel.text = "\(likeCount)"
     }
     
 }

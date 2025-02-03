@@ -8,10 +8,12 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 
 final class MainTableViewCell: BaseTableViewCell {
     
     var disposeBag = DisposeBag()
+    let likeButtonTapped = PublishRelay<Int>()
     
     private let categoryLabel: UILabel = {
         let label = UILabel()
@@ -77,7 +79,13 @@ final class MainTableViewCell: BaseTableViewCell {
                         withReuseIdentifier: ProductCollectionViewCell.identifier,
                         for: IndexPath(item: index, section: 0)
                     ) as? ProductCollectionViewCell {
-                        productCell.configure(with: product)
+                        productCell.product = product
+                        productCell.likeButtonTapped
+                            .subscribe(onNext: { [weak self] productId in
+                                guard let self = self else { return }
+                                self.likeButtonTapped.accept(productId)
+                            })
+                            .disposed(by: productCell.disposeBag)
                         return productCell
                     }
                     
