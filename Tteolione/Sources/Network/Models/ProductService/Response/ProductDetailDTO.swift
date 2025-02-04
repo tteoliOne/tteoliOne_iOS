@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct ProductDetailDTO: Decodable {
+struct ProductDetailDTO: Equatable, Decodable {
     
     let productId: Int
     let categoryId: Int
     let images: [String]
     let sellerProfile: String
+    let receipt: String
     let sellerId: Int
     let sellerNickname: String
     let title: String

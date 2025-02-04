@@ -13,17 +13,20 @@ final class ProductDetailReactor: Reactor {
     
     enum Action {
         case fetchProductDetail
+        case receiptTap
     }
     
     enum Mutation {
         case setProducts(ProductDetailDTO)
         case showError(NetworkError)
+        case toggleReceiptPopup(Bool)
     }
 
     struct State {
         var productId: Int = 0
         var products: ProductDetailDTO?
         var errorMessage: String?
+        var isReceiptTapped: Bool = false
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
@@ -45,6 +48,9 @@ extension ProductDetailReactor {
             return .concat([
                 fetchGetProduct(currentState.productId)
             ])
+            
+        case .receiptTap:
+            return .just(.toggleReceiptPopup(!currentState.isReceiptTapped))
         }
     }
     
@@ -61,6 +67,9 @@ extension ProductDetailReactor {
             
         case .showError(let error):
             newState.errorMessage = error.errorDescription
+            
+        case .toggleReceiptPopup(let isTap):
+            newState.isReceiptTapped = isTap
         }
         
         return newState

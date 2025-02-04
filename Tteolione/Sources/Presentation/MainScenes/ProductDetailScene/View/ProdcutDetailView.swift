@@ -44,7 +44,7 @@ final class ProductDetailView: BaseView {
     private let likeCountLabel = RegularLabel(text: "0",
                                               font: Font.regular13,
                                               color: .myAppBlack)
-    private let receiptButton: UIButton = {
+    let receiptButton: UIButton = {
         let button = UIButton()
         let newSize = CGSize(width: 24, height: 24)
         if let receiptImage = UIImage(named: "receiptPhoto")?.resizableImage(withCapInsets: .zero, resizingMode: .stretch) {
@@ -54,6 +54,18 @@ final class ProductDetailView: BaseView {
             button.setBackgroundImage(resizedImage, for: .normal)
         }
         return button
+    }()
+    private let receiptPopupView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.isHidden = true
+        return view
+    }()
+    private let receiptImageView: LoadImageView = {
+        let imageView = LoadImageView()
+        imageView.layer.cornerRadius = 12
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     private let receiptLabel = RegularLabel(text: AppText.Etc.recipet,
                                             font: Font.regular13,
@@ -150,10 +162,21 @@ final class ProductDetailView: BaseView {
          shareCountPCSLabel].forEach { shareCountFieldView.addSubview($0) }
         [detailLabel, contentLabel].forEach { detailView.addSubview($0) }
         [placeLabel, mapView].forEach { placeView.addSubview($0) }
-        
+        addSubview(receiptPopupView)
+        receiptPopupView.addSubview(receiptImageView)
     }
     
     override func configureLayout() {
+        receiptPopupView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        receiptImageView.snp.makeConstraints { make in
+            make.center.equalTo(safeAreaLayoutGuide)
+            make.width.equalTo(Device.screenWidth * 0.8)
+            make.height.equalTo(Device.screenHeight * 0.3)
+        }
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
@@ -375,11 +398,38 @@ final class ProductDetailView: BaseView {
         buyCountImageView.backgroundColor = .white
         sharePriceImageView.backgroundColor = .white
         shareCountImageView.backgroundColor = .white
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideReceiptPopup))
+        receiptPopupView.addGestureRecognizer(tapGesture)
     }
     
 }
 
 extension ProductDetailView {
+    @objc private func hideReceiptPopup() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.receiptPopupView.alpha = 0
+        }) { _ in
+            self.receiptPopupView.isHidden = true
+            (self.parentViewController as? ProductDetailViewController)?.reactor?.action.onNext(.receiptTap)
+        }
+    }
+    
+    func toggleReceiptPopup(isVisible: Bool) {
+        if isVisible {
+            receiptPopupView.alpha = 0
+            receiptPopupView.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                self.receiptPopupView.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.receiptPopupView.alpha = 0
+            }) { _ in
+                self.receiptPopupView.isHidden = true
+            }
+        }
+    }
     
     func updateUI(with productDetail: ProductDetailDTO) {
         updateScrollView(with: productDetail.images)
@@ -387,6 +437,11 @@ extension ProductDetailView {
             profileImageView.loadImage(from: imageUrl)
         } else {
             profileImageView.image = nil
+        }
+        if let imageUrl = URL(string: productDetail.receipt) {
+            receiptImageView.loadImage(from: imageUrl)
+        } else {
+            receiptImageView.image = nil
         }
         nicknameLabel.text = productDetail.sellerNickname
         titleLabel.text = productDetail.title
