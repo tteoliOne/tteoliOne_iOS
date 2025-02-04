@@ -231,6 +231,9 @@
 		72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */; };
 		72977ED62D4A984300D1FDE7 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */; };
 		72977ED82D4AA2D300D1FDE7 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */; };
+		72977EDD2D51CC8F00D1FDE7 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */; };
+		72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */; };
+		72977EE32D51D23900D1FDE7 /* SideMenuReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -453,6 +456,9 @@
 		72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
+		72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuReactor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1026,7 +1032,9 @@
 		72361FE92D3441A0009BEF12 /* SideMenuScene */ = {
 			isa = PBXGroup;
 			children = (
-				72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */,
+				72977ED92D51CC6500D1FDE7 /* ViewController */,
+				72977EDA2D51CC7200D1FDE7 /* View */,
+				72977EDB2D51CC7800D1FDE7 /* Reactor */,
 			);
 			path = SideMenuScene;
 			sourceTree = "<group>";
@@ -1532,6 +1540,31 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		72977ED92D51CC6500D1FDE7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72361FEA2D3441BE009BEF12 /* SideMenuViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		72977EDA2D51CC7200D1FDE7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */,
+				72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72977EDB2D51CC7800D1FDE7 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1685,6 +1718,7 @@
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
 				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
+				72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
 				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
@@ -1732,6 +1766,7 @@
 				7246FA1A2D39418E00EE6B5E /* KakaoAuthVM.swift in Sources */,
 				72977EC52D48984900D1FDE7 /* SearchBar.swift in Sources */,
 				72361F192D2E46BF009BEF12 /* UserDefaultsStorage.swift in Sources */,
+				72977EDD2D51CC8F00D1FDE7 /* SideMenuView.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
 				72361FB82D30DC05009BEF12 /* PostView.swift in Sources */,
 				72361F6A2D2EBE22009BEF12 /* ShareRequestBody.swift in Sources */,
@@ -1776,6 +1811,7 @@
 				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
 				7246FA0D2D38EA7800EE6B5E /* JoinCoordinator.swift in Sources */,
+				72977EE32D51D23900D1FDE7 /* SideMenuReactor.swift in Sources */,
 				72361F622D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift in Sources */,
 				72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */,
 				72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */,
