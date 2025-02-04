@@ -142,7 +142,7 @@
 		72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC72D315B59009BEF12 /* PostReceiptView.swift */; };
 		72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FC92D315B6A009BEF12 /* PostReceiptReactor.swift */; };
 		72361FD02D316F7A009BEF12 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FCF2D316F7A009BEF12 /* ProductDetailViewController.swift */; };
-		72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FD12D316F8A009BEF12 /* ProdcutDetailView.swift */; };
+		72361FD22D316F8A009BEF12 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FD12D316F8A009BEF12 /* ProductDetailView.swift */; };
 		72361FD42D316F98009BEF12 /* ProductDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FD32D316F98009BEF12 /* ProductDetailReactor.swift */; };
 		72361FD92D3411EA009BEF12 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FD82D3411E9009BEF12 /* TabBarController.swift */; };
 		72361FDC2D3413CC009BEF12 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361FDB2D3413CC009BEF12 /* TabBarCoordinator.swift */; };
@@ -370,7 +370,7 @@
 		72361FC72D315B59009BEF12 /* PostReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReceiptView.swift; sourceTree = "<group>"; };
 		72361FC92D315B6A009BEF12 /* PostReceiptReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReceiptReactor.swift; sourceTree = "<group>"; };
 		72361FCF2D316F7A009BEF12 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
-		72361FD12D316F8A009BEF12 /* ProdcutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProdcutDetailView.swift; sourceTree = "<group>"; };
+		72361FD12D316F8A009BEF12 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
 		72361FD32D316F98009BEF12 /* ProductDetailReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailReactor.swift; sourceTree = "<group>"; };
 		72361FD82D3411E9009BEF12 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		72361FDB2D3413CC009BEF12 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
@@ -996,7 +996,7 @@
 		72361FCD2D316F4E009BEF12 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				72361FD12D316F8A009BEF12 /* ProdcutDetailView.swift */,
+				72361FD12D316F8A009BEF12 /* ProductDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1665,7 +1665,7 @@
 				72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
-				72361FD22D316F8A009BEF12 /* ProdcutDetailView.swift in Sources */,
+				72361FD22D316F8A009BEF12 /* ProductDetailView.swift in Sources */,
 				723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361FF92D353B87009BEF12 /* SearchView.swift in Sources */,

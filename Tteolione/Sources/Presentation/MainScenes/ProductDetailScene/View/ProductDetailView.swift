@@ -1,5 +1,5 @@
 //
-//  ProdcutDetailView.swift
+//  ProductDetailView.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/11/25.
