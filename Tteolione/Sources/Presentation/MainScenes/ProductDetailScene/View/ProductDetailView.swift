@@ -455,6 +455,17 @@ extension ProductDetailView {
         shareCountPCSLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.shareCount))개"
         contentLabel.text = productDetail.description
         updateMapView(latitude: productDetail.latitude, longitude: productDetail.longitude)
+        callButton.isHidden = productDetail.checkOwner
+        
+        placeView.snp.updateConstraints { make in
+            make.bottom.equalTo(productFieldView).offset(productDetail.checkOwner ? -22 : -88)
+        }
+        
+        let contentHeight = contentLabel.sizeThatFits(CGSize(width: Device.screenWidth - 40, height: CGFloat.greatestFiniteMagnitude)).height
+        detailView.snp.updateConstraints { make in
+            make.height.equalTo(contentHeight + 80)
+        }
+        self.layoutIfNeeded()
     }
     
 }
