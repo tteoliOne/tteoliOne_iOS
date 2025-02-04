@@ -53,6 +53,7 @@ extension MainCoordinator {
             with: reactor,
             delegate: self
         )
+        viewController.hidesBottomBarWhenPushed = true
         show(viewController)
     }
     
