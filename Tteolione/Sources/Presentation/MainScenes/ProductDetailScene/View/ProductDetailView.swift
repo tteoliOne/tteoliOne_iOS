@@ -40,7 +40,7 @@ final class ProductDetailView: BaseView {
     private let buyDateLabel = RegularLabel(text: "0000.00.00(화)",
                                             font: Font.regular13,
                                             color: .myAppBlack)
-    private let likeButton = LikeButton(color: .myAppMain)
+    let likeButton = LikeButton(color: .myAppMain)
     private let likeCountLabel = RegularLabel(text: "0",
                                               font: Font.regular13,
                                               color: .myAppBlack)
@@ -237,7 +237,7 @@ final class ProductDetailView: BaseView {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(boundarView.snp.bottom).offset(16)
             make.centerX.equalTo(productFieldView)
-            make.size.equalTo(CGSize(width: 24, height: 24))
+            make.size.equalTo(CGSize(width: 28, height: 28))
         }
         
         likeCountLabel.snp.makeConstraints { make in
@@ -446,7 +446,7 @@ extension ProductDetailView {
         nicknameLabel.text = productDetail.sellerNickname
         titleLabel.text = productDetail.title
         buyDateLabel.text = FormatterManager.shared.formattedDate(from: productDetail.buyDate)
-        thumbUpSet(productDetail.checkLiked)
+        likeButton.updateLikeState(isLiked: productDetail.checkLiked)
         likeCountLabel.text = "\(productDetail.likeCount)"
         
         buyPriceWonLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.buyPrice))원"
@@ -495,11 +495,6 @@ extension ProductDetailView {
         
     }
     
-    private func thumbUpSet(_ isLike: Bool) {
-        let likeName = isLike ? "heart.fill" : "heart"
-        likeButton.setImage(UIImage(systemName: likeName), for: .normal)
-    }
-    
     private func updateMapView(latitude: Double, longitude: Double) {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
@@ -513,6 +508,11 @@ extension ProductDetailView {
             longitudinalMeters: 500
         )
         mapView.setRegion(region, animated: true)
+    }
+    
+    func updateLikeButton(isLiked: Bool, likeCount: Int) {
+        likeButton.updateLikeState(isLiked: isLiked)
+        likeCountLabel.text = "\(likeCount)"
     }
     
 }

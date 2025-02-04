@@ -30,6 +30,11 @@ extension ProductDetailViewController: View {
             .map { ProductDetailReactor.Action.receiptTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.likeButton.rx.tap
+            .map { ProductDetailReactor.Action.likeButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: ProductDetailReactor) {
@@ -46,6 +51,13 @@ extension ProductDetailViewController: View {
             .distinctUntilChanged()
             .bind(with: rootView) { owner, isTapped in
                 owner.toggleReceiptPopup(isVisible: isTapped)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { ($0.isLiked, $0.likeCount) }
+            .distinctUntilChanged { $0 == $1 }
+            .bind(with: rootView) { owner, likeData in
+                owner.updateLikeButton(isLiked: likeData.0, likeCount: likeData.1)
             }
             .disposed(by: disposeBag)
     }
