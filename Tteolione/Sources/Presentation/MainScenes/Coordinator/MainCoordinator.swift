@@ -125,11 +125,20 @@ extension MainCoordinator {
     }
     
     private func configureNavBarButtons(for viewController: UIViewController) {
-        let leftButton = UIButton(type: .system)
+        let leftButton = UIButton()
         leftButton.setTitle("내 이", for: .normal)
         leftButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         leftButton.frame = CGRect(x: 0, y: 0, width: 70, height: 30)
         leftButton.setTitleColor(.black, for: .normal)
+        let spacing: CGFloat = 3
+        let titleSize = leftButton.titleLabel?.intrinsicContentSize ?? .zero
+        leftButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -(leftButton.imageView?.frame.width ?? 0) - spacing,
+                                                  bottom: 0,
+                                                  right: (leftButton.imageView?.frame.width ?? 0) + spacing)
+        leftButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: titleSize.width + spacing,
+                                                  bottom: 0,
+                                                  right: -(titleSize.width) - spacing)
+        leftButton.clipsToBounds = false
         leftButton.showsMenuAsPrimaryAction = true
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
         leftButton.addTarget(self, action: #selector(didTapLeftButton), for: .touchUpInside)
