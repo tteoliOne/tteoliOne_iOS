@@ -234,6 +234,7 @@
 		72977EDD2D51CC8F00D1FDE7 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */; };
 		72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */; };
 		72977EE32D51D23900D1FDE7 /* SideMenuReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */; };
+		72977EE52D5287B900D1FDE7 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -459,6 +460,7 @@
 		72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuReactor.swift; sourceTree = "<group>"; };
+		72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -524,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				72361E352D08761A009BEF12 /* ViewController+Extension.swift */,
+				72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1757,6 +1760,7 @@
 				7246FA0A2D38D22600EE6B5E /* CoordinatorType.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
 				7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */,
+				72977EE52D5287B900D1FDE7 /* UIImage+Extension.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
 				72361FD92D3411EA009BEF12 /* TabBarController.swift in Sources */,
 				72361F332D2E98BF009BEF12 /* ProductDTO.swift in Sources */,

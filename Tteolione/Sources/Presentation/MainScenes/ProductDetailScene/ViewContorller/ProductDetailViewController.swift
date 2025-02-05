@@ -7,8 +7,9 @@
 
 import ReactorKit
 import RxCocoa
+import UIKit
 
-final class ProductDetailViewController: BaseViewController<ProductDetailView> {
+final class ProductDetailViewController: BaseNavigationViewController<ProductDetailView> {
     
     var disposeBag = DisposeBag()
     weak var delegate: MainCoordinatorDelegate?
@@ -42,8 +43,9 @@ extension ProductDetailViewController: View {
             .distinctUntilChanged()
             .compactMap { $0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: rootView, onNext: { owner, value in
-                owner.updateUI(with: value)
+            .bind(with: self, onNext: { owner, value in
+                owner.setupNavigation(with: value)
+                owner.rootView.updateUI(with: value)
             })
             .disposed(by: disposeBag)
         
@@ -65,6 +67,21 @@ extension ProductDetailViewController: View {
     func bindNavigation(_ reactor: ProductDetailReactor) {
         
     }
+}
+
+extension ProductDetailViewController {
+    
+    private func setupNavigation(with productDetail: ProductDetailDTO) {
+        let isOwner = productDetail.checkOwner
+        let menu = rootView.createMenu(isOwner: isOwner)
+        
+        let ellipsisButton = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis")?.rotate(radians: .pi / 2),
+            menu: menu
+        )
+        navigationItem.rightBarButtonItem = ellipsisButton
+    }
+    
 }
 
 extension ProductDetailViewController: DelegateOwner {
