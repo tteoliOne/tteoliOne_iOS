@@ -526,33 +526,6 @@ extension ProductDetailView {
         likeCountLabel.text = "\(likeCount)"
     }
     
-    func createMenu(isOwner: Bool) -> UIMenu {
-        if isOwner {
-            let editAction = UIAction(
-                title: "수정하기",
-                image: UIImage(systemName: "pencil.circle")
-            ) { _ in
-                print("수정하기 눌림")
-            }
-            let deleteAction = UIAction(
-                title: "삭제하기",
-                image: UIImage(systemName: "trash"),
-                attributes: .destructive
-            ) { _ in
-                print("삭제하기 눌림")
-            }
-            return UIMenu(title: "", children: [editAction, deleteAction])
-        } else {
-            let reportAction = UIAction(
-                title: "신고하기",
-                image: UIImage(systemName: "exclamationmark.circle")
-            ) { _ in
-                print("신고하기 눌림")
-            }
-            return UIMenu(title: "", children: [reportAction])
-        }
-    }
-    
 }
 
 extension ProductDetailView: UIScrollViewDelegate {

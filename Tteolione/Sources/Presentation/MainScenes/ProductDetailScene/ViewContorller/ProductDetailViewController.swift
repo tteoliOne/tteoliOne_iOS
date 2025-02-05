@@ -65,15 +65,22 @@ extension ProductDetailViewController: View {
     }
     
     func bindNavigation(_ reactor: ProductDetailReactor) {
-        
+        reactor.state.map { $0.isDelete }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .bind(with: self) { owner, _ in
+                owner.delegate?.popVC()
+            }
+            .disposed(by: disposeBag)
     }
 }
 
+//MARK: - 네비게이션 상단바 설정
 extension ProductDetailViewController {
     
     private func setupNavigation(with productDetail: ProductDetailDTO) {
         let isOwner = productDetail.checkOwner
-        let menu = rootView.createMenu(isOwner: isOwner)
+        let menu = createMenu(isOwner: isOwner)
         
         let ellipsisButton = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis")?.rotate(radians: .pi / 2),
@@ -82,6 +89,32 @@ extension ProductDetailViewController {
         navigationItem.rightBarButtonItem = ellipsisButton
     }
     
+    private func createMenu(isOwner: Bool) -> UIMenu {
+        if isOwner {
+            let editAction = UIAction(
+                title: "수정하기",
+                image: UIImage(systemName: "pencil.circle")
+            ) { _ in
+                print("수정하기 눌림")
+            }
+            let deleteAction = UIAction(
+                title: "삭제하기",
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive
+            ) { [weak self] _ in
+                self?.reactor?.action.onNext(.deletePost)
+            }
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        } else {
+            let reportAction = UIAction(
+                title: "신고하기",
+                image: UIImage(systemName: "exclamationmark.circle")
+            ) { _ in
+                print("신고하기 눌림")
+            }
+            return UIMenu(title: "", children: [reportAction])
+        }
+    }
 }
 
 extension ProductDetailViewController: DelegateOwner {
