@@ -6,17 +6,96 @@
 //
 
 import UIKit
+import ReactorKit
+import RxCocoa
 
 final class SideMenuViewController: BaseViewController<SideMenuView> {
     
-    override func configureView() {
-        view.backgroundColor = .myAppSideMenu
-    }
+    var disposeBag = DisposeBag()
+    weak var delegate: MainCoordinatorDelegate?
     
 }
 
-final class SideMenuView: BaseView {
+extension SideMenuViewController: View {
     
+    func bind(reactor: SideMenuReactor) {
+        bindAction(reactor)
+        bindState(reactor)
+        bindNavigation(reactor)
+    }
+    
+    func bindAction(_ reactor: SideMenuReactor) {
+        self.rx.viewWillAppear
+            .map { _ in SideMenuReactor.Action.fetchLikeLists }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.xButton.rx.tap
+            .map { SideMenuReactor.Action.xButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.itemSelected
+            .bind(with: self, onNext: { owner, indexPath in
+                let products = reactor.currentState.products.flatMap { $0.products }
+                let selectedProduct = products[indexPath.row]
+                reactor.action.onNext(.navigateToDetailView(selectedProduct.productId))
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bindState(_ reactor: SideMenuReactor) {
+        reactor.state.map { $0.products }
+            .map { products in
+                products.flatMap { $0.products }
+            }
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.tableView.rx.items(
+                cellIdentifier: SideMenuTableViewCell.identifier,
+                cellType: SideMenuTableViewCell.self
+            )) { _, productList, cell in
+                cell.selectionStyle = .none
+                cell.configureData(productList)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.showAlert(message: errorMessage)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindNavigation(_ reactor: SideMenuReactor) {
+        reactor.state.map { $0.navigateToPop }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.dismissVC()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { ($0.navigateToDetailView, $0.productId) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, data in
+                guard let productId = data.1 else { return }
+                owner.delegate?.dismissVC()
+                owner.delegate?.pushProductDetailViewController(productId: productId)
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension SideMenuViewController: DelegateOwner {
+    typealias Delegate = MainCoordinatorDelegate
 }
 
 final class SideMenuPresentationController: UIPresentationController {

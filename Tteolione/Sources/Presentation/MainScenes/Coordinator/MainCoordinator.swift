@@ -53,6 +53,7 @@ extension MainCoordinator {
             with: reactor,
             delegate: self
         )
+        viewController.hidesBottomBarWhenPushed = true
         show(viewController)
     }
     
@@ -124,11 +125,20 @@ extension MainCoordinator {
     }
     
     private func configureNavBarButtons(for viewController: UIViewController) {
-        let leftButton = UIButton(type: .system)
+        let leftButton = UIButton()
         leftButton.setTitle("내 이", for: .normal)
         leftButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         leftButton.frame = CGRect(x: 0, y: 0, width: 70, height: 30)
         leftButton.setTitleColor(.black, for: .normal)
+        let spacing: CGFloat = 3
+        let titleSize = leftButton.titleLabel?.intrinsicContentSize ?? .zero
+        leftButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -(leftButton.imageView?.frame.width ?? 0) - spacing,
+                                                  bottom: 0,
+                                                  right: (leftButton.imageView?.frame.width ?? 0) + spacing)
+        leftButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: titleSize.width + spacing,
+                                                  bottom: 0,
+                                                  right: -(titleSize.width) - spacing)
+        leftButton.clipsToBounds = false
         leftButton.showsMenuAsPrimaryAction = true
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: leftButton)
         leftButton.addTarget(self, action: #selector(didTapLeftButton), for: .touchUpInside)
@@ -145,7 +155,7 @@ extension MainCoordinator {
     
     @objc private func didSearchViewButton() {
         let coordinator = SearchCoordinator(navigationController: navigationController,
-                                          dependency: dependency)
+                                            dependency: dependency)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()
@@ -159,15 +169,23 @@ extension MainCoordinator {
 
 extension MainCoordinator {
     func showSideMenu() {
-        let sideMenuVC = SideMenuViewController()
-        sideMenuVC.modalPresentationStyle = .custom
-        sideMenuVC.transitioningDelegate = self
-        navigationController.present(sideMenuVC, animated: true)
+        let reactor = SideMenuReactor(networkProvider: dependency.productServiceProvider)
+        let viewController = createViewController(
+            ofType: SideMenuViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.modalPresentationStyle = .custom
+        viewController.transitioningDelegate = self
+        viewController.view.backgroundColor = .myAppSideMenu
+        show(viewController, as: .present)
     }
 }
 
 extension MainCoordinator: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SideMenuAnimator(isPresenting: true)
     }
     
@@ -175,7 +193,9 @@ extension MainCoordinator: UIViewControllerTransitioningDelegate {
         return SideMenuAnimator(isPresenting: false)
     }
     
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController,
+                                presenting: UIViewController?,
+                                source: UIViewController) -> UIPresentationController? {
         return SideMenuPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

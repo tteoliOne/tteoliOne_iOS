@@ -9,11 +9,12 @@ import UIKit
 
 class XButton: UIButton {
     
-    init(color: UIColor) {
+    init(color: UIColor,
+         systemName: String? = "multiply") {
         super.init(frame: .zero)
         
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light)
-        setImage(UIImage(systemName: "multiply", withConfiguration: imageConfig)?
+        setImage(UIImage(systemName: systemName ?? "multiply", withConfiguration: imageConfig)?
             .withTintColor(color, renderingMode: .alwaysOriginal), for: .normal)
         imageView?.contentMode = .scaleAspectFit
         

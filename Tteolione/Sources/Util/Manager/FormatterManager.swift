@@ -20,8 +20,9 @@ final class FormatterManager {
         self.inputDateFormatter.timeZone = TimeZone.current
         
         self.outputDateFormatter = DateFormatter()
-        self.outputDateFormatter.dateFormat = "yyyy.MM.dd(EEE)"
+        self.outputDateFormatter.dateFormat = "yyyy.MM.dd(E)"
         self.outputDateFormatter.timeZone = TimeZone.current
+        self.outputDateFormatter.locale = Locale(identifier: "ko_KR")
         
         self.buyDateFormatter = DateFormatter()
         self.buyDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"

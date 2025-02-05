@@ -1,5 +1,5 @@
 //
-//  ProdcutDetailView.swift
+//  ProductDetailView.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/11/25.
@@ -40,11 +40,11 @@ final class ProductDetailView: BaseView {
     private let buyDateLabel = RegularLabel(text: "0000.00.00(화)",
                                             font: Font.regular13,
                                             color: .myAppBlack)
-    private let likeButton = LikeButton(color: .myAppMain)
+    let likeButton = LikeButton(color: .myAppMain)
     private let likeCountLabel = RegularLabel(text: "0",
                                               font: Font.regular13,
                                               color: .myAppBlack)
-    private let receiptButton: UIButton = {
+    let receiptButton: UIButton = {
         let button = UIButton()
         let newSize = CGSize(width: 24, height: 24)
         if let receiptImage = UIImage(named: "receiptPhoto")?.resizableImage(withCapInsets: .zero, resizingMode: .stretch) {
@@ -54,6 +54,18 @@ final class ProductDetailView: BaseView {
             button.setBackgroundImage(resizedImage, for: .normal)
         }
         return button
+    }()
+    private let receiptPopupView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.isHidden = true
+        return view
+    }()
+    private let receiptImageView: LoadImageView = {
+        let imageView = LoadImageView()
+        imageView.layer.cornerRadius = 12
+        imageView.isUserInteractionEnabled = true
+        return imageView
     }()
     private let receiptLabel = RegularLabel(text: AppText.Etc.recipet,
                                             font: Font.regular13,
@@ -150,10 +162,21 @@ final class ProductDetailView: BaseView {
          shareCountPCSLabel].forEach { shareCountFieldView.addSubview($0) }
         [detailLabel, contentLabel].forEach { detailView.addSubview($0) }
         [placeLabel, mapView].forEach { placeView.addSubview($0) }
-        
+        addSubview(receiptPopupView)
+        receiptPopupView.addSubview(receiptImageView)
     }
     
     override func configureLayout() {
+        receiptPopupView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        receiptImageView.snp.makeConstraints { make in
+            make.center.equalTo(safeAreaLayoutGuide)
+            make.width.equalTo(Device.screenWidth * 0.8)
+            make.height.equalTo(Device.screenHeight * 0.3)
+        }
+        
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
@@ -214,7 +237,7 @@ final class ProductDetailView: BaseView {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(boundarView.snp.bottom).offset(16)
             make.centerX.equalTo(productFieldView)
-            make.size.equalTo(CGSize(width: 24, height: 24))
+            make.size.equalTo(CGSize(width: 28, height: 28))
         }
         
         likeCountLabel.snp.makeConstraints { make in
@@ -375,11 +398,38 @@ final class ProductDetailView: BaseView {
         buyCountImageView.backgroundColor = .white
         sharePriceImageView.backgroundColor = .white
         shareCountImageView.backgroundColor = .white
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideReceiptPopup))
+        receiptPopupView.addGestureRecognizer(tapGesture)
     }
     
 }
 
 extension ProductDetailView {
+    @objc private func hideReceiptPopup() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.receiptPopupView.alpha = 0
+        }) { _ in
+            self.receiptPopupView.isHidden = true
+            (self.parentViewController as? ProductDetailViewController)?.reactor?.action.onNext(.receiptTap)
+        }
+    }
+    
+    func toggleReceiptPopup(isVisible: Bool) {
+        if isVisible {
+            receiptPopupView.alpha = 0
+            receiptPopupView.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                self.receiptPopupView.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.receiptPopupView.alpha = 0
+            }) { _ in
+                self.receiptPopupView.isHidden = true
+            }
+        }
+    }
     
     func updateUI(with productDetail: ProductDetailDTO) {
         updateScrollView(with: productDetail.images)
@@ -388,10 +438,15 @@ extension ProductDetailView {
         } else {
             profileImageView.image = nil
         }
+        if let imageUrl = URL(string: productDetail.receipt) {
+            receiptImageView.loadImage(from: imageUrl)
+        } else {
+            receiptImageView.image = nil
+        }
         nicknameLabel.text = productDetail.sellerNickname
         titleLabel.text = productDetail.title
         buyDateLabel.text = FormatterManager.shared.formattedDate(from: productDetail.buyDate)
-        thumbUpSet(productDetail.checkLiked)
+        likeButton.updateLikeState(isLiked: productDetail.checkLiked)
         likeCountLabel.text = "\(productDetail.likeCount)"
         
         buyPriceWonLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.buyPrice))원"
@@ -400,6 +455,17 @@ extension ProductDetailView {
         shareCountPCSLabel.text = "\(FormatterManager.shared.numberFormatter(productDetail.shareCount))개"
         contentLabel.text = productDetail.description
         updateMapView(latitude: productDetail.latitude, longitude: productDetail.longitude)
+        callButton.isHidden = productDetail.checkOwner
+        
+        placeView.snp.updateConstraints { make in
+            make.bottom.equalTo(productFieldView).offset(productDetail.checkOwner ? -22 : -88)
+        }
+        
+        let contentHeight = contentLabel.sizeThatFits(CGSize(width: Device.screenWidth - 40, height: CGFloat.greatestFiniteMagnitude)).height
+        detailView.snp.updateConstraints { make in
+            make.height.equalTo(contentHeight + 80)
+        }
+        self.layoutIfNeeded()
     }
     
 }
@@ -440,11 +506,6 @@ extension ProductDetailView {
         
     }
     
-    private func thumbUpSet(_ isLike: Bool) {
-        let likeName = isLike ? "heart.fill" : "heart"
-        likeButton.setImage(UIImage(systemName: likeName), for: .normal)
-    }
-    
     private func updateMapView(latitude: Double, longitude: Double) {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
@@ -458,6 +519,38 @@ extension ProductDetailView {
             longitudinalMeters: 500
         )
         mapView.setRegion(region, animated: true)
+    }
+    
+    func updateLikeButton(isLiked: Bool, likeCount: Int) {
+        likeButton.updateLikeState(isLiked: isLiked)
+        likeCountLabel.text = "\(likeCount)"
+    }
+    
+    func createMenu(isOwner: Bool) -> UIMenu {
+        if isOwner {
+            let editAction = UIAction(
+                title: "수정하기",
+                image: UIImage(systemName: "pencil.circle")
+            ) { _ in
+                print("수정하기 눌림")
+            }
+            let deleteAction = UIAction(
+                title: "삭제하기",
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive
+            ) { _ in
+                print("삭제하기 눌림")
+            }
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        } else {
+            let reportAction = UIAction(
+                title: "신고하기",
+                image: UIImage(systemName: "exclamationmark.circle")
+            ) { _ in
+                print("신고하기 눌림")
+            }
+            return UIMenu(title: "", children: [reportAction])
+        }
     }
     
 }
