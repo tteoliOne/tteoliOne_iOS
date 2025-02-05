@@ -30,6 +30,7 @@ final class PostReactor: Reactor {
         case updateLocation(Double, Double)
         case nextButtonTap
         case updateDate(Date)
+        case setProductDetail(ProductDetailDTO)
     }
     
     enum Mutation {
@@ -53,10 +54,14 @@ final class PostReactor: Reactor {
         case setLocation(Double, Double)
         case setDate(Date)
         case updateNextViewShown([Bool])
-        case setNextViewData(ProductRequestBody, [UIImage])
+        case setReceiptImage(UIImage?)
+        case setNextViewData(PostViewType, ProductRequestBody, [UIImage], Int?)
+        case setProductDetail(ProductDetailDTO)
+        case setProductId(Int?)
     }
     
     struct State {
+        var productDetail: ProductDetailDTO?
         var isProductImagePickerShown: Bool = false
         var productImages: [UIImage] = []
         var title: String = ""
@@ -78,10 +83,20 @@ final class PostReactor: Reactor {
         var isMapViewShown: Bool = false
         var selectedDate: Date = Date()
         var nextViewShown: [Bool] = [false, false, false, false, false, false]
-        var nextViewData: (ProductRequestBody, [UIImage])? = nil
+        var receiptImage: UIImage? = nil
+        var nextViewData: (PostViewType, ProductRequestBody, [UIImage], Int?)? = nil
+        var productId: Int?
     }
     
-    let initialState: State = State()
+    let viewType: PostViewType
+    let productDetail: ProductDetailDTO?
+    var initialState: State = State()
+    
+    init(viewType: PostViewType,
+         productDetail: ProductDetailDTO?) {
+        self.viewType = viewType
+        self.productDetail = productDetail
+    }
     
 }
 
@@ -89,6 +104,35 @@ extension PostReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .setProductDetail(let detail):
+            return Observable.create { observer in
+                Task {
+                    var loadedImages: [UIImage] = []
+                    
+                    for imageUrl in detail.images {
+                        if let url = URL(string: imageUrl),
+                           let image = await UIImage.load(from: url) {
+                            loadedImages.append(image)
+                        }
+                    }
+                    if let receiptUrl = URL(string: detail.receipt),
+                       let receiptImage = await UIImage.load(from: receiptUrl) {
+                        observer.onNext(.setReceiptImage(receiptImage))
+                    }
+                    observer.onNext(.setProductDetail(detail))
+                    observer.onNext(.addProductImages(loadedImages))
+                    observer.onNext(.setTitle(detail.title))
+                    observer.onNext(.setPurchasePrice(detail.buyPrice))
+                    observer.onNext(.setPurchaseCount(detail.buyCount))
+                    observer.onNext(.setSharePrice(detail.sharePrice))
+                    observer.onNext(.setShareCount(detail.shareCount))
+                    observer.onNext(.setDescriptionText(detail.description))
+                    observer.onNext(.setProductId(detail.productId))
+                    observer.onCompleted()
+                }
+                return Disposables.create()
+            }
+            
         case .productPhotoTap:
             return .concat([
                 .just(.setProductImagePicker(true)),
@@ -105,6 +149,7 @@ extension PostReactor {
             let trimmedTitle = String(title.prefix(maxLength))
             let titleLengthText = "\(trimmedTitle.count)/\(maxLength)"
             let isValid = !trimmedTitle.isEmpty
+            
             return .concat([
                 .just(.setTitle(trimmedTitle)),
                 .just(.setTitleValidity(isValid)),
@@ -217,10 +262,15 @@ extension PostReactor {
                 latitude: currentState.latitude
             )
             
+            let productId = currentState.productId
+            
             return .concat([
                 .just(.updateNextViewShown(nextViewShown)),
-                .just(.setNextViewData(productRequestBody,
-                                       currentState.productImages))
+                .just(.setNextViewData(viewType,
+                                       productRequestBody,
+                                       currentState.productImages,
+                                       productId)),
+                .just(.setReceiptImage(currentState.receiptImage ?? nil))
             ])
             
         case let .updateLocation(latitude, longitude):
@@ -239,6 +289,49 @@ extension PostReactor {
         var newState = state
         
         switch mutation {
+        case .setProductId(let id):
+            newState.productId = id
+            
+        case .setReceiptImage(let image):
+            newState.receiptImage = image
+            
+        case .setProductDetail(let detail):
+            newState.productDetail = detail
+            newState.title = detail.title
+            newState.purchasePrice = detail.buyPrice
+            newState.purchaseCount = detail.buyCount
+            newState.sharePrice = detail.sharePrice
+            newState.shareCount = detail.shareCount
+            newState.descriptionText = detail.description
+            newState.longitude = detail.longitude
+            newState.latitude = detail.latitude
+            newState.selectedDate = FormatterManager.shared.date(from: detail.buyDate) ?? Date()
+            
+            let maxLength = 20
+            let trimmedTitle = String(detail.title.prefix(maxLength))
+            newState.titleLengthText = "\(trimmedTitle.count)/\(maxLength)"
+            newState.isTitleValid = trimmedTitle.isEmpty
+            
+            newState.isPurchaseValid = [
+                isValidCount("\(detail.buyPrice)"),
+                isValidCount("\(detail.buyCount)")
+            ]
+            
+            newState.isShareValid = [
+                isValidCount("\(detail.sharePrice)"),
+                isValidCount("\(detail.shareCount)")
+            ]
+            
+            newState.isSelectedNum = detail.categoryId
+            newState.isCategorySelected = [
+                detail.categoryId == 1,
+                detail.categoryId == 2,
+                detail.categoryId == 3,
+                detail.categoryId == 4,
+                detail.categoryId == 5,
+                detail.categoryId == 6
+            ]
+            
         case .setProductImagePicker(let isPickerShown):
             newState.isProductImagePickerShown = isPickerShown
             
@@ -293,8 +386,11 @@ extension PostReactor {
         case .updateNextViewShown(let nextViewShown):
             newState.nextViewShown = nextViewShown
             
-        case .setNextViewData(let requestBody, let photos):
-            newState.nextViewData = (requestBody, photos)
+        case .setNextViewData(let viewType,
+                              let requestBody,
+                              let photos,
+                              let id):
+            newState.nextViewData = (viewType, requestBody, photos, id)
             
         case .setLocation(let latitude, let longitude):
             newState.latitude = latitude

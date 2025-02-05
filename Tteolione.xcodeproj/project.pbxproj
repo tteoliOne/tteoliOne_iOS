@@ -522,15 +522,6 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		72361E342D087600009BEF12 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				72361E352D08761A009BEF12 /* ViewController+Extension.swift */,
-				72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
 		72361E5C2D0C22E3009BEF12 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1158,6 +1149,8 @@
 		723B09352D3BD64300F464A4 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				72361E352D08761A009BEF12 /* ViewController+Extension.swift */,
+				72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */,
 				723B09362D3BD67000F464A4 /* Reactive+Extension.swift */,
 				725F818D2D44B55D002C4E1C /* UIView+Extension.swift */,
 				72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */,
@@ -1334,7 +1327,6 @@
 				72361F172D2E46A5009BEF12 /* Util */,
 				72361E852D13FB99009BEF12 /* Coordinator */,
 				72361E5C2D0C22E3009BEF12 /* Network */,
-				72361E342D087600009BEF12 /* Extension */,
 				724DECAC2D0186A200171F44 /* Component */,
 				724DEC952D01732200171F44 /* Base */,
 			);

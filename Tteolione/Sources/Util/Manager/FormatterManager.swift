@@ -29,6 +29,10 @@ final class FormatterManager {
         self.buyDateFormatter.timeZone = TimeZone.current
     }
     
+    func date(from dateString: String) -> Date? {
+        return inputDateFormatter.date(from: dateString)
+    }
+    
     func numberFormatter(_ data: Int) -> String {
         let format = NumberFormatter()
         format.numberStyle = .decimal

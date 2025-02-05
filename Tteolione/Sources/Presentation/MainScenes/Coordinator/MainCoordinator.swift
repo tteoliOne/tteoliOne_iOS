@@ -35,8 +35,10 @@ final class MainCoordinator: NSObject, MainCoordinatorDelegate {
 
 extension MainCoordinator {
     
-    func pushPostViewController() {
-        let reactor = PostReactor()
+    func pushPostViewController(viewType: PostViewType,
+                                productDetail: ProductDetailDTO? = nil) {
+        let reactor = PostReactor(viewType: viewType,
+                                  productDetail: productDetail)
         let viewController = createViewController(
             ofType: PostViewController.self,
             with: reactor,
@@ -75,11 +77,17 @@ extension MainCoordinator {
         show(viewController)
     }
     
-    func pushPostReceiptViewController(with productRequestBody: ProductRequestBody,
-                                       productImages: [UIImage]) {
-        let reactor = PostReceiptReactor(networkProvider: dependency.productServiceProvider,
+    func pushPostReceiptViewController(with viewType: PostViewType,
+                                       productRequestBody: ProductRequestBody,
+                                       productImages: [UIImage],
+                                       receiptImage: UIImage?,
+                                       productId: Int? = nil) {
+        let reactor = PostReceiptReactor(viewType: viewType,
+                                         networkProvider: dependency.productServiceProvider,
                                          response: productRequestBody,
-                                         images: productImages)
+                                         images: productImages,
+                                         receiptImage: receiptImage,
+                                         productId: productId)
         let viewController = createViewController(
             ofType: PostReceiptViewController.self,
             with: reactor,

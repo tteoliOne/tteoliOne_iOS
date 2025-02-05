@@ -12,6 +12,7 @@ import RxSwift
 final class PostReceiptReactor: Reactor {
     
     enum Action {
+        case setReceiptImage(UIImage)
         case photoButtonTap
         case imageSelected(UIImage)
         case registerButtonTap
@@ -19,7 +20,7 @@ final class PostReceiptReactor: Reactor {
     
     enum Mutation {
         case setProductImagePicker(Bool)
-        case addProductImage(UIImage)
+        case setReceiptImage(UIImage)
         case setregisterButtonIsEnabled(Bool)
         case setRegisterToNext(Bool)
         case showError(NetworkError)
@@ -27,24 +28,32 @@ final class PostReceiptReactor: Reactor {
     
     struct State {
         var isProductImagePickerShown: Bool = false
-        var productImage: UIImage?
         var isRegisterButtonIsEnabled: Bool = false
         var isRegister: Bool = false
         var errorMessage: String?
         var response: ProductRequestBody?
         var images: [UIImage] = []
+        var receiptImage: UIImage?
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
+    private let productId: Int?
+    let viewType: PostViewType
     var initialState: State = State()
     
-    init(networkProvider: NetworkProvider<ProductServiceAPI>,
+    init(viewType: PostViewType,
+         networkProvider: NetworkProvider<ProductServiceAPI>,
          response: ProductRequestBody,
-         images: [UIImage]
+         images: [UIImage],
+         receiptImage: UIImage?,
+         productId: Int? = nil
     ) {
         self.networkProvider = networkProvider
+        self.viewType = viewType
+        self.productId = productId
         self.initialState = State(response: response,
-                                  images: images)
+                                  images: images,
+                                  receiptImage: receiptImage)
     }
     
 }
@@ -62,18 +71,30 @@ extension PostReceiptReactor {
         case let .imageSelected(image):
             let isValidImage = !currentState.images.isEmpty
             return .concat([
-                .just(.addProductImage(image)),
+                .just(.setReceiptImage(image)),
                 .just(.setregisterButtonIsEnabled(isValidImage))
             ])
             
         case .registerButtonTap:
             guard currentState.isRegisterButtonIsEnabled,
-                  let receiptImage = currentState.productImage else {
+                  let receiptImage = currentState.receiptImage else {
                 return .empty()
             }
-            return .concat([
-                postRegisterRequest(receiptImage: receiptImage)
-            ])
+            
+            let request: Observable<Mutation>
+            
+            if viewType == .edit,
+               let productId = productId {
+                request = postUpdateRequest(productId: productId,
+                                            receiptImage: receiptImage)
+            } else {
+                request = postRegisterRequest(receiptImage: receiptImage)
+            }
+            
+            return request
+            
+        case .setReceiptImage(let image):
+            return .just(.setReceiptImage(image))
         }
     }
     
@@ -88,8 +109,8 @@ extension PostReceiptReactor {
         case .setProductImagePicker(let isPickerShown):
             newState.isProductImagePickerShown = isPickerShown
             
-        case .addProductImage(let image):
-            newState.productImage = image
+        case .setReceiptImage(let image):
+            newState.receiptImage = image
             
         case .setregisterButtonIsEnabled(let isEnabled):
             newState.isRegisterButtonIsEnabled = isEnabled
@@ -118,10 +139,32 @@ extension PostReceiptReactor {
             .request(.productRegistration(body: body),
                      decodingType: ServerResponse<RegistDTO>.self)
             .asObservable()
-            .flatMap { [weak self] response -> Observable<Mutation> in
-                guard let self = self else { return .empty() }
+            .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
-                case .success(let message):
+                case .success(_):
+                    return .concat([
+                        .just(.setRegisterToNext(true)),
+                        .just(.setRegisterToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
+    
+    private func postUpdateRequest(productId: Int, receiptImage: UIImage) -> Observable<Mutation> {
+        let body = ProductRegistRequestBody(
+            productRequest: currentState.response ?? ProductRequestBody.defaultValue(),
+            photos: currentState.images.compactMap { $0.jpegData(compressionQuality: 0.8) },
+            receiptImage: receiptImage.jpegData(compressionQuality: 0.8) ?? Data()
+        )
+        return networkProvider
+            .request(.editProduct(productId: productId, body: body),
+                     decodingType: ServerResponse<RegistDTO>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
                     return .concat([
                         .just(.setRegisterToNext(true)),
                         .just(.setRegisterToNext(false))

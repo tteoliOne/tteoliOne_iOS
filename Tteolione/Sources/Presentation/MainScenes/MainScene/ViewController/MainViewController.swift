@@ -97,7 +97,8 @@ extension MainViewController: View {
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.pushPostViewController()
+                owner.delegate?.pushPostViewController(viewType: .post,
+                                                       productDetail: nil)
             }
             .disposed(by: disposeBag)
     }
