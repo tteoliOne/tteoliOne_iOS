@@ -8,10 +8,13 @@
 import UIKit
 
 protocol MainCoordinatorDelegate: Coordinator {
-    func pushPostViewController()
+    func pushPostViewController(viewType: PostViewType, productDetail: ProductDetailDTO?)
     func pushProductDetailViewController(productId: Int)
     func pushMapViewController()
-    func pushPostReceiptViewController(with productRequestBody: ProductRequestBody,
-                                       productImages: [UIImage])
+    func pushPostReceiptViewController(with viewType: PostViewType,
+                                       productRequestBody: ProductRequestBody,
+                                       productImages: [UIImage],
+                                       receiptImage: UIImage?,
+                                       productId: Int?)
     func dismissAndPop()
 }

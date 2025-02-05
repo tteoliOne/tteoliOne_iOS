@@ -26,6 +26,10 @@ extension PostReceiptViewController: View {
     }
     
     func bindAction(_ reactor: PostReceiptReactor) {
+        if reactor.viewType == .edit, let receiptImage = reactor.initialState.receiptImage {
+            reactor.action.onNext(.setReceiptImage(receiptImage))
+        }
+        
         rootView.photoButton.rx.tap
             .map { PostReceiptReactor.Action.photoButtonTap }
             .bind(to: reactor.action)
@@ -38,6 +42,15 @@ extension PostReceiptViewController: View {
     }
     
     func bindState(_ reactor: PostReceiptReactor) {
+        reactor.state.map { $0.receiptImage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: rootView) { owner, image in
+                owner.updateImage(image)
+            }
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.isProductImagePickerShown }
             .distinctUntilChanged()
             .filter { $0 }

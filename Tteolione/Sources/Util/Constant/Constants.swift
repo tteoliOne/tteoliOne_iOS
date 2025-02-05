@@ -16,3 +16,8 @@ enum LoginTypeKey: String {
 struct ProfileMenuItem: Equatable {
     let title: String
 }
+
+enum PostViewType: String {
+    case post
+    case edit
+}

@@ -25,7 +25,10 @@ extension ProductDetailViewController: View {
     }
     
     func bindAction(_ reactor: ProductDetailReactor) {
-        reactor.action.onNext(.fetchProductDetail)
+        self.rx.viewWillAppear
+            .map { _ in ProductDetailReactor.Action.fetchProductDetail }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
         rootView.receiptButton.rx.tap
             .map { ProductDetailReactor.Action.receiptTap }
@@ -59,7 +62,8 @@ extension ProductDetailViewController: View {
         reactor.state.map { ($0.isLiked, $0.likeCount) }
             .distinctUntilChanged { $0 == $1 }
             .bind(with: rootView) { owner, likeData in
-                owner.updateLikeButton(isLiked: likeData.0, likeCount: likeData.1)
+                owner.updateLikeButton(isLiked: likeData.0,
+                                       likeCount: likeData.1)
             }
             .disposed(by: disposeBag)
     }
@@ -70,6 +74,17 @@ extension ProductDetailViewController: View {
             .filter { $0 }
             .bind(with: self) { owner, _ in
                 owner.delegate?.popVC()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { ($0.isEditScreenShown, $0.products) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
+            .compactMap { $0.1 }
+            .bind(with: self) { owner, productDetail in
+                owner.delegate?.pushPostViewController(viewType: .edit,
+                                                       productDetail: productDetail)
             }
             .disposed(by: disposeBag)
     }
@@ -94,8 +109,8 @@ extension ProductDetailViewController {
             let editAction = UIAction(
                 title: "수정하기",
                 image: UIImage(systemName: "pencil.circle")
-            ) { _ in
-                print("수정하기 눌림")
+            ) { [weak self] _ in
+                self?.reactor?.action.onNext(.editPost)
             }
             let deleteAction = UIAction(
                 title: "삭제하기",
