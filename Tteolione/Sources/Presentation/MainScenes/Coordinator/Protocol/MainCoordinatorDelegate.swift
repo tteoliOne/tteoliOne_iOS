@@ -16,5 +16,6 @@ protocol MainCoordinatorDelegate: Coordinator {
                                        productImages: [UIImage],
                                        receiptImage: UIImage?,
                                        productId: Int?)
+    func showReportView(reportType: ReportType, reportId: Int)
     func dismissAndPop()
 }

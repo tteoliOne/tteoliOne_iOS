@@ -13,11 +13,23 @@ enum LoginTypeKey: String {
     case local
 }
 
-struct ProfileMenuItem: Equatable {
+struct MenuItem: Equatable {
     let title: String
 }
 
 enum PostViewType: String {
     case post
     case edit
+}
+
+enum ReportType: String {
+    case products
+    case chat
+}
+
+enum ReportCategory: String {
+    case spam
+    case imageViolence = "image-violence"
+    case information
+    case etc
 }

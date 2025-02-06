@@ -1,27 +1,26 @@
 //
-//  ProfileListTableViewCell.swift
+//  DeclaractionTableViewCell.swift
 //  Tteolione
 //
-//  Created by 전준영 on 1/13/25.
+//  Created by 전준영 on 2/6/25.
 //
 
 import UIKit
 import SnapKit
 import RxSwift
 
-final class ProfileListTableViewCell: BaseTableViewCell {
+final class DeclaractionTableViewCell: BaseTableViewCell {
     
     var disposeBag = DisposeBag()
-    
-    private let listTitleLabel = AndongLabel(text: "리스트",
-                                             font: Font.Andong20,
-                                             color: .white)
+    private let listTitleLabel = RegularLabel(text: "리스트",
+                                              font: Font.regular28,
+                                              color: .myAppBlack)
     private let chevronImageView: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "chevron.right")?
             .withRenderingMode(.alwaysTemplate)
         imageView.image = image
-        imageView.tintColor = .white
+        imageView.tintColor = .myAppBlack
         return imageView
     }()
     
@@ -29,7 +28,7 @@ final class ProfileListTableViewCell: BaseTableViewCell {
         super.prepareForReuse()
         disposeBag = DisposeBag()
     }
-
+    
     override func configureHierarchy() {
         [listTitleLabel, chevronImageView].forEach { contentView.addSubview($0) }
     }
@@ -48,9 +47,12 @@ final class ProfileListTableViewCell: BaseTableViewCell {
     }
     
     override func configureView() {
-        contentView.backgroundColor = .myAppMain
+        contentView.backgroundColor = .myAppLightGray2
     }
     
+}
+
+extension DeclaractionTableViewCell {
     func configure(with item: MenuItem) {
         listTitleLabel.text = item.title
     }

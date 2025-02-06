@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1C2D02D095009BEF12 /* TopBarView.swift */; };
 		72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1F2D02D18F009BEF12 /* JoinImageView.swift */; };
 		72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E212D02D1B1009BEF12 /* AppJoinImage.swift */; };
@@ -235,9 +236,23 @@
 		72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */; };
 		72977EE32D51D23900D1FDE7 /* SideMenuReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */; };
 		72977EE52D5287B900D1FDE7 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */; };
+		72977EED2D53C2B400D1FDE7 /* DeclarationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EEC2D53C2B400D1FDE7 /* DeclarationViewController.swift */; };
+		72977EEF2D53C2BA00D1FDE7 /* DeclarationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EEE2D53C2BA00D1FDE7 /* DeclarationView.swift */; };
+		72977EF32D53C2D200D1FDE7 /* DeclarationReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EF22D53C2D200D1FDE7 /* DeclarationReactor.swift */; };
+		72977EF52D53C2F600D1FDE7 /* ReportCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EF42D53C2F600D1FDE7 /* ReportCoordinatorDelegate.swift */; };
+		72977EF72D53C30000D1FDE7 /* ReportCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EF62D53C30000D1FDE7 /* ReportCoordinator.swift */; };
+		72977EF92D546BDD00D1FDE7 /* DeclaractionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EF82D546BDD00D1FDE7 /* DeclaractionTableViewCell.swift */; };
+		72977EFB2D5475BF00D1FDE7 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EFA2D5475BF00D1FDE7 /* ReportViewController.swift */; };
+		72977EFD2D5475D200D1FDE7 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EFC2D5475D200D1FDE7 /* ReportView.swift */; };
+		72977EFF2D5479E700D1FDE7 /* ReportReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EFE2D5479E700D1FDE7 /* ReportReactor.swift */; };
+		72977F012D5488A000D1FDE7 /* SlideInPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F002D5488A000D1FDE7 /* SlideInPresentationAnimator.swift */; };
+		72977F032D548EB300D1FDE7 /* EtcReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F022D548EB300D1FDE7 /* EtcReportViewController.swift */; };
+		72977F052D548EB800D1FDE7 /* EtcReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F042D548EB800D1FDE7 /* EtcReportView.swift */; };
+		72977F072D548EBF00D1FDE7 /* EtcReportReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F062D548EBF00D1FDE7 /* EtcReportReactor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		72361E1C2D02D095009BEF12 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		72361E1F2D02D18F009BEF12 /* JoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinImageView.swift; sourceTree = "<group>"; };
 		72361E212D02D1B1009BEF12 /* AppJoinImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppJoinImage.swift; sourceTree = "<group>"; };
@@ -461,6 +476,19 @@
 		72977EE02D51CDE600D1FDE7 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		72977EE22D51D23900D1FDE7 /* SideMenuReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuReactor.swift; sourceTree = "<group>"; };
 		72977EE42D5287B900D1FDE7 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		72977EEC2D53C2B400D1FDE7 /* DeclarationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationViewController.swift; sourceTree = "<group>"; };
+		72977EEE2D53C2BA00D1FDE7 /* DeclarationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationView.swift; sourceTree = "<group>"; };
+		72977EF22D53C2D200D1FDE7 /* DeclarationReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationReactor.swift; sourceTree = "<group>"; };
+		72977EF42D53C2F600D1FDE7 /* ReportCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		72977EF62D53C30000D1FDE7 /* ReportCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCoordinator.swift; sourceTree = "<group>"; };
+		72977EF82D546BDD00D1FDE7 /* DeclaractionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclaractionTableViewCell.swift; sourceTree = "<group>"; };
+		72977EFA2D5475BF00D1FDE7 /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		72977EFC2D5475D200D1FDE7 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		72977EFE2D5479E700D1FDE7 /* ReportReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReactor.swift; sourceTree = "<group>"; };
+		72977F002D5488A000D1FDE7 /* SlideInPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationAnimator.swift; sourceTree = "<group>"; };
+		72977F022D548EB300D1FDE7 /* EtcReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcReportViewController.swift; sourceTree = "<group>"; };
+		72977F042D548EB800D1FDE7 /* EtcReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcReportView.swift; sourceTree = "<group>"; };
+		72977F062D548EBF00D1FDE7 /* EtcReportReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcReportReactor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1154,6 +1182,7 @@
 				723B09362D3BD67000F464A4 /* Reactive+Extension.swift */,
 				725F818D2D44B55D002C4E1C /* UIView+Extension.swift */,
 				72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */,
+				721BF2A22D55022000E37E3B /* Encodable+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1173,6 +1202,7 @@
 				7246F9FC2D38BD3B00EE6B5E /* OnboardingScenes */,
 				7246F9FD2D38BDDA00EE6B5E /* MainScenes */,
 				7246F9FE2D38BDE300EE6B5E /* ProfileScenes */,
+				72977EE62D53C16B00D1FDE7 /* DeclarationScenes */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1239,6 +1269,7 @@
 				72361FBD2D30E5D6009BEF12 /* DeviceLenth.swift */,
 				7246FA2D2D3AC76C00EE6B5E /* Constants.swift */,
 				7246FA092D38D22500EE6B5E /* CoordinatorType.swift */,
+				72977F002D5488A000D1FDE7 /* SlideInPresentationAnimator.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1560,6 +1591,65 @@
 			path = Reactor;
 			sourceTree = "<group>";
 		};
+		72977EE62D53C16B00D1FDE7 /* DeclarationScenes */ = {
+			isa = PBXGroup;
+			children = (
+				72977EE72D53C25700D1FDE7 /* Coordinator */,
+				72977EE92D53C27400D1FDE7 /* ViewController */,
+				72977EEA2D53C27F00D1FDE7 /* View */,
+				72977EEB2D53C28300D1FDE7 /* Reactor */,
+			);
+			path = DeclarationScenes;
+			sourceTree = "<group>";
+		};
+		72977EE72D53C25700D1FDE7 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				72977EE82D53C26000D1FDE7 /* Protocol */,
+				72977EF62D53C30000D1FDE7 /* ReportCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		72977EE82D53C26000D1FDE7 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				72977EF42D53C2F600D1FDE7 /* ReportCoordinatorDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		72977EE92D53C27400D1FDE7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				72977EEC2D53C2B400D1FDE7 /* DeclarationViewController.swift */,
+				72977EFA2D5475BF00D1FDE7 /* ReportViewController.swift */,
+				72977F022D548EB300D1FDE7 /* EtcReportViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		72977EEA2D53C27F00D1FDE7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				72977EEE2D53C2BA00D1FDE7 /* DeclarationView.swift */,
+				72977EF82D546BDD00D1FDE7 /* DeclaractionTableViewCell.swift */,
+				72977EFC2D5475D200D1FDE7 /* ReportView.swift */,
+				72977F042D548EB800D1FDE7 /* EtcReportView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		72977EEB2D53C28300D1FDE7 /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				72977EF22D53C2D200D1FDE7 /* DeclarationReactor.swift */,
+				72977EFE2D5479E700D1FDE7 /* ReportReactor.swift */,
+				72977F062D548EBF00D1FDE7 /* EtcReportReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1656,6 +1746,7 @@
 				72361FB02D2FF219009BEF12 /* PostButton.swift in Sources */,
 				72361F532D2EB276009BEF12 /* MyReviewDTO.swift in Sources */,
 				72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */,
+				72977EF72D53C30000D1FDE7 /* ReportCoordinator.swift in Sources */,
 				72361ECA2D27AA2B009BEF12 /* FindIDResultReactor.swift in Sources */,
 				72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
@@ -1683,6 +1774,7 @@
 				72361EA42D1E9041009BEF12 /* SignUpFinshViewController.swift in Sources */,
 				7236200D2D356DE8009BEF12 /* AddressView.swift in Sources */,
 				72361E542D0BF5F7009BEF12 /* ProfileSetView.swift in Sources */,
+				721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
 				72361E442D0B28AE009BEF12 /* PasswordExplainLabelView.swift in Sources */,
@@ -1705,7 +1797,9 @@
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
 				724DEC972D01732C00171F44 /* BaseView.swift in Sources */,
+				72977EFB2D5475BF00D1FDE7 /* ReportViewController.swift in Sources */,
 				723B09322D3BCC1400F464A4 /* ImageCacheManager.swift in Sources */,
+				72977EFF2D5479E700D1FDE7 /* ReportReactor.swift in Sources */,
 				7246FA072D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift in Sources */,
 				72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
@@ -1721,6 +1815,7 @@
 				72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
+				72977EED2D53C2B400D1FDE7 /* DeclarationViewController.swift in Sources */,
 				72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */,
 				723620032D354246009BEF12 /* ProfileCoordinator.swift in Sources */,
 				72361E242D02D1E8009BEF12 /* LineTextField.swift in Sources */,
@@ -1761,6 +1856,7 @@
 				72361FDC2D3413CC009BEF12 /* TabBarCoordinator.swift in Sources */,
 				7246FA1A2D39418E00EE6B5E /* KakaoAuthVM.swift in Sources */,
 				72977EC52D48984900D1FDE7 /* SearchBar.swift in Sources */,
+				72977EF92D546BDD00D1FDE7 /* DeclaractionTableViewCell.swift in Sources */,
 				72361F192D2E46BF009BEF12 /* UserDefaultsStorage.swift in Sources */,
 				72977EDD2D51CC8F00D1FDE7 /* SideMenuView.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
@@ -1775,6 +1871,7 @@
 				72361F422D2EA784009BEF12 /* ProductSearchDTO.swift in Sources */,
 				72361ED02D27C529009BEF12 /* ResetPasswordCheckReactor.swift in Sources */,
 				72361F4F2D2EB041009BEF12 /* UserProfileDTO.swift in Sources */,
+				72977EFD2D5475D200D1FDE7 /* ReportView.swift in Sources */,
 				72361E832D12BFDF009BEF12 /* DefaultOnBoardingMediator.swift in Sources */,
 				72361F2B2D2E8CAC009BEF12 /* ProductRequestBody.swift in Sources */,
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
@@ -1810,6 +1907,7 @@
 				72977EE32D51D23900D1FDE7 /* SideMenuReactor.swift in Sources */,
 				72361F622D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift in Sources */,
 				72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */,
+				72977EEF2D53C2BA00D1FDE7 /* DeclarationView.swift in Sources */,
 				72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */,
 				7246FA2A2D3A817400EE6B5E /* MainCoordinatorDelegate.swift in Sources */,
 				72361E682D0C2DFC009BEF12 /* JoinAPI.swift in Sources */,
@@ -1824,6 +1922,7 @@
 				72361FA22D2F90E0009BEF12 /* ReuseIdentifierProtocol.swift in Sources */,
 				72361E3E2D0B1754009BEF12 /* PasswordViewController.swift in Sources */,
 				72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */,
+				72977F012D5488A000D1FDE7 /* SlideInPresentationAnimator.swift in Sources */,
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
 				7246FA1E2D396F2200EE6B5E /* AppleAuthManager.swift in Sources */,
 				72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */,
@@ -1833,7 +1932,9 @@
 				72361F312D2E963C009BEF12 /* RegistDTO.swift in Sources */,
 				7246FA302D3AD46300EE6B5E /* AccessTokenRetrier.swift in Sources */,
 				72361E262D02D208009BEF12 /* AppTextFieldPlaceholder.swift in Sources */,
+				72977F032D548EB300D1FDE7 /* EtcReportViewController.swift in Sources */,
 				72361F402D2EA3B3009BEF12 /* ProductFilterListDTO.swift in Sources */,
+				72977F052D548EB800D1FDE7 /* EtcReportView.swift in Sources */,
 				725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
@@ -1848,6 +1949,7 @@
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
 				72977ECF2D48A3E700D1FDE7 /* SearchSuggestionsView.swift in Sources */,
 				72361F6E2D2EBFF2009BEF12 /* ChatContentDTO.swift in Sources */,
+				72977EF52D53C2F600D1FDE7 /* ReportCoordinatorDelegate.swift in Sources */,
 				72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */,
 				72977EC02D48950000D1FDE7 /* SearchCoordinatorDelegate.swift in Sources */,
 				72361FEB2D3441BE009BEF12 /* SideMenuViewController.swift in Sources */,
@@ -1859,6 +1961,8 @@
 				72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */,
 				725F81832D4347D7002C4E1C /* ProfileReactor.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
+				72977EF32D53C2D200D1FDE7 /* DeclarationReactor.swift in Sources */,
+				72977F072D548EBF00D1FDE7 /* EtcReportReactor.swift in Sources */,
 				725F818E2D44B55D002C4E1C /* UIView+Extension.swift in Sources */,
 				72361F1B2D2E4AB2009BEF12 /* LoginRequestBody.swift in Sources */,
 				72977EBE2D48943300D1FDE7 /* SearchCoordinator.swift in Sources */,

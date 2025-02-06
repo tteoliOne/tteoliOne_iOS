@@ -23,7 +23,7 @@ final class ProfileReactor: Reactor {
     }
     
     struct State {
-        var tableViewItems: [ProfileMenuItem] = []
+        var tableViewItems: [MenuItem] = []
         var profile: UserProfileDTO?
         var errorMessage: String?
         var isFailure: Bool = false
@@ -34,11 +34,11 @@ final class ProfileReactor: Reactor {
    
     init(networkProvider: NetworkProvider<UserAPI>) {
         let menuItems = [
-            ProfileMenuItem(title: "내 공유글 목록"),
-            ProfileMenuItem(title: "공유완료 목록"),
-            ProfileMenuItem(title: "저장글 목록"),
-            ProfileMenuItem(title: "후기 목록"),
-            ProfileMenuItem(title: "프로필 수정")
+            MenuItem(title: "내 공유글 목록"),
+            MenuItem(title: "공유완료 목록"),
+            MenuItem(title: "저장글 목록"),
+            MenuItem(title: "후기 목록"),
+            MenuItem(title: "프로필 수정")
         ]
         self.initialState = State(tableViewItems: menuItems)
         self.networkProvider = networkProvider

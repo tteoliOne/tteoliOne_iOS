@@ -94,12 +94,17 @@ extension UserAPI: TargetType {
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
         case let .reports(_, _, query, body):
-            var parameters = query.asQueryItems()
-               if let bodyData = try? JSONEncoder().encode(body),
-                  let bodyDict = try? JSONSerialization.jsonObject(with: bodyData) as? [String: Any] {
-                   parameters.merge(bodyDict) { (_, new) in new }
-               }
-               return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            let parameters = query.asQueryItems()
+
+            do {
+                let bodyDict = try body.asDictionary() ?? [:]
+                return .requestCompositeParameters(
+                    bodyParameters: bodyDict, bodyEncoding: JSONEncoding.default,
+                    urlParameters: parameters
+                )
+            } catch {
+                return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            }
             
         case let .withdrawal(_, body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
