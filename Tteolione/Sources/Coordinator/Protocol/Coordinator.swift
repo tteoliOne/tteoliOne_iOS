@@ -18,6 +18,7 @@ protocol Coordinator: AnyObject {
     func popVC()
     func dismissVC()
     func finishAllChildren()
+    func removeChild(_ coordinator: Coordinator)
     func show<T: UIViewController>(_ viewController: T, as style: PresentationStyle)
 }
 
@@ -62,6 +63,10 @@ extension Coordinator {
         }
         childCoordinators.removeAll()
         finish()
+    }
+    
+    func removeChild(_ coordinator: Coordinator) {
+        childCoordinators.removeAll { $0 === coordinator }
     }
 }
 
