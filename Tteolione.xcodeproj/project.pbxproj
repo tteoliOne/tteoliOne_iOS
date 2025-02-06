@@ -229,7 +229,7 @@
 		72977ECD2D489CD600D1FDE7 /* XButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ECC2D489CD600D1FDE7 /* XButton.swift */; };
 		72977ECF2D48A3E700D1FDE7 /* SearchSuggestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */; };
 		72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */; };
-		72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */; };
+		72977ED32D48A59500D1FDE7 /* ProductListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED22D48A59500D1FDE7 /* ProductListTableViewCell.swift */; };
 		72977ED62D4A984300D1FDE7 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */; };
 		72977ED82D4AA2D300D1FDE7 /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */; };
 		72977EDD2D51CC8F00D1FDE7 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */; };
@@ -469,7 +469,7 @@
 		72977ECC2D489CD600D1FDE7 /* XButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XButton.swift; sourceTree = "<group>"; };
 		72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSuggestionsView.swift; sourceTree = "<group>"; };
 		72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		72977ED22D48A59500D1FDE7 /* ProductListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListTableViewCell.swift; sourceTree = "<group>"; };
 		72977ED52D4A984300D1FDE7 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		72977EDC2D51CC8F00D1FDE7 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
@@ -511,6 +511,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		721BF2A42D55160D00E37E3B /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				72977ED22D48A59500D1FDE7 /* ProductListTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		72361E1B2D02D07A009BEF12 /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -1080,7 +1088,6 @@
 				72977ECE2D48A3E700D1FDE7 /* SearchSuggestionsView.swift */,
 				72977ED02D48A57300D1FDE7 /* SearchResultsView.swift */,
 				72977ECA2D489C0C00D1FDE7 /* RecentSearchTableViewCell.swift */,
-				72977ED22D48A59500D1FDE7 /* SearchResultTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1429,6 +1436,7 @@
 		724DECAC2D0186A200171F44 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				721BF2A42D55160D00E37E3B /* TableViewCell */,
 				72977EC32D48983900D1FDE7 /* UISearchBar */,
 				72361F9D2D2F9056009BEF12 /* CollectionView */,
 				72361E1E2D02D184009BEF12 /* ImageView */,
@@ -1812,7 +1820,7 @@
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
 				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
-				72977ED32D48A59500D1FDE7 /* SearchResultTableViewCell.swift in Sources */,
+				72977ED32D48A59500D1FDE7 /* ProductListTableViewCell.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
 				72977EED2D53C2B400D1FDE7 /* DeclarationViewController.swift in Sources */,

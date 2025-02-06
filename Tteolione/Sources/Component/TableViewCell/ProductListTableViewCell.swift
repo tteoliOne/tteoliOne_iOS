@@ -1,5 +1,5 @@
 //
-//  SearchResultTableViewCell.swift
+//  ProductListTableViewCell.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/28/25.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 
-final class SearchResultTableViewCell: BaseTableViewCell {
+final class ProductListTableViewCell: BaseTableViewCell {
     
     var disposeBag = DisposeBag()
     private let containerView = ShadowView()

@@ -34,6 +34,28 @@ extension ProfileViewController: View {
             .map { ProfileReactor.Action.resetProfileButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.itemSelected
+            .map { indexPath in
+                return indexPath.row
+            }
+            .subscribe(onNext: { selectedIndex in
+                switch selectedIndex {
+                case 0:
+                    print(1)
+                case 1:
+                    print(2)
+                case 2:
+                    print(3)
+                case 3:
+                    print(4)
+                case 4:
+                    self.rootView.resetProfileField()
+                default:
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: ProfileReactor) {
@@ -68,27 +90,7 @@ extension ProfileViewController: View {
     }
     
     func bindNavigation(_ reactor: ProfileReactor) {
-        rootView.tableView.rx.itemSelected
-            .map { indexPath in
-                return indexPath.row
-            }
-            .subscribe(onNext: { selectedIndex in
-                switch selectedIndex {
-                case 0:
-                    print(1)
-                case 1:
-                    print(2)
-                case 2:
-                    print(3)
-                case 3:
-                    print(4)
-                case 4:
-                    self.rootView.resetProfileField()
-                default:
-                    break
-                }
-            })
-            .disposed(by: disposeBag)
+        
     }
 }
 
