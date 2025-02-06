@@ -22,7 +22,7 @@ final class EtcReportView: BaseView {
         view.tintColor = .black
         view.textAlignment = .left
         view.isScrollEnabled = true
-        view.textColor = .lightGray
+        view.textColor = .myAppBlack
         return view
     }()
     var remainCountLabel = RegularLabel(text: AppText.PostProduct.detailWordCount,
@@ -41,27 +41,28 @@ final class EtcReportView: BaseView {
     
     override func configureLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).inset(40)
+            make.top.equalTo(safeAreaLayoutGuide).inset(4)
             make.centerX.equalTo(safeAreaLayoutGuide)
         }
         
         reportButton.snp.makeConstraints { make in
-            make.bottom.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+            make.bottom.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(28)
             make.height.equalTo(44)
         }
         
         reportView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.bottom.equalTo(reportButton.snp.top).offset(40)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
+            make.bottom.equalTo(reportButton.snp.top).offset(-32)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(28)
         }
         
         reportTextView.snp.makeConstraints { make in
-            make.edges.equalTo(reportView).inset(20)
+            make.edges.equalTo(reportView).inset(28)
         }
         
         remainCountLabel.snp.makeConstraints { make in
-            make.bottom.trailing.equalTo(reportView).inset(8)
+            make.bottom.equalTo(reportView).inset(8)
+            make.trailing.equalTo(reportView).inset(16)
         }
     }
 }

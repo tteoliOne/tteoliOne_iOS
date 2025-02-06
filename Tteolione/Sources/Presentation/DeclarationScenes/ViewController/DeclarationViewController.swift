@@ -68,6 +68,14 @@ extension DeclarationViewController: View {
                 owner.delegate?.pushReportViewController()
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isShowEtcScreen }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushEtcReportViewController()
+            }
+            .disposed(by: disposeBag)
     }
 }
 

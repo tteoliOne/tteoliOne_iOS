@@ -9,5 +9,6 @@ import Foundation
 
 protocol ReportCoordinatorDelegate: Coordinator {
     func pushReportViewController()
+    func pushEtcReportViewController()
     func finishView()
 }

@@ -44,10 +44,12 @@ extension ReportCoordinator {
         )
         viewController.view.backgroundColor = .myAppLightGray2
         viewController.modalPresentationStyle = .pageSheet
+        viewController.isModalInPresentation = false
         if let sheet = viewController.sheetPresentationController {
             sheet.detents = [.medium()]
             sheet.preferredCornerRadius = 20
             sheet.largestUndimmedDetentIdentifier = .large
+            sheet.delegate = self
         }
         show(viewController, as: .present)
     }
@@ -74,10 +76,34 @@ extension ReportCoordinator {
         }
     }
     
+    func pushEtcReportViewController() {
+        let reactor = EtcReportReactor(networkProvider: dependency.userProvider,
+                                       productId: reportId)
+        let viewController = createViewController(
+            ofType: EtcReportViewController.self,
+            with: reactor,
+            delegate: self
+        )
+
+        viewController.modalPresentationStyle = .pageSheet
+        viewController.transitioningDelegate = self
+        viewController.view.backgroundColor = .myAppLightGray2
+        viewController.sheetPresentationController?.detents = [.medium()]
+        viewController.view.layer.cornerRadius = 20
+        viewController.view.layer.masksToBounds = true
+
+        if let presentedVC = navigationController.presentedViewController {
+            presentedVC.present(viewController, animated: true, completion: nil)
+        } else {
+            navigationController.present(viewController, animated: true)
+        }
+    }
+    
     func finishView() {
         finishAllChildren()
         Task { @MainActor in
             await dismissAllPresentedViewControllers()
+            await Task.yield()
             self.parentCoordinator?.removeChild(self)
         }
     }
@@ -90,9 +116,16 @@ extension ReportCoordinator {
                     continuation.resume()
                 }
             }
+            await Task.yield()
         }
     }
     
+}
+
+extension ReportCoordinator: UISheetPresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        finishView()
+    }
 }
 
 extension ReportCoordinator: UIViewControllerTransitioningDelegate {
