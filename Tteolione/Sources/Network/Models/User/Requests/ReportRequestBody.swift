@@ -9,7 +9,7 @@ import Foundation
 
 struct ReportRequestBody: Encodable {
     
-    let content: String
-    let reporteeId: String
+    let content: String?
+    let reporteeId: String?
     
 }

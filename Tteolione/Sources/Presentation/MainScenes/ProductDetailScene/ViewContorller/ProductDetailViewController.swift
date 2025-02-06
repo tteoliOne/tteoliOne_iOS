@@ -87,6 +87,17 @@ extension ProductDetailViewController: View {
                                                        productDetail: productDetail)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { ($0.isReportScreenShown, $0.productId) }
+            .distinctUntilChanged { $0.0 == $1.0 }
+            .filter { $0.0 }
+            .compactMap { $0.1 }
+            .bind(with: self) { owner, id in
+                owner.delegate?.showReportView(reportType: .products,
+                                               reportId: id)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -124,8 +135,8 @@ extension ProductDetailViewController {
             let reportAction = UIAction(
                 title: "신고하기",
                 image: UIImage(systemName: "exclamationmark.circle")
-            ) { _ in
-                print("신고하기 눌림")
+            ) { [weak self] _ in
+                self?.reactor?.action.onNext(.reportPost)
             }
             return UIMenu(title: "", children: [reportAction])
         }

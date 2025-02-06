@@ -51,7 +51,7 @@ final class ProfileListTableViewCell: BaseTableViewCell {
         contentView.backgroundColor = .myAppMain
     }
     
-    func configure(with item: ProfileMenuItem) {
+    func configure(with item: MenuItem) {
         listTitleLabel.text = item.title
     }
 }

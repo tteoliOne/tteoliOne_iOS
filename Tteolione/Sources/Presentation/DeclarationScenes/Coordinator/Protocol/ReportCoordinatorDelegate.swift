@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol ReportCoordinatorDelegate: Coordinator {
+    func pushReportViewController()
+    func finishView()
+}

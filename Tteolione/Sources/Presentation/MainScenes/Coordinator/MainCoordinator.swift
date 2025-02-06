@@ -103,6 +103,16 @@ extension MainCoordinator {
         show(viewController, as: .present)
     }
     
+    func showReportView(reportType: ReportType, reportId: Int) {
+        let coordinator = ReportCoordinator(navigationController: navigationController,
+                                            dependency: dependency,
+                                            reportType: reportType,
+                                            reportId: reportId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
     func dismissAndPop() {
         navigationController.dismiss(animated: true) { [weak navigationController] in
             guard let navigationController = navigationController else { return }
