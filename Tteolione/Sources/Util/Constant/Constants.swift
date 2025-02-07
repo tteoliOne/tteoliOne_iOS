@@ -33,3 +33,9 @@ enum ReportCategory: String {
     case information
     case etc
 }
+
+enum StatusType: String {
+    case eNew
+    case eSoldOut
+    case saved
+}

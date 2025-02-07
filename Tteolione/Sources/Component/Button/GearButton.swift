@@ -1,19 +1,19 @@
 //
-//  BackButton.swift
+//  GearButton.swift
 //  Tteolione
 //
-//  Created by 전준영 on 12/6/24.
+//  Created by 전준영 on 2/7/25.
 //
 
 import UIKit
 
-class BackButton: UIButton {
+class GearButton: UIButton {
     
-    init(size: CGFloat? = 30) {
+    init(size: CGFloat? = 22) {
         super.init(frame: .zero)
         
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: size ?? 30, weight: .light)
-        setImage(UIImage(systemName: "chevron.backward", withConfiguration: imageConfig)?
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: size ?? 22, weight: .light)
+        setImage(UIImage(systemName: "gearshape.fill", withConfiguration: imageConfig)?
             .withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
         imageView?.contentMode = .scaleAspectFit
         

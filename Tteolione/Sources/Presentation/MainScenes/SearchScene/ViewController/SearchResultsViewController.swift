@@ -21,8 +21,8 @@ final class SearchResultsViewController: BaseViewController<SearchResultsView> {
     
     private func setupBindings() {
         results.bind(to: rootView.tableView.rx.items(
-                cellIdentifier: SearchResultTableViewCell.identifier,
-                cellType: SearchResultTableViewCell.self)) { _, element, cell in
+                cellIdentifier: ProductListTableViewCell.identifier,
+                cellType: ProductListTableViewCell.self)) { _, element, cell in
                 cell.configure(with: element)
             }
                 .disposed(by: disposeBag)

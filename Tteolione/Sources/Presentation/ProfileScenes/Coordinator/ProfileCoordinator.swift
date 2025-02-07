@@ -31,3 +31,26 @@ final class ProfileCoordinator: NSObject, ProfileCoordinatorDelegate {
         show(viewController)
     }
 }
+
+extension ProfileCoordinator {
+    func pushMyProductViewController(status: StatusType) {
+        let reactor = MyProductListReactor(networkProvider: dependency.userProvider,
+                                           status: status)
+        let viewController = createViewController(
+            ofType: MyProductListViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
+    func showSettingView() {
+        let coordinator = SettingCoordinator(navigationController: navigationController,
+                                             dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+}

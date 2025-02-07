@@ -1,5 +1,5 @@
 //
-//  SearchResultTableViewCell.swift
+//  ProductListTableViewCell.swift
 //  Tteolione
 //
 //  Created by 전준영 on 1/28/25.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 
-final class SearchResultTableViewCell: BaseTableViewCell {
+final class ProductListTableViewCell: BaseTableViewCell {
     
     var disposeBag = DisposeBag()
     private let containerView = ShadowView()
@@ -23,6 +23,9 @@ final class SearchResultTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.text = "양파 100개 공유합니다~!!"
         label.textColor = .myAppBlack
+        label.numberOfLines = 1
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.7
         label.font = Font.bold18
         return label
     }()
@@ -77,6 +80,7 @@ final class SearchResultTableViewCell: BaseTableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(containerView).inset(20)
             make.leading.equalTo(productImageView.snp.trailing).offset(12)
+            make.trailing.equalTo(containerView).inset(12)
         }
         
         markImageView.snp.makeConstraints { make in
@@ -106,6 +110,13 @@ final class SearchResultTableViewCell: BaseTableViewCell {
         }
     }
     
+    private func updateLikeButton(isLiked: Bool, likeCount: Int) {
+        likeButton.updateLikeState(isLiked: isLiked)
+        likeCountLabel.text = "\(likeCount)"
+    }
+}
+
+extension ProductListTableViewCell {
     func configure(with data: ProductPreviewDTO) {
         if let imageUrl = URL(string: data.imageUrl) {
             productImageView.loadImage(from: imageUrl)
@@ -117,6 +128,7 @@ final class SearchResultTableViewCell: BaseTableViewCell {
                                     data.walkingDistance / 1000)
         unitPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(data.unitPrice))원"
         likeCountLabel.text = "\(data.totalLikes)"
+        likeButton.updateLikeState(isLiked: data.liked)
         likeButton.isSelected = data.liked
     }
     

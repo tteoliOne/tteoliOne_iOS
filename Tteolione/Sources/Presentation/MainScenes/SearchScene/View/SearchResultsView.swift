@@ -14,8 +14,8 @@ final class SearchResultsView: BaseView {
                                   color: .myAppMain)
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(SearchResultTableViewCell.self,
-                           forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+        tableView.register(ProductListTableViewCell.self,
+                           forCellReuseIdentifier: ProductListTableViewCell.identifier)
         tableView.rowHeight = 140
         tableView.separatorStyle = .none
         return tableView

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 extension UIImage {
     func rotate(radians: CGFloat) -> UIImage? {
@@ -30,6 +31,26 @@ extension UIImage {
     }
     
     static func load(from url: URL) async -> UIImage? {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return UIImage(data: data)
+        } catch {
+            return nil
+        }
+    }
+    
+    static func loadImage(from url: URL) -> Observable<UIImage?> {
+        return Observable.create { observer in
+            Task {
+                let image = await load(from: url)
+                observer.onNext(image)
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    static func loadSync(from url: URL) async -> UIImage? {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             return UIImage(data: data)
