@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
+		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
+		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
+		721BF2AC2D55176300E37E3B /* MyProductListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2AB2D55176300E37E3B /* MyProductListReactor.swift */; };
 		72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1C2D02D095009BEF12 /* TopBarView.swift */; };
 		72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1F2D02D18F009BEF12 /* JoinImageView.swift */; };
 		72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E212D02D1B1009BEF12 /* AppJoinImage.swift */; };
@@ -253,6 +256,9 @@
 
 /* Begin PBXFileReference section */
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
+		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
+		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
+		721BF2AB2D55176300E37E3B /* MyProductListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListReactor.swift; sourceTree = "<group>"; };
 		72361E1C2D02D095009BEF12 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		72361E1F2D02D18F009BEF12 /* JoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinImageView.swift; sourceTree = "<group>"; };
 		72361E212D02D1B1009BEF12 /* AppJoinImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppJoinImage.swift; sourceTree = "<group>"; };
@@ -1125,6 +1131,7 @@
 			isa = PBXGroup;
 			children = (
 				725F81822D4347D7002C4E1C /* ProfileReactor.swift */,
+				721BF2AB2D55176300E37E3B /* MyProductListReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -1134,6 +1141,7 @@
 			children = (
 				723620002D3541A5009BEF12 /* ProfileView.swift */,
 				723620042D355502009BEF12 /* ProfileListTableViewCell.swift */,
+				721BF2A72D55174900E37E3B /* MyProductListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1142,6 +1150,7 @@
 			isa = PBXGroup;
 			children = (
 				72361FFE2D35417C009BEF12 /* ProfileViewController.swift */,
+				721BF2A92D55175700E37E3B /* MyProductListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1788,6 +1797,7 @@
 				72361E442D0B28AE009BEF12 /* PasswordExplainLabelView.swift in Sources */,
 				72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */,
 				72361E7B2D0EC866009BEF12 /* HeaderKeyAndValue.swift in Sources */,
+				721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */,
 				72361E422D0B179A009BEF12 /* PasswordReactor.swift in Sources */,
 				72361F442D2EA8B7009BEF12 /* UserAPI.swift in Sources */,
 				72361F4B2D2EAEBA009BEF12 /* UserProfileRequestBody.swift in Sources */,
@@ -1808,6 +1818,7 @@
 				72977EFB2D5475BF00D1FDE7 /* ReportViewController.swift in Sources */,
 				723B09322D3BCC1400F464A4 /* ImageCacheManager.swift in Sources */,
 				72977EFF2D5479E700D1FDE7 /* ReportReactor.swift in Sources */,
+				721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */,
 				7246FA072D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift in Sources */,
 				72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
@@ -1842,6 +1853,7 @@
 				72361ECC2D27C510009BEF12 /* ResetPasswordCheckViewController.swift in Sources */,
 				72361ECE2D27C51C009BEF12 /* ResetPasswordCheckView.swift in Sources */,
 				7236200F2D3571F6009BEF12 /* AddressTableViewCell.swift in Sources */,
+				721BF2AC2D55176300E37E3B /* MyProductListReactor.swift in Sources */,
 				725F81882D43B2AB002C4E1C /* MapViewController.swift in Sources */,
 				72361FC42D30F8D2009BEF12 /* RegularLabel.swift in Sources */,
 				72361FCA2D315B6A009BEF12 /* PostReceiptReactor.swift in Sources */,

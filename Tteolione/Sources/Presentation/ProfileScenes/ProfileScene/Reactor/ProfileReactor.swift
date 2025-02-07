@@ -14,12 +14,14 @@ final class ProfileReactor: Reactor {
     enum Action {
         case fetchProfile
         case resetProfileButtonTap
+        case myShareTap(StatusType)
     }
     
     enum Mutation {
         case setProfile(UserProfileDTO)
         case showError(NetworkError)
         case setFailureType(Bool)
+        case myProductScreen(Bool, StatusType?)
     }
     
     struct State {
@@ -27,6 +29,8 @@ final class ProfileReactor: Reactor {
         var profile: UserProfileDTO?
         var errorMessage: String?
         var isFailure: Bool = false
+        var isMyProductScreen: Bool = false
+        var selectedStatus: StatusType?
     }
     
     private let networkProvider: NetworkProvider<UserAPI>
@@ -60,6 +64,12 @@ extension ProfileReactor {
                 .just(.setFailureType(true)),
                 .just(.setFailureType(false))
             ])
+            
+        case .myShareTap(let status):
+            return .concat([
+                .just(.myProductScreen(true, status)),
+                .just(.myProductScreen(false, nil))
+            ])
         }
     }
     
@@ -79,6 +89,10 @@ extension ProfileReactor {
             
         case .setFailureType(let isFail):
             newState.isFailure = isFail
+            
+        case let .myProductScreen(isScreen, status):
+            newState.isMyProductScreen = isScreen
+            newState.selectedStatus = status
         }
         
         return newState

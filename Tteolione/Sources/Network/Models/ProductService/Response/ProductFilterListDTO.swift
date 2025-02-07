@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductFilterListDTO: Decodable {
+struct ProductFilterListDTO: Equatable, Decodable {
     
     let content: [ProductPreviewDTO]
     let pageable: PageableDTO
@@ -21,7 +21,7 @@ struct ProductFilterListDTO: Decodable {
     
 }
 
-struct PageableDTO: Decodable {
+struct PageableDTO: Equatable, Decodable {
     
     let sort: [PageSortDTO]
     let offset: Int
@@ -32,7 +32,7 @@ struct PageableDTO: Decodable {
     
 }
 
-struct PageSortDTO: Decodable {
+struct PageSortDTO: Equatable, Decodable {
     
     let direction: String
     let property: String

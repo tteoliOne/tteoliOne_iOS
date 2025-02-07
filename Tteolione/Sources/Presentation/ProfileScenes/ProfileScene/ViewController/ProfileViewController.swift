@@ -42,11 +42,11 @@ extension ProfileViewController: View {
             .subscribe(onNext: { selectedIndex in
                 switch selectedIndex {
                 case 0:
-                    print(1)
+                    reactor.action.onNext(.myShareTap(.eNew))
                 case 1:
                     print(2)
                 case 2:
-                    print(3)
+                    reactor.action.onNext(.myShareTap(.saved))
                 case 3:
                     print(4)
                 case 4:
@@ -90,6 +90,15 @@ extension ProfileViewController: View {
     }
     
     func bindNavigation(_ reactor: ProfileReactor) {
+        reactor.state
+            .map { ($0.isMyProductScreen, $0.selectedStatus) }
+            .filter { $0.0 }
+            .compactMap { $0.1 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, status in
+                owner.delegate?.pushMyProductViewController(status: status)
+            }
+            .disposed(by: disposeBag)
         
     }
 }

@@ -31,3 +31,18 @@ final class ProfileCoordinator: NSObject, ProfileCoordinatorDelegate {
         show(viewController)
     }
 }
+
+extension ProfileCoordinator {
+    func pushMyProductViewController(status: StatusType) {
+        let reactor = MyProductListReactor(networkProvider: dependency.userProvider,
+                                           status: status)
+        let viewController = createViewController(
+            ofType: MyProductListViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+}
