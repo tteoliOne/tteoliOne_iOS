@@ -45,4 +45,12 @@ extension ProfileCoordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
         show(viewController)
     }
+    
+    func showSettingView() {
+        let coordinator = SettingCoordinator(navigationController: navigationController,
+                                             dependency: dependency)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
 }

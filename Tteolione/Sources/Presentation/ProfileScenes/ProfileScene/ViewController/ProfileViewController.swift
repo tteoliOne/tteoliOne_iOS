@@ -74,6 +74,11 @@ extension ProfileViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.gearButton.rx.tap
+            .map { ProfileReactor.Action.gearButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.tableView.rx.itemSelected
             .map { indexPath in
                 return indexPath.row
@@ -193,6 +198,15 @@ extension ProfileViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.showImagePicker()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isGearButtonTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.showSettingView()
             }
             .disposed(by: disposeBag)
     }

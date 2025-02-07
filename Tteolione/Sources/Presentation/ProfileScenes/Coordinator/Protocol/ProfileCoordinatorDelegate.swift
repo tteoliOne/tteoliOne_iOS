@@ -9,4 +9,5 @@ import Foundation
 
 protocol ProfileCoordinatorDelegate: Coordinator {
     func pushMyProductViewController(status: StatusType)
+    func showSettingView()
 }

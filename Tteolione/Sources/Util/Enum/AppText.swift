@@ -91,6 +91,7 @@ enum AppText {
         static let complete = "공유완료 목록"
         static let likeList = "저장글 목록"
         static let review = "후기 목록"
+        static let setting = "설정"
     }
     
 }

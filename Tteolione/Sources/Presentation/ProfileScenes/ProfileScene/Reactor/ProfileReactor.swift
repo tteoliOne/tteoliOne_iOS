@@ -20,6 +20,7 @@ final class ProfileReactor: Reactor {
         case updateIntro(String)
         case photoButtonTap
         case imageSelected(UIImage)
+        case gearButtonTap
     }
     
     enum Mutation {
@@ -33,6 +34,7 @@ final class ProfileReactor: Reactor {
         case setIntroLengthText(String)
         case setProfileImagePicker(Bool)
         case setProfileImage(UIImage?)
+        case setGearButtonTapped(Bool)
     }
     
     struct State {
@@ -48,6 +50,7 @@ final class ProfileReactor: Reactor {
         var introLengthText: String = "0/20"
         var isProductImagePickerShown: Bool = false
         var profileImage: UIImage?
+        var isGearButtonTapped: Bool = false
     }
     
     private let networkProvider: NetworkProvider<UserAPI>
@@ -116,6 +119,12 @@ extension ProfileReactor {
             
         case .imageSelected(let image):
             return .just(.setProfileImage(image))
+            
+        case .gearButtonTap:
+            return .concat([
+                .just(.setGearButtonTapped(true)),
+                .just(.setGearButtonTapped(false))
+            ])
         }
     }
     
@@ -157,6 +166,9 @@ extension ProfileReactor {
             
         case .setProfileImage(let image):
             newState.profileImage = image
+            
+        case .setGearButtonTapped(let isGear):
+            newState.isGearButtonTapped = isGear
         }
         
         return newState

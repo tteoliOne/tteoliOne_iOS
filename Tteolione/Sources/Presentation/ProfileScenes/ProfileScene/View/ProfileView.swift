@@ -11,6 +11,7 @@ import SnapKit
 final class ProfileView: BaseView {
     
     private let profileFieldView = ShadowView()
+    let gearButton = GearButton(size: 22)
     private let profileShadowView = ShadowView(color: .white,
                                                corner: (Device.screenWidth * 0.22) / 2,
                                                shadowColor: UIColor(red: 0x58/255.0,
@@ -99,6 +100,7 @@ final class ProfileView: BaseView {
          withdrawalButton].forEach { addSubview($0) }
         
         [profileShadowView, nicknameView,
+         gearButton,
          thumbView, oneLinerLabel,
          profileSetButton, setNicknameLabel,
          setNicknameView, setNickErrorLabel,
@@ -117,6 +119,11 @@ final class ProfileView: BaseView {
         profileFieldView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(Device.screenHeight * 0.22)
+        }
+        
+        gearButton.snp.makeConstraints { make in
+            make.top.equalTo(profileFieldView).inset(8)
+            make.trailing.equalTo(profileFieldView).inset(12)
         }
         
         profileShadowView.snp.makeConstraints { make in
@@ -202,6 +209,11 @@ final class ProfileView: BaseView {
         setNicknameTextField.textAlignment = .center
         setIntroTextField.textAlignment = .center
     }
+    
+    private func updateVisibility(hiddenViews: [UIView], visibleViews: [UIView]) {
+        hiddenViews.forEach { $0.isHidden = true }
+        visibleViews.forEach { $0.isHidden = false }
+    }
 }
 
 extension ProfileView {
@@ -212,11 +224,6 @@ extension ProfileView {
     
     func updateImage(_ image: UIImage) {
         profileMyImage.image = image
-    }
-    
-    private func updateVisibility(hiddenViews: [UIView], visibleViews: [UIView]) {
-        hiddenViews.forEach { $0.isHidden = true }
-        visibleViews.forEach { $0.isHidden = false }
     }
 
     func resetProfileField() {
@@ -287,7 +294,8 @@ extension ProfileView {
 
             let hiddenViews = [
                 self.nicknameView, self.thumbView, self.oneLinerLabel,
-                self.logOutButton, self.slash, self.withdrawalButton
+                self.logOutButton, self.slash, self.withdrawalButton,
+                self.gearButton
             ]
             
             let visibleViews: [UIView] = [
@@ -315,7 +323,8 @@ extension ProfileView {
             
             let visibleViews = [
                 self.nicknameView, self.thumbView, self.oneLinerLabel,
-                self.logOutButton, self.slash, self.withdrawalButton
+                self.logOutButton, self.slash, self.withdrawalButton,
+                self.gearButton
             ]
             
             let hiddenViews: [UIView] = [
