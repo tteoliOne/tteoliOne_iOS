@@ -9,10 +9,10 @@ import UIKit
 
 class BackButton: UIButton {
     
-    init() {
+    init(size: CGFloat? = 30) {
         super.init(frame: .zero)
         
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: size ?? 30, weight: .light)
         setImage(UIImage(systemName: "chevron.backward", withConfiguration: imageConfig)?
             .withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
         imageView?.contentMode = .scaleAspectFit
