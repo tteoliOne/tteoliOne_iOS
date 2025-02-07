@@ -8,6 +8,7 @@
 import UIKit
 import ReactorKit
 import RxCocoa
+import PhotosUI
 
 final class ProfileViewController: BaseViewController<ProfileView> {
     
@@ -25,13 +26,51 @@ extension ProfileViewController: View {
     }
     
     func bindAction(_ reactor: ProfileReactor) {
-        self.rx.viewWillAppear
-            .map { _ in ProfileReactor.Action.fetchProfile }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+        reactor.action.onNext(.fetchProfile)
+//        self.rx.viewWillAppear
+//            .map { _ in ProfileReactor.Action.fetchProfile }
+//            .bind(to: reactor.action)
+//            .disposed(by: disposeBag)
         
         rootView.setButton.rx.tap
             .map { ProfileReactor.Action.resetProfileButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.setNicknameTextField.rx.text.orEmpty
+            .map { $0.count <= 10 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+                if !isEditable {
+                    self?.rootView.setNicknameTextField.text = String(self?.rootView.setNicknameTextField.text?.dropLast() ?? "")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.setNicknameTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { ProfileReactor.Action.updateNickname($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.setIntroTextField.rx.text.orEmpty
+            .map { $0.count <= 20 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isEditable in
+                if !isEditable {
+                    self?.rootView.setIntroTextField.text = String(self?.rootView.setIntroTextField.text?.dropLast() ?? "")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.setIntroTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .map { ProfileReactor.Action.updateIntro($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.profileSetButton.rx.tap
+            .map { ProfileReactor.Action.photoButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -50,7 +89,7 @@ extension ProfileViewController: View {
                 case 3:
                     print(4)
                 case 4:
-                    self.rootView.resetProfileField()
+                    reactor.action.onNext(.resetProfileListTap)
                 default:
                     break
                 }
@@ -100,6 +139,104 @@ extension ProfileViewController: View {
             }
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.isResetProfileListTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: rootView) { owner, _ in
+                owner.resetProfileField()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.nickname }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.nickname.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.intro }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.oneLinerLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.nickname }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.setNicknameTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.intro }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.setIntroTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.introLengthText }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(to: rootView.remainCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.profileImage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: rootView) { owner, image in
+                owner.updateImage(image)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isProductImagePickerShown }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showImagePicker()
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension ProfileViewController: PHPickerViewControllerDelegate {
+    
+    func showImagePicker() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 1
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        guard let result = results.first else { return }
+        
+        Task {
+            if let image = await loadImage(from: result) {
+                self.reactor?.action.onNext(.imageSelected(image))
+                self.rootView.updateImage(image)
+            }
+        }
+    }
+    
+    private func loadImage(from result: PHPickerResult) async -> UIImage? {
+        return await withCheckedContinuation { continuation in
+            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                result.itemProvider.loadObject(ofClass: UIImage.self) { object, _ in
+                    if let image = object as? UIImage {
+                        continuation.resume(returning: image)
+                    } else {
+                        continuation.resume(returning: nil)
+                    }
+                }
+            } else {
+                continuation.resume(returning: nil)
+            }
+        }
     }
 }
 

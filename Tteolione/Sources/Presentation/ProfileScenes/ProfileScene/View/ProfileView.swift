@@ -26,7 +26,7 @@ final class ProfileView: BaseView {
                                        shadowColor: UIColor.myAppMain.cgColor)
     private let nicknameLabel = AndongLabel(text: AppText.Etc.nickname,
                                             color: .myAppMain)
-    private let nickname = AndongLabel(text: "닉네임",
+    let nickname = AndongLabel(text: "닉네임",
                                        font: Font.Andong15,
                                        color: .myAppBlack)
     private let thumbLabel = AndongLabel(text: AppText.Etc.thumb,
@@ -34,7 +34,7 @@ final class ProfileView: BaseView {
     private let thumbCount = AndongLabel(text: "3",
                                          font: Font.Andong15,
                                          color: .myAppBlack)
-    private let oneLinerLabel = RegularLabel(text: "한줄 소개",
+    let oneLinerLabel = RegularLabel(text: "한줄 소개",
                                              color: .myAppBlack)
     private let listView = ShadowView(color: .myAppMain,
                                       corner: 20)
@@ -73,7 +73,7 @@ final class ProfileView: BaseView {
                                                                   green: 0x8F/255.0,
                                                                   blue: 0x11/255.0,
                                                                   alpha: 1.0).cgColor)
-    private let setNicknameTextField = CommonTextField()
+    let setNicknameTextField = CommonTextField()
     private let setNickErrorLabel = RegularLabel(text: "닉네임 중복입니다!!",
                                               font: Font.regular13,
                                               color: .myAppRed)
@@ -85,7 +85,9 @@ final class ProfileView: BaseView {
                                                                green: 0x8F/255.0,
                                                                blue: 0x11/255.0,
                                                                alpha: 1.0).cgColor)
-    private let setIntroTextField = CommonTextField()
+    let setIntroTextField = CommonTextField()
+    var remainCountLabel = RegularLabel(text: "0/20",
+                                        color: .myAppLightGray2)
     let setButton = CommonButton(title: .set,
                                  corner: 24,
                                  backgroundColor: .myAppMain,
@@ -101,7 +103,7 @@ final class ProfileView: BaseView {
          profileSetButton, setNicknameLabel,
          setNicknameView, setNickErrorLabel,
          setIntroLabel, setIntroView,
-         setButton].forEach { profileFieldView.addSubview($0) }
+         remainCountLabel, setButton].forEach { profileFieldView.addSubview($0) }
         [setNicknameTextField].forEach { setNicknameView.addSubview($0) }
         [setIntroTextField].forEach { setIntroView.addSubview($0) }
         
@@ -205,14 +207,11 @@ final class ProfileView: BaseView {
 extension ProfileView {
     
     func setupViews(with value: UserProfileDTO) {
-        if let imageUrl = URL(string: value.profile) {
-            profileMyImage.loadImage(from: imageUrl)
-        } else {
-            profileMyImage.image = nil
-        }
-        nickname.text = value.nickname
-        oneLinerLabel.text = value.intro ?? "소개글이 없습니다"
         thumbCount.text = "\(value.thumbsUpScore)"
+    }
+    
+    func updateImage(_ image: UIImage) {
+        profileMyImage.image = image
     }
     
     private func updateVisibility(hiddenViews: [UIView], visibleViews: [UIView]) {
@@ -273,6 +272,11 @@ extension ProfileView {
             self.setIntroTextField.snp.makeConstraints { make in
                 make.edges.equalTo(self.setIntroView)
             }
+            
+            self.remainCountLabel.snp.makeConstraints { make in
+                make.top.equalTo(self.setIntroView.snp.bottom).offset(8)
+                make.trailing.equalTo(self.setIntroView)
+            }
 
             self.setButton.snp.makeConstraints { make in
                 make.centerX.equalTo(self.profileFieldView)
@@ -289,7 +293,7 @@ extension ProfileView {
             let visibleViews: [UIView] = [
                 self.setButton, self.setIntroView, self.setIntroLabel,
                 self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
-                self.setNicknameView
+                self.setNicknameView, self.remainCountLabel
             ]
             self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
 
@@ -303,10 +307,10 @@ extension ProfileView {
                 make.height.equalTo(Device.screenHeight * 0.22)
             }
             
-            self.profileShadowView.snp.makeConstraints { make in
-                make.size.equalTo(Device.screenWidth * 0.22)
+            self.profileShadowView.snp.remakeConstraints { make in
                 make.top.equalTo(self.profileFieldView).inset(28)
                 make.leading.equalTo(self.profileFieldView).inset(20)
+                make.size.equalTo(Device.screenWidth * 0.22)
             }
             
             let visibleViews = [
@@ -317,7 +321,7 @@ extension ProfileView {
             let hiddenViews: [UIView] = [
                 self.setButton, self.setIntroView, self.setIntroLabel,
                 self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
-                self.setNicknameView
+                self.setNicknameView, self.remainCountLabel
             ]
 
             self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
