@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct CreateChatRoonRequestBody: Encodable {
+struct CreateChatRoomRequestBody: Encodable {
     
-    let productNo: Int
+    let productNo: Int?
     
 }
