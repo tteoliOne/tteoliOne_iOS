@@ -18,6 +18,7 @@ final class AppDependency {
     let joinNetworkProvider = NetworkProvider<JoinAPI>()
     let accountNetworkProvider = NetworkProvider<FindAccountAPI>()
     let socialNetworkProvider = NetworkProvider<SocialAPI>()
+    let chatNetworkProvider = NetworkProvider<ChatAPI>()
     let userProvider = NetworkProvider<UserAPI>()
     lazy var onboardingMediator = DefaultOnBoardingMediator(signUpReactor: onboardingReactor)
 
