@@ -36,6 +36,9 @@ extension Font {
     static let regular15 = Font.regular(15).font()
     static let regular16 = Font.regular(16).font()
     static let regular17 = Font.regular(17).font()
+    static let regular20 = Font.regular(20).font()
+    static let regular25 = Font.regular(25).font()
+    static let regular28 = Font.regular(28).font()
     
     static let bold13 = Font.bold(13).font()
     static let bold14 = Font.bold(14).font()
@@ -44,9 +47,19 @@ extension Font {
     static let bold17 = Font.bold(17).font()
     static let bold18 = Font.bold(18).font()
     static let bold20 = Font.bold(20).font()
+    static let bold30 = Font.bold(30).font()
+    static let bold50 = Font.bold(50).font()
     
-    static let Andong60 = Font.custom(FontNames.andong, 60).font() // 로그인 화면 로고
-    static let Andong30 = Font.custom(FontNames.andong, 30).font() // 떠리원 텍스트
+    static let Andong11 = Font.custom(FontNames.andong, 11).font()
+    static let Andong13 = Font.custom(FontNames.andong, 13).font()
+    static let Andong15 = Font.custom(FontNames.andong, 15).font()
+    static let Andong16 = Font.custom(FontNames.andong, 16).font()
+    static let Andong18 = Font.custom(FontNames.andong, 18).font()
+    static let Andong20 = Font.custom(FontNames.andong, 20).font()
+    static let Andong25 = Font.custom(FontNames.andong, 25).font()
+    static let Andong30 = Font.custom(FontNames.andong, 30).font()
+    static let Andong60 = Font.custom(FontNames.andong, 60).font()
+    static let Andong100 = Font.custom(FontNames.andong, 100).font()
     
     static let bold25 = Font.bold(25).font()
 }

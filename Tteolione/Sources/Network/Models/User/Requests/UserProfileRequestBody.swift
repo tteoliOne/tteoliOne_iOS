@@ -1,0 +1,15 @@
+//
+//  UserProfileRequestBody.swift
+//  Tteolione
+//
+//  Created by 전준영 on 1/8/25.
+//
+
+import Foundation
+
+struct UserProfileRequestBody: Encodable {
+    
+    let nickname: String
+    let intro: String
+    
+}
