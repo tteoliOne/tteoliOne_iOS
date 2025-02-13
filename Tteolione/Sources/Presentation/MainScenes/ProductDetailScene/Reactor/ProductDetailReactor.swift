@@ -18,6 +18,7 @@ final class ProductDetailReactor: Reactor {
         case editPost
         case deletePost
         case reportPost
+        case callButtonTap
     }
     
     enum Mutation {
@@ -28,6 +29,8 @@ final class ProductDetailReactor: Reactor {
         case showEditScreen(Bool)
         case deleteConfirmation(Bool)
         case showReportScreen(Bool)
+        case callButtonTapped(Bool)
+        case setChatDto(ChatDTO)
     }
 
     struct State {
@@ -40,14 +43,19 @@ final class ProductDetailReactor: Reactor {
         var isEditScreenShown: Bool = false
         var isDelete: Bool = false
         var isReportScreenShown: Bool = false
+        var isCallButtonTapped: Bool = false
+        var chatDto: ChatDTO?
     }
     
-    private let networkProvider: NetworkProvider<ProductServiceAPI>
+    private let networkPorductProvider: NetworkProvider<ProductServiceAPI>
+    private let networkChatProvider: NetworkProvider<ChatAPI>
     var initialState: State = State()
     
-    init(networkProvider: NetworkProvider<ProductServiceAPI>,
+    init(networkPorductProvider: NetworkProvider<ProductServiceAPI>,
+         networkChatProvider: NetworkProvider<ChatAPI>,
          productId: Int) {
-        self.networkProvider = networkProvider
+        self.networkPorductProvider = networkPorductProvider
+        self.networkChatProvider = networkChatProvider
         self.initialState = State(productId: productId)
     }
     
@@ -82,6 +90,9 @@ extension ProductDetailReactor {
                 .just(.showReportScreen(true)),
                 .just(.showReportScreen(false))
             ])
+            
+        case .callButtonTap:
+            return createChat(productId: currentState.productId)
         }
     }
     
@@ -116,6 +127,12 @@ extension ProductDetailReactor {
             
         case .showReportScreen(let isReport):
             newState.isReportScreenShown = isReport
+            
+        case .callButtonTapped(let isCall):
+            newState.isCallButtonTapped = isCall
+            
+        case .setChatDto(let dto):
+            newState.chatDto = dto
         }
         
         return newState
@@ -126,7 +143,7 @@ extension ProductDetailReactor {
 extension ProductDetailReactor {
     
     private func fetchGetProduct(_ productId: Int) -> Observable<Mutation> {
-        return networkProvider.request(.getDetailProduct(productId: productId),
+        return networkPorductProvider.request(.getDetailProduct(productId: productId),
                                        decodingType: ServerResponse<ProductDetailDTO>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
@@ -142,7 +159,7 @@ extension ProductDetailReactor {
     }
     
     private func fetchLikePost(productId: Int) -> Observable<Mutation> {
-        return networkProvider.request(.likeProduct(productId: productId),
+        return networkPorductProvider.request(.likeProduct(productId: productId),
                                        decodingType: ServerResponse<String>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
@@ -158,7 +175,7 @@ extension ProductDetailReactor {
     }
     
     private func deletePost(productId: Int) -> Observable<Mutation> {
-        return networkProvider.request(.deleteProduct(productId: productId),
+        return networkPorductProvider.request(.deleteProduct(productId: productId),
                                        decodingType: ServerResponse<String>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
@@ -167,6 +184,25 @@ extension ProductDetailReactor {
                 return .concat([
                     .just(.deleteConfirmation(true)),
                     .just(.deleteConfirmation(false))
+                ])
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func createChat(productId: Int) -> Observable<Mutation> {
+        let body = CreateChatRoomRequestBody(productNo: productId)
+        return networkChatProvider.request(.createChatRoom(body: body),
+                                           decodingType: ServerResponse<ChatDTO>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(let dto):
+                return .concat([
+                    .just(.setChatDto(dto)),
+                    .just(.callButtonTapped(true)),
+                    .just(.callButtonTapped(false))
                 ])
             case .failure(let error):
                 return .just(.showError(error))

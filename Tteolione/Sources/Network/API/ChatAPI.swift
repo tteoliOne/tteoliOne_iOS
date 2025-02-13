@@ -9,8 +9,8 @@ import Foundation
 import Moya
 
 enum ChatAPI {
-    case createChatRoom(body: CreateChatRoonRequestBody)
-    case getChatRoomList(body: CreateChatRoonRequestBody)
+    case createChatRoom(body: CreateChatRoomRequestBody)
+    case getChatRoomList
     case getChatHistory(roomNo: Int)
     case sendMessageWithCallback(body: CallBackRequestBody)
     case leaveChatRoom(chatRoomId: Int)
@@ -89,9 +89,6 @@ extension ChatAPI: TargetType {
         case let .createChatRoom(body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
-        case let .getChatRoomList(body):
-            return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
-            
         case let .sendMessageWithCallback(body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
@@ -105,7 +102,8 @@ extension ChatAPI: TargetType {
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
         case .getChatHistory, .leaveChatRoom,
-                .deleteChatRoom, .requestShare:
+                .deleteChatRoom, .requestShare,
+                .getChatRoomList:
             return .requestPlain
         }
     }

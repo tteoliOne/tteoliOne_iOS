@@ -39,4 +39,11 @@ enum AppButtonTitle: String {
     case set = "저장"
     case check = "확인"
     case report = "신고 하기"
+    
+    case requestStart = "요청 하기"
+    case requesting = "요청 중...."
+    case requestApprove = "승인 하기"
+    case writeReview = "후기 쓰기"
+    case requestComplete = "공유 완료"
+    
 }

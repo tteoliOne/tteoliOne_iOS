@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ChattingCoordinatorDelegate: Coordinator {
-    
+    func finishView()
 }

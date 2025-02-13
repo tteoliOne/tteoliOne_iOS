@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatListDTO: Decodable {
+struct ChatListDTO: Equatable, Decodable {
     
     let chatNo: Int
     let createMember: Int
@@ -16,19 +16,19 @@ struct ChatListDTO: Decodable {
     let productTitle: String
     let regDate: Int
     let participant: ParticipantDTO
-    let latestMessage: LastestMessageDTO
+    let latestMessage: LastestMessageDTO?
     let unReadCount: Int
     
 }
 
-struct ParticipantDTO: Decodable {
+struct ParticipantDTO: Equatable, Decodable {
     
     let username: String
     let profile: String
     
 }
 
-struct LastestMessageDTO: Decodable {
+struct LastestMessageDTO: Equatable, Decodable {
     
     let context: String
     let sendAt: Int

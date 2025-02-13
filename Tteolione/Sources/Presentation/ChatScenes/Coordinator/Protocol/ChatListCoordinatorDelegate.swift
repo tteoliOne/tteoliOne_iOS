@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol ChatListCoordinatorDelegate: Coordinator {
+    func showChatView(chatId: Int, productId: Int)
+}

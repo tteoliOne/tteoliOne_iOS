@@ -39,6 +39,11 @@ extension ProductDetailViewController: View {
             .map { ProductDetailReactor.Action.likeButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.callButton.rx.tap
+            .map { ProductDetailReactor.Action.callButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: ProductDetailReactor) {
@@ -96,6 +101,16 @@ extension ProductDetailViewController: View {
             .bind(with: self) { owner, id in
                 owner.delegate?.showReportView(reportType: .products,
                                                reportId: id)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { state -> ChatDTO? in
+                guard state.isCallButtonTapped else { return nil }
+                return state.chatDto
+            }
+            .bind(with: self) { owner, dto in
+                owner.delegate?.showChatView(chatId: dto.chatId, productId: dto.productNo)
             }
             .disposed(by: disposeBag)
     }
