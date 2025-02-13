@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatDTO: Decodable {
+struct ChatDTO: Equatable, Decodable {
     
     let chatId: Int
     let createMember: Int

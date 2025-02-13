@@ -64,8 +64,8 @@ extension TabBarCoordinator {
                                           dependency: dependency)
             
         case .chat:
-            coordinator = ProfileCoordinator(navigationController: navigationController,
-                                             dependency: dependency)//아직 안만들어서 임시 코디네이터임
+            coordinator = ChatListCoordinator(navigationController: navigationController,
+                                              dependency: dependency)
             
         case .myProfile:
             coordinator = ProfileCoordinator(navigationController: navigationController,

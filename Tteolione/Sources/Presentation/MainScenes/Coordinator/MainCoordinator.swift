@@ -44,11 +44,13 @@ extension MainCoordinator {
             with: reactor,
             delegate: self
         )
+        navigationController.setNavigationBarHidden(false, animated: false)
         show(viewController)
     }
     
     func pushProductDetailViewController(productId: Int) {
-        let reactor = ProductDetailReactor(networkProvider: dependency.productServiceProvider,
+        let reactor = ProductDetailReactor(networkPorductProvider: dependency.productServiceProvider,
+                                           networkChatProvider: dependency.chatNetworkProvider,
                                            productId: productId)
         let viewController = createViewController(
             ofType: ProductDetailViewController.self,
@@ -108,6 +110,16 @@ extension MainCoordinator {
                                             dependency: dependency,
                                             reportType: reportType,
                                             reportId: reportId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
+    func showChatView(chatId: Int, productId: Int) {
+        let coordinator = ChattingCoordinator(navigationController: navigationController,
+                                              dependency: dependency,
+                                              chatId: chatId,
+                                              productId: productId)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()

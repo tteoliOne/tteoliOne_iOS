@@ -22,6 +22,24 @@
 		721BF2CD2D56010900E37E3B /* SettingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2CC2D56010900E37E3B /* SettingSwitchCell.swift */; };
 		721BF2CF2D56011E00E37E3B /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2CE2D56011E00E37E3B /* SettingTableViewCell.swift */; };
 		721BF2D12D56013100E37E3B /* SettingVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2D02D56013100E37E3B /* SettingVersionCell.swift */; };
+		721BF2D92D573AC800E37E3B /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2D82D573AC800E37E3B /* ChattingViewController.swift */; };
+		721BF2DB2D573ACF00E37E3B /* ChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2DA2D573ACF00E37E3B /* ChattingView.swift */; };
+		721BF2DD2D573AD800E37E3B /* ChattingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2DC2D573AD800E37E3B /* ChattingReactor.swift */; };
+		721BF2DF2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2DE2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift */; };
+		721BF2E12D573B3E00E37E3B /* ChattingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2E02D573B3E00E37E3B /* ChattingCoordinator.swift */; };
+		721BF2E52D5744BD00E37E3B /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 721BF2E42D5744BD00E37E3B /* Starscream */; };
+		721BF2E82D57789700E37E3B /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2E72D57789700E37E3B /* SocketManager.swift */; };
+		721BF2EA2D58681A00E37E3B /* SocketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2E92D58681A00E37E3B /* SocketAPI.swift */; };
+		721BF2ED2D588DBD00E37E3B /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = 721BF2EC2D588DBD00E37E3B /* SwiftStomp */; };
+		721BF2EF2D59C9C100E37E3B /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2EE2D59C9C100E37E3B /* ChatListViewController.swift */; };
+		721BF2F12D59C9CB00E37E3B /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2F02D59C9CB00E37E3B /* ChatListView.swift */; };
+		721BF2F32D59C9D600E37E3B /* ChatListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2F22D59C9D600E37E3B /* ChatListReactor.swift */; };
+		721BF2F52D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2F42D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift */; };
+		721BF2F72D59CA8100E37E3B /* ChatListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2F62D59CA8100E37E3B /* ChatListCoordinator.swift */; };
+		721BF2F92D59CCCE00E37E3B /* ChatListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2F82D59CCCE00E37E3B /* ChatListTableViewCell.swift */; };
+		721BF2FB2D5A333900E37E3B /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2FA2D5A333900E37E3B /* ChatMessageCell.swift */; };
+		721BF2FF2D5C615900E37E3B /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2FE2D5C615900E37E3B /* DBManager.swift */; };
+		721BF3012D5C617E00E37E3B /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF3002D5C617E00E37E3B /* ChatData.swift */; };
 		72361E1D2D02D095009BEF12 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1C2D02D095009BEF12 /* TopBarView.swift */; };
 		72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E1F2D02D18F009BEF12 /* JoinImageView.swift */; };
 		72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361E212D02D1B1009BEF12 /* AppJoinImage.swift */; };
@@ -126,7 +144,7 @@
 		72361F572D2EB404009BEF12 /* ReportRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F562D2EB404009BEF12 /* ReportRequestBody.swift */; };
 		72361F592D2EB55E009BEF12 /* WithdrawalRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F582D2EB55E009BEF12 /* WithdrawalRequestBody.swift */; };
 		72361F5D2D2EB75D009BEF12 /* ChatAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F5C2D2EB75D009BEF12 /* ChatAPI.swift */; };
-		72361F622D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F612D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift */; };
+		72361F622D2EB8DF009BEF12 /* CreateChatRoomRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F612D2EB8DF009BEF12 /* CreateChatRoomRequestBody.swift */; };
 		72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F632D2EB93F009BEF12 /* ChatDTO.swift */; };
 		72361F662D2EBA2C009BEF12 /* ChatListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F652D2EBA2B009BEF12 /* ChatListDTO.swift */; };
 		72361F682D2EBBAA009BEF12 /* CallBackRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72361F672D2EBBAA009BEF12 /* CallBackRequestBody.swift */; };
@@ -280,6 +298,22 @@
 		721BF2CC2D56010900E37E3B /* SettingSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSwitchCell.swift; sourceTree = "<group>"; };
 		721BF2CE2D56011E00E37E3B /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		721BF2D02D56013100E37E3B /* SettingVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVersionCell.swift; sourceTree = "<group>"; };
+		721BF2D82D573AC800E37E3B /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		721BF2DA2D573ACF00E37E3B /* ChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingView.swift; sourceTree = "<group>"; };
+		721BF2DC2D573AD800E37E3B /* ChattingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingReactor.swift; sourceTree = "<group>"; };
+		721BF2DE2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		721BF2E02D573B3E00E37E3B /* ChattingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingCoordinator.swift; sourceTree = "<group>"; };
+		721BF2E72D57789700E37E3B /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
+		721BF2E92D58681A00E37E3B /* SocketAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAPI.swift; sourceTree = "<group>"; };
+		721BF2EE2D59C9C100E37E3B /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		721BF2F02D59C9CB00E37E3B /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
+		721BF2F22D59C9D600E37E3B /* ChatListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListReactor.swift; sourceTree = "<group>"; };
+		721BF2F42D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		721BF2F62D59CA8100E37E3B /* ChatListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCoordinator.swift; sourceTree = "<group>"; };
+		721BF2F82D59CCCE00E37E3B /* ChatListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListTableViewCell.swift; sourceTree = "<group>"; };
+		721BF2FA2D5A333900E37E3B /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		721BF2FE2D5C615900E37E3B /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
+		721BF3002D5C617E00E37E3B /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		72361E1C2D02D095009BEF12 /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		72361E1F2D02D18F009BEF12 /* JoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinImageView.swift; sourceTree = "<group>"; };
 		72361E212D02D1B1009BEF12 /* AppJoinImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppJoinImage.swift; sourceTree = "<group>"; };
@@ -382,7 +416,7 @@
 		72361F562D2EB404009BEF12 /* ReportRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRequestBody.swift; sourceTree = "<group>"; };
 		72361F582D2EB55E009BEF12 /* WithdrawalRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalRequestBody.swift; sourceTree = "<group>"; };
 		72361F5C2D2EB75D009BEF12 /* ChatAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAPI.swift; sourceTree = "<group>"; };
-		72361F612D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatRoonRequestBody.swift; sourceTree = "<group>"; };
+		72361F612D2EB8DF009BEF12 /* CreateChatRoomRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatRoomRequestBody.swift; sourceTree = "<group>"; };
 		72361F632D2EB93F009BEF12 /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
 		72361F652D2EBA2B009BEF12 /* ChatListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListDTO.swift; sourceTree = "<group>"; };
 		72361F672D2EBBAA009BEF12 /* CallBackRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallBackRequestBody.swift; sourceTree = "<group>"; };
@@ -526,8 +560,10 @@
 				72361E6A2D0C3236009BEF12 /* RxMoya in Frameworks */,
 				7246FA132D393B2800EE6B5E /* RxKakaoSDKAuth in Frameworks */,
 				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
+				721BF2E52D5744BD00E37E3B /* Starscream in Frameworks */,
 				721BF2CB2D55FFE900E37E3B /* RxDataSources in Frameworks */,
 				724DEC8B2D00937300171F44 /* RxSwift in Frameworks */,
+				721BF2ED2D588DBD00E37E3B /* SwiftStomp in Frameworks */,
 				7246FA152D393B2800EE6B5E /* RxKakaoSDKCommon in Frameworks */,
 				724DEC942D00939100171F44 /* ReactorKit in Frameworks */,
 				7246FA172D393B2800EE6B5E /* RxKakaoSDKUser in Frameworks */,
@@ -584,6 +620,90 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		721BF2D22D5738AE00E37E3B /* ChatScenes */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2D32D5738FC00E37E3B /* Coordinator */,
+				721BF2D52D573A9600E37E3B /* ViewController */,
+				721BF2D62D573A9F00E37E3B /* View */,
+				721BF2D72D573AA400E37E3B /* Reactor */,
+			);
+			path = ChatScenes;
+			sourceTree = "<group>";
+		};
+		721BF2D32D5738FC00E37E3B /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2D42D57390E00E37E3B /* Protocol */,
+				721BF2F62D59CA8100E37E3B /* ChatListCoordinator.swift */,
+				721BF2E02D573B3E00E37E3B /* ChattingCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		721BF2D42D57390E00E37E3B /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2F42D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift */,
+				721BF2DE2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		721BF2D52D573A9600E37E3B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2EE2D59C9C100E37E3B /* ChatListViewController.swift */,
+				721BF2D82D573AC800E37E3B /* ChattingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		721BF2D62D573A9F00E37E3B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2F02D59C9CB00E37E3B /* ChatListView.swift */,
+				721BF2DA2D573ACF00E37E3B /* ChattingView.swift */,
+				721BF2F82D59CCCE00E37E3B /* ChatListTableViewCell.swift */,
+				721BF2FA2D5A333900E37E3B /* ChatMessageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		721BF2D72D573AA400E37E3B /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2F22D59C9D600E37E3B /* ChatListReactor.swift */,
+				721BF2DC2D573AD800E37E3B /* ChattingReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		721BF2E62D57785B00E37E3B /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2E72D57789700E37E3B /* SocketManager.swift */,
+			);
+			path = Socket;
+			sourceTree = "<group>";
+		};
+		721BF2FC2D5C612E00E37E3B /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				721BF2FE2D5C615900E37E3B /* DBManager.swift */,
+				721BF2FD2D5C614000E37E3B /* Model */,
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
+		721BF2FD2D5C614000E37E3B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				721BF3002D5C617E00E37E3B /* ChatData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		72361E1B2D02D07A009BEF12 /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +749,7 @@
 				72361E6B2D0C5773009BEF12 /* APIKey.swift */,
 				72361E5E2D0C2330009BEF12 /* Provider */,
 				72361E5D2D0C232B009BEF12 /* API */,
+				721BF2E62D57785B00E37E3B /* Socket */,
 				72361E5F2D0C2340009BEF12 /* Interceptors */,
 				72361E602D0C2347009BEF12 /* Models */,
 				72361F382D2EA1C9009BEF12 /* Query */,
@@ -650,6 +771,7 @@
 				72361F272D2E576C009BEF12 /* ProductServiceAPI.swift */,
 				72361F432D2EA8B7009BEF12 /* UserAPI.swift */,
 				72361F5C2D2EB75D009BEF12 /* ChatAPI.swift */,
+				721BF2E92D58681A00E37E3B /* SocketAPI.swift */,
 				7246FA1C2D396F0C00EE6B5E /* Social */,
 			);
 			path = API;
@@ -960,7 +1082,7 @@
 		72361F5F2D2EB8AD009BEF12 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				72361F612D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift */,
+				72361F612D2EB8DF009BEF12 /* CreateChatRoomRequestBody.swift */,
 				72361F672D2EBBAA009BEF12 /* CallBackRequestBody.swift */,
 				72361F692D2EBE22009BEF12 /* ShareRequestBody.swift */,
 				72361F6B2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift */,
@@ -1276,6 +1398,7 @@
 				72361FD72D3411DB009BEF12 /* TabBar */,
 				7246F9FC2D38BD3B00EE6B5E /* OnboardingScenes */,
 				7246F9FD2D38BDDA00EE6B5E /* MainScenes */,
+				721BF2D22D5738AE00E37E3B /* ChatScenes */,
 				7246F9FE2D38BDE300EE6B5E /* ProfileScenes */,
 				72977EE62D53C16B00D1FDE7 /* DeclarationScenes */,
 			);
@@ -1437,6 +1560,7 @@
 				72361E5C2D0C22E3009BEF12 /* Network */,
 				724DECAC2D0186A200171F44 /* Component */,
 				724DEC952D01732200171F44 /* Base */,
+				721BF2FC2D5C612E00E37E3B /* DataBase */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1758,6 +1882,8 @@
 				7246FA142D393B2800EE6B5E /* RxKakaoSDKCommon */,
 				7246FA162D393B2800EE6B5E /* RxKakaoSDKUser */,
 				721BF2CA2D55FFE900E37E3B /* RxDataSources */,
+				721BF2E42D5744BD00E37E3B /* Starscream */,
+				721BF2EC2D588DBD00E37E3B /* SwiftStomp */,
 			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
@@ -1794,6 +1920,8 @@
 				72361E592D0C2171009BEF12 /* XCRemoteSwiftPackageReference "Moya" */,
 				7246FA112D393B2800EE6B5E /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				721BF2E32D5744BD00E37E3B /* XCRemoteSwiftPackageReference "Starscream" */,
+				721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
@@ -1831,6 +1959,7 @@
 				72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */,
 				72977EF72D53C30000D1FDE7 /* ReportCoordinator.swift in Sources */,
 				72361ECA2D27AA2B009BEF12 /* FindIDResultReactor.swift in Sources */,
+				721BF2DF2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift in Sources */,
 				72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
@@ -1841,12 +1970,14 @@
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
 				725F818A2D43B2B2002C4E1C /* MapView.swift in Sources */,
 				723B09302D3BCBC600F464A4 /* LoadImageView.swift in Sources */,
+				721BF2F12D59C9CB00E37E3B /* ChatListView.swift in Sources */,
 				72361FC62D315B08009BEF12 /* PostReceiptViewController.swift in Sources */,
 				72361F3E2D2EA226009BEF12 /* ProductQueryParameters.swift in Sources */,
 				72361FF32D353665009BEF12 /* RecentSearchViewController.swift in Sources */,
 				72361FA82D2F96BC009BEF12 /* LikeButton.swift in Sources */,
 				721BF2B02D55F30E00E37E3B /* GearButton.swift in Sources */,
 				724DECC42D02CBAF00171F44 /* EmailAuthViewController.swift in Sources */,
+				721BF2D92D573AC800E37E3B /* ChattingViewController.swift in Sources */,
 				72361ED22D27C576009BEF12 /* ResetPasswordViewController.swift in Sources */,
 				72361F352D2E9BCD009BEF12 /* SavedProdcutDTO.swift in Sources */,
 				72361F982D2F8EDD009BEF12 /* MainViewController.swift in Sources */,
@@ -1863,14 +1994,17 @@
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
 				72361E442D0B28AE009BEF12 /* PasswordExplainLabelView.swift in Sources */,
 				72361E2F2D0427BC009BEF12 /* AuthNumViewController.swift in Sources */,
+				721BF2DD2D573AD800E37E3B /* ChattingReactor.swift in Sources */,
 				72361E7B2D0EC866009BEF12 /* HeaderKeyAndValue.swift in Sources */,
 				721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */,
 				72361E422D0B179A009BEF12 /* PasswordReactor.swift in Sources */,
 				72361F442D2EA8B7009BEF12 /* UserAPI.swift in Sources */,
+				721BF2F72D59CA8100E37E3B /* ChatListCoordinator.swift in Sources */,
 				72361F4B2D2EAEBA009BEF12 /* UserProfileRequestBody.swift in Sources */,
 				72361E8F2D140C9E009BEF12 /* AppDependency.swift in Sources */,
 				7246FA202D3A1EE500EE6B5E /* SocialProfileSetViewController.swift in Sources */,
 				72361FBC2D30DDF9009BEF12 /* AndongLabel.swift in Sources */,
+				721BF2FB2D5A333900E37E3B /* ChatMessageCell.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
@@ -1900,6 +2034,7 @@
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
 				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
+				721BF2F52D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift in Sources */,
 				72977ED32D48A59500D1FDE7 /* ProductListTableViewCell.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
@@ -1950,9 +2085,11 @@
 				72361F192D2E46BF009BEF12 /* UserDefaultsStorage.swift in Sources */,
 				72977EDD2D51CC8F00D1FDE7 /* SideMenuView.swift in Sources */,
 				72361E402D0B175E009BEF12 /* PasswordView.swift in Sources */,
+				721BF2E82D57789700E37E3B /* SocketManager.swift in Sources */,
 				72361FB82D30DC05009BEF12 /* PostView.swift in Sources */,
 				72361F6A2D2EBE22009BEF12 /* ShareRequestBody.swift in Sources */,
 				7246FA262D3A492200EE6B5E /* LocationManagerDelegate.swift in Sources */,
+				721BF2EF2D59C9C100E37E3B /* ChatListViewController.swift in Sources */,
 				72977ECD2D489CD600D1FDE7 /* XButton.swift in Sources */,
 				72361E202D02D18F009BEF12 /* JoinImageView.swift in Sources */,
 				72361E732D0EA96F009BEF12 /* JoinRequestBody.swift in Sources */,
@@ -1988,15 +2125,18 @@
 				72361E662D0C2D30009BEF12 /* NetworkProvider.swift in Sources */,
 				72361E312D0427CC009BEF12 /* AuthNumView.swift in Sources */,
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
+				721BF2E12D573B3E00E37E3B /* ChattingCoordinator.swift in Sources */,
 				721BF2CF2D56011E00E37E3B /* SettingTableViewCell.swift in Sources */,
 				72361FE82D3425C5009BEF12 /* NavigationTitle.swift in Sources */,
 				72361F9F2D2F906E009BEF12 /* ProductCollectionViewCell.swift in Sources */,
 				72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */,
+				721BF2F32D59C9D600E37E3B /* ChatListReactor.swift in Sources */,
 				72361E4E2D0BEEC5009BEF12 /* NicknameView.swift in Sources */,
 				724DECAF2D01870800171F44 /* CommonTextField.swift in Sources */,
 				7246FA0D2D38EA7800EE6B5E /* JoinCoordinator.swift in Sources */,
 				72977EE32D51D23900D1FDE7 /* SideMenuReactor.swift in Sources */,
-				72361F622D2EB8DF009BEF12 /* CreateChatRoonRequestBody.swift in Sources */,
+				72361F622D2EB8DF009BEF12 /* CreateChatRoomRequestBody.swift in Sources */,
+				721BF2EA2D58681A00E37E3B /* SocketAPI.swift in Sources */,
 				72361E872D13FBC2009BEF12 /* AppCoordinator.swift in Sources */,
 				72977EEF2D53C2BA00D1FDE7 /* DeclarationView.swift in Sources */,
 				72361E802D12BFAC009BEF12 /* OnBoardingMediator.swift in Sources */,
@@ -2006,6 +2146,7 @@
 				72977ED62D4A984300D1FDE7 /* SearchDelegate.swift in Sources */,
 				72361FDF2D3415A5009BEF12 /* TabBase.swift in Sources */,
 				72361EA62D1E904D009BEF12 /* SignUpFinshView.swift in Sources */,
+				721BF3012D5C617E00E37E3B /* ChatData.swift in Sources */,
 				72977ED82D4AA2D300D1FDE7 /* Notification+Extension.swift in Sources */,
 				7246FA012D38C04C00EE6B5E /* FindAccountCoordinator.swift in Sources */,
 				72361FC02D30E964009BEF12 /* SymbolImageButton.swift in Sources */,
@@ -2031,6 +2172,7 @@
 				72977F052D548EB800D1FDE7 /* EtcReportView.swift in Sources */,
 				725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
+				721BF2FF2D5C615900E37E3B /* DBManager.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
 				72361E522D0BF5C9009BEF12 /* ProfileSetViewController.swift in Sources */,
@@ -2056,7 +2198,9 @@
 				72361FAC2D2F9E13009BEF12 /* MainTableViewCell.swift in Sources */,
 				725F81832D4347D7002C4E1C /* ProfileReactor.swift in Sources */,
 				72361EBC2D26B6F1009BEF12 /* FindIDReactor.swift in Sources */,
+				721BF2DB2D573ACF00E37E3B /* ChattingView.swift in Sources */,
 				721BF2C02D55FD8200E37E3B /* SettingSection.swift in Sources */,
+				721BF2F92D59CCCE00E37E3B /* ChatListTableViewCell.swift in Sources */,
 				72977EF32D53C2D200D1FDE7 /* DeclarationReactor.swift in Sources */,
 				72977F072D548EBF00D1FDE7 /* EtcReportReactor.swift in Sources */,
 				725F818E2D44B55D002C4E1C /* UIView+Extension.swift in Sources */,
@@ -2223,7 +2367,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2261,7 +2405,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2311,6 +2455,22 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		721BF2E32D5744BD00E37E3B /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+		721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Romixery/SwiftStomp.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
+			};
+		};
 		72361E592D0C2171009BEF12 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -2358,6 +2518,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		721BF2E42D5744BD00E37E3B /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 721BF2E32D5744BD00E37E3B /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		721BF2EC2D588DBD00E37E3B /* SwiftStomp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */;
+			productName = SwiftStomp;
 		};
 		72361E5A2D0C2171009BEF12 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;

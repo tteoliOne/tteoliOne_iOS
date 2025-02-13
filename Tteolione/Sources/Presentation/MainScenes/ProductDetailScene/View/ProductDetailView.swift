@@ -134,7 +134,7 @@ final class ProductDetailView: BaseView {
         map.isRotateEnabled = false
         return map
     }()
-    private let callButton = CommonButton(title: .call,
+    let callButton = CommonButton(title: .call,
                                           corner: 20,
                                           backgroundColor: .myAppMain,
                                           textColor: .white)
