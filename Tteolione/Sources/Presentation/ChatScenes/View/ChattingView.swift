@@ -66,6 +66,11 @@ final class ChattingView: BaseView {
         return button
     }()
     
+    override func touchesBegan(_ touches: Set<UITouch>,
+                               with event: UIEvent?) {
+        self.endEditing(true)
+    }
+    
     override func configureHierarchy() {
         [inputTopView, tableView,
          inputContainerView].forEach { addSubview($0) }
@@ -133,5 +138,67 @@ final class ChattingView: BaseView {
             make.trailing.equalTo(inputContainerView).offset(-12)
             make.width.height.equalTo(36)
         }
+    }
+}
+
+extension ChattingView {
+    func configureData(with data: ChatContentDTO) {
+        if let imageUrl = URL(string: data.productImage) {
+            productImageView.loadImage(from: imageUrl)
+        } else {
+            productImageView.image = nil
+        }
+        productTitleLabel.text = data.title
+        productPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(data.sharePrice))원"
+
+        configureRequestButton(isMine: data.checkSeller,
+                               status: data.soldStatus,
+                               checkReservation: data.checkReservation,
+                               checkReview: data.checkReview)
+    }
+    
+    private func configureRequestButton(isMine: Bool,
+                                        status: String,
+                                        checkReservation: Bool,
+                                        checkReview: Bool) {
+        let disabledColor = UIColor.myAppDarkGray
+        let enabledColor = UIColor.myAppMain
+        
+        if isMine {
+            if status == "eNew" {
+                requestButton.setTitle("승인하기", for: .normal)
+                requestButton.isEnabled = false
+            } else if status == "eReservation" {
+                requestButton.setTitle("승인하기", for: .normal)
+                requestButton.isEnabled = true
+            } else {
+                requestButton.setTitle("공유완료", for: .normal)
+                requestButton.isEnabled = false
+            }
+        } else {
+            if status == "eNew" {
+                requestButton.setTitle("요청하기", for: .normal)
+                requestButton.isEnabled = true
+            } else if status == "eReservation" {
+                if checkReservation {
+                    requestButton.setTitle("요청중...", for: .normal)
+                    requestButton.isEnabled = false
+                } else {
+                    requestButton.setTitle("공유중..", for: .normal)
+                    requestButton.isEnabled = false
+                }
+            } else {
+                if checkReview {
+                    requestButton.setTitle("공유완료", for: .normal)
+                    requestButton.isEnabled = false
+                } else {
+                    requestButton.setTitle("후기쓰기", for: .normal)
+                    requestButton.isEnabled = true
+                }
+            }
+        }
+        
+        requestButton.backgroundColor = requestButton.isEnabled ? enabledColor : disabledColor
+        requestButton.setTitleColor(.white, for: .normal)
     }
 }

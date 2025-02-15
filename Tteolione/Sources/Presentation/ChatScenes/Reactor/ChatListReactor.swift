@@ -32,7 +32,6 @@ final class ChatListReactor: Reactor {
         var selectedProductNo: Int?
     }
     
-    private var chatWebSocketService: ChatWebSocketService?
     private let networkChatProvider: NetworkProvider<ChatAPI>
     let initialState = State()
     
@@ -49,8 +48,6 @@ extension ChatListReactor {
             return fetchChatList()
             
         case let .tableIndexTap(chatNo, productNo):
-            chatWebSocketService = ChatWebSocketService(chatId: chatNo,
-                                                        productId: productNo)
             return .concat([
                 .just(.setSelectedChatNo(chatNo)),
                 .just(.setSelectedProductNo(productNo)),

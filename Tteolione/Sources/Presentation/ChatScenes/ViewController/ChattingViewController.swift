@@ -56,8 +56,18 @@ extension ChattingViewController: View {
             })
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.productData }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: rootView, onNext: { owner, dto in
+                owner.configureData(with: dto)
+            })
+            .disposed(by: disposeBag)
+        
         reactor.state
             .map { $0.messages }
+            .observe(on: MainScheduler.instance)
             .bind(to: rootView.tableView.rx.items(cellIdentifier: ChatMessageCell.identifier,
                                                   cellType: ChatMessageCell.self)
             ) { _, message, cell in
@@ -76,11 +86,11 @@ extension ChattingViewController: View {
         
         reactor.state.map { $0.messages.count }
             .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-//                self?.rootView.tableView.scrollToBottom(animated: true)
                 self?.rootView.tableView.reloadData()
-                        self?.rootView.tableView.layoutIfNeeded() // 🚨 레이아웃 강제 업데이트
-                        self?.rootView.tableView.scrollToBottom(animated: true)
+                self?.rootView.tableView.layoutIfNeeded()
+                self?.rootView.tableView.scrollToBottom(animated: true)
             })
             .disposed(by: disposeBag)
     }

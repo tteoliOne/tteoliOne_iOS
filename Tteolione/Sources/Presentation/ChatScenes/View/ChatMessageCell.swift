@@ -82,7 +82,6 @@ final class ChatMessageCell: BaseTableViewCell {
     func configure(with message: ChatMessage) {
         messageLabel.text = message.text
         timeLabel.text = message.timestamp
-        
         if message.isMine {
             profileImageView.isHidden = true
             containerView.snp.remakeConstraints { make in

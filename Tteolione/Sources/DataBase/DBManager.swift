@@ -7,124 +7,70 @@
 
 import Foundation
 import SwiftData
-import RxSwift
 
 final class DBManager {
     
-    var modelContext: ModelContext?
+    static let shared = DBManager()
     
-    init(modelContext: ModelContext? = nil) {
-        self.modelContext = modelContext
-    }
-    
-    static func makeModelContainer() -> ModelContainer {
-        let schema = Schema([ChatMessageData.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        
+    var container: ModelContainer
+    var modelContext: ModelContext
+
+    private init() {
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            let schema = Schema([ChatMessageData.self])
+            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+            container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            modelContext = ModelContext(container)
+            print("✅ [DB] modelContext 초기화 완료: \(modelContext)")
         } catch {
-            fatalError("ModelContainer 생성 실패: \(error)")
+            fatalError("❌ ModelContainer 생성 실패: \(error)")
         }
     }
 }
 
-//MARK: - RxSwift 기반 CRUD Method
+// MARK: - CRUD 메서드 (Create, Read, Delete)
 extension DBManager {
     
-    func addItem(_ message: ChatMessageData) -> Completable {
-        return Completable.create { [weak self] completable in
-            guard let self, let modelContext else {
-                completable(.error(NSError(domain: "DB Error", code: -1, userInfo: nil)))
-                return Disposables.create()
-            }
-            
-            modelContext.insert(message)
-            do {
-                try modelContext.save()
-                completable(.completed)
-            } catch {
-                completable(.error(error))
-            }
-            return Disposables.create()
+    func addItem<T: PersistentModel>(_ model: T) {
+        modelContext.insert(model)
+        
+        do {
+            try modelContext.save()
+            print("✅ [DB] 데이터 저장 성공: \(model)")
+        } catch {
+            print("❌ [DB] 데이터 저장 실패: \(error.localizedDescription)")
         }
     }
     
-    func fetchItems(chatRoomID: String) -> Single<[ChatMessageData]> {
-        return Single.create { [weak self] single in
-            guard let self, let modelContext else {
-                single(.failure(NSError(domain: "DB Error", code: -1, userInfo: nil)))
-                return Disposables.create()
-            }
-            
-            let request = FetchDescriptor<ChatMessageData>(
-                predicate: #Predicate { $0.chatRoomID == chatRoomID },
-                sortBy: [SortDescriptor(\.timestamp)]
-            )
-            
-            do {
-                let messages = try modelContext.fetch(request)
-                single(.success(messages))
-            } catch {
-                single(.failure(error))
-            }
-            return Disposables.create()
+    func fetchMessages(chatRoomID: Int) -> [ChatMessageData] {
+        let request = FetchDescriptor<ChatMessageData>(
+            predicate: #Predicate { $0.chatRoomNo == chatRoomID },
+            sortBy: [SortDescriptor(\.sendTime, order: .forward)]
+        )
+        
+        do {
+            let items: [ChatMessageData] = try modelContext.fetch(request)
+            print("✅ [DB] 채팅방(\(chatRoomID)) 메시지 불러오기 성공! 개수: \(items.count)")
+            return items
+        } catch {
+            print("❌ [DB] 채팅방 메시지 불러오기 실패: \(error.localizedDescription)")
+            return []
         }
     }
     
-    func updateItem(_ message: ChatMessageData) -> Completable {
-        return Completable.create { [weak self] completable in
-            guard let self, let modelContext else {
-                completable(.error(NSError(domain: "DB Error", code: -1, userInfo: nil)))
-                return Disposables.create()
-            }
-            
-            do {
-                try modelContext.save()
-                completable(.completed)
-            } catch {
-                completable(.error(error))
-            }
-            return Disposables.create()
-        }
+    func getLastMessageTime(chatRoomID: Int) -> Int? {
+        let messages = fetchMessages(chatRoomID: chatRoomID)
+        return messages.last?.sendTime
     }
     
-    func removeItem(_ message: ChatMessageData) -> Completable {
-        return Completable.create { [weak self] completable in
-            guard let self, let modelContext else {
-                completable(.error(NSError(domain: "DB Error", code: -1, userInfo: nil)))
-                return Disposables.create()
-            }
-            
-            modelContext.delete(message)
-            do {
-                try modelContext.save()
-                completable(.completed)
-            } catch {
-                completable(.error(error))
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func deleteAllItems(in chatRoomID: String) -> Completable {
-        return Completable.create { [weak self] completable in
-            guard let self, let modelContext else {
-                completable(.error(NSError(domain: "DB Error", code: -1, userInfo: nil)))
-                return Disposables.create()
-            }
-            
-            let request = FetchDescriptor<ChatMessageData>(predicate: #Predicate { $0.chatRoomID == chatRoomID })
-            
-            do {
-                let messages = try modelContext.fetch(request)
-                messages.forEach { modelContext.delete($0) }
-                try modelContext.save()
-                completable(.completed)
-            } catch {
-                completable(.error(error))
-            }
-            return Disposables.create()
+    func removeItem<T: PersistentModel>(_ model: T) {
+        modelContext.delete(model)
+        
+        do {
+            try modelContext.save()
+            print("✅ [DB] 데이터 삭제 성공: \(model)")
+        } catch {
+            print("❌ [DB] 데이터 삭제 실패: \(error.localizedDescription)")
         }
     }
 }

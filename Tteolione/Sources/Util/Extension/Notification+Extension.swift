@@ -9,4 +9,6 @@ import Foundation
 
 extension Notification.Name {
     static let recentSearchUpdated = Notification.Name("recentSearchUpdated")
+    static let didReceiveMessage = Notification.Name("didReceiveMessage")
+    static let didCallBackMessage = Notification.Name("didCallBackMessage")
 }

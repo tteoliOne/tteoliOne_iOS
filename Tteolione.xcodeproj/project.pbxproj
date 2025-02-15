@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		720D70AC2D5F173800FC25FB /* CallBackDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70AB2D5F173800FC25FB /* CallBackDTO.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -27,7 +28,6 @@
 		721BF2DD2D573AD800E37E3B /* ChattingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2DC2D573AD800E37E3B /* ChattingReactor.swift */; };
 		721BF2DF2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2DE2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift */; };
 		721BF2E12D573B3E00E37E3B /* ChattingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2E02D573B3E00E37E3B /* ChattingCoordinator.swift */; };
-		721BF2E52D5744BD00E37E3B /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 721BF2E42D5744BD00E37E3B /* Starscream */; };
 		721BF2E82D57789700E37E3B /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2E72D57789700E37E3B /* SocketManager.swift */; };
 		721BF2EA2D58681A00E37E3B /* SocketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2E92D58681A00E37E3B /* SocketAPI.swift */; };
 		721BF2ED2D588DBD00E37E3B /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = 721BF2EC2D588DBD00E37E3B /* SwiftStomp */; };
@@ -281,9 +281,13 @@
 		72977F032D548EB300D1FDE7 /* EtcReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F022D548EB300D1FDE7 /* EtcReportViewController.swift */; };
 		72977F052D548EB800D1FDE7 /* EtcReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F042D548EB800D1FDE7 /* EtcReportView.swift */; };
 		72977F072D548EBF00D1FDE7 /* EtcReportReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72977F062D548EBF00D1FDE7 /* EtcReportReactor.swift */; };
+		8672FF1398834BD58351C1D0 /* Pods_Tteolione.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2272FD1E778CCD0978F5732 /* Pods_Tteolione.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FD30292AC9AD2F9D4BD7D39 /* Pods-Tteolione.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tteolione.release.xcconfig"; path = "Target Support Files/Pods-Tteolione/Pods-Tteolione.release.xcconfig"; sourceTree = "<group>"; };
+		51F33EDA3176D8DBF56664AC /* Pods-Tteolione.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tteolione.debug.xcconfig"; path = "Target Support Files/Pods-Tteolione/Pods-Tteolione.debug.xcconfig"; sourceTree = "<group>"; };
+		720D70AB2D5F173800FC25FB /* CallBackDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallBackDTO.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -550,6 +554,7 @@
 		72977F022D548EB300D1FDE7 /* EtcReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcReportViewController.swift; sourceTree = "<group>"; };
 		72977F042D548EB800D1FDE7 /* EtcReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcReportView.swift; sourceTree = "<group>"; };
 		72977F062D548EBF00D1FDE7 /* EtcReportReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcReportReactor.swift; sourceTree = "<group>"; };
+		A2272FD1E778CCD0978F5732 /* Pods_Tteolione.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tteolione.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,7 +565,6 @@
 				72361E6A2D0C3236009BEF12 /* RxMoya in Frameworks */,
 				7246FA132D393B2800EE6B5E /* RxKakaoSDKAuth in Frameworks */,
 				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
-				721BF2E52D5744BD00E37E3B /* Starscream in Frameworks */,
 				721BF2CB2D55FFE900E37E3B /* RxDataSources in Frameworks */,
 				724DEC8B2D00937300171F44 /* RxSwift in Frameworks */,
 				721BF2ED2D588DBD00E37E3B /* SwiftStomp in Frameworks */,
@@ -569,6 +573,7 @@
 				7246FA172D393B2800EE6B5E /* RxKakaoSDKUser in Frameworks */,
 				72361E5B2D0C2171009BEF12 /* Moya in Frameworks */,
 				724DEC892D00937300171F44 /* RxCocoa in Frameworks */,
+				8672FF1398834BD58351C1D0 /* Pods_Tteolione.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1096,6 +1101,7 @@
 				72361F632D2EB93F009BEF12 /* ChatDTO.swift */,
 				72361F652D2EBA2B009BEF12 /* ChatListDTO.swift */,
 				72361F6D2D2EBFF2009BEF12 /* ChatContentDTO.swift */,
+				720D70AB2D5F173800FC25FB /* CallBackDTO.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1509,6 +1515,8 @@
 				724DEC822D0091D800171F44 /* .gitignore */,
 				724DEC6D2D0091B700171F44 /* Tteolione */,
 				724DEC6C2D0091B700171F44 /* Products */,
+				790FB008958F43036C8D29A9 /* Pods */,
+				B1C55344AA0D6FE1810AAA56 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1855,6 +1863,23 @@
 			path = Reactor;
 			sourceTree = "<group>";
 		};
+		790FB008958F43036C8D29A9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				51F33EDA3176D8DBF56664AC /* Pods-Tteolione.debug.xcconfig */,
+				4FD30292AC9AD2F9D4BD7D39 /* Pods-Tteolione.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B1C55344AA0D6FE1810AAA56 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2272FD1E778CCD0978F5732 /* Pods_Tteolione.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1862,9 +1887,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 724DEC7F2D0091B800171F44 /* Build configuration list for PBXNativeTarget "Tteolione" */;
 			buildPhases = (
+				F8A53D0C9FCCEFD734991A41 /* [CP] Check Pods Manifest.lock */,
 				724DEC672D0091B700171F44 /* Sources */,
 				724DEC682D0091B700171F44 /* Frameworks */,
 				724DEC692D0091B700171F44 /* Resources */,
+				FE0F9AD1637741D4E3F342EB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1882,7 +1909,6 @@
 				7246FA142D393B2800EE6B5E /* RxKakaoSDKCommon */,
 				7246FA162D393B2800EE6B5E /* RxKakaoSDKUser */,
 				721BF2CA2D55FFE900E37E3B /* RxDataSources */,
-				721BF2E42D5744BD00E37E3B /* Starscream */,
 				721BF2EC2D588DBD00E37E3B /* SwiftStomp */,
 			);
 			productName = Tteolione;
@@ -1920,7 +1946,6 @@
 				72361E592D0C2171009BEF12 /* XCRemoteSwiftPackageReference "Moya" */,
 				7246FA112D393B2800EE6B5E /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
-				721BF2E32D5744BD00E37E3B /* XCRemoteSwiftPackageReference "Starscream" */,
 				721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
@@ -1945,6 +1970,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F8A53D0C9FCCEFD734991A41 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tteolione-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE0F9AD1637741D4E3F342EB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tteolione/Pods-Tteolione-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tteolione/Pods-Tteolione-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tteolione/Pods-Tteolione-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		724DEC672D0091B700171F44 /* Sources */ = {
@@ -2009,6 +2076,7 @@
 				72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
 				72361FFF2D35417C009BEF12 /* ProfileViewController.swift in Sources */,
+				720D70AC2D5F173800FC25FB /* CallBackDTO.swift in Sources */,
 				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
@@ -2264,7 +2332,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2328,7 +2396,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2349,7 +2417,7 @@
 		};
 		724DEC802D0091B800171F44 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7246FA182D393C8D00EE6B5E /* Secretes.xcconfig */;
+			baseConfigurationReference = 51F33EDA3176D8DBF56664AC /* Pods-Tteolione.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2387,7 +2455,7 @@
 		};
 		724DEC812D0091B800171F44 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7246FA182D393C8D00EE6B5E /* Secretes.xcconfig */;
+			baseConfigurationReference = 4FD30292AC9AD2F9D4BD7D39 /* Pods-Tteolione.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2455,14 +2523,6 @@
 				minimumVersion = 5.0.2;
 			};
 		};
-		721BF2E32D5744BD00E37E3B /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.8;
-			};
-		};
 		721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Romixery/SwiftStomp.git";
@@ -2518,11 +2578,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
-		};
-		721BF2E42D5744BD00E37E3B /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 721BF2E32D5744BD00E37E3B /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
 		};
 		721BF2EC2D588DBD00E37E3B /* SwiftStomp */ = {
 			isa = XCSwiftPackageProductDependency;

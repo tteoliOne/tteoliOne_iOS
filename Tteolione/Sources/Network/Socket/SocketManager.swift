@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftStomp
+import StompClientLib
 
 struct MessageData: Codable {
     let productNo: Int
@@ -16,14 +16,23 @@ struct MessageData: Codable {
     let content: String
 }
 
-final class ChatWebSocketService: SwiftStompDelegate {
+final class ChatWebSocketService {
     
-    private static var existingInstance: ChatWebSocketService?
-    private var swiftStomp: SwiftStomp?
-    private var hostURL: URL?
+    private let networkChatProvider = NetworkProvider<ChatAPI>()
+    private var socketClient = StompClientLib()
+    private var hostURL: NSURL?
+    private var isSubscribed = false
+    private var pingTimer: Timer?
     
     var chatId: Int?
     var productId: Int?
+    var topic: String {
+        if let chatId = chatId {
+            return "/sub/pub/\(chatId)"
+        } else {
+            return "/sub/pub/0"
+        }
+    }
     var userId: Int? {
         return UserDefaultsStorage.userID
     }
@@ -32,203 +41,212 @@ final class ChatWebSocketService: SwiftStompDelegate {
     }
     
     init(chatId: Int, productId: Int) {
-        if let existingInstance = ChatWebSocketService.existingInstance {
-            self.swiftStomp = existingInstance.swiftStomp
-            self.chatId = existingInstance.chatId
-            self.productId = existingInstance.productId
-            return
-        }
-        
+        print("???")
         self.chatId = chatId
         self.productId = productId
-        self.hostURL = URL(string: APIURL.socketBaseURL)!
-        ChatWebSocketService.existingInstance = self
-        
+        self.hostURL = NSURL(string: APIURL.socketBaseURL)
         configure()
     }
     
+    /// STOMP WebSocket 설정
     private func configure() {
         guard let chatId = chatId, let token = accessToken, let hostURL = hostURL else {
             print("🚨 chatId 또는 Token 없음!")
             return
         }
         
-        let headers: [String: String] = [
+        let connectionHeaders = [
             "Authorization": "\(token)",
-            "chatRoomNo": "\(chatId)",
-            "heart-beat": "10000,50000",
-            "destination": "/pub/message",
+            "chatRoomNo" : "\(chatId)",
+            "heart-beat": "10000,50000"
         ]
         
-        if swiftStomp == nil {
-            swiftStomp = SwiftStomp(host: hostURL, headers: headers, httpConnectionHeaders: headers)
-        }
-        
-        swiftStomp?.delegate = self
-        swiftStomp?.autoReconnect = true
-        swiftStomp?.connect(timeout: 5.0, acceptVersion: "1.1,1.2")
-        
+        print("🔌 WebSocket 연결 시도 중...")
+        socketClient.openSocketWithURLRequest(request: NSURLRequest(url: hostURL as URL),
+                                              delegate: self, connectionHeaders: connectionHeaders)
         enableAutoPing()
     }
-
-
     
-    func onConnect(swiftStomp: SwiftStomp, connectType: StompConnectType) {
-        print("✅ WebSocket & STOMP 연결 성공!")
-        guard let token = accessToken else {
-            print("🚨 Token 없음!")
-            return
-        }
-        let subscriptionPath = "/sub/pub/\(self.chatId ?? 0)"
-        print("🔄 STOMP 구독 시도: \(subscriptionPath)")
-        
-        let headers: [String: String] = [
-            "Authorization": "\(token)",
-            "heart-beat": "10000,50000",
-            "destination": "/pub/message",
-        ]
-        
-        self.swiftStomp?.subscribe(to: subscriptionPath, mode: .clientIndividual, headers: headers)
-
-        switch self.swiftStomp?.connectionStatus {
-        case .connecting:
-            print("Connecting to the server...")
-        case .socketConnected:
-            print("Scoket is connected but STOMP as sub-protocol is not connected yet.")
-        case .fullyConnected:
-            print("Both socket and STOMP is connected. Ready for messaging...")
-        case .socketDisconnected:
-            print("Socket is disconnected")
-        case .none:
-            print("noting")
-        }
-    }
-
-    
-    func onError(swiftStomp: SwiftStomp, briefDescription: String, fullDescription: String?, receiptId: String?, type: StompErrorType) {
-        print("🚨 STOMP 오류 발생: \(briefDescription)")
-        if let fullDescription = fullDescription {
-            print("❌ 상세 오류: \(fullDescription)")
-        }
-        if let receiptId = receiptId {
-            print("📌 관련된 receipt ID: \(receiptId)")
-        }
-        print("오류 타입: \(type)")
-    }
-    
-    func onDisconnect(swiftStomp: SwiftStomp, disconnectType: StompDisconnectType) {
-        print("❌ WebSocket 연결 종료됨!")
-    }
-    
-    func sendMessage(content: String, retryCount: Int = 5) {
-        guard !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            print("🚨 메시지가 비어있음, 전송 취소됨")
+    /// STOMP 메시지 전송 (receipt 포함)
+    func sendMessage(content: String) {
+        guard let chatId = chatId, let userId = userId, let token = accessToken else {
+            print("❌ 메시지 전송 불가: 필요한 정보 부족")
             return
         }
         
-        guard let chatId = chatId, chatId != 0 else {
-            print("🚨 chatId가 설정되지 않음!")
-            return
-        }
-        
-        guard let productId = productId, productId != 0 else {
-            print("🚨 productId가 설정되지 않음!")
-            return
-        }
-        
-        guard let token = accessToken else {
-            print("🚨 토큰이 없음!")
-            return
-        }
-        
-        // ✅ **STOMP 연결 상태 확인**
-        guard let stomp = swiftStomp else {
-            print("🚨 [에러] SwiftStomp 인스턴스가 nil!")
-            return
-        }
-        
-        switch stomp.connectionStatus {
-        case .fullyConnected:
-            print("✅ STOMP 연결 상태: fullyConnected (메시지 전송 가능)")
-        case .socketConnected, .connecting:
-            if retryCount > 0 {
-                print("⏳ STOMP 연결 대기 중... \(retryCount)회 남음")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.sendMessage(content: content, retryCount: retryCount - 1)
-                }
-            } else {
-                print("🚨 [에러] STOMP 연결 실패: 메시지 전송 취소됨")
-            }
-            return
-        case .socketDisconnected:
-            print("🚨 [에러] WebSocket이 끊어져 있음! 메시지 전송 취소됨")
-            return
-        }
-
         let messageData: [String: Any] = [
-            "productNo": productId,
+            "productNo": productId ?? 0,
             "chatRoomNo": chatId,
-            "senderNo": userId ?? 0,
+            "senderNo": userId,
             "contentType": "chat",
-            "content": content
+            "content": content,
+            "destination": "/pub/message"
         ]
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: messageData)
-            guard let messageString = String(data: jsonData, encoding: .utf8) else {
-                print("❌ 메시지 변환 실패: Encoding 오류")
+            guard let jsonString = String(data: jsonData, encoding: .utf8) else {
+                print("❌ JSON 변환 실패")
                 return
             }
             
-            let contentLength = messageString.utf8.count
-            
-            let connectionHeaders = [
+            let connectionHeaders: [String: String] = [
                 "Authorization": "\(token)",
                 "chatRoomNo": "\(chatId)",
-                "content-length": "\(contentLength)",
-                "destination": "/pub/message",
+                "heart-beat": "10000,50000",
                 "content-type": "application/json"
             ]
             
-            print("📤 [디버깅] SwiftStomp.send() 호출 직전")
-            print("📤 메시지 전송: \(messageString)")
-            print("📤 content-length: \(contentLength)")
-            print("📤 헤더: \(connectionHeaders)")
-
-            // ✅ **전송 전에 STOMP 인스턴스 주소 확인**
-            print("🧐 현재 메시지를 보내는 `swiftStomp` 인스턴스 주소: \(Unmanaged.passUnretained(stomp).toOpaque())")
-
-            stomp.send(
-                body: messageString,
-                to: "/pub/message",
-                receiptId: "send-\(UUID().uuidString)", // ✅ **서버에서 수신 확인을 위한 고유 ID 추가**
-                headers: connectionHeaders
+            print("📤 메시지 전송 시도: \(messageData)")
+            socketClient.sendMessage(
+                message: jsonString,
+                toDestination: "/pub/message",
+                withHeaders: connectionHeaders,
+                withReceipt: nil
             )
             
-            print("📤 [디버깅] SwiftStomp.send() 호출 완료")
-            
         } catch {
-            print("❌ 메시지 변환 실패: \(error)")
+            print("❌ JSON 직렬화 실패: \(error)")
         }
     }
-
-
     
-    func onReceipt(swiftStomp: SwiftStomp, receiptId: String) {
-        print("✅ 메시지 전송 확인됨 (서버에서 확인됨), receipt ID: \(receiptId)")
-    }
-
-    
-    func onMessageReceived(swiftStomp: SwiftStomp, message: Any?, messageId: String, destination: String, headers: [String: String]) {
-        print("📥 메시지 수신 확인됨! \n - messageId: \(messageId) \n - destination: \(destination) \n - message: \(message ?? "nil")")
-        print("🧐 현재 메시지를 받는 `swiftStomp` 인스턴스 주소: \(Unmanaged.passUnretained(swiftStomp).toOpaque())")
-    }
-    
+    /// WebSocket 연결 해제
     func disconnect() {
-        swiftStomp?.disconnect(force: true)
+        print("🔌 WebSocket 연결 해제 요청됨")
+        pingTimer?.invalidate()
+        pingTimer = nil
+        socketClient.disconnect()
+        socketClient = StompClientLib()
+        isSubscribed = false
     }
     
+    /// 자동 Ping 유지 (30초 간격)
     func enableAutoPing() {
-        swiftStomp?.enableAutoPing(pingInterval: 30)
+        pingTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
+            guard let self = self,
+                  let token = self.accessToken,
+                  let chatId = self.chatId else {
+                print("🚨 Ping 전송 실패: 필요한 정보 없음")
+                return
+            }
+            
+            let pingHeaders: [String: String] = [
+                "Authorization": "\(token)",
+                "chatRoomNo": "\(chatId)",
+                "heart-beat": "10000,50000",
+                "content-type": "application/json"
+            ]
+            
+            let pingMessage = "{}"
+            
+            print("🔄 Ping Sent to Server with Headers: \(pingHeaders)")
+            
+            self.socketClient.sendMessage(
+                message: pingMessage,
+                toDestination: "/pub/ping",
+                withHeaders: pingHeaders,
+                withReceipt: nil
+            )
+        }
+    }
+    
+}
+
+// MARK: - StompClientLibDelegate 구현
+extension ChatWebSocketService: StompClientLibDelegate {
+    func stompClient(client: StompClientLib!,
+                     didReceiveMessageWithJSONBody jsonBody: AnyObject?,
+                     akaStringBody stringBody: String?,
+                     withHeader header: [String : String]?,
+                     withDestination destination: String) {
+        print("📩 메시지 수신: \(String(describing: jsonBody)), destination: \(destination), header: \(String(describing: header))")
+        
+        guard let data = jsonBody as? [String: Any],
+              let content = data["content"] as? String,
+              let senderNo = data["senderNo"] as? Int,
+              let timestamp = data["sendTime"] as? Int,
+              let contentType = data["contentType"] as? String,
+              let chatRoomNo = data["chatRoomNo"] as? Int,
+              let senderName = data["senderName"] as? String,
+              let readCount = data["readCount"] as? Int,
+              let productNo = data["productNo"] as? Int,
+              let senderLoginId = data["senderLoginId"] as? String else {
+            print("❌ 메시지 파싱 실패")
+            return
+        }
+        
+        if senderNo != userId, contentType == "chat" {
+            NotificationCenter.default.post(name: .didReceiveMessage,
+                                            object: nil,
+                                            userInfo: [
+                                                "content": content,
+                                                "senderNo": senderNo,
+                                                "timestamp": timestamp,
+                                                "chatRoomNo": chatRoomNo,
+                                                "productNo": productNo
+                                            ])
+        } else if senderNo == userId, contentType == "chat" {
+            NotificationCenter.default.post(name: .didCallBackMessage,
+                                            object: nil,
+                                            userInfo: [
+                                                "chatRoomNo": chatRoomNo,
+                                                "contentType": contentType,
+                                                "content": content,
+                                                "senderName": senderName,
+                                                "senderNo": senderNo,
+                                                "sendTime": timestamp,
+                                                "readCount": readCount,
+                                                "productNo": productNo,
+                                                "senderLoginId": senderLoginId
+                                            ])
+        }
+    }
+    
+    func serverDidSendError(client: StompClientLib!, withErrorMessage description: String, detailedErrorMessage message: String?) {
+        print("🚨 STOMP 오류 발생: \(description)")
+    }
+    
+    /// STOMP 연결 성공 시 실행
+    func stompClientDidConnect(client: StompClientLib!) {
+        print("✅ WebSocket & STOMP 연결 성공!")
+        
+        guard let chatId = chatId, let token = accessToken else {
+            print("⚠️ 토큰 없음!")
+            return
+        }
+        print("🔄 STOMP 구독 시도: \(topic)")
+        
+        let authHeader = ["Authorization": "\(token)",
+                          "chatRoomNo": "\(chatId)",
+                          "heart-beat": "10000,50000",
+                          "content-type": "application/json",
+                          "id": "sub-\(chatId)"]
+        socketClient.subscribeWithHeader(destination: topic,
+                                         withHeader: authHeader)
+        isSubscribed = true
+    }
+    
+    /// STOMP 연결 종료 시 실행 (자동 재연결 추가)
+    func stompClientDidDisconnect(client: StompClientLib!) {
+        print("❌ WebSocket 연결 종료됨!")
+        isSubscribed = false
+    }
+    
+    /// STOMP 메시지 수신
+    func stompClientDidReceiveMessage(client: StompClientLib!, jsonBody: AnyObject?, withHeader header: [String : String]?, fromDestination destination: String) {
+        print("📩 메시지 수신: \(String(describing: jsonBody ?? nil))")
+    }
+    
+    /// STOMP 오류 발생 시 실행
+    func stompClientDidReceiveError(client: StompClientLib!, description: String, message: Any?) {
+        print("🚨 STOMP 오류 발생: \(description)")
+    }
+    
+    func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {
+        print("✅ 메시지 전송 확인됨, receipt ID: \(receiptId)")
+    }
+    
+    func serverDidSendPing() {
+        print("🔄 서버 Ping 수신")
     }
 }

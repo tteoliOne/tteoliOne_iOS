@@ -13,6 +13,7 @@ final class FormatterManager {
     private let inputDateFormatter: DateFormatter
     private let outputDateFormatter: DateFormatter
     private let buyDateFormatter: DateFormatter
+    private let timeFormatter: DateFormatter
     
     private init() {
         self.inputDateFormatter = DateFormatter()
@@ -27,6 +28,10 @@ final class FormatterManager {
         self.buyDateFormatter = DateFormatter()
         self.buyDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         self.buyDateFormatter.timeZone = TimeZone.current
+        
+        self.timeFormatter = DateFormatter()
+        self.timeFormatter.dateFormat = "a h:mm"
+        self.timeFormatter.locale = Locale(identifier: "ko_KR")
     }
     
     func date(from dateString: String) -> Date? {
@@ -49,5 +54,14 @@ final class FormatterManager {
     
     func formattedBuyDate(from date: Date) -> String {
         return buyDateFormatter.string(from: date)
+    }
+    
+    func getChatTimeFormat() -> String {
+        return timeFormatter.string(from: Date())
+    }
+    
+    func getChatTimeFormat(from timestamp: Int64) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp) / 1000)
+        return timeFormatter.string(from: date)
     }
 }

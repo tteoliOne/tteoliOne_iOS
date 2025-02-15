@@ -9,22 +9,6 @@ import Foundation
 import ReactorKit
 import RxSwift
 
-enum ChatMessageType {
-    case received
-    case sent
-}
-
-struct ChatMessage {
-    let text: String
-    let type: ChatMessageType
-    let timestamp: String
-    
-    var isMine: Bool {
-        return type == .sent
-    }
-}
-
-
 final class ChattingReactor: Reactor {
     
     enum Action {
@@ -32,6 +16,7 @@ final class ChattingReactor: Reactor {
         case sendMessage(String)
         case socketDisconnect
         case updateSendButtonState(String)
+        case addMessages([ChatMessage])
     }
     
     enum Mutation {
@@ -39,8 +24,9 @@ final class ChattingReactor: Reactor {
         case receiveMessage(String)
         case viewDisappeared(Bool)
         case showError(NetworkError)
-        case addMessage(ChatMessage)
+        case addMessages([ChatMessage])
         case setSendButtonEnabled(Bool)
+        case setProductData(ChatContentDTO?)
     }
     
     struct State {
@@ -52,23 +38,41 @@ final class ChattingReactor: Reactor {
         var errorMessage: String?
         var messages: [ChatMessage] = []
         var isSendButtonEnabled: Bool = false
+        var productData: ChatContentDTO?
     }
     
     private var chatWebSocketService: ChatWebSocketService?
     private let networkChatProvider: NetworkProvider<ChatAPI>
+    private let disposeBag = DisposeBag()
+    private let dbManager = DBManager.shared
     var initialState = State()
     
     init(chatId: Int,
          productId: Int,
          networkChatProvider: NetworkProvider<ChatAPI>) {
         self.networkChatProvider = networkChatProvider
-        var state = State(chatId: chatId,
-                          productId: productId)
-           state.messages = [
-               ChatMessage(text: "안녕하세요!ㄴㅇㅁㄹㄴㅇㄹㄴㅇㅁ란왼이ㅏㅓ\nㄹㄴ어ㅣ라ㅓㄴ이ㅏ러니아\nsdlfasjflksdj\nㅇ리머ㅏㄴㅇ", type: .received, timestamp: "오후 10:05"),
-               ChatMessage(text: "반갑습니다 :)", type: .sent, timestamp: "오후 10:06")
-           ]
-           self.initialState = state
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleReceivedMessage(_:)),
+                                               name: .didReceiveMessage,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleCallBackMessage(_:)),
+                                               name: .didCallBackMessage,
+                                               object: nil)
+        self.initialState = State(chatId: chatId,
+                                  productId: productId)
+        Task { @MainActor in
+            let messages = dbManager.fetchMessages(chatRoomID: chatId)
+            
+            let chatMessages = messages.map { message in
+                ChatMessage(
+                    text: message.content,
+                    type: message.isMine ? .sent : .received,
+                    timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendTime))
+                )
+            }
+            self.action.onNext(.addMessages(chatMessages))
+        }
     }
 }
 
@@ -79,13 +83,20 @@ extension ChattingReactor {
         case .socketConnect:
             chatWebSocketService = ChatWebSocketService(chatId: currentState.chatId ?? 0,
                                                         productId: currentState.productId ?? 0)
-            return .just(.setSocketConnected(true))
+            return .concat([
+                .just(.setSocketConnected(true)),
+                fetchChatRoom(roomNo: currentState.chatId ?? 0)
+            ])
             
         case .sendMessage(let message):
             chatWebSocketService?.sendMessage(content: message)
-            let message = ChatMessage(text: message, type: .sent, timestamp: "오후 10:10")
-            return .just(.addMessage(message))
-//            return .empty()
+            let chatMessage = ChatMessage(text: message,
+                                          type: .sent,
+                                          timestamp: FormatterManager.shared.getChatTimeFormat())
+            return .concat([
+                .just(.addMessages([chatMessage])),
+                .just(.setSendButtonEnabled(false))
+            ])
             
         case .socketDisconnect:
             chatWebSocketService?.disconnect()
@@ -96,6 +107,9 @@ extension ChattingReactor {
             
         case .updateSendButtonState(let text):
             return .just(.setSendButtonEnabled(!text.isEmpty))
+            
+        case .addMessages(let messages):
+            return .just(.addMessages(messages))
         }
     }
 }
@@ -118,11 +132,14 @@ extension ChattingReactor {
         case .showError(let error):
             newState.errorMessage = error.localizedDescription
             
-        case .addMessage(let message):
-            newState.messages.append(message)
-            
         case .setSendButtonEnabled(let isEnabled):
             newState.isSendButtonEnabled = isEnabled
+            
+        case .addMessages(let messages):
+            newState.messages.append(contentsOf: messages)
+            
+        case .setProductData(let ChatContentDTO):
+            newState.productData = ChatContentDTO
         }
         
         return newState
@@ -133,7 +150,7 @@ extension ChattingReactor {
     
     private func leaveChatRoom(chatRoomId: Int) -> Observable<Mutation> {
         return networkChatProvider.request(.leaveChatRoom(chatRoomId: chatRoomId),
-                                            decodingType: ServerResponse<String>.self)
+                                           decodingType: ServerResponse<String>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
@@ -148,4 +165,143 @@ extension ChattingReactor {
         }
     }
     
+    private func fetchChatRoom(roomNo: Int) -> Observable<Mutation> {
+        let lastMessageTime = dbManager.getLastMessageTime(chatRoomID: roomNo) ?? 0
+        
+        return networkChatProvider.request(.getChatHistory(roomNo: roomNo),
+                                           decodingType: ServerResponse<ChatContentDTO>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(let chatContentDTO):
+                let newMessages = chatContentDTO.chatList
+                let filteredMessages = newMessages.filter { $0.sendDate > lastMessageTime }
+                
+                if !filteredMessages.isEmpty {
+                    filteredMessages.forEach { message in
+                        let chatMessageData = ChatMessageData(
+                            chatRoomNo: message.chatRoomNo,
+                            content: message.content,
+                            senderNo: message.senderNo,
+                            productNo: chatContentDTO.productId,
+                            sendTime: message.sendDate,
+                            isMine: message.mine
+                        )
+                        self.dbManager.addItem(chatMessageData)
+                    }
+                    
+                    let chatMessages = filteredMessages.map { message in
+                        ChatMessage(
+                            text: message.content,
+                            type: message.mine ? .sent : .received,
+                            timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate))
+                        )
+                    }
+                    return .concat([
+                        .just(.setProductData(chatContentDTO)),
+                        .just(.addMessages(chatMessages))
+                    ])
+                } else {
+                    return .just(.setProductData(chatContentDTO))
+                }
+                
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func callBackMessage(chatRoomNo: Int, contentType: String,
+                                 content: String, senderName: String,
+                                 senderNo: Int, productNo: Int,
+                                 sendTime: Int, readCount: Int,
+                                 senderLoginId: String) {
+        let body = CallBackRequestBody(
+            id: nil,
+            chatRoomNo: chatRoomNo,
+            contentType: contentType,
+            content: content,
+            senderName: senderName,
+            senderNo: senderNo,
+            productNo: productNo,
+            sendTime: sendTime,
+            readCount: readCount,
+            senderLoginId: senderLoginId
+        )
+
+        networkChatProvider.request(.sendMessageWithCallback(body: body),
+                                    decodingType: ServerResponse<CallBackDTO>.self)
+        .asObservable()
+        .subscribe { event in
+            switch event {
+            case .next(let response):
+                switch handleResponse(response) {
+                case .success(let data):
+                    let chatMessage = ChatMessageData(chatRoomNo: data.chatRoomNo,
+                                                      content: data.content,
+                                                      senderNo: data.senderNo,
+                                                      productNo: data.productNo,
+                                                      sendTime: data.sendTime,
+                                                      isMine: true)
+                    self.dbManager.addItem(chatMessage)
+                case .failure(let error):
+                    print("❌ CallBack 실패: \(error.localizedDescription)")
+                }
+            case .error(let error):
+                print("🚨 CallBack 네트워크 오류: \(error.localizedDescription)")
+            case .completed:
+                print("✅ CallBack 요청 완료")
+            }
+        }.disposed(by: disposeBag)
+    }
+    
+}
+
+extension ChattingReactor {
+    @objc private func handleReceivedMessage(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let content = userInfo["content"] as? String,
+              let senderNo = userInfo["senderNo"] as? Int,
+              let timestamp = userInfo["timestamp"] as? Int,
+              let chatRoomId = userInfo["chatRoomNo"] as? Int,
+              let productNo = userInfo["productNo"] as? Int else {
+            return print("없어")
+        }
+        let isMine = senderNo == currentState.chatId
+        let formattedTime = FormatterManager.shared.getChatTimeFormat(from: Int64(timestamp))
+        let chatMessage = ChatMessageData(chatRoomNo: chatRoomId,
+                                          content: content,
+                                          senderNo: senderNo,
+                                          productNo: productNo,
+                                          sendTime: timestamp,
+                                          isMine: isMine)
+        dbManager.addItem(chatMessage)
+        action.onNext(.addMessages([ChatMessage(text: content, type: isMine ? .sent : .received, timestamp: formattedTime)]))
+    }
+    
+    @objc private func handleCallBackMessage(_ notification: Notification) {
+        print("내 콜백")
+        guard let userInfo = notification.userInfo,
+              let chatRoomNo = userInfo["chatRoomNo"] as? Int,
+              let contentType = userInfo["contentType"] as? String,
+              let content = userInfo["content"] as? String,
+              let senderName = userInfo["senderName"] as? String,
+              let senderNo = userInfo["senderNo"] as? Int,
+              let productNo = userInfo["productNo"] as? Int,
+              let sendTime = userInfo["sendTime"] as? Int,
+              let readCount = userInfo["readCount"] as? Int,
+              let senderLoginId = userInfo["senderLoginId"] as? String else {
+            return print("실패")
+        }
+        
+        callBackMessage(chatRoomNo: chatRoomNo,
+                        contentType: contentType,
+                        content: content,
+                        senderName: senderName,
+                        senderNo: senderNo,
+                        productNo: productNo,
+                        sendTime: sendTime,
+                        readCount: readCount,
+                        senderLoginId: senderLoginId)
+    }
 }
