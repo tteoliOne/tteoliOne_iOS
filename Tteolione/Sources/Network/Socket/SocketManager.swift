@@ -23,9 +23,9 @@ final class ChatWebSocketService {
     private var hostURL: NSURL?
     private var isSubscribed = false
     private var pingTimer: Timer?
-    
     var chatId: Int?
     var productId: Int?
+    var isMine: Bool
     var topic: String {
         if let chatId = chatId {
             return "/sub/pub/\(chatId)"
@@ -40,11 +40,12 @@ final class ChatWebSocketService {
         return UserDefaultsStorage.token
     }
     
-    init(chatId: Int, productId: Int) {
-        print("???")
+    init(chatId: Int, productId: Int, isMine: Bool) {
+        print("isMine: \(isMine)")
         self.chatId = chatId
         self.productId = productId
         self.hostURL = NSURL(string: APIURL.socketBaseURL)
+        self.isMine = isMine
         configure()
     }
     
@@ -159,46 +160,95 @@ extension ChatWebSocketService: StompClientLibDelegate {
                      akaStringBody stringBody: String?,
                      withHeader header: [String : String]?,
                      withDestination destination: String) {
+        
         print("📩 메시지 수신: \(String(describing: jsonBody)), destination: \(destination), header: \(String(describing: header))")
         
         guard let data = jsonBody as? [String: Any],
-              let content = data["content"] as? String,
-              let senderNo = data["senderNo"] as? Int,
-              let timestamp = data["sendTime"] as? Int,
               let contentType = data["contentType"] as? String,
-              let chatRoomNo = data["chatRoomNo"] as? Int,
-              let senderName = data["senderName"] as? String,
-              let readCount = data["readCount"] as? Int,
-              let productNo = data["productNo"] as? Int,
-              let senderLoginId = data["senderLoginId"] as? String else {
-            print("❌ 메시지 파싱 실패")
+              let chatRoomNo = data["chatRoomNo"] as? Int else {
+            print("❌ 메시지 파싱 실패: 데이터 부족")
             return
         }
+
+        if contentType == "request" {
+            if isMine {
+                print("✅ 상대방이 요청함! 버튼을 '승인하기'로 변경")
+                NotificationCenter.default.post(name: .didReceiveRequestMessage,
+                                                object: nil,
+                                                userInfo: ["chatRoomNo": chatRoomNo])
+            } else {
+                print("✅ 내가 요청함! 버튼을 '요청중..'으로 변경")
+                NotificationCenter.default.post(name: .didReceivePendingRequest,
+                                                object: nil,
+                                                userInfo: ["chatRoomNo": chatRoomNo])
+            }
+        }
         
-        if senderNo != userId, contentType == "chat" {
-            NotificationCenter.default.post(name: .didReceiveMessage,
-                                            object: nil,
-                                            userInfo: [
-                                                "content": content,
-                                                "senderNo": senderNo,
-                                                "timestamp": timestamp,
-                                                "chatRoomNo": chatRoomNo,
-                                                "productNo": productNo
-                                            ])
-        } else if senderNo == userId, contentType == "chat" {
-            NotificationCenter.default.post(name: .didCallBackMessage,
-                                            object: nil,
-                                            userInfo: [
-                                                "chatRoomNo": chatRoomNo,
-                                                "contentType": contentType,
-                                                "content": content,
-                                                "senderName": senderName,
-                                                "senderNo": senderNo,
-                                                "sendTime": timestamp,
-                                                "readCount": readCount,
-                                                "productNo": productNo,
-                                                "senderLoginId": senderLoginId
-                                            ])
+        else if contentType == "reject" {
+            if isMine {
+                print("❌ 판매자가 거절함 -> 구매자에게 '승인하기' 버튼으로 변경")
+                NotificationCenter.default.post(name: .didReceiveRejectApprove,
+                                                object: nil,
+                                                userInfo: ["chatRoomNo": chatRoomNo])
+            } else {
+                print("❌ 요청이 거절됨! 버튼을 다시 '요청하기'로 변경")
+                NotificationCenter.default.post(name: .didReceiveRejectMessage,
+                                                object: nil,
+                                                userInfo: ["chatRoomNo": chatRoomNo])
+            }
+        }
+        
+        else if contentType == "approve" {
+            if isMine {
+                print("판매자가 승인 -> 구매자에게 '공유완료' 버튼으로 변경")
+                NotificationCenter.default.post(name: .didReceiveApprove,
+                                                object: nil,
+                                                userInfo: ["chatRoomNo": chatRoomNo])
+            } else {
+                NotificationCenter.default.post(name: .didReceiveApproveToReview,
+                                                object: nil,
+                                                userInfo: ["chatRoomNo": chatRoomNo])
+            }
+        }
+        
+        else if contentType == "chat",
+                let content = data["content"] as? String,
+                let senderNo = data["senderNo"] as? Int,
+                let timestamp = data["sendTime"] as? Int,
+                let senderName = data["senderName"] as? String,
+                let readCount = data["readCount"] as? Int,
+                let productNo = data["productNo"] as? Int,
+                let senderLoginId = data["senderLoginId"] as? String {
+
+            let isMine = senderNo == userId
+
+            if !isMine {
+                NotificationCenter.default.post(name: .didReceiveMessage,
+                                                object: nil,
+                                                userInfo: [
+                                                    "content": content,
+                                                    "senderNo": senderNo,
+                                                    "timestamp": timestamp,
+                                                    "chatRoomNo": chatRoomNo,
+                                                    "productNo": productNo
+                                                ])
+            } else {
+                NotificationCenter.default.post(name: .didCallBackMessage,
+                                                object: nil,
+                                                userInfo: [
+                                                    "chatRoomNo": chatRoomNo,
+                                                    "contentType": contentType,
+                                                    "content": content,
+                                                    "senderName": senderName,
+                                                    "senderNo": senderNo,
+                                                    "sendTime": timestamp,
+                                                    "readCount": readCount,
+                                                    "productNo": productNo,
+                                                    "senderLoginId": senderLoginId
+                                                ])
+            }
+        } else {
+            print("⚠️ 지원되지 않는 메시지 타입: \(contentType)")
         }
     }
     

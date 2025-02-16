@@ -11,7 +11,7 @@ import Moya
 enum ChatAPI {
     case createChatRoom(body: CreateChatRoomRequestBody)
     case getChatRoomList
-    case getChatHistory(roomNo: Int)
+    case getChatHistory(roomNo: Int, date: Int)
     case sendMessageWithCallback(body: CallBackRequestBody)
     case leaveChatRoom(chatRoomId: Int)
     case deleteChatRoom(chatRoomId: Int)
@@ -21,6 +21,7 @@ enum ChatAPI {
                       chatRoomId: Int,
                       body: ShareRequestBody)
     case rejectShare(productId: Int,
+                     chatRoomId: Int,
                      body: ShareRequestBody)
     case submitShareReview(productId: Int,
                            body: SubmitReviewRequestBody)
@@ -40,8 +41,8 @@ extension ChatAPI: TargetType {
         case .getChatRoomList:
             return "/api/chatRoom"
             
-        case let .getChatHistory(roomNo):
-            return "/api/chatRoom/\(roomNo)"
+        case let .getChatHistory(roomNo, lastDate):
+            return "/api/v2/chatRoom/\(roomNo)/\(lastDate)"
             
         case .sendMessageWithCallback:
             return "/api/chatRoom/notification"
@@ -58,8 +59,8 @@ extension ChatAPI: TargetType {
         case let .approveShare(productId, chatRoomId, _):
             return "/api/products/\(productId)/chatRoom/\(chatRoomId)/approve"
             
-        case let .rejectShare(productId, _):
-            return "/api/products/\(productId)/reject"
+        case let .rejectShare(productId, chatRoomId, _):
+            return "/api/products/\(productId)/chatRoom/\(chatRoomId)/reject"
             
         case let .submitShareReview(productId, _):
             return "/api/products/\(productId)/review"
@@ -95,7 +96,7 @@ extension ChatAPI: TargetType {
         case let .approveShare(_, _, body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
-        case let .rejectShare(_, body):
+        case let .rejectShare(_, _, body):
             return .requestCustomJSONEncodable(body, encoder: JSONEncoder())
             
         case let .submitShareReview(_, body):

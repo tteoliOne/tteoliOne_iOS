@@ -61,7 +61,8 @@ extension ChattingViewController: View {
             .compactMap { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: rootView, onNext: { owner, dto in
-                owner.configureData(with: dto)
+                owner.configureData(with: dto,
+                                    reactor: reactor)
             })
             .disposed(by: disposeBag)
         
@@ -91,6 +92,14 @@ extension ChattingViewController: View {
                 self?.rootView.tableView.reloadData()
                 self?.rootView.tableView.layoutIfNeeded()
                 self?.rootView.tableView.scrollToBottom(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.requestButtonState }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: rootView, onNext: { owner, state in
+                owner.updateRequestButton(state)
             })
             .disposed(by: disposeBag)
     }
