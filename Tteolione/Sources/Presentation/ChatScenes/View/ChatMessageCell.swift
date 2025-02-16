@@ -16,9 +16,9 @@ final class ChatMessageCell: BaseTableViewCell {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "31photo") // 기본 프로필 이미지 설정
-        imageView.isHidden = true // 내 메시지일 경우 숨김
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "31photo")
+        imageView.isHidden = true
         return imageView
     }()
     
@@ -70,8 +70,8 @@ final class ChatMessageCell: BaseTableViewCell {
         messageLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(12)
             make.top.bottom.equalToSuperview().inset(8)
-            make.width.greaterThanOrEqualTo(20) // 최소 크기 설정
-            make.height.greaterThanOrEqualTo(20) // 최소 크기 설정
+            make.width.greaterThanOrEqualTo(20)
+            make.height.greaterThanOrEqualTo(20)
         }
         
         timeLabel.snp.makeConstraints { make in

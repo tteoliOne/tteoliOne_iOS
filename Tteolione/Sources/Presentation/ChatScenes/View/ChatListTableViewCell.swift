@@ -111,7 +111,7 @@ final class ChatListTableViewCell: BaseTableViewCell {
         }
         
         lastMessageLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(profileImageView)
+            make.bottom.equalTo(profileImageView).inset(4)
             make.leading.equalTo(nicknameLabel)
             make.width.equalTo(containerView.snp.width).multipliedBy(0.6)
         }
@@ -123,8 +123,8 @@ final class ChatListTableViewCell: BaseTableViewCell {
         }
         
         timeLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(unReadView)
-            make.bottom.equalTo(unReadView.snp.top).offset(-12)
+            make.trailing.equalTo(unReadView)
+            make.bottom.equalTo(unReadView.snp.top).offset(-8)
         }
         
         unReadCountLabel.snp.makeConstraints { make in
@@ -143,7 +143,16 @@ extension ChatListTableViewCell {
         nicknameLabel.text = data.participant.username
         titleLabel.text = data.productTitle
         lastMessageLabel.text = data.latestMessage?.context
-        timeLabel.text = data.latestMessage?.sendAt.description
-        unReadCountLabel.text = data.unReadCount.description
+        timeLabel.text = FormatterManager.shared.getChatListTimeFormat(from: Int64(data.latestMessage?.sendAt ?? -1))
+        switch data.unReadCount {
+        case 0:
+            unReadView.isHidden = true
+            
+        case 1...:
+            unReadView.isHidden = false
+            unReadCountLabel.text = data.unReadCount.description
+        default:
+            unReadView.isHidden = true
+        }
     }
 }

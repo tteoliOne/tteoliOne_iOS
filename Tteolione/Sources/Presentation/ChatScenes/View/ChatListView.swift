@@ -18,7 +18,7 @@ final class ChatListView: BaseView {
         tableView.register(ChatListTableViewCell.self,
                            forCellReuseIdentifier: ChatListTableViewCell.identifier)
         tableView.separatorStyle = .none
-        tableView.rowHeight = Device.screenHeight * 0.15
+        tableView.rowHeight = Device.screenHeight * 0.14
         return tableView
     }()
     

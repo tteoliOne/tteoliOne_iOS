@@ -9,6 +9,15 @@ import Foundation
 import ReactorKit
 import RxSwift
 
+enum RequestButtonState {
+    case request       // 요청하기
+    case approve       // 승인하기
+    case pending       // 요청중..
+    case rejectApprove // 승인하기 (비활성화)
+    case complete // 승인하기 (비활성화)
+    case review // 승인하기 (비활성화)
+}
+
 final class ChattingReactor: Reactor {
     
     enum Action {
@@ -17,6 +26,10 @@ final class ChattingReactor: Reactor {
         case socketDisconnect
         case updateSendButtonState(String)
         case addMessages([ChatMessage])
+        case fetchPutRequest(productId: Int, chatRoomId: Int)
+        case fetchPutApprove(buyerId: Int, productId: Int, chatRoomId: Int)
+        case fetchPutReject(buyerId: Int, productId: Int, chatRoomId: Int)
+        case updateRequestButtonStatus(RequestButtonState)
     }
     
     enum Mutation {
@@ -27,6 +40,7 @@ final class ChattingReactor: Reactor {
         case addMessages([ChatMessage])
         case setSendButtonEnabled(Bool)
         case setProductData(ChatContentDTO?)
+        case updateRequestButtonStatus(RequestButtonState)
     }
     
     struct State {
@@ -39,6 +53,7 @@ final class ChattingReactor: Reactor {
         var messages: [ChatMessage] = []
         var isSendButtonEnabled: Bool = false
         var productData: ChatContentDTO?
+        var requestButtonState: RequestButtonState = .request
     }
     
     private var chatWebSocketService: ChatWebSocketService?
@@ -58,6 +73,30 @@ final class ChattingReactor: Reactor {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleCallBackMessage(_:)),
                                                name: .didCallBackMessage,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleRequestMessage(_:)),
+                                               name: .didReceiveRequestMessage,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleRejectMessage(_:)),
+                                               name: .didReceiveRejectMessage,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handlePendingRequestMessage(_:)),
+                                               name: .didReceivePendingRequest,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleReceiveRejectMessage(_:)),
+                                               name: .didReceiveRejectApprove,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleReceiveApproveMessage(_:)),
+                                               name: .didReceiveApprove,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleReceiveApproveToReviewMessage(_:)),
+                                               name: .didReceiveApproveToReview,
                                                object: nil)
         self.initialState = State(chatId: chatId,
                                   productId: productId)
@@ -81,8 +120,6 @@ extension ChattingReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .socketConnect:
-            chatWebSocketService = ChatWebSocketService(chatId: currentState.chatId ?? 0,
-                                                        productId: currentState.productId ?? 0)
             return .concat([
                 .just(.setSocketConnected(true)),
                 fetchChatRoom(roomNo: currentState.chatId ?? 0)
@@ -110,6 +147,22 @@ extension ChattingReactor {
             
         case .addMessages(let messages):
             return .just(.addMessages(messages))
+            
+        case .fetchPutRequest(let productId, let chatRoomId):
+            return fetchPutRequest(productId: productId,
+                                   chatRoomId: chatRoomId)
+            
+        case .fetchPutApprove(let buyerId, let productId, let chatRoomId):
+            return fetchPutApprove(buyerId: buyerId,
+                                   productId: productId,
+                                   chatRoomId: chatRoomId)
+            
+        case .fetchPutReject(let buyerId, let productId, let chatRoomId):
+            return fetchPutReject(buyerId: buyerId,
+                                  productId: productId,
+                                  chatRoomId: chatRoomId)
+        case .updateRequestButtonStatus(let status):
+            return .just(.updateRequestButtonStatus(status))
         }
     }
 }
@@ -140,6 +193,9 @@ extension ChattingReactor {
             
         case .setProductData(let ChatContentDTO):
             newState.productData = ChatContentDTO
+            
+        case .updateRequestButtonStatus(let status):
+            newState.requestButtonState = status
         }
         
         return newState
@@ -167,18 +223,20 @@ extension ChattingReactor {
     
     private func fetchChatRoom(roomNo: Int) -> Observable<Mutation> {
         let lastMessageTime = dbManager.getLastMessageTime(chatRoomID: roomNo) ?? 0
-        
-        return networkChatProvider.request(.getChatHistory(roomNo: roomNo),
+
+        return networkChatProvider.request(.getChatHistory(roomNo: roomNo,
+                                                           date: lastMessageTime),
                                            decodingType: ServerResponse<ChatContentDTO>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(let chatContentDTO):
+                self.chatWebSocketService = ChatWebSocketService(chatId: self.currentState.chatId ?? 0,
+                                                                 productId: self.currentState.productId ?? 0,
+                                                                 isMine: chatContentDTO.checkSeller)
                 let newMessages = chatContentDTO.chatList
-                let filteredMessages = newMessages.filter { $0.sendDate > lastMessageTime }
-                
-                if !filteredMessages.isEmpty {
-                    filteredMessages.forEach { message in
+                if !newMessages.isEmpty {
+                    newMessages.forEach { message in
                         let chatMessageData = ChatMessageData(
                             chatRoomNo: message.chatRoomNo,
                             content: message.content,
@@ -190,7 +248,7 @@ extension ChattingReactor {
                         self.dbManager.addItem(chatMessageData)
                     }
                     
-                    let chatMessages = filteredMessages.map { message in
+                    let chatMessages = newMessages.map { message in
                         ChatMessage(
                             text: message.content,
                             type: message.mine ? .sent : .received,
@@ -205,6 +263,69 @@ extension ChattingReactor {
                     return .just(.setProductData(chatContentDTO))
                 }
                 
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func fetchPutRequest(productId: Int,
+                                 chatRoomId: Int) -> Observable<Mutation> {
+        return networkChatProvider.request(.requestShare(productId: productId,
+                                                         chatRoomId: chatRoomId),
+                                           decodingType: ServerResponse<String>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(_):
+                return .concat([
+//                    .just(.viewDisappeared(true)),
+//                    .just(.viewDisappeared(false))
+                ])
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func fetchPutApprove(buyerId: Int,
+                                 productId: Int,
+                                 chatRoomId: Int) -> Observable<Mutation> {
+        let body = ShareRequestBody(buyerId: buyerId)
+        return networkChatProvider.request(.approveShare(productId: productId,
+                                                         chatRoomId: chatRoomId,
+                                                         body: body),
+                                           decodingType: ServerResponse<String>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(_):
+                return .concat([
+//                    .just(.viewDisappeared(true)),
+//                    .just(.viewDisappeared(false))
+                ])
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func fetchPutReject(buyerId: Int,
+                                productId: Int,
+                                chatRoomId: Int) -> Observable<Mutation> {
+        let body = ShareRequestBody(buyerId: buyerId)
+        return networkChatProvider.request(.rejectShare(productId: productId,
+                                                        chatRoomId: chatRoomId,
+                                                        body: body),
+                                           decodingType: ServerResponse<String>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(_):
+                return .concat([
+//                    .just(.viewDisappeared(true)),
+//                    .just(.viewDisappeared(false))
+                ])
             case .failure(let error):
                 return .just(.showError(error))
             }
@@ -303,5 +424,32 @@ extension ChattingReactor {
                         sendTime: sendTime,
                         readCount: readCount,
                         senderLoginId: senderLoginId)
+    }
+    
+    @objc private func handleRequestMessage(_ notification: Notification) {
+        print("✅ 요청 메시지 수신! 버튼을 '승인하기'로 변경")
+        action.onNext(.updateRequestButtonStatus(.approve))
+    }
+    
+    @objc private func handleRejectMessage(_ notification: Notification) {
+        print("❌ 요청이 거절됨! 버튼을 '요청하기'로 변경")
+        action.onNext(.updateRequestButtonStatus(.request))
+    }
+    
+    @objc private func handlePendingRequestMessage(_ notification: Notification) {
+        print("⏳ 내가 요청함! 버튼을 '요청중..'으로 변경")
+        action.onNext(.updateRequestButtonStatus(.pending))
+    }
+    
+    @objc private func handleReceiveRejectMessage(_ notification: Notification) {
+        action.onNext(.updateRequestButtonStatus(.rejectApprove))
+    }
+    
+    @objc private func handleReceiveApproveMessage(_ notification: Notification) {
+        action.onNext(.updateRequestButtonStatus(.complete))
+    }
+    
+    @objc private func handleReceiveApproveToReviewMessage(_ notification: Notification) {
+        action.onNext(.updateRequestButtonStatus(.review))
     }
 }
