@@ -60,7 +60,19 @@ extension ChattingCoordinator {
         show(viewController, as: .present)
     }
     
+    func showReportView(reportType: ReportType, reportId: Int, opponentId: Int) {
+        let coordinator = ReportCoordinator(navigationController: navigationController,
+                                            dependency: dependency,
+                                            reportType: reportType,
+                                            reportId: reportId,
+                                            opponentId: opponentId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
     func finishView() {
         finishAllChildren()
+        popVC()
     }
 }

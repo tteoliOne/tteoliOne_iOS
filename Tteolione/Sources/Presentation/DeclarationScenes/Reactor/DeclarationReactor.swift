@@ -26,19 +26,23 @@ final class DeclarationReactor: Reactor {
     }
     
     struct State {
-        var productId: Int = 0
+        var reportId: Int = 0
+        var opponent: Int?
         var tableViewItems: [MenuItem] = []
         var isShowReportSuccess: Bool = false
         var isShowEtcScreen: Bool = false
         var reportCategoryType: ReportCategory?
         var errorMessage: String?
+        var reportType: ReportType?
     }
     
     private let networkProvider: NetworkProvider<UserAPI>
     var initialState: State = State()
     
     init(networkProvider: NetworkProvider<UserAPI>,
-         productId: Int) {
+         reportId: Int,
+         reportType: ReportType,
+         opponent: Int? = nil) {
         let menuItems = [
             MenuItem(title: "스팸"),
             MenuItem(title: "이미지 및 언어폭력"),
@@ -46,8 +50,10 @@ final class DeclarationReactor: Reactor {
             MenuItem(title: "기타")
         ]
         self.networkProvider = networkProvider
-        self.initialState = State(productId: productId,
-                                  tableViewItems: menuItems)
+        self.initialState = State(reportId: reportId,
+                                  opponent: opponent,
+                                  tableViewItems: menuItems,
+                                  reportType: reportType)
     }
 }
 
@@ -58,25 +64,28 @@ extension DeclarationReactor {
         case .spamTap:
             return .concat([
                 .just(.setReportType(.spam)),
-                reportPost(reportType: .products,
+                reportPost(reportType: currentState.reportType ?? .chat,
                            reportCategory: .spam,
-                           productId: currentState.productId)
+                           targetId: currentState.reportId,
+                           reporteeId: currentState.opponent)
             ])
             
         case .imageAndViolenceTap:
             return .concat([
                 .just(.setReportType(.imageViolence)),
-                reportPost(reportType: .products,
+                reportPost(reportType: currentState.reportType ?? .chat,
                            reportCategory: .imageViolence,
-                           productId: currentState.productId)
+                           targetId: currentState.reportId,
+                           reporteeId: currentState.opponent)
             ])
             
         case .informationTap:
             return .concat([
                 .just(.setReportType(.information)),
-                reportPost(reportType: .products,
+                reportPost(reportType: currentState.reportType ?? .chat,
                            reportCategory: .information,
-                           productId: currentState.productId)
+                           targetId: currentState.reportId,
+                           reporteeId: currentState.opponent)
             ])
             
         case .etcTap:
@@ -94,7 +103,7 @@ extension DeclarationReactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
-    
+        
         switch mutation {
         case .showReportSuccessScreen(let isShow):
             newState.isShowReportSuccess = isShow
@@ -117,12 +126,13 @@ extension DeclarationReactor {
 extension DeclarationReactor {
     private func reportPost(reportType: ReportType,
                             reportCategory: ReportCategory,
-                            productId: Int) -> Observable<Mutation> {
+                            targetId: Int,
+                            reporteeId: Int? = nil) -> Observable<Mutation> {
         let query = ReportQueryParameters(reportCategory: reportCategory.rawValue)
         let body = ReportRequestBody(content: nil,
-                                     reporteeId: nil)
+                                     reporteeId: reporteeId)
         return networkProvider.request(.reports(reportType: reportType.rawValue,
-                                                id: productId,
+                                                id: targetId,
                                                 query: query,
                                                 body: body),
                                        decodingType: ServerResponse<String>.self)

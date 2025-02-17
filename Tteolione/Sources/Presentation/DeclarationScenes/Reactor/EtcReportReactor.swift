@@ -24,7 +24,9 @@ final class EtcReportReactor: Reactor {
     }
     
     struct State {
-        var productId: Int = 0
+        var reportId: Int = 0
+        var opponentId: Int?
+        var reportType: ReportType?
         var reportText: String = ""
         var reportLengthText: String = "0/100"
         var isReport: Bool = false
@@ -36,9 +38,13 @@ final class EtcReportReactor: Reactor {
     var initialState: State = State()
     
     init(networkProvider: NetworkProvider<UserAPI>,
-         productId: Int) {
+         reportId: Int,
+         reportType: ReportType,
+         opponentId: Int? = nil) {
         self.networkProvider = networkProvider
-        self.initialState = State(productId: productId)
+        self.initialState = State(reportId: reportId,
+                                  opponentId: opponentId,
+                                  reportType: reportType)
     }
 }
 
@@ -58,8 +64,9 @@ extension EtcReportReactor {
         case .reportButtonTap:
             return reportPost(reportType: .products,
                               reportCategory: .etc,
-                              productId: currentState.productId,
-                              content: currentState.reportText)
+                              productId: currentState.reportId,
+                              content: currentState.reportText,
+                              reporteeId: currentState.opponentId)
         }
     }
     
@@ -93,10 +100,11 @@ extension EtcReportReactor {
     private func reportPost(reportType: ReportType,
                             reportCategory: ReportCategory,
                             productId: Int,
-                            content: String) -> Observable<Mutation> {
+                            content: String,
+                            reporteeId: Int? = nil) -> Observable<Mutation> {
         let query = ReportQueryParameters(reportCategory: reportCategory.rawValue)
         let body = ReportRequestBody(content: content,
-                                     reporteeId: nil)
+                                     reporteeId: reporteeId)
         return networkProvider.request(.reports(reportType: reportType.rawValue,
                                                 id: productId,
                                                 query: query,

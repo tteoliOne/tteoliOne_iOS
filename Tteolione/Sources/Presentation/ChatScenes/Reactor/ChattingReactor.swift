@@ -31,6 +31,8 @@ final class ChattingReactor: Reactor {
         case fetchPutReject(buyerId: Int, productId: Int, chatRoomId: Int)
         case pushReviewView(productId: Int)
         case updateRequestButtonStatus(RequestButtonState)
+        case exitChatRoomTap
+        case reportPost
     }
     
     enum Mutation {
@@ -43,11 +45,14 @@ final class ChattingReactor: Reactor {
         case setProductData(ChatContentDTO?)
         case updateRequestButtonStatus(RequestButtonState)
         case pushReviewView(Bool)
+        case pushReportPost(Bool)
+        case setOpponentId(Int)
     }
     
     struct State {
         var chatId: Int?
         var productId: Int?
+        var opponentId: Int?
         var isConnected: Bool = false
         var receivedMessages: [String] = []
         var isViewDisappeared: Bool = false
@@ -57,6 +62,7 @@ final class ChattingReactor: Reactor {
         var productData: ChatContentDTO?
         var requestButtonState: RequestButtonState = .request
         var isReviewViewPushed: Bool = false
+        var pushReportPost: Bool = false
     }
     
     private var chatWebSocketService: ChatWebSocketService?
@@ -176,6 +182,15 @@ extension ChattingReactor {
                 .just(.pushReviewView(true)),
                 .just(.pushReviewView(false))
             ])
+            
+        case .exitChatRoomTap:
+            return deleteChatRoom(chatRoomId: currentState.chatId ?? 0)
+            
+        case .reportPost:
+            return .concat([
+                .just(.pushReportPost(true)),
+                .just(.pushReportPost(false))
+            ])
         }
     }
 }
@@ -212,6 +227,12 @@ extension ChattingReactor {
             
         case .pushReviewView(let isView):
             newState.isReviewViewPushed = isView
+            
+        case .pushReportPost(let isPush):
+            newState.pushReportPost = isPush
+            
+        case .setOpponentId(let id):
+            newState.opponentId = id
         }
         
         return newState
@@ -222,6 +243,23 @@ extension ChattingReactor {
     
     private func leaveChatRoom(chatRoomId: Int) -> Observable<Mutation> {
         return networkChatProvider.request(.leaveChatRoom(chatRoomId: chatRoomId),
+                                           decodingType: ServerResponse<String>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(_):
+                return .concat([
+                    .just(.viewDisappeared(true)),
+                    .just(.viewDisappeared(false))
+                ])
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func deleteChatRoom(chatRoomId: Int) -> Observable<Mutation> {
+        return networkChatProvider.request(.deleteChatRoom(chatRoomId: chatRoomId),
                                            decodingType: ServerResponse<String>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
@@ -271,12 +309,16 @@ extension ChattingReactor {
                             timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate))
                         )
                     }
+                    
                     return .concat([
                         .just(.setProductData(chatContentDTO)),
-                        .just(.addMessages(chatMessages))
+                        .just(.addMessages(chatMessages)),
+                        .just(.setOpponentId(chatContentDTO.opponentId))
                     ])
                 } else {
-                    return .just(.setProductData(chatContentDTO))
+                    return .concat([.just(.setProductData(chatContentDTO)),
+                                    .just(.setOpponentId(chatContentDTO.opponentId))
+                    ])
                 }
                 
             case .failure(let error):

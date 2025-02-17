@@ -28,6 +28,7 @@
 		720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D82D63880500FC25FB /* ReviewPopView.swift */; };
 		720D70DB2D63881D00FC25FB /* ReviewPopReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */; };
 		720D70DD2D6395EF00FC25FB /* UpAndDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */; };
+		720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -326,6 +327,7 @@
 		720D70D82D63880500FC25FB /* ReviewPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopView.swift; sourceTree = "<group>"; };
 		720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopReactor.swift; sourceTree = "<group>"; };
 		720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpAndDownButton.swift; sourceTree = "<group>"; };
+		720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -1497,6 +1499,7 @@
 				725F818D2D44B55D002C4E1C /* UIView+Extension.swift */,
 				72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */,
 				721BF2A22D55022000E37E3B /* Encodable+Extension.swift */,
+				720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2205,6 +2208,7 @@
 				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
+				720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */,
 				720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
