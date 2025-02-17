@@ -32,3 +32,10 @@ final class SettingCoordinator: NSObject, SettingCoordinatorDelegate {
         show(viewController)
     }
 }
+
+extension SettingCoordinator {
+    func finishView() {
+        finishAllChildren()
+        popVC()
+    }
+}

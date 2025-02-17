@@ -73,7 +73,7 @@ final class SettingView: BaseView {
     
     override func configureLayout() {
         backButton.snp.makeConstraints { make in
-            make.leading.equalTo(safeAreaLayoutGuide).inset(20)
+            make.leading.equalTo(safeAreaLayoutGuide).inset(12)
             make.top.equalTo(safeAreaLayoutGuide).inset(12)
         }
         

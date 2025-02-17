@@ -16,7 +16,6 @@ final class SettingViewController: BaseViewController<SettingView> {
     
 }
 
-
 extension SettingViewController: View {
     
     func bind(reactor: SettingReactor) {
@@ -26,6 +25,11 @@ extension SettingViewController: View {
     }
     
     func bindAction(_ reactor: SettingReactor) {
+        rootView.backButton.rx.tap
+            .map { SettingReactor.Action.backButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.tableView.rx.modelSelected(SettingItem.self)
             .bind { item in
                 switch item {
@@ -57,7 +61,14 @@ extension SettingViewController: View {
     }
     
     func bindNavigation(_ reactor: SettingReactor) {
-        
+        reactor.state.map { $0.isBackButtonTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.finishView()
+            }
+            .disposed(by: disposeBag)
     }
 }
 

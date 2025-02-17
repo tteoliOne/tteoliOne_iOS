@@ -13,14 +13,17 @@ final class SettingReactor: Reactor {
     
     enum Action {
         case toggleNotification(Bool)
+        case backButtonTap
     }
     
     enum Mutation {
         case updateNotificationState(Bool)
+        case backButtonTapped(Bool)
     }
     
     struct State {
         var sections: [SettingSection] = []
+        var isBackButtonTapped: Bool = false
     }
     
     var initialState = State()
@@ -43,6 +46,12 @@ extension SettingReactor {
         switch action {
         case .toggleNotification(let isOn):
             return .just(.updateNotificationState(isOn))
+            
+        case .backButtonTap:
+            return .concat([
+                .just(.backButtonTapped(true)),
+                .just(.backButtonTapped(false))
+            ])
         }
     }
     
@@ -57,6 +66,9 @@ extension SettingReactor {
             if let index = newState.sections.firstIndex(where: { $0.title == "알림" }) {
                 newState.sections[index].items = [.chatNotification(isOn)]
             }
+            
+        case .backButtonTapped(let isTap):
+            newState.isBackButtonTapped = isTap
         }
         return newState
     }

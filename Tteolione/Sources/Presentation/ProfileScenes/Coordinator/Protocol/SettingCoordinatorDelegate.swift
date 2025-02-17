@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SettingCoordinatorDelegate: Coordinator {
-    
+    func finishView()
 }
