@@ -92,6 +92,14 @@ enum AppText {
         static let likeList = "저장글 목록"
         static let review = "후기 목록"
         static let setting = "설정"
+        static let profileSetting = "프로필 설정"
+        static let resetPassword = "비밀번호 변경"
+    }
+    
+    enum ResetPassword {
+        static let checkPassword = "새 비밀번호 확인"
+        static let newPassword = "새 비밀번호"
+        static let originalPassword = "기존 비밀번호 입력"
     }
     
 }

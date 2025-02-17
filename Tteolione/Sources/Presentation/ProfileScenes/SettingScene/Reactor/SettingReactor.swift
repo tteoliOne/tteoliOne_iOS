@@ -13,14 +13,23 @@ final class SettingReactor: Reactor {
     
     enum Action {
         case toggleNotification(Bool)
+        case backButtonTap
+        case profileSettingTap
+        case profileResetPasswordTap
     }
     
     enum Mutation {
         case updateNotificationState(Bool)
+        case backButtonTapped(Bool)
+        case profileSettingTapped(Bool)
+        case profileResetPasswordTapped(Bool)
     }
     
     struct State {
         var sections: [SettingSection] = []
+        var isBackButtonTapped: Bool = false
+        var isProfileSettingTapped: Bool = false
+        var isProfileResetPasswordTapped: Bool = false
     }
     
     var initialState = State()
@@ -43,6 +52,24 @@ extension SettingReactor {
         switch action {
         case .toggleNotification(let isOn):
             return .just(.updateNotificationState(isOn))
+            
+        case .backButtonTap:
+            return .concat([
+                .just(.backButtonTapped(true)),
+                .just(.backButtonTapped(false))
+            ])
+            
+        case .profileSettingTap:
+            return .concat([
+                .just(.profileSettingTapped(true)),
+                .just(.profileSettingTapped(false))
+            ])
+            
+        case .profileResetPasswordTap:
+            return .concat([
+                .just(.profileResetPasswordTapped(true)),
+                .just(.profileResetPasswordTapped(false))
+            ])
         }
     }
     
@@ -57,6 +84,15 @@ extension SettingReactor {
             if let index = newState.sections.firstIndex(where: { $0.title == "알림" }) {
                 newState.sections[index].items = [.chatNotification(isOn)]
             }
+            
+        case .backButtonTapped(let isTap):
+            newState.isBackButtonTapped = isTap
+            
+        case .profileSettingTapped(let isTap):
+            newState.isProfileSettingTapped = isTap
+            
+        case .profileResetPasswordTapped(let isTap):
+            newState.isProfileResetPasswordTapped = isTap
         }
         return newState
     }

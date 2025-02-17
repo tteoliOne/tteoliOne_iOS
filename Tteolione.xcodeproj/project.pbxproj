@@ -17,6 +17,13 @@
 		720D70C12D61C6FA00FC25FB /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70C02D61C6FA00FC25FB /* RxGesture */; };
 		720D70C42D61CBE500FC25FB /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C32D61CBE500FC25FB /* CustomSegmentedControl.swift */; };
 		720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C52D623F1600FC25FB /* ReviewTableViewCell.swift */; };
+		720D70C82D62FFD900FC25FB /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C72D62FFD900FC25FB /* ProfileSettingViewController.swift */; };
+		720D70CA2D62FFE200FC25FB /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */; };
+		720D70CC2D62FFF000FC25FB /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */; };
+		720D70CF2D6313F300FC25FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70CE2D6313F300FC25FB /* Toast */; };
+		720D70D12D6328E500FC25FB /* ProfileResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */; };
+		720D70D32D63291F00FC25FB /* ProfileResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */; };
+		720D70D52D63293D00FC25FB /* ProfileResetPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -305,6 +312,12 @@
 		720D70BD2D61C18700FC25FB /* OpponentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentCollectionViewCell.swift; sourceTree = "<group>"; };
 		720D70C32D61CBE500FC25FB /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		720D70C52D623F1600FC25FB /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		720D70C72D62FFD900FC25FB /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
+		720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
+		720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
+		720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordViewController.swift; sourceTree = "<group>"; };
+		720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordView.swift; sourceTree = "<group>"; };
+		720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordReactor.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -591,6 +604,7 @@
 				7246FA172D393B2800EE6B5E /* RxKakaoSDKUser in Frameworks */,
 				72361E5B2D0C2171009BEF12 /* Moya in Frameworks */,
 				724DEC892D00937300171F44 /* RxCocoa in Frameworks */,
+				720D70CF2D6313F300FC25FB /* Toast in Frameworks */,
 				8672FF1398834BD58351C1D0 /* Pods_Tteolione.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,6 +696,8 @@
 			isa = PBXGroup;
 			children = (
 				721BF2B92D55F58300E37E3B /* SettingReactor.swift */,
+				720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */,
+				720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -693,6 +709,8 @@
 				721BF2CE2D56011E00E37E3B /* SettingTableViewCell.swift */,
 				721BF2CC2D56010900E37E3B /* SettingSwitchCell.swift */,
 				721BF2D02D56013100E37E3B /* SettingVersionCell.swift */,
+				720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */,
+				720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -701,6 +719,8 @@
 			isa = PBXGroup;
 			children = (
 				721BF2B52D55F57400E37E3B /* SettingViewController.swift */,
+				720D70C72D62FFD900FC25FB /* ProfileSettingViewController.swift */,
+				720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1993,6 +2013,7 @@
 				721BF2CA2D55FFE900E37E3B /* RxDataSources */,
 				721BF2EC2D588DBD00E37E3B /* SwiftStomp */,
 				720D70C02D61C6FA00FC25FB /* RxGesture */,
+				720D70CE2D6313F300FC25FB /* Toast */,
 			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
@@ -2031,6 +2052,7 @@
 				721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */,
 				720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */,
+				720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
@@ -2105,7 +2127,9 @@
 				723B09372D3BD67000F464A4 /* Reactive+Extension.swift in Sources */,
 				72361FF52D353680009BEF12 /* SearchSuggestionsViewController.swift in Sources */,
 				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
+				720D70CA2D62FFE200FC25FB /* ProfileSettingView.swift in Sources */,
 				72361FB02D2FF219009BEF12 /* PostButton.swift in Sources */,
+				720D70D12D6328E500FC25FB /* ProfileResetPasswordViewController.swift in Sources */,
 				72361F532D2EB276009BEF12 /* MyReviewDTO.swift in Sources */,
 				72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */,
 				72977EF72D53C30000D1FDE7 /* ReportCoordinator.swift in Sources */,
@@ -2119,6 +2143,7 @@
 				723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361FF92D353B87009BEF12 /* SearchView.swift in Sources */,
+				720D70D52D63293D00FC25FB /* ProfileResetPasswordReactor.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
 				725F818A2D43B2B2002C4E1C /* MapView.swift in Sources */,
 				723B09302D3BCBC600F464A4 /* LoadImageView.swift in Sources */,
@@ -2154,10 +2179,12 @@
 				72361F442D2EA8B7009BEF12 /* UserAPI.swift in Sources */,
 				721BF2F72D59CA8100E37E3B /* ChatListCoordinator.swift in Sources */,
 				72361F4B2D2EAEBA009BEF12 /* UserProfileRequestBody.swift in Sources */,
+				720D70CC2D62FFF000FC25FB /* ProfileSettingReactor.swift in Sources */,
 				72361E8F2D140C9E009BEF12 /* AppDependency.swift in Sources */,
 				7246FA202D3A1EE500EE6B5E /* SocialProfileSetViewController.swift in Sources */,
 				72361FBC2D30DDF9009BEF12 /* AndongLabel.swift in Sources */,
 				721BF2FB2D5A333900E37E3B /* ChatMessageCell.swift in Sources */,
+				720D70D32D63291F00FC25FB /* ProfileResetPasswordView.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,
@@ -2237,6 +2264,7 @@
 				723620192D364CAD009BEF12 /* AddressReactor.swift in Sources */,
 				72361FA42D2F926F009BEF12 /* BaseCollectionViewCell.swift in Sources */,
 				72361FDC2D3413CC009BEF12 /* TabBarCoordinator.swift in Sources */,
+				720D70C82D62FFD900FC25FB /* ProfileSettingViewController.swift in Sources */,
 				7246FA1A2D39418E00EE6B5E /* KakaoAuthVM.swift in Sources */,
 				72977EC52D48984900D1FDE7 /* SearchBar.swift in Sources */,
 				72977EF92D546BDD00D1FDE7 /* DeclaractionTableViewCell.swift in Sources */,
@@ -2615,6 +2643,14 @@
 				minimumVersion = 4.0.4;
 			};
 		};
+		720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 		721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
@@ -2678,6 +2714,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		720D70CE2D6313F300FC25FB /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		721BF2CA2D55FFE900E37E3B /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;
