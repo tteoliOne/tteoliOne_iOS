@@ -36,7 +36,7 @@ extension SettingViewController: View {
                 case .profile:
                     reactor.action.onNext(.profileSettingTap)
                 case .password:
-                    print("비밀번호 변경 이동")
+                    reactor.action.onNext(.profileResetPasswordTap)
                 case .address:
                     print("주소 설정 이동")
                 case .terms:
@@ -67,6 +67,15 @@ extension SettingViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.pushProfileSettingView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isProfileResetPasswordTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushProfileResetPasswordView()
             }
             .disposed(by: disposeBag)
         

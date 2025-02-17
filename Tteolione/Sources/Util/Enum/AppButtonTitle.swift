@@ -45,5 +45,5 @@ enum AppButtonTitle: String {
     case requestApprove = "승인 하기"
     case writeReview = "후기 쓰기"
     case requestComplete = "공유 완료"
-    
+    case change = "변경"
 }

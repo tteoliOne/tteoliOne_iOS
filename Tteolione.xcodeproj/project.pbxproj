@@ -21,6 +21,9 @@
 		720D70CA2D62FFE200FC25FB /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */; };
 		720D70CC2D62FFF000FC25FB /* ProfileSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */; };
 		720D70CF2D6313F300FC25FB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70CE2D6313F300FC25FB /* Toast */; };
+		720D70D12D6328E500FC25FB /* ProfileResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */; };
+		720D70D32D63291F00FC25FB /* ProfileResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */; };
+		720D70D52D63293D00FC25FB /* ProfileResetPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -312,6 +315,9 @@
 		720D70C72D62FFD900FC25FB /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingReactor.swift; sourceTree = "<group>"; };
+		720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordViewController.swift; sourceTree = "<group>"; };
+		720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordView.swift; sourceTree = "<group>"; };
+		720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordReactor.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -691,6 +697,7 @@
 			children = (
 				721BF2B92D55F58300E37E3B /* SettingReactor.swift */,
 				720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */,
+				720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -703,6 +710,7 @@
 				721BF2CC2D56010900E37E3B /* SettingSwitchCell.swift */,
 				721BF2D02D56013100E37E3B /* SettingVersionCell.swift */,
 				720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */,
+				720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -712,6 +720,7 @@
 			children = (
 				721BF2B52D55F57400E37E3B /* SettingViewController.swift */,
 				720D70C72D62FFD900FC25FB /* ProfileSettingViewController.swift */,
+				720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2120,6 +2129,7 @@
 				724DECCA2D02CE2E00171F44 /* BackButton.swift in Sources */,
 				720D70CA2D62FFE200FC25FB /* ProfileSettingView.swift in Sources */,
 				72361FB02D2FF219009BEF12 /* PostButton.swift in Sources */,
+				720D70D12D6328E500FC25FB /* ProfileResetPasswordViewController.swift in Sources */,
 				72361F532D2EB276009BEF12 /* MyReviewDTO.swift in Sources */,
 				72361EC62D27AA0D009BEF12 /* FindIDResultView.swift in Sources */,
 				72977EF72D53C30000D1FDE7 /* ReportCoordinator.swift in Sources */,
@@ -2133,6 +2143,7 @@
 				723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */,
 				724DECA62D01848600171F44 /* LoginViewController.swift in Sources */,
 				72361FF92D353B87009BEF12 /* SearchView.swift in Sources */,
+				720D70D52D63293D00FC25FB /* ProfileResetPasswordReactor.swift in Sources */,
 				72361F2F2D2E8DF4009BEF12 /* ProductRegistRequestBody.swift in Sources */,
 				725F818A2D43B2B2002C4E1C /* MapView.swift in Sources */,
 				723B09302D3BCBC600F464A4 /* LoadImageView.swift in Sources */,
@@ -2173,6 +2184,7 @@
 				7246FA202D3A1EE500EE6B5E /* SocialProfileSetViewController.swift in Sources */,
 				72361FBC2D30DDF9009BEF12 /* AndongLabel.swift in Sources */,
 				721BF2FB2D5A333900E37E3B /* ChatMessageCell.swift in Sources */,
+				720D70D32D63291F00FC25FB /* ProfileResetPasswordView.swift in Sources */,
 				724DECBA2D0188BA00171F44 /* BoundarView.swift in Sources */,
 				72361FAA2D2F9986009BEF12 /* MappinImageView.swift in Sources */,
 				72361E562D0BF609009BEF12 /* ProfileSetReactor.swift in Sources */,

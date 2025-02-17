@@ -46,6 +46,18 @@ extension SettingCoordinator {
         show(viewController)
     }
     
+    func pushProfileResetPasswordView() {
+        let reactor = ProfileResetPasswordReactor(networkProvider: dependency.userProvider)
+        let viewController = createViewController(
+            ofType: ProfileResetPasswordViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
     func finishView() {
         finishAllChildren()
         popVC()
