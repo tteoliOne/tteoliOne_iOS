@@ -34,7 +34,7 @@ extension SettingViewController: View {
             .bind { item in
                 switch item {
                 case .profile:
-                    print("프로필 설정 이동")
+                    reactor.action.onNext(.profileSettingTap)
                 case .password:
                     print("비밀번호 변경 이동")
                 case .address:
@@ -61,6 +61,15 @@ extension SettingViewController: View {
     }
     
     func bindNavigation(_ reactor: SettingReactor) {
+        reactor.state.map { $0.isProfileSettingTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushProfileSettingView()
+            }
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.isBackButtonTapped }
             .distinctUntilChanged()
             .filter { $0 }

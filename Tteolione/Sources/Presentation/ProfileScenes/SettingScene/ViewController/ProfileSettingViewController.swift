@@ -1,39 +1,36 @@
 //
-//  ProfileViewController.swift
+//  ProfileSettingViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 1/13/25.
+//  Created by 전준영 on 2/17/25.
 //
 
-import UIKit
 import ReactorKit
+import RxSwift
 import RxCocoa
 import PhotosUI
+import Toast
 
-final class ProfileViewController: BaseViewController<ProfileView> {
+final class ProfileSettingViewController: BaseViewController<ProfileSettingView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: ProfileCoordinatorDelegate?
+    weak var delegate: SettingCoordinatorDelegate?
     
 }
 
-extension ProfileViewController: View {
+extension ProfileSettingViewController: View {
     
-    func bind(reactor: ProfileReactor) {
+    func bind(reactor: ProfileSettingReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    func bindAction(_ reactor: ProfileReactor) {
-//        reactor.action.onNext(.fetchProfile)
-        self.rx.viewWillAppear
-            .map { _ in ProfileReactor.Action.fetchProfile }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
+    func bindAction(_ reactor: ProfileSettingReactor) {
+        reactor.action.onNext(.fetchProfile)
         
         rootView.setButton.rx.tap
-            .map { ProfileReactor.Action.resetProfileButtonTap }
+            .map { ProfileSettingReactor.Action.resetProfileButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -49,7 +46,7 @@ extension ProfileViewController: View {
         
         rootView.setNicknameTextField.rx.text.orEmpty
             .distinctUntilChanged()
-            .map { ProfileReactor.Action.updateNickname($0) }
+            .map { ProfileSettingReactor.Action.updateNickname($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -65,104 +62,29 @@ extension ProfileViewController: View {
         
         rootView.setIntroTextField.rx.text.orEmpty
             .distinctUntilChanged()
-            .map { ProfileReactor.Action.updateIntro($0) }
+            .map { ProfileSettingReactor.Action.updateIntro($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.profileSetButton.rx.tap
-            .map { ProfileReactor.Action.photoButtonTap }
+            .map { ProfileSettingReactor.Action.photoButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.gearButton.rx.tap
-            .map { ProfileReactor.Action.gearButtonTap }
+        rootView.backButton.rx.tap
+            .map { ProfileSettingReactor.Action.backButtonTap }
             .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        rootView.tableView.rx.itemSelected
-            .map { indexPath in
-                return indexPath.row
-            }
-            .subscribe(onNext: { selectedIndex in
-                switch selectedIndex {
-                case 0:
-                    reactor.action.onNext(.myShareTap(.eNew))
-                case 1:
-                    print(2)
-                case 2:
-                    reactor.action.onNext(.myShareTap(.saved))
-                case 3:
-                    print(4)
-                case 4:
-                    reactor.action.onNext(.resetProfileListTap)
-                default:
-                    break
-                }
-            })
             .disposed(by: disposeBag)
     }
     
-    func bindState(_ reactor: ProfileReactor) {
-        reactor.state.map { $0.tableViewItems }
+    func bindState(_ reactor: ProfileSettingReactor) {
+        reactor.state.map { $0.profileImage }
             .distinctUntilChanged()
-            .observe(on: MainScheduler.instance)
-            .bind(to: rootView.tableView.rx.items(
-                cellIdentifier: ProfileListTableViewCell.identifier,
-                cellType: ProfileListTableViewCell.self
-            )) { _, item, cell in
-                cell.selectionStyle = .none
-                cell.configure(with: item)
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.profile }
             .compactMap { $0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: rootView, onNext: { owner, value in
-                owner.setupViews(with: value)
-            })
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isFailure }
-            .distinctUntilChanged()
-            .filter { $0 }
-            .observe(on: MainScheduler.instance)
-            .bind(with: rootView) { owner, _ in
-                owner.resetProfile()
+            .bind(with: rootView) { owner, image in
+                owner.updateImage(image)
             }
-            .disposed(by: disposeBag)
-    }
-    
-    func bindNavigation(_ reactor: ProfileReactor) {
-        reactor.state
-            .map { ($0.isMyProductScreen, $0.selectedStatus) }
-            .filter { $0.0 }
-            .compactMap { $0.1 }
-            .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, status in
-                owner.delegate?.pushMyProductViewController(status: status)
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isResetProfileListTapped }
-            .distinctUntilChanged()
-            .filter { $0 }
-            .observe(on: MainScheduler.instance)
-            .bind(with: rootView) { owner, _ in
-                owner.resetProfileField()
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.nickname }
-            .distinctUntilChanged()
-            .observe(on: MainScheduler.instance)
-            .bind(to: rootView.nickname.rx.text)
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.intro }
-            .distinctUntilChanged()
-            .observe(on: MainScheduler.instance)
-            .bind(to: rootView.oneLinerLabel.rx.text)
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.nickname }
@@ -183,15 +105,17 @@ extension ProfileViewController: View {
             .bind(to: rootView.remainCountLabel.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.profileImage }
+        reactor.state.map { $0.errorMessage }
             .distinctUntilChanged()
             .compactMap { $0 }
             .observe(on: MainScheduler.instance)
-            .bind(with: rootView) { owner, image in
-                owner.updateImage(image)
+            .bind(with: self) { owner, errorMessage in
+                owner.view.makeToast(errorMessage)
             }
             .disposed(by: disposeBag)
-        
+    }
+    
+    func bindNavigation(_ reactor: ProfileSettingReactor) {
         reactor.state.map { $0.isProductImagePickerShown }
             .distinctUntilChanged()
             .filter { $0 }
@@ -201,24 +125,23 @@ extension ProfileViewController: View {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isGearButtonTapped }
+        reactor.state.map { $0.backButtonTapped }
             .distinctUntilChanged()
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.showSettingView()
+                owner.delegate?.popVC()
             }
             .disposed(by: disposeBag)
     }
 }
 
-extension ProfileViewController: PHPickerViewControllerDelegate {
+extension ProfileSettingViewController: PHPickerViewControllerDelegate {
     
     func showImagePicker() {
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 1
         configuration.filter = .images
-        
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         present(picker, animated: true)
@@ -254,6 +177,6 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
     }
 }
 
-extension ProfileViewController: DelegateOwner {
-    typealias Delegate = ProfileCoordinatorDelegate
+extension ProfileSettingViewController: DelegateOwner {
+    typealias Delegate = SettingCoordinatorDelegate
 }

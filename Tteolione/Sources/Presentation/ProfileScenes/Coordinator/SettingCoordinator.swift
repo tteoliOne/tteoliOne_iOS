@@ -34,6 +34,18 @@ final class SettingCoordinator: NSObject, SettingCoordinatorDelegate {
 }
 
 extension SettingCoordinator {
+    func pushProfileSettingView() {
+        let reactor = ProfileSettingReactor(networkProvider: dependency.userProvider)
+        let viewController = createViewController(
+            ofType: ProfileSettingViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
     func finishView() {
         finishAllChildren()
         popVC()

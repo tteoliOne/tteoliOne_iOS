@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkError: LocalizedError,Equatable {
+public enum NetworkError: LocalizedError, Equatable {
     
     case connectionError // 네트워크 연결 문제
     case serverError(code: Int, message: String?) // 서버에서 반환한 에러
@@ -22,8 +22,8 @@ public enum NetworkError: LocalizedError,Equatable {
         case .connectionError:
             return "네트워크 연결에 문제가 있습니다. 인터넷 연결을 확인해주세요."
             
-        case let .serverError(_, message):
-            return message ?? "서버에서 알 수 없는 오류가 발생했습니다."
+        case let .serverError(code, message):
+            return message ?? NetworkError.descriptionForErrorCode(code)
             
         case .decodingFailure:
             return "응답 데이터를 처리하는 데 실패했습니다."
@@ -78,8 +78,7 @@ extension NetworkError {
             return .unknownError
         } else {
             return .serverError(code: code,
-                                message: message)
+                                message: message ?? descriptionForErrorCode(code))
         }
     }
-    
 }

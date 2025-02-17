@@ -185,10 +185,15 @@ extension ProfileReactor {
         .flatMapLatest { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(let dto):
+                let introText = dto.intro ?? ""
+                let maxLength = 20
+                let introLengthText = "\(introText.count)/\(maxLength)"
+                
                 return Observable.concat([
                     .just(.setProfile(dto)),
                     .just(.setNickname(dto.nickname)),
                     .just(.setIntro(dto.intro ?? "")),
+                    .just(.setIntroLengthText(introLengthText)),
                     .create { observer in
                         Task {
                             if let profileUrl = URL(string: dto.profile),

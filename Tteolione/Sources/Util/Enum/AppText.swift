@@ -92,6 +92,7 @@ enum AppText {
         static let likeList = "저장글 목록"
         static let review = "후기 목록"
         static let setting = "설정"
+        static let profileSetting = "프로필 설정"
     }
     
 }

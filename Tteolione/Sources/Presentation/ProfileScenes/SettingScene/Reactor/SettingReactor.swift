@@ -14,16 +14,19 @@ final class SettingReactor: Reactor {
     enum Action {
         case toggleNotification(Bool)
         case backButtonTap
+        case profileSettingTap
     }
     
     enum Mutation {
         case updateNotificationState(Bool)
         case backButtonTapped(Bool)
+        case profileSettingTapped(Bool)
     }
     
     struct State {
         var sections: [SettingSection] = []
         var isBackButtonTapped: Bool = false
+        var isProfileSettingTapped: Bool = false
     }
     
     var initialState = State()
@@ -52,6 +55,12 @@ extension SettingReactor {
                 .just(.backButtonTapped(true)),
                 .just(.backButtonTapped(false))
             ])
+            
+        case .profileSettingTap:
+            return .concat([
+                .just(.profileSettingTapped(true)),
+                .just(.profileSettingTapped(false))
+            ])
         }
     }
     
@@ -69,6 +78,9 @@ extension SettingReactor {
             
         case .backButtonTapped(let isTap):
             newState.isBackButtonTapped = isTap
+            
+        case .profileSettingTapped(let isTap):
+            newState.isProfileSettingTapped = isTap
         }
         return newState
     }
