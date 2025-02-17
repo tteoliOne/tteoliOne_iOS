@@ -18,5 +18,6 @@ protocol MainCoordinatorDelegate: Coordinator {
                                        productId: Int?)
     func showReportView(reportType: ReportType, reportId: Int)
     func showChatView(chatId: Int, productId: Int)
+    func showOpponentView(userId: Int)
     func dismissAndPop()
 }

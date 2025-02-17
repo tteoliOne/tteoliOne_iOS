@@ -26,7 +26,7 @@ final class ProductDetailView: BaseView {
         return pageControl
     }()
     private let productFieldView = UIView()
-    private let profileImageView = CircleImageView(joinImage: .setProfile,
+    let profileImageView = CircleImageView(joinImage: .setProfile,
                                                    corner: 30,
                                                    border: 1)
     private let nicknameLabel = RegularLabel(text: "닉네임",
