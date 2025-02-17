@@ -57,6 +57,7 @@ extension MainCoordinator {
             with: reactor,
             delegate: self
         )
+        navigationController.setNavigationBarHidden(false, animated: false)
         viewController.hidesBottomBarWhenPushed = true
         show(viewController)
     }
@@ -120,6 +121,15 @@ extension MainCoordinator {
                                               dependency: dependency,
                                               chatId: chatId,
                                               productId: productId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
+    func showOpponentView(userId: Int) {
+        let coordinator = OpponentCoordinator(navigationController: navigationController,
+                                              dependency: dependency,
+                                              userId: userId)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()

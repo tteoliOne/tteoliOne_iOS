@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		720D70AC2D5F173800FC25FB /* CallBackDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70AB2D5F173800FC25FB /* CallBackDTO.swift */; };
+		720D70B42D61BDB900FC25FB /* OpponentCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70B32D61BDB900FC25FB /* OpponentCoordinatorDelegate.swift */; };
+		720D70B62D61BDDD00FC25FB /* OpponentCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70B52D61BDDD00FC25FB /* OpponentCoordinator.swift */; };
+		720D70B82D61BE3B00FC25FB /* OpponentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70B72D61BE3B00FC25FB /* OpponentViewController.swift */; };
+		720D70BA2D61BE4E00FC25FB /* OpponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70B92D61BE4E00FC25FB /* OpponentView.swift */; };
+		720D70BC2D61BE5700FC25FB /* OpponentReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70BB2D61BE5700FC25FB /* OpponentReactor.swift */; };
+		720D70BE2D61C18700FC25FB /* OpponentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70BD2D61C18700FC25FB /* OpponentCollectionViewCell.swift */; };
+		720D70C12D61C6FA00FC25FB /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70C02D61C6FA00FC25FB /* RxGesture */; };
+		720D70C42D61CBE500FC25FB /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C32D61CBE500FC25FB /* CustomSegmentedControl.swift */; };
+		720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70C52D623F1600FC25FB /* ReviewTableViewCell.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -288,6 +297,14 @@
 		4FD30292AC9AD2F9D4BD7D39 /* Pods-Tteolione.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tteolione.release.xcconfig"; path = "Target Support Files/Pods-Tteolione/Pods-Tteolione.release.xcconfig"; sourceTree = "<group>"; };
 		51F33EDA3176D8DBF56664AC /* Pods-Tteolione.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tteolione.debug.xcconfig"; path = "Target Support Files/Pods-Tteolione/Pods-Tteolione.debug.xcconfig"; sourceTree = "<group>"; };
 		720D70AB2D5F173800FC25FB /* CallBackDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallBackDTO.swift; sourceTree = "<group>"; };
+		720D70B32D61BDB900FC25FB /* OpponentCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D70B52D61BDDD00FC25FB /* OpponentCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentCoordinator.swift; sourceTree = "<group>"; };
+		720D70B72D61BE3B00FC25FB /* OpponentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentViewController.swift; sourceTree = "<group>"; };
+		720D70B92D61BE4E00FC25FB /* OpponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentView.swift; sourceTree = "<group>"; };
+		720D70BB2D61BE5700FC25FB /* OpponentReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentReactor.swift; sourceTree = "<group>"; };
+		720D70BD2D61C18700FC25FB /* OpponentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentCollectionViewCell.swift; sourceTree = "<group>"; };
+		720D70C32D61CBE500FC25FB /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		720D70C52D623F1600FC25FB /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -563,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72361E6A2D0C3236009BEF12 /* RxMoya in Frameworks */,
+				720D70C12D61C6FA00FC25FB /* RxGesture in Frameworks */,
 				7246FA132D393B2800EE6B5E /* RxKakaoSDKAuth in Frameworks */,
 				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
 				721BF2CB2D55FFE900E37E3B /* RxDataSources in Frameworks */,
@@ -580,10 +598,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		720D70AD2D61BC2500FC25FB /* OpponentProfileScenes */ = {
+			isa = PBXGroup;
+			children = (
+				720D70AE2D61BC3B00FC25FB /* Coordinator */,
+				720D70AF2D61BC4600FC25FB /* ViewController */,
+				720D70B02D61BC4C00FC25FB /* View */,
+				720D70B12D61BC4F00FC25FB /* Reactor */,
+			);
+			path = OpponentProfileScenes;
+			sourceTree = "<group>";
+		};
+		720D70AE2D61BC3B00FC25FB /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				720D70B52D61BDDD00FC25FB /* OpponentCoordinator.swift */,
+				720D70B22D61BC7400FC25FB /* Protocol */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		720D70AF2D61BC4600FC25FB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				720D70B72D61BE3B00FC25FB /* OpponentViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		720D70B02D61BC4C00FC25FB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				720D70B92D61BE4E00FC25FB /* OpponentView.swift */,
+				720D70BD2D61C18700FC25FB /* OpponentCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		720D70B12D61BC4F00FC25FB /* Reactor */ = {
+			isa = PBXGroup;
+			children = (
+				720D70BB2D61BE5700FC25FB /* OpponentReactor.swift */,
+			);
+			path = Reactor;
+			sourceTree = "<group>";
+		};
+		720D70B22D61BC7400FC25FB /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				720D70B32D61BDB900FC25FB /* OpponentCoordinatorDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		720D70C22D61CBD000FC25FB /* Segment */ = {
+			isa = PBXGroup;
+			children = (
+				720D70C32D61CBE500FC25FB /* CustomSegmentedControl.swift */,
+			);
+			path = Segment;
+			sourceTree = "<group>";
+		};
 		721BF2A42D55160D00E37E3B /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				72977ED22D48A59500D1FDE7 /* ProductListTableViewCell.swift */,
+				720D70C52D623F1600FC25FB /* ReviewTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -1406,6 +1486,7 @@
 				7246F9FD2D38BDDA00EE6B5E /* MainScenes */,
 				721BF2D22D5738AE00E37E3B /* ChatScenes */,
 				7246F9FE2D38BDE300EE6B5E /* ProfileScenes */,
+				720D70AD2D61BC2500FC25FB /* OpponentProfileScenes */,
 				72977EE62D53C16B00D1FDE7 /* DeclarationScenes */,
 			);
 			path = Presentation;
@@ -1638,6 +1719,7 @@
 		724DECAC2D0186A200171F44 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				720D70C22D61CBD000FC25FB /* Segment */,
 				721BF2A42D55160D00E37E3B /* TableViewCell */,
 				72977EC32D48983900D1FDE7 /* UISearchBar */,
 				72361F9D2D2F9056009BEF12 /* CollectionView */,
@@ -1910,6 +1992,7 @@
 				7246FA162D393B2800EE6B5E /* RxKakaoSDKUser */,
 				721BF2CA2D55FFE900E37E3B /* RxDataSources */,
 				721BF2EC2D588DBD00E37E3B /* SwiftStomp */,
+				720D70C02D61C6FA00FC25FB /* RxGesture */,
 			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
@@ -1947,6 +2030,7 @@
 				7246FA112D393B2800EE6B5E /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */,
+				720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
@@ -2029,6 +2113,7 @@
 				721BF2DF2D573B1200E37E3B /* ChattingCoordinatorDelegate.swift in Sources */,
 				72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
+				720D70BC2D61BE5700FC25FB /* OpponentReactor.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
 				72361FD22D316F8A009BEF12 /* ProductDetailView.swift in Sources */,
 				723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */,
@@ -2057,6 +2142,7 @@
 				7236200D2D356DE8009BEF12 /* AddressView.swift in Sources */,
 				72361E542D0BF5F7009BEF12 /* ProfileSetView.swift in Sources */,
 				721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */,
+				720D70B82D61BE3B00FC25FB /* OpponentViewController.swift in Sources */,
 				72361E2C2D02E12F009BEF12 /* LineView.swift in Sources */,
 				724DECB72D01883B00171F44 /* SlashLabel.swift in Sources */,
 				72361E442D0B28AE009BEF12 /* PasswordExplainLabelView.swift in Sources */,
@@ -2080,6 +2166,7 @@
 				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
+				720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
@@ -2093,6 +2180,7 @@
 				72361FC22D30EA0C009BEF12 /* ShadowView.swift in Sources */,
 				721BF2BA2D55F58300E37E3B /* SettingReactor.swift in Sources */,
 				72361E582D0BFA4D009BEF12 /* CircleImageView.swift in Sources */,
+				720D70C42D61CBE500FC25FB /* CustomSegmentedControl.swift in Sources */,
 				725F81852D43488D002C4E1C /* ProfileCoordinatorDelegate.swift in Sources */,
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
 				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
@@ -2104,6 +2192,7 @@
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
 				721BF2F52D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift in Sources */,
 				72977ED32D48A59500D1FDE7 /* ProductListTableViewCell.swift in Sources */,
+				720D70B42D61BDB900FC25FB /* OpponentCoordinatorDelegate.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
 				72977EED2D53C2B400D1FDE7 /* DeclarationViewController.swift in Sources */,
@@ -2117,6 +2206,7 @@
 				723B092E2D3BC77800F464A4 /* FormatterManager.swift in Sources */,
 				72361E382D087B50009BEF12 /* IDView.swift in Sources */,
 				72361F372D2E9EEB009BEF12 /* ProductDetailDTO.swift in Sources */,
+				720D70BE2D61C18700FC25FB /* OpponentCollectionViewCell.swift in Sources */,
 				72977EC22D48957900D1FDE7 /* SearchReactor.swift in Sources */,
 				72361E642D0C24C2009BEF12 /* NetworkError.swift in Sources */,
 				7246FA2E2D3AC76C00EE6B5E /* Constants.swift in Sources */,
@@ -2195,6 +2285,7 @@
 				724DEC9C2D01746A00171F44 /* ResourceFonts.swift in Sources */,
 				721BF2E12D573B3E00E37E3B /* ChattingCoordinator.swift in Sources */,
 				721BF2CF2D56011E00E37E3B /* SettingTableViewCell.swift in Sources */,
+				720D70B62D61BDDD00FC25FB /* OpponentCoordinator.swift in Sources */,
 				72361FE82D3425C5009BEF12 /* NavigationTitle.swift in Sources */,
 				72361F9F2D2F906E009BEF12 /* ProductCollectionViewCell.swift in Sources */,
 				72361E952D155D61009BEF12 /* LoginDelegate.swift in Sources */,
@@ -2253,6 +2344,7 @@
 				72361FB62D30DBFE009BEF12 /* PostViewController.swift in Sources */,
 				72361E6C2D0C5773009BEF12 /* APIKey.swift in Sources */,
 				72977ECF2D48A3E700D1FDE7 /* SearchSuggestionsView.swift in Sources */,
+				720D70BA2D61BE4E00FC25FB /* OpponentView.swift in Sources */,
 				72361F6E2D2EBFF2009BEF12 /* ChatContentDTO.swift in Sources */,
 				72977EF52D53C2F600D1FDE7 /* ReportCoordinatorDelegate.swift in Sources */,
 				72361F122D2E3951009BEF12 /* UserDTO.swift in Sources */,
@@ -2515,6 +2607,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
 		721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
@@ -2574,6 +2674,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		720D70C02D61C6FA00FC25FB /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
+		};
 		721BF2CA2D55FFE900E37E3B /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */;

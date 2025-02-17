@@ -19,6 +19,7 @@ final class ProductDetailReactor: Reactor {
         case deletePost
         case reportPost
         case callButtonTap
+        case profileTap
     }
     
     enum Mutation {
@@ -31,10 +32,13 @@ final class ProductDetailReactor: Reactor {
         case showReportScreen(Bool)
         case callButtonTapped(Bool)
         case setChatDto(ChatDTO)
+        case profileTapped(Bool)
+        case setSellerId(Int)
     }
 
     struct State {
         var productId: Int = 0
+        var sellerId: Int = 0
         var products: ProductDetailDTO?
         var errorMessage: String?
         var isReceiptTapped: Bool = false
@@ -45,6 +49,7 @@ final class ProductDetailReactor: Reactor {
         var isReportScreenShown: Bool = false
         var isCallButtonTapped: Bool = false
         var chatDto: ChatDTO?
+        var isProfileTap: Bool = false
     }
     
     private let networkPorductProvider: NetworkProvider<ProductServiceAPI>
@@ -93,6 +98,12 @@ extension ProductDetailReactor {
             
         case .callButtonTap:
             return createChat(productId: currentState.productId)
+            
+        case .profileTap:
+            return .concat([
+                .just(.profileTapped(true)),
+                .just(.profileTapped(false))
+            ])
         }
     }
     
@@ -133,6 +144,12 @@ extension ProductDetailReactor {
             
         case .setChatDto(let dto):
             newState.chatDto = dto
+            
+        case .profileTapped(let tapped):
+            newState.isProfileTap = tapped
+            
+        case .setSellerId(let id):
+            newState.sellerId = id
         }
         
         return newState
@@ -150,7 +167,8 @@ extension ProductDetailReactor {
             switch handleResponse(response) {
             case .success(let dto):
                 return .concat([
-                    .just(.setProducts(dto))
+                    .just(.setProducts(dto)),
+                    .just(.setSellerId(dto.sellerId))
                 ])
             case .failure(let error):
                 return .just(.showError(error))

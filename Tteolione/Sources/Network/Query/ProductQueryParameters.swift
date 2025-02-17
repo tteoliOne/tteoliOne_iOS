@@ -18,6 +18,7 @@ struct ProductQueryParameters: QueryStringProtocol {
     let size: Int?
     let sort: String?
     let status: String?
+    let soldStatus: String?
     let q: String?
     
     init(longitude: Double,
@@ -29,6 +30,7 @@ struct ProductQueryParameters: QueryStringProtocol {
          size: Int? = nil,
          sort: String? = nil,
          status: String? = nil,
+         soldStatus: String? = nil,
          q: String? = nil) {
         self.longitude = longitude
         self.latitude = latitude
@@ -39,6 +41,7 @@ struct ProductQueryParameters: QueryStringProtocol {
         self.size = size
         self.sort = sort
         self.status = status
+        self.soldStatus = soldStatus
         self.q = q
     }
     
@@ -75,6 +78,10 @@ struct ProductQueryParameters: QueryStringProtocol {
         
         if let status = status {
             items["status"] = status
+        }
+        
+        if let soldStatus = soldStatus {
+            items["soldStatus"] = soldStatus
         }
         
         if let q = q {

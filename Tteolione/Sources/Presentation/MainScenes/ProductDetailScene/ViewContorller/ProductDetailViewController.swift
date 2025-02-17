@@ -7,6 +7,7 @@
 
 import ReactorKit
 import RxCocoa
+import RxGesture
 import UIKit
 
 final class ProductDetailViewController: BaseNavigationViewController<ProductDetailView> {
@@ -14,6 +15,10 @@ final class ProductDetailViewController: BaseNavigationViewController<ProductDet
     var disposeBag = DisposeBag()
     weak var delegate: MainCoordinatorDelegate?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 }
 
 extension ProductDetailViewController: View {
@@ -42,6 +47,11 @@ extension ProductDetailViewController: View {
         
         rootView.callButton.rx.tap
             .map { ProductDetailReactor.Action.callButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.profileImageView.rx.tapGesture()
+            .map { _ in ProductDetailReactor.Action.profileTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -111,6 +121,16 @@ extension ProductDetailViewController: View {
             }
             .bind(with: self) { owner, dto in
                 owner.delegate?.showChatView(chatId: dto.chatId, productId: dto.productNo)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { state -> Int? in
+                guard state.isProfileTap else { return nil }
+                return state.sellerId
+            }
+            .bind(with: self) { owner, id in
+                owner.delegate?.showOpponentView(userId: id)
             }
             .disposed(by: disposeBag)
     }
