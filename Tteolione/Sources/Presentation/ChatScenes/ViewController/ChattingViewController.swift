@@ -112,6 +112,19 @@ extension ChattingViewController: View {
                 owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { state -> Int? in
+                guard state.isReviewViewPushed,
+                      let productNo = state.productId else {
+                    return nil
+                }
+                return productNo
+            }
+            .bind(with: self) { owner, productNo in
+                owner.delegate?.pushReviewView(productId: productNo)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

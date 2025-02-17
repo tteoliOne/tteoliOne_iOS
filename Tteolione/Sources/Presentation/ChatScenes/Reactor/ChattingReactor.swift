@@ -29,6 +29,7 @@ final class ChattingReactor: Reactor {
         case fetchPutRequest(productId: Int, chatRoomId: Int)
         case fetchPutApprove(buyerId: Int, productId: Int, chatRoomId: Int)
         case fetchPutReject(buyerId: Int, productId: Int, chatRoomId: Int)
+        case pushReviewView(productId: Int)
         case updateRequestButtonStatus(RequestButtonState)
     }
     
@@ -41,6 +42,7 @@ final class ChattingReactor: Reactor {
         case setSendButtonEnabled(Bool)
         case setProductData(ChatContentDTO?)
         case updateRequestButtonStatus(RequestButtonState)
+        case pushReviewView(Bool)
     }
     
     struct State {
@@ -54,6 +56,7 @@ final class ChattingReactor: Reactor {
         var isSendButtonEnabled: Bool = false
         var productData: ChatContentDTO?
         var requestButtonState: RequestButtonState = .request
+        var isReviewViewPushed: Bool = false
     }
     
     private var chatWebSocketService: ChatWebSocketService?
@@ -97,6 +100,10 @@ final class ChattingReactor: Reactor {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleReceiveApproveToReviewMessage(_:)),
                                                name: .didReceiveApproveToReview,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleCompleteReview(_:)),
+                                               name: .didCompleteReview,
                                                object: nil)
         self.initialState = State(chatId: chatId,
                                   productId: productId)
@@ -163,6 +170,12 @@ extension ChattingReactor {
                                   chatRoomId: chatRoomId)
         case .updateRequestButtonStatus(let status):
             return .just(.updateRequestButtonStatus(status))
+            
+        case .pushReviewView:
+            return .concat([
+                .just(.pushReviewView(true)),
+                .just(.pushReviewView(false))
+            ])
         }
     }
 }
@@ -196,6 +209,9 @@ extension ChattingReactor {
             
         case .updateRequestButtonStatus(let status):
             newState.requestButtonState = status
+            
+        case .pushReviewView(let isView):
+            newState.isReviewViewPushed = isView
         }
         
         return newState
@@ -401,7 +417,6 @@ extension ChattingReactor {
     }
     
     @objc private func handleCallBackMessage(_ notification: Notification) {
-        print("내 콜백")
         guard let userInfo = notification.userInfo,
               let chatRoomNo = userInfo["chatRoomNo"] as? Int,
               let contentType = userInfo["contentType"] as? String,
@@ -427,17 +442,14 @@ extension ChattingReactor {
     }
     
     @objc private func handleRequestMessage(_ notification: Notification) {
-        print("✅ 요청 메시지 수신! 버튼을 '승인하기'로 변경")
         action.onNext(.updateRequestButtonStatus(.approve))
     }
     
     @objc private func handleRejectMessage(_ notification: Notification) {
-        print("❌ 요청이 거절됨! 버튼을 '요청하기'로 변경")
         action.onNext(.updateRequestButtonStatus(.request))
     }
     
     @objc private func handlePendingRequestMessage(_ notification: Notification) {
-        print("⏳ 내가 요청함! 버튼을 '요청중..'으로 변경")
         action.onNext(.updateRequestButtonStatus(.pending))
     }
     
@@ -451,5 +463,9 @@ extension ChattingReactor {
     
     @objc private func handleReceiveApproveToReviewMessage(_ notification: Notification) {
         action.onNext(.updateRequestButtonStatus(.review))
+    }
+    
+    @objc private func handleCompleteReview(_ notification: Notification) {
+        action.onNext(.updateRequestButtonStatus(.complete))
     }
 }

@@ -156,7 +156,7 @@ final class PostView: BaseView, UITextViewDelegate {
         view.textAlignment = .left
         view.isScrollEnabled = true
         view.text = textViewPlaceHolder
-        view.textColor = .lightGray
+        view.textColor = .myAppBlack
         view.delegate = self
         return view
     }()

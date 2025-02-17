@@ -24,6 +24,10 @@
 		720D70D12D6328E500FC25FB /* ProfileResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */; };
 		720D70D32D63291F00FC25FB /* ProfileResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */; };
 		720D70D52D63293D00FC25FB /* ProfileResetPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */; };
+		720D70D72D6387CE00FC25FB /* ReviewPopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D62D6387CE00FC25FB /* ReviewPopViewController.swift */; };
+		720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D82D63880500FC25FB /* ReviewPopView.swift */; };
+		720D70DB2D63881D00FC25FB /* ReviewPopReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */; };
+		720D70DD2D6395EF00FC25FB /* UpAndDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -318,6 +322,10 @@
 		720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordViewController.swift; sourceTree = "<group>"; };
 		720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordView.swift; sourceTree = "<group>"; };
 		720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordReactor.swift; sourceTree = "<group>"; };
+		720D70D62D6387CE00FC25FB /* ReviewPopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopViewController.swift; sourceTree = "<group>"; };
+		720D70D82D63880500FC25FB /* ReviewPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopView.swift; sourceTree = "<group>"; };
+		720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopReactor.swift; sourceTree = "<group>"; };
+		720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpAndDownButton.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -760,6 +768,7 @@
 			children = (
 				721BF2EE2D59C9C100E37E3B /* ChatListViewController.swift */,
 				721BF2D82D573AC800E37E3B /* ChattingViewController.swift */,
+				720D70D62D6387CE00FC25FB /* ReviewPopViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -771,6 +780,7 @@
 				721BF2DA2D573ACF00E37E3B /* ChattingView.swift */,
 				721BF2F82D59CCCE00E37E3B /* ChatListTableViewCell.swift */,
 				721BF2FA2D5A333900E37E3B /* ChatMessageCell.swift */,
+				720D70D82D63880500FC25FB /* ReviewPopView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -780,6 +790,7 @@
 			children = (
 				721BF2F22D59C9D600E37E3B /* ChatListReactor.swift */,
 				721BF2DC2D573AD800E37E3B /* ChattingReactor.swift */,
+				720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -1773,6 +1784,7 @@
 				72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */,
 				72977ECC2D489CD600D1FDE7 /* XButton.swift */,
 				721BF2AF2D55F30E00E37E3B /* GearButton.swift */,
+				720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -2212,6 +2224,7 @@
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
 				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
+				720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */,
 				72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
@@ -2254,9 +2267,11 @@
 				725F817E2D421326002C4E1C /* BoldLabel.swift in Sources */,
 				72361F592D2EB55E009BEF12 /* WithdrawalRequestBody.swift in Sources */,
 				72361F492D2EAB7A009BEF12 /* NewPasswordRequestBody.swift in Sources */,
+				720D70DD2D6395EF00FC25FB /* UpAndDownButton.swift in Sources */,
 				7246FA0A2D38D22600EE6B5E /* CoordinatorType.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
 				7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */,
+				720D70DB2D63881D00FC25FB /* ReviewPopReactor.swift in Sources */,
 				72977EE52D5287B900D1FDE7 /* UIImage+Extension.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
 				72361FD92D3411EA009BEF12 /* TabBarController.swift in Sources */,
@@ -2344,6 +2359,7 @@
 				72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */,
 				72977F012D5488A000D1FDE7 /* SlideInPresentationAnimator.swift in Sources */,
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
+				720D70D72D6387CE00FC25FB /* ReviewPopViewController.swift in Sources */,
 				721BF2D12D56013100E37E3B /* SettingVersionCell.swift in Sources */,
 				7246FA1E2D396F2200EE6B5E /* AppleAuthManager.swift in Sources */,
 				72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */,

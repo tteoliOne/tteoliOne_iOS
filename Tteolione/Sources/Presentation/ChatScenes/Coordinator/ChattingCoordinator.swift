@@ -46,6 +46,20 @@ final class ChattingCoordinator: ChattingCoordinatorDelegate {
 }
 
 extension ChattingCoordinator {
+    func pushReviewView(productId: Int) {
+        let reactor = ReviewPopReactor(networkChatProvider: dependency.chatNetworkProvider,
+                                       productId: productId)
+        let viewController = createViewController(
+            ofType: ReviewPopViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.view.backgroundColor = .clear
+        show(viewController, as: .present)
+    }
+    
     func finishView() {
         finishAllChildren()
     }
