@@ -17,6 +17,7 @@ final class ChatMessageData {
     var productNo: Int
     var sendTime: Int
     var isMine: Bool
+    var contentType: String
 
     init(messageID: String = UUID().uuidString,
          chatRoomNo: Int,
@@ -24,7 +25,8 @@ final class ChatMessageData {
          senderNo: Int,
          productNo: Int,
          sendTime: Int,
-         isMine: Bool) {
+         isMine: Bool,
+         contentType: String) {
         self.messageID = messageID
         self.chatRoomNo = chatRoomNo
         self.content = content
@@ -32,5 +34,6 @@ final class ChatMessageData {
         self.productNo = productNo
         self.sendTime = sendTime
         self.isMine = isMine
+        self.contentType = contentType
     }
 }

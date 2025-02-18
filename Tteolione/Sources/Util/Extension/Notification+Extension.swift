@@ -18,4 +18,5 @@ extension Notification.Name {
     static let didReceiveApprove = Notification.Name("didReceiveApprove")
     static let didReceiveApproveToReview = Notification.Name("didReceiveApproveToReview")
     static let didCompleteReview = Notification.Name("didCompleteReview")
+    static let didLeaveChat = Notification.Name("didLeaveChat")
 }

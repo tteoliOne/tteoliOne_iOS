@@ -46,6 +46,8 @@ final class ChattingView: BaseView {
         let tableView = UITableView()
         tableView.register(ChatMessageCell.self,
                            forCellReuseIdentifier: ChatMessageCell.identifier)
+        tableView.register(SystemMessageCell.self,
+                           forCellReuseIdentifier: SystemMessageCell.identifier)
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = false

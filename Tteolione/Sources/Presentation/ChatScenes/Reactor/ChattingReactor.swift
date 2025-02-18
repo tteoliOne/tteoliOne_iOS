@@ -111,18 +111,31 @@ final class ChattingReactor: Reactor {
                                                selector: #selector(handleCompleteReview(_:)),
                                                name: .didCompleteReview,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleLeaveChat(_:)),
+                                               name: .didLeaveChat,
+                                               object: nil)
         self.initialState = State(chatId: chatId,
                                   productId: productId)
         Task { @MainActor in
             let messages = dbManager.fetchMessages(chatRoomID: chatId)
             
             let chatMessages = messages.map { message in
-                ChatMessage(
+                let messageType: ChatMessageType = {
+                    if message.contentType == "notice" {
+                        return .notice
+                    } else {
+                        return message.isMine ? .sent : .received
+                    }
+                }()
+                
+                return ChatMessage(
                     text: message.content,
-                    type: message.isMine ? .sent : .received,
+                    type: messageType,
                     timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendTime))
                 )
             }
+            
             self.action.onNext(.addMessages(chatMessages))
         }
     }
@@ -297,15 +310,20 @@ extension ChattingReactor {
                             senderNo: message.senderNo,
                             productNo: chatContentDTO.productId,
                             sendTime: message.sendDate,
-                            isMine: message.mine
+                            isMine: message.mine,
+                            contentType: message.contentType
                         )
+                        
+                        print("🔍 저장된 contentType:", chatMessageData.contentType)
                         self.dbManager.addItem(chatMessageData)
                     }
                     
                     let chatMessages = newMessages.map { message in
-                        ChatMessage(
+                        let messageType: ChatMessageType = (message.contentType == "notice") ? .notice : (message.mine ? .sent : .received)
+                        
+                        return ChatMessage(
                             text: message.content,
-                            type: message.mine ? .sent : .received,
+                            type: messageType,
                             timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate))
                         )
                     }
@@ -421,7 +439,8 @@ extension ChattingReactor {
                                                       senderNo: data.senderNo,
                                                       productNo: data.productNo,
                                                       sendTime: data.sendTime,
-                                                      isMine: true)
+                                                      isMine: true,
+                                                      contentType: data.contentType)
                     self.dbManager.addItem(chatMessage)
                 case .failure(let error):
                     print("❌ CallBack 실패: \(error.localizedDescription)")
@@ -453,7 +472,8 @@ extension ChattingReactor {
                                           senderNo: senderNo,
                                           productNo: productNo,
                                           sendTime: timestamp,
-                                          isMine: isMine)
+                                          isMine: isMine,
+                                          contentType: "chat")
         dbManager.addItem(chatMessage)
         action.onNext(.addMessages([ChatMessage(text: content, type: isMine ? .sent : .received, timestamp: formattedTime)]))
     }
@@ -509,5 +529,30 @@ extension ChattingReactor {
     
     @objc private func handleCompleteReview(_ notification: Notification) {
         action.onNext(.updateRequestButtonStatus(.complete))
+    }
+    
+    @objc private func handleLeaveChat(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let content = userInfo["content"] as? String,
+              let senderNo = userInfo["senderNo"] as? Int,
+              let timestamp = userInfo["timestamp"] as? Int,
+              let chatRoomId = userInfo["chatRoomNo"] as? Int,
+              let productNo = userInfo["productNo"] as? Int else {
+            return print("없어")
+        }
+
+        let isMine = senderNo == currentState.chatId
+        let formattedTime = FormatterManager.shared.getChatTimeFormat(from: Int64(timestamp))
+        let chatMessage = ChatMessageData(chatRoomNo: chatRoomId,
+                                          content: content,
+                                          senderNo: senderNo,
+                                          productNo: productNo,
+                                          sendTime: timestamp,
+                                          isMine: isMine,
+                                          contentType: "notice")
+        dbManager.addItem(chatMessage)
+        action.onNext(.addMessages([ChatMessage(text: content,
+                                                type: .notice,
+                                                timestamp: formattedTime)]))
     }
 }

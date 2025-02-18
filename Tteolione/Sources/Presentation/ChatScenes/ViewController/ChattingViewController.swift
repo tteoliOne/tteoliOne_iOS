@@ -71,13 +71,32 @@ extension ChattingViewController: View {
             })
             .disposed(by: disposeBag)
         
+//        reactor.state
+//            .map { $0.messages }
+//            .observe(on: MainScheduler.instance)
+//            .bind(to: rootView.tableView.rx.items(cellIdentifier: ChatMessageCell.identifier,
+//                                                  cellType: ChatMessageCell.self)
+//            ) { _, message, cell in
+//                cell.configure(with: message)
+//            }
+//            .disposed(by: disposeBag)
+        
         reactor.state
             .map { $0.messages }
             .observe(on: MainScheduler.instance)
-            .bind(to: rootView.tableView.rx.items(cellIdentifier: ChatMessageCell.identifier,
-                                                  cellType: ChatMessageCell.self)
-            ) { _, message, cell in
-                cell.configure(with: message)
+            .bind(to: rootView.tableView.rx.items) { tableView, index, message in
+                print(message.type)
+                if message.type == .notice {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: SystemMessageCell.identifier,
+                                                             for: IndexPath(row: index, section: 0)) as! SystemMessageCell
+                    cell.configure(with: message.text)
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ChatMessageCell.identifier,
+                                                             for: IndexPath(row: index, section: 0)) as! ChatMessageCell
+                    cell.configure(with: message)
+                    return cell
+                }
             }
             .disposed(by: disposeBag)
         

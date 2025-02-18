@@ -43,6 +43,7 @@ enum StatusType: String {
 enum ChatMessageType {
     case received
     case sent
+    case notice
 }
 
 struct ChatMessage {
