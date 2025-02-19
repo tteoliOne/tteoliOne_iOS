@@ -24,6 +24,16 @@
 		720D70D12D6328E500FC25FB /* ProfileResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */; };
 		720D70D32D63291F00FC25FB /* ProfileResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */; };
 		720D70D52D63293D00FC25FB /* ProfileResetPasswordReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */; };
+		720D70D72D6387CE00FC25FB /* ReviewPopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D62D6387CE00FC25FB /* ReviewPopViewController.swift */; };
+		720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70D82D63880500FC25FB /* ReviewPopView.swift */; };
+		720D70DB2D63881D00FC25FB /* ReviewPopReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */; };
+		720D70DD2D6395EF00FC25FB /* UpAndDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */; };
+		720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */; };
+		720D70E12D63B84700FC25FB /* SystemMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70E02D63B84700FC25FB /* SystemMessageCell.swift */; };
+		720D70F72D6597E600FC25FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 720D70F62D6597E600FC25FB /* GoogleService-Info.plist */; };
+		720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		720D70FC2D65996700FC25FB /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70FB2D65996700FC25FB /* FirebaseMessaging */; };
+		720D70FE2D65E50800FC25FB /* ProfileImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -318,6 +328,14 @@
 		720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordViewController.swift; sourceTree = "<group>"; };
 		720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordView.swift; sourceTree = "<group>"; };
 		720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResetPasswordReactor.swift; sourceTree = "<group>"; };
+		720D70D62D6387CE00FC25FB /* ReviewPopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopViewController.swift; sourceTree = "<group>"; };
+		720D70D82D63880500FC25FB /* ReviewPopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopView.swift; sourceTree = "<group>"; };
+		720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPopReactor.swift; sourceTree = "<group>"; };
+		720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpAndDownButton.swift; sourceTree = "<group>"; };
+		720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		720D70E02D63B84700FC25FB /* SystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageCell.swift; sourceTree = "<group>"; };
+		720D70F62D6597E600FC25FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageManager.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -592,7 +610,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				720D70FC2D65996700FC25FB /* FirebaseMessaging in Frameworks */,
 				72361E6A2D0C3236009BEF12 /* RxMoya in Frameworks */,
+				720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				720D70C12D61C6FA00FC25FB /* RxGesture in Frameworks */,
 				7246FA132D393B2800EE6B5E /* RxKakaoSDKAuth in Frameworks */,
 				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
@@ -760,6 +780,7 @@
 			children = (
 				721BF2EE2D59C9C100E37E3B /* ChatListViewController.swift */,
 				721BF2D82D573AC800E37E3B /* ChattingViewController.swift */,
+				720D70D62D6387CE00FC25FB /* ReviewPopViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -771,6 +792,8 @@
 				721BF2DA2D573ACF00E37E3B /* ChattingView.swift */,
 				721BF2F82D59CCCE00E37E3B /* ChatListTableViewCell.swift */,
 				721BF2FA2D5A333900E37E3B /* ChatMessageCell.swift */,
+				720D70D82D63880500FC25FB /* ReviewPopView.swift */,
+				720D70E02D63B84700FC25FB /* SystemMessageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -780,6 +803,7 @@
 			children = (
 				721BF2F22D59C9D600E37E3B /* ChatListReactor.swift */,
 				721BF2DC2D573AD800E37E3B /* ChattingReactor.swift */,
+				720D70DA2D63881D00FC25FB /* ReviewPopReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -796,6 +820,7 @@
 			isa = PBXGroup;
 			children = (
 				721BF2FE2D5C615900E37E3B /* DBManager.swift */,
+				720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */,
 				721BF2FD2D5C614000E37E3B /* Model */,
 			);
 			path = DataBase;
@@ -1486,6 +1511,7 @@
 				725F818D2D44B55D002C4E1C /* UIView+Extension.swift */,
 				72977ED72D4AA2D300D1FDE7 /* Notification+Extension.swift */,
 				721BF2A22D55022000E37E3B /* Encodable+Extension.swift */,
+				720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1636,6 +1662,7 @@
 				724DEC842D00930800171F44 /* Resources */,
 				724DEC862D00933400171F44 /* Sources */,
 				724DEC7C2D0091B800171F44 /* Info.plist */,
+				720D70F62D6597E600FC25FB /* GoogleService-Info.plist */,
 			);
 			path = Tteolione;
 			sourceTree = "<group>";
@@ -1773,6 +1800,7 @@
 				72361FBF2D30E964009BEF12 /* SymbolImageButton.swift */,
 				72977ECC2D489CD600D1FDE7 /* XButton.swift */,
 				721BF2AF2D55F30E00E37E3B /* GearButton.swift */,
+				720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -2014,6 +2042,8 @@
 				721BF2EC2D588DBD00E37E3B /* SwiftStomp */,
 				720D70C02D61C6FA00FC25FB /* RxGesture */,
 				720D70CE2D6313F300FC25FB /* Toast */,
+				720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */,
+				720D70FB2D65996700FC25FB /* FirebaseMessaging */,
 			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
@@ -2053,6 +2083,7 @@
 				721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */,
 				720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */,
 				720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
@@ -2070,6 +2101,7 @@
 			files = (
 				724DEC832D0091D800171F44 /* .gitignore in Resources */,
 				724DEC782D0091B800171F44 /* Assets.xcassets in Resources */,
+				720D70F72D6597E600FC25FB /* GoogleService-Info.plist in Resources */,
 				724DEC9E2D01749900171F44 /* AndongKaturiOTF.otf in Resources */,
 				724DEC7B2D0091B800171F44 /* Base in Resources */,
 			);
@@ -2193,6 +2225,7 @@
 				72361FAE2D2FEA7B009BEF12 /* NextButtonCollectionViewCell.swift in Sources */,
 				72361F642D2EB93F009BEF12 /* ChatDTO.swift in Sources */,
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
+				720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */,
 				720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
@@ -2212,6 +2245,7 @@
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
 				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
+				720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */,
 				72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
@@ -2221,6 +2255,7 @@
 				72977ED32D48A59500D1FDE7 /* ProductListTableViewCell.swift in Sources */,
 				720D70B42D61BDB900FC25FB /* OpponentCoordinatorDelegate.swift in Sources */,
 				72361EBE2D26BC98009BEF12 /* AuthView.swift in Sources */,
+				720D70E12D63B84700FC25FB /* SystemMessageCell.swift in Sources */,
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
 				72977EED2D53C2B400D1FDE7 /* DeclarationViewController.swift in Sources */,
 				72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */,
@@ -2254,9 +2289,11 @@
 				725F817E2D421326002C4E1C /* BoldLabel.swift in Sources */,
 				72361F592D2EB55E009BEF12 /* WithdrawalRequestBody.swift in Sources */,
 				72361F492D2EAB7A009BEF12 /* NewPasswordRequestBody.swift in Sources */,
+				720D70DD2D6395EF00FC25FB /* UpAndDownButton.swift in Sources */,
 				7246FA0A2D38D22600EE6B5E /* CoordinatorType.swift in Sources */,
 				72361E462D0B28CF009BEF12 /* CheckImageView.swift in Sources */,
 				7246F9F82D3792DA00EE6B5E /* SearchCompleterWrapper.swift in Sources */,
+				720D70DB2D63881D00FC25FB /* ReviewPopReactor.swift in Sources */,
 				72977EE52D5287B900D1FDE7 /* UIImage+Extension.swift in Sources */,
 				72361EB82D26B6D3009BEF12 /* FindIDView.swift in Sources */,
 				72361FD92D3411EA009BEF12 /* TabBarController.swift in Sources */,
@@ -2290,6 +2327,7 @@
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				72361F282D2E576C009BEF12 /* ProductServiceAPI.swift in Sources */,
+				720D70FE2D65E50800FC25FB /* ProfileImageManager.swift in Sources */,
 				723620112D362635009BEF12 /* BaseNavigationViewController.swift in Sources */,
 				72361F572D2EB404009BEF12 /* ReportRequestBody.swift in Sources */,
 				72361F512D2EB134009BEF12 /* OtherUserDTO.swift in Sources */,
@@ -2344,6 +2382,7 @@
 				72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */,
 				72977F012D5488A000D1FDE7 /* SlideInPresentationAnimator.swift in Sources */,
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
+				720D70D72D6387CE00FC25FB /* ReviewPopViewController.swift in Sources */,
 				721BF2D12D56013100E37E3B /* SettingVersionCell.swift in Sources */,
 				7246FA1E2D396F2200EE6B5E /* AppleAuthManager.swift in Sources */,
 				72361EB12D1FE764009BEF12 /* NameReactor.swift in Sources */,
@@ -2651,6 +2690,14 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.8.1;
+			};
+		};
 		721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
@@ -2719,6 +2766,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		720D70FB2D65996700FC25FB /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		721BF2CA2D55FFE900E37E3B /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;

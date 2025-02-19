@@ -46,6 +46,8 @@ final class ChattingView: BaseView {
         let tableView = UITableView()
         tableView.register(ChatMessageCell.self,
                            forCellReuseIdentifier: ChatMessageCell.identifier)
+        tableView.register(SystemMessageCell.self,
+                           forCellReuseIdentifier: SystemMessageCell.identifier)
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.allowsSelection = false
@@ -204,7 +206,7 @@ extension ChattingView {
         }
 
         DispatchQueue.main.async {
-            self.requestButton.layoutIfNeeded() // UI 강제 업데이트
+            self.requestButton.layoutIfNeeded()
         }
     }
     
@@ -257,6 +259,9 @@ extension ChattingView {
                 } else {
                     requestButton.setTitle("후기쓰기", for: .normal)
                     requestButton.isEnabled = true
+                    action = { [weak self] in
+                        self?.showReviewAlert(productId: productId, reactor: reactor)
+                    }
                 }
             }
         }
@@ -324,6 +329,25 @@ extension ChattingView {
                                          handler: nil)
         alertController.addAction(approveAction)
         alertController.addAction(rejectAction)
+        alertController.addAction(cancelAction)
+        presentAlert(alertController)
+    }
+    
+    private func showReviewAlert(productId: Int,
+                                 reactor: ChattingReactor?) {
+        let alertController = UIAlertController(title: "후기작성",
+                                                message: "후기를 작성하시겠습니까?",
+                                                preferredStyle: .alert)
+        alertController.view.tintColor = .myAppMain
+        let confirmAction = UIAlertAction(title: "작성하기",
+                                          style: .default) { _ in
+            reactor?.action.onNext(.pushReviewView(productId: productId))
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소",
+                                         style: .cancel,
+                                         handler: nil)
+        alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         presentAlert(alertController)
     }

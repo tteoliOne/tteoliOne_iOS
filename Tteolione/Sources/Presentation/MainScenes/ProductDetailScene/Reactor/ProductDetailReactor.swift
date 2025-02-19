@@ -34,6 +34,7 @@ final class ProductDetailReactor: Reactor {
         case setChatDto(ChatDTO)
         case profileTapped(Bool)
         case setSellerId(Int)
+        case setOpponentName(String?)
     }
 
     struct State {
@@ -50,6 +51,7 @@ final class ProductDetailReactor: Reactor {
         var isCallButtonTapped: Bool = false
         var chatDto: ChatDTO?
         var isProfileTap: Bool = false
+        var opponentName: String?
     }
     
     private let networkPorductProvider: NetworkProvider<ProductServiceAPI>
@@ -150,6 +152,9 @@ extension ProductDetailReactor {
             
         case .setSellerId(let id):
             newState.sellerId = id
+            
+        case .setOpponentName(let name):
+            newState.opponentName = name
         }
         
         return newState
@@ -168,7 +173,8 @@ extension ProductDetailReactor {
             case .success(let dto):
                 return .concat([
                     .just(.setProducts(dto)),
-                    .just(.setSellerId(dto.sellerId))
+                    .just(.setSellerId(dto.sellerId)),
+                    .just(.setOpponentName(dto.sellerNickname))
                 ])
             case .failure(let error):
                 return .just(.showError(error))

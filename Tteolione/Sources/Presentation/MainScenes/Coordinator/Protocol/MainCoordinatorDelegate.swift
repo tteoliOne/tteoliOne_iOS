@@ -17,7 +17,7 @@ protocol MainCoordinatorDelegate: Coordinator {
                                        receiptImage: UIImage?,
                                        productId: Int?)
     func showReportView(reportType: ReportType, reportId: Int)
-    func showChatView(chatId: Int, productId: Int)
+    func showChatView(chatId: Int, productId: Int, opponentName: String)
     func showOpponentView(userId: Int)
     func dismissAndPop()
 }

@@ -14,6 +14,11 @@ final class ChattingViewController: BaseViewController<ChattingView> {
     var disposeBag = DisposeBag()
     weak var delegate: ChattingCoordinatorDelegate?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigation()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         reactor?.action.onNext(.socketDisconnect)
@@ -69,10 +74,18 @@ extension ChattingViewController: View {
         reactor.state
             .map { $0.messages }
             .observe(on: MainScheduler.instance)
-            .bind(to: rootView.tableView.rx.items(cellIdentifier: ChatMessageCell.identifier,
-                                                  cellType: ChatMessageCell.self)
-            ) { _, message, cell in
-                cell.configure(with: message)
+            .bind(to: rootView.tableView.rx.items) { tableView, index, message in
+                if message.type == .notice {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: SystemMessageCell.identifier,
+                                                             for: IndexPath(row: index, section: 0)) as! SystemMessageCell
+                    cell.configure(with: message.text)
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: ChatMessageCell.identifier,
+                                                             for: IndexPath(row: index, section: 0)) as! ChatMessageCell
+                    cell.configure(with: message)
+                    return cell
+                }
             }
             .disposed(by: disposeBag)
         
@@ -112,24 +125,85 @@ extension ChattingViewController: View {
                 owner.delegate?.finishView()
             }
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { state -> Int? in
+                guard state.isReviewViewPushed,
+                      let productNo = state.productId else {
+                    return nil
+                }
+                return productNo
+            }
+            .bind(with: self) { owner, productNo in
+                owner.delegate?.pushReviewView(productId: productNo)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { state -> (Int, Int)? in
+                guard state.pushReportPost,
+                      let chatNo = state.chatId,
+                      let opponentNo = state.opponentId else {
+                    return nil
+                }
+                return (chatNo, opponentNo)
+            }
+            .bind(with: self) { owner, chatData in
+                let (chatNo, opponentNo) = chatData
+                owner.delegate?.showReportView(reportType: .chat,
+                                               reportId: chatNo,
+                                               opponentId: opponentNo)
+            }
+            .disposed(by: disposeBag)
     }
+}
+
+extension ChattingViewController {
+    
+    private func setupNavigation() {
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        backButton.tintColor = .black
+        navigationItem.leftBarButtonItem = backButton
+        
+        let menu = createMenu()
+        let ellipsisButton = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis")?.rotate(radians: .pi / 2),
+            menu: menu
+        )
+        ellipsisButton.tintColor = .black
+        navigationItem.rightBarButtonItem = ellipsisButton
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func createMenu() -> UIMenu {
+        let reportAction = UIAction(
+            title: "신고하기",
+            image: UIImage(systemName: "exclamationmark.circle")
+        ) { [weak self] _ in
+            self?.reactor?.action.onNext(.reportPost)
+        }
+        
+        let exitAction = UIAction(
+            title: "방 나가기",
+            image: UIImage(systemName: "door.right.hand.open"),
+            attributes: .destructive
+        ) { [weak self] _ in
+            self?.reactor?.action.onNext(.exitChatRoomTap)
+        }
+        
+        return UIMenu(title: "", children: [reportAction, exitAction])
+    }
+    
 }
 
 extension ChattingViewController: DelegateOwner {
     typealias Delegate = ChattingCoordinatorDelegate
-}
-
-extension UITableView {
-    func scrollToBottom(animated: Bool) {
-        DispatchQueue.main.async {
-            let numberOfSections = self.numberOfSections
-            guard numberOfSections > 0 else { return }
-            
-            let numberOfRows = self.numberOfRows(inSection: numberOfSections - 1)
-            guard numberOfRows > 0 else { return }
-            
-            let indexPath = IndexPath(row: numberOfRows - 1, section: numberOfSections - 1)
-            self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
-        }
-    }
 }

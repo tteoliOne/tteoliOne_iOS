@@ -115,12 +115,19 @@ extension ProductDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .compactMap { state -> ChatDTO? in
-                guard state.isCallButtonTapped else { return nil }
-                return state.chatDto
+            .compactMap { state -> (ChatDTO, String)? in
+                guard state.isCallButtonTapped,
+                let dto = state.chatDto,
+                let opponentName = state.opponentName else {
+                    return nil
+                }
+                return (dto, opponentName)
             }
-            .bind(with: self) { owner, dto in
-                owner.delegate?.showChatView(chatId: dto.chatId, productId: dto.productNo)
+            .bind(with: self) { owner, data in
+                let (dto, opponentName) = data
+                owner.delegate?.showChatView(chatId: dto.chatId,
+                                             productId: dto.productNo,
+                                             opponentName: opponentName)
             }
             .disposed(by: disposeBag)
         

@@ -247,7 +247,22 @@ extension ChatWebSocketService: StompClientLibDelegate {
                                                     "senderLoginId": senderLoginId
                                                 ])
             }
-        } else {
+        } else if contentType == "notice",
+                  let content = data["content"] as? String,
+                  let senderNo = data["senderNo"] as? Int,
+                  let timestamp = data["sendTime"] as? Int,
+                  let productNo = data["productNo"] as? Int {
+            NotificationCenter.default.post(name: .didLeaveChat,
+                                            object: nil,
+                                            userInfo: [
+                                                "content": content,
+                                                "senderNo": senderNo,
+                                                "timestamp": timestamp,
+                                                "chatRoomNo": chatRoomNo,
+                                                "productNo": productNo
+                                            ])
+        }
+        else {
             print("⚠️ 지원되지 않는 메시지 타입: \(contentType)")
         }
     }

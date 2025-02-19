@@ -2,10 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=swift
 
 .DS_Store
-APIKey.swift
-
-*.xcconfig
 GoogleService-Info.plist
+APIKey.swift
+*.xcconfig
 
 ### Swift ###
 # Xcode

@@ -47,9 +47,10 @@ final class AccessTokenRetrier: RequestInterceptor {
     
     private func refreshAccessToken(completion: @escaping (Bool) -> Void) {
         let provider = MoyaProvider<TokenAPI>()
+        let fcmToken = UserDefaultsStorage.fcmToken
         let body = ReissueTokenRequestBody(accessToken: UserDefaultsStorage.token,
                                            refreshToken: UserDefaultsStorage.refreshToken,
-                                           targetToken: nil)
+                                           targetToken: fcmToken)
         provider.request(.reissueToken(body: body)) { result in
             switch result {
             case .success(let response):
