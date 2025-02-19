@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ChatListCoordinatorDelegate: Coordinator {
-    func showChatView(chatId: Int, productId: Int)
+    func showChatView(chatId: Int, productId: Int, opponentName: String)
 }

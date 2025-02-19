@@ -116,11 +116,12 @@ extension MainCoordinator {
         coordinator.start()
     }
     
-    func showChatView(chatId: Int, productId: Int) {
+    func showChatView(chatId: Int, productId: Int, opponentName: String) {
         let coordinator = ChattingCoordinator(navigationController: navigationController,
                                               dependency: dependency,
                                               chatId: chatId,
-                                              productId: productId)
+                                              productId: productId,
+                                              title: opponentName)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()

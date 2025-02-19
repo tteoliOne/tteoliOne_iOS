@@ -15,15 +15,18 @@ final class ChattingCoordinator: ChattingCoordinatorDelegate {
     private let dependency: AppDependency
     private let chatId: Int
     private let productId: Int
+    private let chatTitle: String
     
     init(navigationController: UINavigationController,
          dependency: AppDependency,
          chatId: Int,
-         productId: Int) {
+         productId: Int,
+         title: String) {
         self.navigationController = navigationController
         self.dependency = dependency
         self.chatId = chatId
         self.productId = productId
+        self.chatTitle = "\(title) 채팅"
     }
     
     deinit {
@@ -41,6 +44,7 @@ final class ChattingCoordinator: ChattingCoordinatorDelegate {
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController.setNavigationBarHidden(false, animated: false)
+        viewController.title = chatTitle
         show(viewController)
     }
 }
