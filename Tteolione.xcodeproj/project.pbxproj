@@ -30,6 +30,7 @@
 		720D70DD2D6395EF00FC25FB /* UpAndDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */; };
 		720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */; };
 		720D70E12D63B84700FC25FB /* SystemMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70E02D63B84700FC25FB /* SystemMessageCell.swift */; };
+		720D70F72D6597E600FC25FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 720D70F62D6597E600FC25FB /* GoogleService-Info.plist */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -330,6 +331,7 @@
 		720D70DC2D6395EF00FC25FB /* UpAndDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpAndDownButton.swift; sourceTree = "<group>"; };
 		720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		720D70E02D63B84700FC25FB /* SystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageCell.swift; sourceTree = "<group>"; };
+		720D70F62D6597E600FC25FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -1653,6 +1655,7 @@
 				724DEC842D00930800171F44 /* Resources */,
 				724DEC862D00933400171F44 /* Sources */,
 				724DEC7C2D0091B800171F44 /* Info.plist */,
+				720D70F62D6597E600FC25FB /* GoogleService-Info.plist */,
 			);
 			path = Tteolione;
 			sourceTree = "<group>";
@@ -2088,6 +2091,7 @@
 			files = (
 				724DEC832D0091D800171F44 /* .gitignore in Resources */,
 				724DEC782D0091B800171F44 /* Assets.xcassets in Resources */,
+				720D70F72D6597E600FC25FB /* GoogleService-Info.plist in Resources */,
 				724DEC9E2D01749900171F44 /* AndongKaturiOTF.otf in Resources */,
 				724DEC7B2D0091B800171F44 /* Base in Resources */,
 			);
