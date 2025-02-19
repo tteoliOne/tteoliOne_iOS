@@ -65,7 +65,9 @@ extension AppleAuthManager: ASAuthorizationControllerDelegate, ASAuthorizationCo
                                                userInfo: [NSLocalizedDescriptionKey: "Failed to extract authorization code"])))
             return
         }
-        let body = SocialRequestBody(authorization: authCodeString)
+        let fcmToken = UserDefaultsStorage.fcmToken
+        let body = SocialRequestBody(authorization: authCodeString,
+                                     targetToken: fcmToken)
         
         networkProvider.request(.appleLogin(body: body),
                                 decodingType: ServerResponse<UserDTO>.self)

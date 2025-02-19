@@ -35,6 +35,7 @@ enum UserDefaultsStorage {
         case recentSearches
         case accessToken
         case refreshToken
+        case fcmToken
         case userID
         case nickname
         case typeLogin
@@ -51,6 +52,9 @@ enum UserDefaultsStorage {
     @UserDefault(key: Keys.refreshToken.rawValue, defaultValue: "")
     static var refreshToken: String
 
+    @UserDefault(key: Keys.fcmToken.rawValue, defaultValue: "")
+    static var fcmToken: String
+    
     @UserDefault(key: Keys.userID.rawValue, defaultValue: 0)
     static var userID: Int
 

@@ -260,9 +260,10 @@ extension LoginReactor {
     
     private func performLogin(id: String,
                               password: String) -> Observable<Mutation> {
+        let fcmtoken = UserDefaultsStorage.fcmToken
         let body = LoginRequestBody(loginId: id,
                                     password: password,
-                                    targetToken: "")
+                                    targetToken: fcmtoken)
         return networkProvider.request(.login(body: body),
                                        decodingType: ServerResponse<UserDTO>.self)
         .asObservable()

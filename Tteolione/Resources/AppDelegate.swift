@@ -9,11 +9,11 @@ import UIKit
 import RxKakaoSDKCommon
 import RxKakaoSDKAuth
 import KakaoSDKAuth
+import FirebaseCore
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //카카오 연결
@@ -22,6 +22,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             fatalError("KakaoNativeAppKey not found in Info.plist")
         }
+        
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        
+        if #available(iOS 10.0, *) {
+          // For iOS 10 display notification (sent via APNS)
+          UNUserNotificationCenter.current().delegate = self
+
+          let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+          UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { _, _ in }
+          )
+        } else {
+          let settings: UIUserNotificationSettings =
+            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+          application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
+        
         return true
     }
     
@@ -47,6 +68,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    // 백그라운드에서 푸시 알림을 탭했을 때 실행
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("APNS token: \(deviceToken)")
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    // Foreground(앱 켜진 상태)에서도 알림 오는 설정
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        completionHandler([.badge, .sound, .banner, .list])
+        completionHandler([.list, .banner])
+    }
+    
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//            
+//        print("Body: \(response.notification.request.content.body)")
+//        print("userInfo: \(response.notification.request.content.userInfo)")
+//            
+//        let userInfo = response.notification.request.content.userInfo
+//            
+//        // Notification 분기처리
+//        if userInfo[AnyHashable("sesac")] as? String == "project" {
+//            print("SESAC PROJECT")
+//        }else {
+//            print("NOTHING")
+//        }
+//    }
+}
+    
+extension AppDelegate: MessagingDelegate {
+    
+    // 파이어베이스 MessagingDelegate 설정
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
+        
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+        )
+        
+        UserDefaultsStorage.fcmToken = fcmToken ?? ""
+    }
+}

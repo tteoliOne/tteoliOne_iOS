@@ -83,7 +83,9 @@ final class KakaoAuthVM {
     
     private func handlePostLogin(oauthToken: OAuthToken) -> Single<SocialLoginResult> {
         let accessToken = oauthToken.accessToken
-        let body = SocialRequestBody(accessToken: accessToken)
+        let fcmToken = UserDefaultsStorage.fcmToken
+        let body = SocialRequestBody(accessToken: accessToken,
+                                     targetToken: fcmToken)
         
         return networkManager.request(.kakaoLogin(body: body),
                                       decodingType: ServerResponse<UserDTO>.self)

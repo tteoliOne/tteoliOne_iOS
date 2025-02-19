@@ -75,7 +75,6 @@ extension ChattingViewController: View {
             .map { $0.messages }
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.tableView.rx.items) { tableView, index, message in
-                print(message.type)
                 if message.type == .notice {
                     let cell = tableView.dequeueReusableCell(withIdentifier: SystemMessageCell.identifier,
                                                              for: IndexPath(row: index, section: 0)) as! SystemMessageCell

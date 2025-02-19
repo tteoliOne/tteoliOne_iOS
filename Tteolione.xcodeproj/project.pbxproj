@@ -31,6 +31,8 @@
 		720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */; };
 		720D70E12D63B84700FC25FB /* SystemMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70E02D63B84700FC25FB /* SystemMessageCell.swift */; };
 		720D70F72D6597E600FC25FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 720D70F62D6597E600FC25FB /* GoogleService-Info.plist */; };
+		720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		720D70FC2D65996700FC25FB /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70FB2D65996700FC25FB /* FirebaseMessaging */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -606,7 +608,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				720D70FC2D65996700FC25FB /* FirebaseMessaging in Frameworks */,
 				72361E6A2D0C3236009BEF12 /* RxMoya in Frameworks */,
+				720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				720D70C12D61C6FA00FC25FB /* RxGesture in Frameworks */,
 				7246FA132D393B2800EE6B5E /* RxKakaoSDKAuth in Frameworks */,
 				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
@@ -2035,6 +2039,8 @@
 				721BF2EC2D588DBD00E37E3B /* SwiftStomp */,
 				720D70C02D61C6FA00FC25FB /* RxGesture */,
 				720D70CE2D6313F300FC25FB /* Toast */,
+				720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */,
+				720D70FB2D65996700FC25FB /* FirebaseMessaging */,
 			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
@@ -2074,6 +2080,7 @@
 				721BF2EB2D588DBD00E37E3B /* XCRemoteSwiftPackageReference "SwiftStomp" */,
 				720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */,
 				720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
@@ -2679,6 +2686,14 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.8.1;
+			};
+		};
 		721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
@@ -2747,6 +2762,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		720D70FB2D65996700FC25FB /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		721BF2CA2D55FFE900E37E3B /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;
