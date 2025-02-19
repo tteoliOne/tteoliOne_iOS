@@ -155,13 +155,14 @@ final class OpponentView: BaseView {
 
 extension OpponentView {
     func updateUI(with data: OtherUserDTO) {
+        let roundedThumbsUpScore = round(data.ddabongScore * 10) / 10
         if let imageUrl = URL(string: data.profile) {
             profileMyImage.loadImage(from: imageUrl)
         } else {
             profileMyImage.image = nil
         }
         titleLabel.text = "\(data.nickname)님 가게"
-        thumbCountLabel.text = "\(data.ddabongScore)"
+        thumbCountLabel.text = String(format: "%.1f", roundedThumbsUpScore)
         introLabel.text = data.intro
     }
 }

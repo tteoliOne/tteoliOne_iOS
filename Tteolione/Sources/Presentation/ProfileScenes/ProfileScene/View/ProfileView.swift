@@ -219,7 +219,8 @@ final class ProfileView: BaseView {
 extension ProfileView {
     
     func setupViews(with value: UserProfileDTO) {
-        thumbCount.text = "\(value.thumbsUpScore)"
+        let roundedThumbsUpScore = round(value.thumbsUpScore * 10) / 10
+        thumbCount.text = String(format: "%.1f", roundedThumbsUpScore)
     }
     
     func updateImage(_ image: UIImage) {
