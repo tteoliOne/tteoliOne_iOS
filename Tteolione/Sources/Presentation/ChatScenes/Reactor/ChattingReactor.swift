@@ -129,10 +129,13 @@ final class ChattingReactor: Reactor {
                     }
                 }()
                 
+                let opponentProfile: String? = message.isMine ? nil : ProfileImageManager.shared.getProfileImagePath(for: message.senderNo)?.path
+                
                 return ChatMessage(
                     text: message.content,
                     type: messageType,
-                    timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendTime))
+                    timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendTime)),
+                    opponentProfile: opponentProfile
                 )
             }
             
@@ -155,7 +158,8 @@ extension ChattingReactor {
             chatWebSocketService?.sendMessage(content: message)
             let chatMessage = ChatMessage(text: message,
                                           type: .sent,
-                                          timestamp: FormatterManager.shared.getChatTimeFormat())
+                                          timestamp: FormatterManager.shared.getChatTimeFormat(),
+                                          opponentProfile: nil)
             return .concat([
                 .just(.addMessages([chatMessage])),
                 .just(.setSendButtonEnabled(false))
@@ -291,8 +295,7 @@ extension ChattingReactor {
     private func fetchChatRoom(roomNo: Int) -> Observable<Mutation> {
         let lastMessageTime = dbManager.getLastMessageTime(chatRoomID: roomNo) ?? 0
 
-        return networkChatProvider.request(.getChatHistory(roomNo: roomNo,
-                                                           date: lastMessageTime),
+        return networkChatProvider.request(.getChatHistory(roomNo: roomNo, date: lastMessageTime),
                                            decodingType: ServerResponse<ChatContentDTO>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
@@ -301,44 +304,55 @@ extension ChattingReactor {
                 self.chatWebSocketService = ChatWebSocketService(chatId: self.currentState.chatId ?? 0,
                                                                  productId: self.currentState.productId ?? 0,
                                                                  isMine: chatContentDTO.checkSeller)
-                let newMessages = chatContentDTO.chatList
-                if !newMessages.isEmpty {
-                    newMessages.forEach { message in
-                        let chatMessageData = ChatMessageData(
-                            chatRoomNo: message.chatRoomNo,
-                            content: message.content,
-                            senderNo: message.senderNo,
-                            productNo: chatContentDTO.productId,
-                            sendTime: message.sendDate,
-                            isMine: message.mine,
-                            contentType: message.contentType
-                        )
-                        
-                        print("🔍 저장된 contentType:", chatMessageData.contentType)
-                        self.dbManager.addItem(chatMessageData)
+                let opponentId = chatContentDTO.opponentId
+                let opponentProfileURL = chatContentDTO.opponentProfile
+
+                return .create { observer in
+                    Task {
+                        let localProfilePath = await ProfileImageManager.shared.getProfileImage(for: opponentId, urlString: opponentProfileURL)
+
+                        let newMessages = chatContentDTO.chatList
+                        if !newMessages.isEmpty {
+                            newMessages.forEach { message in
+                                let chatMessageData = ChatMessageData(
+                                    chatRoomNo: message.chatRoomNo,
+                                    content: message.content,
+                                    senderNo: message.senderNo,
+                                    productNo: chatContentDTO.productId,
+                                    sendTime: message.sendDate,
+                                    isMine: message.mine,
+                                    contentType: message.contentType,
+                                    opponentProfileURL: opponentProfileURL,
+                                    localProfilePath: localProfilePath
+                                )
+                                
+                                self.dbManager.addItem(chatMessageData)
+                            }
+
+                            let chatMessages = newMessages.map { message in
+                                let messageType: ChatMessageType = (message.contentType == "notice") ? .notice : (message.mine ? .sent : .received)
+
+                                return ChatMessage(
+                                    text: message.content,
+                                    type: messageType,
+                                    timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate)),
+                                    opponentProfile: localProfilePath
+                                )
+                            }
+
+                            observer.onNext(.setProductData(chatContentDTO))
+                            observer.onNext(.addMessages(chatMessages))
+                            observer.onNext(.setOpponentId(chatContentDTO.opponentId))
+                            observer.onCompleted()
+                        } else {
+                            observer.onNext(.setProductData(chatContentDTO))
+                            observer.onNext(.setOpponentId(chatContentDTO.opponentId))
+                            observer.onCompleted()
+                        }
                     }
-                    
-                    let chatMessages = newMessages.map { message in
-                        let messageType: ChatMessageType = (message.contentType == "notice") ? .notice : (message.mine ? .sent : .received)
-                        
-                        return ChatMessage(
-                            text: message.content,
-                            type: messageType,
-                            timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate))
-                        )
-                    }
-                    
-                    return .concat([
-                        .just(.setProductData(chatContentDTO)),
-                        .just(.addMessages(chatMessages)),
-                        .just(.setOpponentId(chatContentDTO.opponentId))
-                    ])
-                } else {
-                    return .concat([.just(.setProductData(chatContentDTO)),
-                                    .just(.setOpponentId(chatContentDTO.opponentId))
-                    ])
+                    return Disposables.create()
                 }
-                
+
             case .failure(let error):
                 return .just(.showError(error))
             }
@@ -467,6 +481,7 @@ extension ChattingReactor {
         }
         let isMine = senderNo == currentState.chatId
         let formattedTime = FormatterManager.shared.getChatTimeFormat(from: Int64(timestamp))
+        let opponentProfile = isMine ? nil : ProfileImageManager.shared.getProfileImagePath(for: senderNo)?.path
         let chatMessage = ChatMessageData(chatRoomNo: chatRoomId,
                                           content: content,
                                           senderNo: senderNo,
@@ -475,7 +490,10 @@ extension ChattingReactor {
                                           isMine: isMine,
                                           contentType: "chat")
         dbManager.addItem(chatMessage)
-        action.onNext(.addMessages([ChatMessage(text: content, type: isMine ? .sent : .received, timestamp: formattedTime)]))
+        action.onNext(.addMessages([ChatMessage(text: content,
+                                                type: isMine ? .sent : .received,
+                                                timestamp: formattedTime,
+                                                opponentProfile: opponentProfile)]))
     }
     
     @objc private func handleCallBackMessage(_ notification: Notification) {
@@ -553,6 +571,7 @@ extension ChattingReactor {
         dbManager.addItem(chatMessage)
         action.onNext(.addMessages([ChatMessage(text: content,
                                                 type: .notice,
-                                                timestamp: formattedTime)]))
+                                                timestamp: formattedTime,
+                                                opponentProfile: nil)]))
     }
 }

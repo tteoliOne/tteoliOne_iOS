@@ -50,6 +50,7 @@ struct ChatMessage {
     let text: String
     let type: ChatMessageType
     let timestamp: String
+    let opponentProfile: String?
     
     var isMine: Bool {
         return type == .sent

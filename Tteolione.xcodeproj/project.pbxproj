@@ -33,6 +33,7 @@
 		720D70F72D6597E600FC25FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 720D70F62D6597E600FC25FB /* GoogleService-Info.plist */; };
 		720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		720D70FC2D65996700FC25FB /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70FB2D65996700FC25FB /* FirebaseMessaging */; };
+		720D70FE2D65E50800FC25FB /* ProfileImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -334,6 +335,7 @@
 		720D70DE2D63A63E00FC25FB /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		720D70E02D63B84700FC25FB /* SystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageCell.swift; sourceTree = "<group>"; };
 		720D70F62D6597E600FC25FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageManager.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -818,6 +820,7 @@
 			isa = PBXGroup;
 			children = (
 				721BF2FE2D5C615900E37E3B /* DBManager.swift */,
+				720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */,
 				721BF2FD2D5C614000E37E3B /* Model */,
 			);
 			path = DataBase;
@@ -2324,6 +2327,7 @@
 				724DEC992D01734200171F44 /* BaseViewController.swift in Sources */,
 				724DECA42D01835100171F44 /* LoginReactor.swift in Sources */,
 				72361F282D2E576C009BEF12 /* ProductServiceAPI.swift in Sources */,
+				720D70FE2D65E50800FC25FB /* ProfileImageManager.swift in Sources */,
 				723620112D362635009BEF12 /* BaseNavigationViewController.swift in Sources */,
 				72361F572D2EB404009BEF12 /* ReportRequestBody.swift in Sources */,
 				72361F512D2EB134009BEF12 /* OtherUserDTO.swift in Sources */,

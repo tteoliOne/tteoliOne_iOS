@@ -18,6 +18,8 @@ final class ChatMessageData {
     var sendTime: Int
     var isMine: Bool
     var contentType: String
+    var opponentProfileURL: String?
+    var localProfilePath: String?
 
     init(messageID: String = UUID().uuidString,
          chatRoomNo: Int,
@@ -26,7 +28,9 @@ final class ChatMessageData {
          productNo: Int,
          sendTime: Int,
          isMine: Bool,
-         contentType: String) {
+         contentType: String,
+         opponentProfileURL: String? = nil,
+         localProfilePath: String? = nil) {
         self.messageID = messageID
         self.chatRoomNo = chatRoomNo
         self.content = content
@@ -35,5 +39,7 @@ final class ChatMessageData {
         self.sendTime = sendTime
         self.isMine = isMine
         self.contentType = contentType
+        self.opponentProfileURL = opponentProfileURL
+        self.localProfilePath = localProfilePath
     }
 }

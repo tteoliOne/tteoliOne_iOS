@@ -97,6 +97,15 @@ final class ChatMessageCell: BaseTableViewCell {
             }
         } else {
             profileImageView.isHidden = false
+            profileImageView.image = UIImage(named: "31photo")
+            
+            if let profilePath = message.opponentProfile, !profilePath.isEmpty {
+                let profileURL = URL(fileURLWithPath: profilePath)
+                if let imageData = try? Data(contentsOf: profileURL), let image = UIImage(data: imageData) {
+                    profileImageView.image = image
+                }
+            }
+            
             profileImageView.snp.remakeConstraints { make in
                 make.leading.equalToSuperview().offset(8)
                 make.bottom.equalTo(containerView)
