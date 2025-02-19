@@ -88,11 +88,11 @@ extension ProfileViewController: View {
                 case 0:
                     reactor.action.onNext(.myShareTap(.eNew))
                 case 1:
-                    print(2)
+                    reactor.action.onNext(.myShareTap(.eSoldOut))
                 case 2:
                     reactor.action.onNext(.myShareTap(.saved))
                 case 3:
-                    print(4)
+                    reactor.action.onNext(.myReviewTap)
                 case 4:
                     reactor.action.onNext(.resetProfileListTap)
                 default:
@@ -207,6 +207,15 @@ extension ProfileViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.showSettingView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isReviewScreen }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushMyReviewViewController()
             }
             .disposed(by: disposeBag)
     }

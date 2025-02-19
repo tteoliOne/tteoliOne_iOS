@@ -16,6 +16,7 @@ final class ProfileReactor: Reactor {
         case resetProfileButtonTap
         case resetProfileListTap
         case myShareTap(StatusType)
+        case myReviewTap
         case updateNickname(String)
         case updateIntro(String)
         case photoButtonTap
@@ -29,6 +30,7 @@ final class ProfileReactor: Reactor {
         case setFailureType(Bool)
         case setResetProfileListTapped(Bool)
         case myProductScreen(Bool, StatusType?)
+        case reveiwScreen(Bool)
         case setNickname(String)
         case setIntro(String)
         case setIntroLengthText(String)
@@ -43,6 +45,7 @@ final class ProfileReactor: Reactor {
         var errorMessage: String?
         var isFailure: Bool = false
         var isMyProductScreen: Bool = false
+        var isReviewScreen: Bool = false
         var isResetProfileListTapped: Bool = false
         var selectedStatus: StatusType?
         var nickname: String = ""
@@ -125,6 +128,12 @@ extension ProfileReactor {
                 .just(.setGearButtonTapped(true)),
                 .just(.setGearButtonTapped(false))
             ])
+            
+        case .myReviewTap:
+            return .concat([
+                .just(.reveiwScreen(true)),
+                .just(.reveiwScreen(false))
+            ])
         }
     }
     
@@ -169,6 +178,9 @@ extension ProfileReactor {
             
         case .setGearButtonTapped(let isGear):
             newState.isGearButtonTapped = isGear
+            
+        case .reveiwScreen(let isTap):
+            newState.isReviewScreen = isTap
         }
         
         return newState

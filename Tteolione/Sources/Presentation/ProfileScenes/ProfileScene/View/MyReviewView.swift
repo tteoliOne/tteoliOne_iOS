@@ -1,18 +1,18 @@
 //
-//  MyProductListView.swift
+//  MyReviewView.swift
 //  Tteolione
 //
-//  Created by 전준영 on 2/7/25.
+//  Created by 전준영 on 2/20/25.
 //
 
 import UIKit
 import SnapKit
 
-final class MyProductListView: BaseView {
+final class MyReviewView: BaseView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = AppText.MyProduct.myShare
+        label.text = AppText.MyProduct.review
         label.font = Font.bold20
         label.textColor = .myAppMain
         return label
@@ -20,10 +20,9 @@ final class MyProductListView: BaseView {
     let backButton = BackButton(size: 24)
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(ProductListTableViewCell.self,
-                           forCellReuseIdentifier: ProductListTableViewCell.identifier)
+        tableView.register(ReviewTableViewCell.self,
+                           forCellReuseIdentifier: ReviewTableViewCell.identifier)
         tableView.separatorStyle = .none
-        tableView.rowHeight = 140
         return tableView
     }()
     
@@ -49,19 +48,4 @@ final class MyProductListView: BaseView {
         }
     }
     
-}
-
-extension MyProductListView {
-    func setupTitle(with value: StatusType) {
-        switch value {
-        case .eNew:
-            titleLabel.text = AppText.MyProduct.myShare
-            
-        case .eSoldOut:
-            titleLabel.text = AppText.MyProduct.complete
-            
-        case .saved:
-            titleLabel.text = AppText.MyProduct.likeList
-        }
-    }
 }

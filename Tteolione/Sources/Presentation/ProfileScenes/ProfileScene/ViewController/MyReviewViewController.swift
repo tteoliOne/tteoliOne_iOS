@@ -1,64 +1,56 @@
 //
-//  MyProductListViewController.swift
+//  MyReviewViewController.swift
 //  Tteolione
 //
-//  Created by 전준영 on 2/7/25.
+//  Created by 전준영 on 2/20/25.
 //
 
 import ReactorKit
 import RxCocoa
 
-final class MyProductListViewController: BaseViewController<MyProductListView> {
+final class MyReviewViewController: BaseViewController<MyReviewView> {
     
     var disposeBag = DisposeBag()
     weak var delegate: ProfileCoordinatorDelegate?
     
 }
 
-extension MyProductListViewController: View {
+extension MyReviewViewController: View {
     
-    func bind(reactor: MyProductListReactor) {
+    func bind(reactor: MyReviewReactor) {
         bindAction(reactor)
         bindState(reactor)
         bindNavigation(reactor)
     }
     
-    func bindAction(_ reactor: MyProductListReactor) {
+    func bindAction(_ reactor: MyReviewReactor) {
         self.rx.viewWillAppear
-            .map { _ in MyProductListReactor.Action.fetchList }
+            .map { _ in MyReviewReactor.Action.fetchReview }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.backButton.rx.tap
-            .map { MyProductListReactor.Action.backButtonTap }
+            .map { MyReviewReactor.Action.backButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
     
-    func bindState(_ reactor: MyProductListReactor) {
+    func bindState(_ reactor: MyReviewReactor) {
         reactor.state
-            .map { $0.setProductDTO?.content ?? [] }
+            .map { $0.reviewDTO ?? [] }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.tableView.rx.items(
-                cellIdentifier: ProductListTableViewCell.identifier,
-                cellType: ProductListTableViewCell.self
+                cellIdentifier: ReviewTableViewCell.identifier,
+                cellType: ReviewTableViewCell.self
             )) { _, item, cell in
                 cell.selectionStyle = .none
-                cell.configure(with: item)
+                cell.setUI(item)
             }
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.status }
-            .compactMap { $0 }
-            .observe(on: MainScheduler.instance)
-            .bind(with: rootView, onNext: { owner, value in
-                owner.setupTitle(with: value)
-            })
             .disposed(by: disposeBag)
     }
     
-    func bindNavigation(_ reactor: MyProductListReactor) {
+    func bindNavigation(_ reactor: MyReviewReactor) {
         reactor.state.map { $0.isBackButtonTapped }
             .distinctUntilChanged()
             .filter { $0 }
@@ -70,6 +62,6 @@ extension MyProductListViewController: View {
     }
 }
 
-extension MyProductListViewController: DelegateOwner {
+extension MyReviewViewController: DelegateOwner {
     typealias Delegate = ProfileCoordinatorDelegate
 }

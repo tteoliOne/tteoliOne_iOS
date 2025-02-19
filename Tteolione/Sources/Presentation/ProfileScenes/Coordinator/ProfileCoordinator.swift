@@ -46,6 +46,18 @@ extension ProfileCoordinator {
         show(viewController)
     }
     
+    func pushMyReviewViewController() {
+        let reactor = MyReviewReactor(networkProvider: dependency.userProvider)
+        let viewController = createViewController(
+            ofType: MyReviewViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
     func showSettingView() {
         let coordinator = SettingCoordinator(navigationController: navigationController,
                                              dependency: dependency)
