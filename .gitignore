@@ -4,6 +4,7 @@
 .DS_Store
 APIKey.swift
 *.xcconfig
+GoogleService-Info.plist
 
 ### Swift ###
 # Xcode
@@ -12,8 +13,6 @@ APIKey.swift
 
 ## User settings
 xcuserdata/
-
-GoogleService-Info.plist
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
