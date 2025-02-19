@@ -71,16 +71,6 @@ extension ChattingViewController: View {
             })
             .disposed(by: disposeBag)
         
-//        reactor.state
-//            .map { $0.messages }
-//            .observe(on: MainScheduler.instance)
-//            .bind(to: rootView.tableView.rx.items(cellIdentifier: ChatMessageCell.identifier,
-//                                                  cellType: ChatMessageCell.self)
-//            ) { _, message, cell in
-//                cell.configure(with: message)
-//            }
-//            .disposed(by: disposeBag)
-        
         reactor.state
             .map { $0.messages }
             .observe(on: MainScheduler.instance)
