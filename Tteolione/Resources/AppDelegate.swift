@@ -84,20 +84,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.list, .banner])
     }
     
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//            
-//        print("Body: \(response.notification.request.content.body)")
-//        print("userInfo: \(response.notification.request.content.userInfo)")
-//            
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+            
+        print("Body: \(response.notification.request.content.body)")
+        print("userInfo: \(response.notification.request.content)")
+        print("userInfo: \(response.notification.request)")
+            
 //        let userInfo = response.notification.request.content.userInfo
-//            
+            
 //        // Notification 분기처리
 //        if userInfo[AnyHashable("sesac")] as? String == "project" {
 //            print("SESAC PROJECT")
 //        }else {
 //            print("NOTHING")
 //        }
-//    }
+    }
 }
     
 extension AppDelegate: MessagingDelegate {
