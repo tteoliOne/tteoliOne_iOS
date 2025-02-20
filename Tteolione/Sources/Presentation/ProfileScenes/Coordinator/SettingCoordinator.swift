@@ -67,6 +67,18 @@ extension SettingCoordinator {
         coordinator.start()
     }
     
+    func pushWithdrawSettingView() {
+        let reactor = WithdrawReactor(networkProvider: dependency.userProvider)
+        let viewController = createViewController(
+            ofType: WithdrawViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
     func finishView() {
         finishAllChildren()
         popVC()

@@ -11,5 +11,6 @@ protocol SettingCoordinatorDelegate: Coordinator {
     func pushProfileSettingView()
     func pushProfileResetPasswordView()
     func pushAddressSettingView()
+    func pushWithdrawSettingView()
     func finishView()
 }

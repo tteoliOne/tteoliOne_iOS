@@ -9,6 +9,6 @@ import Foundation
 
 struct WithdrawalRequestBody: Encodable {
     
-    let authorizationCode: String
+    let authorizationCode: String?
     
 }

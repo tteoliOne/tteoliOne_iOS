@@ -46,7 +46,7 @@ extension SettingViewController: View {
                 case .logout:
                     reactor.action.onNext(.logoutTap)
                 case .withdraw:
-                    print("회원 탈퇴 처리")
+                    reactor.action.onNext(.withDrawTap)
                 default:
                     break
                 }
@@ -98,6 +98,15 @@ extension SettingViewController: View {
                                 cancelTitle: "취소") {
                     reactor.action.onNext(.logoutCheckTap)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isWithDrawTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushWithdrawSettingView()
             }
             .disposed(by: disposeBag)
         

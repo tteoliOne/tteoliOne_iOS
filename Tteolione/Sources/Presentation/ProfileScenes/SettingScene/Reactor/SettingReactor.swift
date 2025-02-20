@@ -20,6 +20,7 @@ final class SettingReactor: Reactor {
         case resetAddressTap
         case logoutTap
         case logoutCheckTap
+        case withDrawTap
     }
     
     enum Mutation {
@@ -30,6 +31,7 @@ final class SettingReactor: Reactor {
         case resetAddressTapped(Bool)
         case logoutTapped(Bool)
         case logoutCheckTapped(Bool)
+        case withDrawTapped(Bool)
         case showError(NetworkError)
     }
     
@@ -41,6 +43,7 @@ final class SettingReactor: Reactor {
         var isResetAddressTapped: Bool = false
         var isLogoutTapped: Bool = false
         var isLogoutCheckTapped: Bool = false
+        var isWithDrawTapped: Bool = false
         var errorMessage: String?
     }
     
@@ -99,6 +102,12 @@ extension SettingReactor {
             
         case .logoutCheckTap:
             return logout()
+            
+        case .withDrawTap:
+            return .concat([
+                .just(.withDrawTapped(true)),
+                .just(.withDrawTapped(false))
+            ])
         }
     }
     
@@ -134,6 +143,9 @@ extension SettingReactor {
             
         case .showError(let error):
             newState.errorMessage = error.errorDescription
+            
+        case .withDrawTapped(let isTap):
+            newState.isWithDrawTapped = isTap
         }
         
         return newState
