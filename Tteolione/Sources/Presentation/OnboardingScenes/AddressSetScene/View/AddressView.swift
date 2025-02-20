@@ -10,6 +10,14 @@ import SnapKit
 
 final class AddressView: BaseView {
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = AppText.Etc.addressSet
+        label.font = Font.bold20
+        label.textColor = .myAppMain
+        return label
+    }()
+    let backButton = BackButton(size: 24)
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "주소를 입력하세요"
@@ -36,13 +44,24 @@ final class AddressView: BaseView {
     }()
     
     override func configureHierarchy() {
-        [searchBar, myLocationButton,
+        [backButton, titleLabel,
+         searchBar, myLocationButton,
          tableView].forEach { addSubview($0) }
     }
     
     override func configureLayout() {
+        backButton.snp.makeConstraints { make in
+            make.leading.equalTo(safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(safeAreaLayoutGuide).inset(12)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).inset(12)
+            make.centerX.equalToSuperview()
+        }
+        
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
         }
         

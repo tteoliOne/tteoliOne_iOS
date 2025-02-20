@@ -5,7 +5,6 @@
 //  Created by 전준영 on 1/14/25.
 //
 
-//import UIKit
 import ReactorKit
 import RxCocoa
 import MapKit
@@ -13,13 +12,7 @@ import MapKit
 final class AddressViewController: BaseViewController<AddressView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: LoginCoordinatorDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        title = "주소설정"
-    }
+    weak var delegate: AddressCoordinatorDelegate?
     
 }
 
@@ -38,6 +31,11 @@ extension AddressViewController: View {
             .disposed(by: disposeBag)
         
         rootView.myLocationButton.rx.tap
+            .map { AddressReactor.Action.myLocationButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.backButton.rx.tap
             .map { AddressReactor.Action.myLocationButtonTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -70,12 +68,29 @@ extension AddressViewController: View {
     }
     
     private func bindNavigation(_ reactor: AddressReactor) {
-        reactor.state.map { $0.isLocationSelected }
+        reactor.state.map { $0.isBackButtonTapped }
             .distinctUntilChanged()
             .filter { $0 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
-                owner.delegate?.goHome()
+                owner.delegate?.finshView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { ($0.isLocationSelected, $0.addressViewType) }
+            .filter { $0.0 }
+            .compactMap { $0.1 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, status in
+                print(status)
+                switch status {
+                case .login:
+                    owner.delegate?.goHome()
+                    
+                case .change:
+                    owner.delegate?.finshView()
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -83,5 +98,5 @@ extension AddressViewController: View {
 }
 
 extension AddressViewController: DelegateOwner {
-    typealias Delegate = LoginCoordinatorDelegate
+    typealias Delegate = AddressCoordinatorDelegate
 }

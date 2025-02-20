@@ -10,5 +10,6 @@ import Foundation
 protocol SettingCoordinatorDelegate: Coordinator {
     func pushProfileSettingView()
     func pushProfileResetPasswordView()
+    func pushAddressSettingView()
     func finishView()
 }

@@ -84,6 +84,7 @@ enum AppText {
         static let nickname = "닉네임"
         static let thumb = "따봉"
         static let intro = "소개"
+        static let addressSet = "주소 설정"
     }
     
     enum MyProduct {

@@ -16,6 +16,7 @@ final class SettingReactor: Reactor {
         case backButtonTap
         case profileSettingTap
         case profileResetPasswordTap
+        case resetAddressTap
     }
     
     enum Mutation {
@@ -23,6 +24,7 @@ final class SettingReactor: Reactor {
         case backButtonTapped(Bool)
         case profileSettingTapped(Bool)
         case profileResetPasswordTapped(Bool)
+        case resetAddressTapped(Bool)
     }
     
     struct State {
@@ -30,6 +32,7 @@ final class SettingReactor: Reactor {
         var isBackButtonTapped: Bool = false
         var isProfileSettingTapped: Bool = false
         var isProfileResetPasswordTapped: Bool = false
+        var isResetAddressTapped: Bool = false
     }
     
     var initialState = State()
@@ -70,6 +73,12 @@ extension SettingReactor {
                 .just(.profileResetPasswordTapped(true)),
                 .just(.profileResetPasswordTapped(false))
             ])
+            
+        case .resetAddressTap:
+            return .concat([
+                .just(.resetAddressTapped(true)),
+                .just(.resetAddressTapped(false))
+            ])
         }
     }
     
@@ -93,6 +102,9 @@ extension SettingReactor {
             
         case .profileResetPasswordTapped(let isTap):
             newState.isProfileResetPasswordTapped = isTap
+            
+        case .resetAddressTapped(let isTap):
+            newState.isResetAddressTapped = isTap
         }
         return newState
     }

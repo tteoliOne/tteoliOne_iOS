@@ -15,5 +15,5 @@ protocol LoginCoordinatorDelegate: Coordinator {
     func pushKakaoSetProfileView(with token: String)
     func pushAppleSetProfileView(with token: String)
     func finishView()
-    func goHome()
+//    func goHome()
 }

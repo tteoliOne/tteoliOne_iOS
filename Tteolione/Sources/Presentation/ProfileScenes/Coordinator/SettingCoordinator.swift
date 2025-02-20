@@ -58,6 +58,15 @@ extension SettingCoordinator {
         show(viewController)
     }
     
+    func pushAddressSettingView() {
+        let coordinator = AddressCoordinator(navigationController: navigationController,
+                                             dependency: dependency,
+                                             viewType: .change)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
     func finishView() {
         finishAllChildren()
         popVC()

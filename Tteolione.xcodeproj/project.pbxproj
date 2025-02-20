@@ -37,6 +37,8 @@
 		720D71002D66432000FC25FB /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70FF2D66432000FC25FB /* MyReviewView.swift */; };
 		720D71022D6643A500FC25FB /* MyReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71012D6643A500FC25FB /* MyReviewViewController.swift */; };
 		720D71042D6645FA00FC25FB /* MyReviewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71032D6645FA00FC25FB /* MyReviewReactor.swift */; };
+		720D71072D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71062D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift */; };
+		720D71092D66EC9800FC25FB /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71082D66EC9800FC25FB /* AddressCoordinator.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -342,6 +344,8 @@
 		720D70FF2D66432000FC25FB /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
 		720D71012D6643A500FC25FB /* MyReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewController.swift; sourceTree = "<group>"; };
 		720D71032D6645FA00FC25FB /* MyReviewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewReactor.swift; sourceTree = "<group>"; };
+		720D71062D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D71082D66EC9800FC25FB /* AddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinator.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -1554,6 +1558,7 @@
 				72361E902D1411D9009BEF12 /* LoginCoordinator.swift */,
 				7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */,
 				7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */,
+				720D71082D66EC9800FC25FB /* AddressCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1564,6 +1569,7 @@
 				72361E942D155D61009BEF12 /* LoginDelegate.swift */,
 				7246FA062D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift */,
 				7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */,
+				720D71062D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2284,6 +2290,7 @@
 				72977EC22D48957900D1FDE7 /* SearchReactor.swift in Sources */,
 				72361E642D0C24C2009BEF12 /* NetworkError.swift in Sources */,
 				7246FA2E2D3AC76C00EE6B5E /* Constants.swift in Sources */,
+				720D71092D66EC9800FC25FB /* AddressCoordinator.swift in Sources */,
 				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
 				724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */,
 				72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */,
@@ -2393,6 +2400,7 @@
 				721BF2B62D55F57400E37E3B /* SettingViewController.swift in Sources */,
 				72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */,
 				72977F012D5488A000D1FDE7 /* SlideInPresentationAnimator.swift in Sources */,
+				720D71072D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift in Sources */,
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
 				720D70D72D6387CE00FC25FB /* ReviewPopViewController.swift in Sources */,
 				721BF2D12D56013100E37E3B /* SettingVersionCell.swift in Sources */,
