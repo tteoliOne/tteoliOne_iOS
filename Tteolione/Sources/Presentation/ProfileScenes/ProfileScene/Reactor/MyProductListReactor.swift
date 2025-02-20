@@ -14,10 +14,13 @@ final class MyProductListReactor: Reactor {
     enum Action {
         case fetchList
         case backButtonTap
+        case selectProduct(ProductPreviewDTO)
     }
     
     enum Mutation {
         case setProducts(ProductFilterListDTO)
+        case setSelectedProduct(ProductPreviewDTO)
+        case showDetailView(Bool)
         case showError(NetworkError)
         case isBackButtonTapped(Bool)
     }
@@ -25,6 +28,8 @@ final class MyProductListReactor: Reactor {
     struct State {
         var status: StatusType?
         var setProductDTO: ProductFilterListDTO?
+        var selectedProduct: ProductPreviewDTO?
+        var isShowDetailView: Bool = false
         var errorMessage: String?
         var isBackButtonTapped: Bool = false
     }
@@ -64,6 +69,13 @@ extension MyProductListReactor {
                 .just(.isBackButtonTapped(true)),
                 .just(.isBackButtonTapped(false))
             ])
+            
+        case .selectProduct(let product):
+            return .concat([
+                .just(.setSelectedProduct(product)),
+                .just(.showDetailView(true)),
+                .just(.showDetailView(false))
+            ])
         }
     }
     
@@ -83,6 +95,12 @@ extension MyProductListReactor {
             
         case .isBackButtonTapped(let isBack):
             newState.isBackButtonTapped = isBack
+            
+        case .setSelectedProduct(let product):
+            newState.selectedProduct = product
+            
+        case .showDetailView(let isShow):
+            newState.isShowDetailView = isShow
         }
         
         return newState

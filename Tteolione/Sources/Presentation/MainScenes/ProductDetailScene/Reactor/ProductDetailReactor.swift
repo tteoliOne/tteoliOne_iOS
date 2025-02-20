@@ -58,10 +58,10 @@ final class ProductDetailReactor: Reactor {
     private let networkChatProvider: NetworkProvider<ChatAPI>
     var initialState: State = State()
     
-    init(networkPorductProvider: NetworkProvider<ProductServiceAPI>,
+    init(networkProductProvider: NetworkProvider<ProductServiceAPI>,
          networkChatProvider: NetworkProvider<ChatAPI>,
          productId: Int) {
-        self.networkPorductProvider = networkPorductProvider
+        self.networkPorductProvider = networkProductProvider
         self.networkChatProvider = networkChatProvider
         self.initialState = State(productId: productId)
     }
@@ -102,6 +102,7 @@ extension ProductDetailReactor {
             return createChat(productId: currentState.productId)
             
         case .profileTap:
+            print("???????")
             return .concat([
                 .just(.profileTapped(true)),
                 .just(.profileTapped(false))

@@ -13,6 +13,11 @@ final class MyProductListViewController: BaseViewController<MyProductListView> {
     var disposeBag = DisposeBag()
     weak var delegate: ProfileCoordinatorDelegate?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
 }
 
 extension MyProductListViewController: View {
@@ -31,6 +36,12 @@ extension MyProductListViewController: View {
         
         rootView.backButton.rx.tap
             .map { MyProductListReactor.Action.backButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(ProductPreviewDTO.self)
+            .filter { $0.soldStatus != "eSoldOut" }
+            .map { MyProductListReactor.Action.selectProduct($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -65,6 +76,16 @@ extension MyProductListViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.popVC()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { ($0.isShowDetailView, $0.selectedProduct) }
+            .filter { $0.0 }
+            .compactMap { $0.1 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, product in
+                owner.delegate?.pushDetailViewController(productId: product.productId)
             }
             .disposed(by: disposeBag)
     }

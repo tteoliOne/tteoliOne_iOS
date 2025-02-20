@@ -66,7 +66,7 @@ extension MainViewController: View {
                 cell.collectionView.rx.itemSelected
                     .subscribe(onNext: { [weak self] indexPath in
                         let selectedProduct = productList.products[indexPath.item]
-                        self?.delegate?.pushProductDetailViewController(productId: selectedProduct.productId)
+                        self?.delegate?.pushProductDetailView(productId: selectedProduct.productId)
                     })
                     .disposed(by: cell.disposeBag)
             }

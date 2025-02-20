@@ -12,7 +12,7 @@ import ReactorKit
 final class MapViewController: BaseViewController<MapView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: MainCoordinatorDelegate?
+    weak var delegate: PostCoordinatorDelegate?
     weak var delegates: MapViewControllerDelegate?
     
     func completeSelection() {
@@ -39,5 +39,5 @@ extension MapViewController: View {
 }
 
 extension MapViewController: DelegateOwner {
-    typealias Delegate = MainCoordinatorDelegate
+    typealias Delegate = PostCoordinatorDelegate
 }

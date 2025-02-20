@@ -59,6 +59,15 @@ extension ProfileCoordinator {
         show(viewController)
     }
     
+    func pushDetailViewController(productId: Int) {
+        let coordinator = ProductDetailCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   productId: productId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
     func showSettingView() {
         let coordinator = SettingCoordinator(navigationController: navigationController,
                                              dependency: dependency)

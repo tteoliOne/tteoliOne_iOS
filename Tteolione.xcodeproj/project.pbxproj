@@ -42,6 +42,10 @@
 		720D710B2D67051600FC25FB /* WithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D710A2D67051600FC25FB /* WithdrawViewController.swift */; };
 		720D710D2D67054500FC25FB /* WithdrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D710C2D67054500FC25FB /* WithdrawView.swift */; };
 		720D710F2D67054F00FC25FB /* WithdrawReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D710E2D67054F00FC25FB /* WithdrawReactor.swift */; };
+		720D71112D67882A00FC25FB /* ProductDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71102D67882A00FC25FB /* ProductDetailCoordinator.swift */; };
+		720D71132D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71122D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift */; };
+		720D71152D678B9A00FC25FB /* PostCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71142D678B9A00FC25FB /* PostCoordinatorDelegate.swift */; };
+		720D71172D678BA300FC25FB /* PostCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71162D678BA300FC25FB /* PostCoordinator.swift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -352,6 +356,10 @@
 		720D710A2D67051600FC25FB /* WithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawViewController.swift; sourceTree = "<group>"; };
 		720D710C2D67054500FC25FB /* WithdrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawView.swift; sourceTree = "<group>"; };
 		720D710E2D67054F00FC25FB /* WithdrawReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawReactor.swift; sourceTree = "<group>"; };
+		720D71102D67882A00FC25FB /* ProductDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCoordinator.swift; sourceTree = "<group>"; };
+		720D71122D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D71142D678B9A00FC25FB /* PostCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D71162D678BA300FC25FB /* PostCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinator.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -1646,6 +1654,8 @@
 				7246FA282D3A805C00EE6B5E /* Protocol */,
 				72361FE32D3417E2009BEF12 /* MainCoordinator.swift */,
 				72977EBD2D48943300D1FDE7 /* SearchCoordinator.swift */,
+				720D71102D67882A00FC25FB /* ProductDetailCoordinator.swift */,
+				720D71162D678BA300FC25FB /* PostCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1655,6 +1665,8 @@
 			children = (
 				7246FA292D3A817400EE6B5E /* MainCoordinatorDelegate.swift */,
 				72977EBF2D48950000D1FDE7 /* SearchCoordinatorDelegate.swift */,
+				720D71122D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift */,
+				720D71142D678B9A00FC25FB /* PostCoordinatorDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2252,6 +2264,7 @@
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
 				720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */,
 				720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */,
+				720D71152D678B9A00FC25FB /* PostCoordinatorDelegate.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
@@ -2268,7 +2281,9 @@
 				720D70C42D61CBE500FC25FB /* CustomSegmentedControl.swift in Sources */,
 				725F81852D43488D002C4E1C /* ProfileCoordinatorDelegate.swift in Sources */,
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
+				720D71112D67882A00FC25FB /* ProductDetailCoordinator.swift in Sources */,
 				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
+				720D71132D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */,
 				72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */,
@@ -2431,6 +2446,7 @@
 				725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
 				721BF2FF2D5C615900E37E3B /* DBManager.swift in Sources */,
+				720D71172D678BA300FC25FB /* PostCoordinator.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
 				72361E522D0BF5C9009BEF12 /* ProfileSetViewController.swift in Sources */,

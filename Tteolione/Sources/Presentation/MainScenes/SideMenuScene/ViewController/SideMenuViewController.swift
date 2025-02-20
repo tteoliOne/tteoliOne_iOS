@@ -88,7 +88,7 @@ extension SideMenuViewController: View {
             .bind(with: self) { owner, data in
                 guard let productId = data.1 else { return }
                 owner.delegate?.dismissVC()
-                owner.delegate?.pushProductDetailViewController(productId: productId)
+                owner.delegate?.pushProductDetailView(productId: productId)
             }
             .disposed(by: disposeBag)
     }
