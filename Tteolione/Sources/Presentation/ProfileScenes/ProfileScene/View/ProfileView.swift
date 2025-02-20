@@ -48,17 +48,11 @@ final class ProfileView: BaseView {
         tableView.backgroundColor = .myAppMain
         return tableView
     }()
-    private let logOutButton = CommonButton(title: .logout,
-                                            corner: 0,
-                                            backgroundColor: .clear,
-                                            textColor: .myAppDarkGray,
-                                            font: Font.regular17)
-    private let slash = SlashLabel(font: Font.regular20)
-    private let withdrawalButton = CommonButton(title: .withdrawal,
-                                            corner: 0,
-                                            backgroundColor: .clear,
-                                            textColor: .myAppDarkGray,
-                                            font: Font.regular17)
+    let logOutButton = CommonButton(title: .logout,
+                                    corner: 0,
+                                    backgroundColor: .clear,
+                                    textColor: .myAppDarkGray,
+                                    font: Font.regular17)
     
     //MARK: - 프로필 변경시 화면
     let profileSetButton = CommonButton(title: .profile,
@@ -96,8 +90,7 @@ final class ProfileView: BaseView {
     
     override func configureHierarchy() {
         [profileFieldView, listView,
-         logOutButton, slash,
-         withdrawalButton].forEach { addSubview($0) }
+         logOutButton].forEach { addSubview($0) }
         
         [profileShadowView, nicknameView,
          gearButton,
@@ -187,24 +180,13 @@ final class ProfileView: BaseView {
             make.horizontalEdges.equalTo(listView).inset(20)
         }
         
-        slash.snp.makeConstraints { make in
-            make.centerX.equalTo(safeAreaLayoutGuide)
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(40)
-        }
-        
         logOutButton.snp.makeConstraints { make in
-            make.trailing.equalTo(slash.snp.leading).offset(-8)
-            make.centerY.equalTo(slash)
-        }
-        
-        withdrawalButton.snp.makeConstraints { make in
-            make.leading.equalTo(slash.snp.trailing).offset(8)
-            make.centerY.equalTo(slash)
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(40)
+            make.centerX.equalTo(safeAreaLayoutGuide)
         }
     }
     
     override func configureView() {
-        slash.textColor = .myAppDarkGray
         tableView.rowHeight = ((Device.screenHeight * 0.44) - 40) / 5
         setNicknameTextField.textAlignment = .center
         setIntroTextField.textAlignment = .center
@@ -295,8 +277,7 @@ extension ProfileView {
 
             let hiddenViews = [
                 self.nicknameView, self.thumbView, self.oneLinerLabel,
-                self.logOutButton, self.slash, self.withdrawalButton,
-                self.gearButton
+                self.logOutButton, self.gearButton
             ]
             
             let visibleViews: [UIView] = [
@@ -324,8 +305,7 @@ extension ProfileView {
             
             let visibleViews = [
                 self.nicknameView, self.thumbView, self.oneLinerLabel,
-                self.logOutButton, self.slash, self.withdrawalButton,
-                self.gearButton
+                self.logOutButton, self.gearButton
             ]
             
             let hiddenViews: [UIView] = [

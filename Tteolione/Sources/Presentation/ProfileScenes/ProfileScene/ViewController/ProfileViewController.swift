@@ -79,6 +79,11 @@ extension ProfileViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.logOutButton.rx.tap
+            .map { ProfileReactor.Action.logoutButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.tableView.rx.itemSelected
             .map { indexPath in
                 return indexPath.row
@@ -216,6 +221,19 @@ extension ProfileViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.pushMyReviewViewController()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLogoutButtonTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showAlert(title: "로그 아웃",
+                                message: "로그 아웃 하시겠습니까?",
+                                cancelTitle: "취소") {
+                    reactor.action.onNext(.logoutCheckTap)
+                }
             }
             .disposed(by: disposeBag)
     }

@@ -21,7 +21,8 @@ final class ProfileCoordinator: NSObject, ProfileCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = ProfileReactor(networkProvider: dependency.userProvider)
+        let reactor = ProfileReactor(networkProvider: dependency.userProvider,
+                                     userSessionNetworkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: ProfileViewController.self,
             with: reactor,

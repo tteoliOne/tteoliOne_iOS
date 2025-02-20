@@ -22,6 +22,8 @@ final class ProfileReactor: Reactor {
         case photoButtonTap
         case imageSelected(UIImage)
         case gearButtonTap
+        case logoutButtonTap
+        case logoutCheckTap
     }
     
     enum Mutation {
@@ -37,6 +39,7 @@ final class ProfileReactor: Reactor {
         case setProfileImagePicker(Bool)
         case setProfileImage(UIImage?)
         case setGearButtonTapped(Bool)
+        case setLogoutButtonTapped(Bool)
     }
     
     struct State {
@@ -54,12 +57,15 @@ final class ProfileReactor: Reactor {
         var isProductImagePickerShown: Bool = false
         var profileImage: UIImage?
         var isGearButtonTapped: Bool = false
+        var isLogoutButtonTapped: Bool = false
     }
     
     private let networkProvider: NetworkProvider<UserAPI>
+    private let userSessionNetworkProvider: NetworkProvider<UserSessionAPI>
     let initialState: State
     
-    init(networkProvider: NetworkProvider<UserAPI>) {
+    init(networkProvider: NetworkProvider<UserAPI>,
+         userSessionNetworkProvider: NetworkProvider<UserSessionAPI>) {
         let menuItems = [
             MenuItem(title: "내 공유글 목록"),
             MenuItem(title: "공유완료 목록"),
@@ -69,6 +75,7 @@ final class ProfileReactor: Reactor {
         ]
         self.initialState = State(tableViewItems: menuItems)
         self.networkProvider = networkProvider
+        self.userSessionNetworkProvider = userSessionNetworkProvider
     }
     
 }
@@ -134,6 +141,15 @@ extension ProfileReactor {
                 .just(.reveiwScreen(true)),
                 .just(.reveiwScreen(false))
             ])
+            
+        case .logoutButtonTap:
+            return .concat([
+                .just(.setLogoutButtonTapped(true)),
+                .just(.setLogoutButtonTapped(false))
+            ])
+            
+        case .logoutCheckTap:
+            return logout()
         }
     }
     
@@ -181,6 +197,9 @@ extension ProfileReactor {
             
         case .reveiwScreen(let isTap):
             newState.isReviewScreen = isTap
+            
+        case .setLogoutButtonTapped(let isTap):
+            newState.isLogoutButtonTapped = isTap
         }
         
         return newState
@@ -255,5 +274,21 @@ extension ProfileReactor {
                 return .just(.showError(error))
             }
         }
+    }
+    
+    private func logout() -> Observable<Mutation> {
+        return userSessionNetworkProvider
+            .request(.logout,
+                     decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    NotificationCenter.default.post(name: .logout, object: nil)
+                    return .empty()
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
     }
 }
