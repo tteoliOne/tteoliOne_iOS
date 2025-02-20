@@ -34,6 +34,16 @@ extension MyProductListViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.tableView.rx.willDisplayCell
+            .filter { [weak self] (_, indexPath) in
+                guard let self = self else { return false }
+                let lastRowIndex = self.rootView.tableView.numberOfRows(inSection: indexPath.section) - 1
+                return indexPath.row == lastRowIndex
+            }
+            .map { _ in MyProductListReactor.Action.loadMore }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+
         rootView.backButton.rx.tap
             .map { MyProductListReactor.Action.backButtonTap }
             .bind(to: reactor.action)
