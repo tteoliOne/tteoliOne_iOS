@@ -5,6 +5,7 @@
 //  Created by 전준영 on 2/7/25.
 //
 
+import UIKit
 import ReactorKit
 import RxSwift
 import RxCocoa
@@ -13,7 +14,31 @@ final class SettingViewController: BaseViewController<SettingView> {
     
     var disposeBag = DisposeBag()
     weak var delegate: SettingCoordinatorDelegate?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleAppDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reactor?.action.onNext(.getToggleNotification)
+        
+    }
+    
+    @objc private func handleAppDidBecomeActive() {
+        reactor?.action.onNext(.getToggleNotification)
+        DispatchQueue.main.async {
+            self.rootView.tableView.reloadData()
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension SettingViewController: View {
@@ -52,6 +77,30 @@ extension SettingViewController: View {
                 }
             }
             .disposed(by: disposeBag)
+        
+        rootView.toggleNotificationAction = { [weak self] isOn in
+            guard let self = self else { return }
+            
+            let settingsURL = URL(string: UIApplication.openSettingsURLString)!
+            
+            if isOn {
+                self.showAlert(title: "알림 활성화",
+                               message: "설정 앱에서 알림을 활성화하시겠습니까?",
+                               cancelTitle: "취소") {
+                    if UIApplication.shared.canOpenURL(settingsURL) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+            } else {
+                self.showAlert(title: "알림 비활성화",
+                               message: "설정 앱에서 직접 변경해야 합니다.",
+                               cancelTitle: "취소") {
+                    if UIApplication.shared.canOpenURL(settingsURL) {
+                        UIApplication.shared.open(settingsURL)
+                    }
+                }
+            }
+        }
     }
     
     func bindState(_ reactor: SettingReactor) {

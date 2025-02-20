@@ -21,6 +21,7 @@ final class SettingReactor: Reactor {
         case logoutTap
         case logoutCheckTap
         case withDrawTap
+        case getToggleNotification
     }
     
     enum Mutation {
@@ -52,14 +53,17 @@ final class SettingReactor: Reactor {
     
     init(networkProvider: NetworkProvider<UserSessionAPI>) {
         self.userSessionNetworkProvider = networkProvider
-        let sections = [
-            SettingSection(title: "계정", items: [.profile, .password, .address]),
-            SettingSection(title: "알림", items: [.chatNotification(true)]),
-            SettingSection(title: "정보", items: [
-                .terms, .privacy, .version("1.0.0"), .logout, .withdraw
-            ])
-        ]
-        self.initialState = State(sections: sections)
+        Task {
+            let isNotificationEnabled = await SettingReactor.fetchNotificationStatus()
+            let sections = [
+                SettingSection(title: "계정", items: [.profile, .password, .address]),
+                SettingSection(title: "알림", items: [.chatNotification(isNotificationEnabled)]),
+                SettingSection(title: "정보", items: [
+                    .terms, .privacy, .version(SettingReactor.appVersion), .logout, .withdraw
+                ])
+            ]
+            self.initialState = State(sections: sections)
+        }
     }
 }
 
@@ -108,6 +112,23 @@ extension SettingReactor {
                 .just(.withDrawTapped(true)),
                 .just(.withDrawTapped(false))
             ])
+            
+        case .getToggleNotification:
+            return .deferred {
+                return Single<Bool>.create { single in
+                    Task {
+                        let isNotificationEnabled = await SettingReactor.fetchNotificationStatus()
+                        DispatchQueue.main.async {
+                            single(.success(isNotificationEnabled))
+                        }
+                    }
+                    return Disposables.create()
+                }
+                .asObservable()
+                .map { isEnabled in
+                    Mutation.updateNotificationState(isEnabled)
+                }
+            }
         }
     }
     
@@ -149,6 +170,20 @@ extension SettingReactor {
         }
         
         return newState
+    }
+    
+}
+
+extension SettingReactor {
+    static var appVersion: String {
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    }
+}
+
+extension SettingReactor {
+    static func fetchNotificationStatus() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .authorized
     }
     
 }
