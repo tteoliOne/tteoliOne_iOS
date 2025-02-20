@@ -21,7 +21,7 @@ final class SettingCoordinator: NSObject, SettingCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = SettingReactor()
+        let reactor = SettingReactor(networkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: SettingViewController.self,
             with: reactor,

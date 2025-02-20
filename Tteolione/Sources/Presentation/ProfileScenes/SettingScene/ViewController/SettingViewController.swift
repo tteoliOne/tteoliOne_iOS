@@ -44,7 +44,7 @@ extension SettingViewController: View {
                 case .privacy:
                     print("개인정보 처리방침 이동")
                 case .logout:
-                    print("로그아웃 처리")
+                    reactor.action.onNext(.logoutTap)
                 case .withdraw:
                     print("회원 탈퇴 처리")
                 default:
@@ -85,6 +85,19 @@ extension SettingViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.pushAddressSettingView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLogoutTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showAlert(title: "로그 아웃",
+                                message: "로그 아웃 하시겠습니까?",
+                                cancelTitle: "취소") {
+                    reactor.action.onNext(.logoutCheckTap)
+                }
             }
             .disposed(by: disposeBag)
         

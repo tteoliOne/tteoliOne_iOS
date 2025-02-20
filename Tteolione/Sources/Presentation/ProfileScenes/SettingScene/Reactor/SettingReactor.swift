@@ -8,6 +8,7 @@
 import Foundation
 import ReactorKit
 import RxSwift
+import UIKit
 
 final class SettingReactor: Reactor {
     
@@ -17,6 +18,8 @@ final class SettingReactor: Reactor {
         case profileSettingTap
         case profileResetPasswordTap
         case resetAddressTap
+        case logoutTap
+        case logoutCheckTap
     }
     
     enum Mutation {
@@ -25,6 +28,9 @@ final class SettingReactor: Reactor {
         case profileSettingTapped(Bool)
         case profileResetPasswordTapped(Bool)
         case resetAddressTapped(Bool)
+        case logoutTapped(Bool)
+        case logoutCheckTapped(Bool)
+        case showError(NetworkError)
     }
     
     struct State {
@@ -33,11 +39,16 @@ final class SettingReactor: Reactor {
         var isProfileSettingTapped: Bool = false
         var isProfileResetPasswordTapped: Bool = false
         var isResetAddressTapped: Bool = false
+        var isLogoutTapped: Bool = false
+        var isLogoutCheckTapped: Bool = false
+        var errorMessage: String?
     }
     
+    private let userSessionNetworkProvider: NetworkProvider<UserSessionAPI>
     var initialState = State()
     
-    init() {
+    init(networkProvider: NetworkProvider<UserSessionAPI>) {
+        self.userSessionNetworkProvider = networkProvider
         let sections = [
             SettingSection(title: "계정", items: [.profile, .password, .address]),
             SettingSection(title: "알림", items: [.chatNotification(true)]),
@@ -79,6 +90,15 @@ extension SettingReactor {
                 .just(.resetAddressTapped(true)),
                 .just(.resetAddressTapped(false))
             ])
+            
+        case .logoutTap:
+            return .concat([
+                .just(.logoutTapped(true)),
+                .just(.logoutTapped(false))
+            ])
+            
+        case .logoutCheckTap:
+            return logout()
         }
     }
     
@@ -105,8 +125,39 @@ extension SettingReactor {
             
         case .resetAddressTapped(let isTap):
             newState.isResetAddressTapped = isTap
+            
+        case .logoutTapped(let isTap):
+            newState.isLogoutTapped = isTap
+            
+        case .logoutCheckTapped(let isTap):
+            newState.isLogoutCheckTapped = isTap
+            
+        case .showError(let error):
+            newState.errorMessage = error.errorDescription
         }
+        
         return newState
     }
     
+}
+
+extension SettingReactor {
+    private func logout() -> Observable<Mutation> {
+        return userSessionNetworkProvider
+            .request(.logout,
+                     decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    NotificationCenter.default.post(name: .logout, object: nil)
+                    return .concat([
+                        .just(.logoutCheckTapped(true)),
+                        .just(.logoutCheckTapped(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
 }
