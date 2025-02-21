@@ -193,18 +193,11 @@ final class ProfileView: BaseView {
         tableView.rowHeight = ((Device.screenHeight * 0.44) - 40) / 5
         setNicknameTextField.textAlignment = .center
         setIntroTextField.textAlignment = .center
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        self.addGestureRecognizer(tapGesture)
     }
     
     private func updateVisibility(hiddenViews: [UIView], visibleViews: [UIView]) {
         hiddenViews.forEach { $0.isHidden = true }
         visibleViews.forEach { $0.isHidden = false }
-    }
-    
-    @objc private func dismissKeyboard() {
-        self.endEditing(true)
     }
 }
 

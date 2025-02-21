@@ -14,6 +14,9 @@ final class AddressViewController: BaseViewController<AddressView> {
     var disposeBag = DisposeBag()
     weak var delegate: AddressCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension AddressViewController: View {

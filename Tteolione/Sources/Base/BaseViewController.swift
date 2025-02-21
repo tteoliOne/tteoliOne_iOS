@@ -29,6 +29,7 @@ class BaseViewController<RootView: UIView>: UIViewController {
         configureHierarchy()
         configureView()
         configureConstraints()
+        setupKeyboardDismissGesture()
     }
     
     func configureHierarchy() {
@@ -41,6 +42,16 @@ class BaseViewController<RootView: UIView>: UIViewController {
     
     func configureConstraints() {
         
+    }
+    
+    func setupKeyboardDismissGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true) // 키보드 내리기
     }
     
 }

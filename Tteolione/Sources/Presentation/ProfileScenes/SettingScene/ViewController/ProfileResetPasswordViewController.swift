@@ -15,6 +15,9 @@ final class ProfileResetPasswordViewController: BaseViewController<ProfileResetP
     var disposeBag = DisposeBag()
     weak var delegate: SettingCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension ProfileResetPasswordViewController: View {
