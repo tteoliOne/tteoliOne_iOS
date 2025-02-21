@@ -36,8 +36,16 @@ final class SettingSwitchCell: BaseTableViewCell {
         }
     }
     
-    func configure(title: String, isOn: Bool) {
+    func configure(title: String, isOn: Bool, toggleAction: @escaping (Bool) -> Void) {
         titleLabel.text = title
         toggleSwitch.isOn = isOn
+        
+        toggleSwitch.rx.controlEvent(.valueChanged)
+            .bind { [weak self] in
+                guard let self = self else { return }
+                let newValue = self.toggleSwitch.isOn
+                toggleAction(newValue)
+            }
+            .disposed(by: disposeBag)
     }
 }

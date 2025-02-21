@@ -62,7 +62,7 @@ extension EtcReportReactor {
             ])
             
         case .reportButtonTap:
-            return reportPost(reportType: .products,
+            return reportPost(reportType: currentState.reportType ?? .chat,
                               reportCategory: .etc,
                               productId: currentState.reportId,
                               content: currentState.reportText,

@@ -16,17 +16,21 @@ final class AddressReactor: Reactor {
         case myLocationButtonTap
         case selectSearchResult(MKLocalSearchCompletion)
         case updateSearchResults([MKLocalSearchCompletion])
+        case backButtonTap
     }
     
     enum Mutation {
         case setSearchResults([MKLocalSearchCompletion])
         case setSelectedLocation(Bool)
         case showError(String)
+        case backButtonTapped(Bool)
     }
     
     struct State {
+        var addressViewType: AddressViewType?
         var searchResults: [MKLocalSearchCompletion] = []
         var isLocationSelected: Bool = false
+        var isBackButtonTapped: Bool = false
         var errorMessage: String?
     }
     
@@ -34,9 +38,10 @@ final class AddressReactor: Reactor {
     private var locationManagerDelegate: LocationManagerDelegate?
     private let locationManager = CLLocationManager()
     private let disposeBag = DisposeBag()
-    let initialState: State = State()
+    var initialState: State = State()
     
-    init() {
+    init(viewType: AddressViewType) {
+        self.initialState = State(addressViewType: viewType)
         searchCompleterWrapper.results
             .map { Action.updateSearchResults($0) }
             .bind(to: action)
@@ -120,6 +125,11 @@ extension AddressReactor {
                 ])
             }
             
+        case .backButtonTap:
+            return .concat([
+                .just(.backButtonTapped(true)),
+                .just(.backButtonTapped(false))
+            ])
         }
     }
 }
@@ -138,6 +148,9 @@ extension AddressReactor {
             
         case .showError(let errorMessage):
             newState.errorMessage = errorMessage
+            
+        case .backButtonTapped(let isTap):
+            newState.isBackButtonTapped = isTap
         }
         
         return newState

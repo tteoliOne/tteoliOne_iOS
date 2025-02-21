@@ -11,11 +11,15 @@ import RxKakaoSDKAuth
 import KakaoSDKAuth
 import FirebaseCore
 import FirebaseMessaging
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        IQKeyboardManager.shared.isEnabled = true
+        
         //카카오 연결
         if let kakaoAppKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_NATIVE_APP_KEY") as? String {
             RxKakaoSDK.initSDK(appKey: kakaoAppKey)
@@ -84,20 +88,23 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.list, .banner])
     }
     
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//            
-//        print("Body: \(response.notification.request.content.body)")
-//        print("userInfo: \(response.notification.request.content.userInfo)")
-//            
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+            
+        print("Body: \(response.notification.request.content.body)")
+        print("userInfo: \(response.notification.request.content)")
+        print("userInfo: \(response.notification.request)")
+            
 //        let userInfo = response.notification.request.content.userInfo
-//            
+            
 //        // Notification 분기처리
 //        if userInfo[AnyHashable("sesac")] as? String == "project" {
 //            print("SESAC PROJECT")
 //        }else {
 //            print("NOTHING")
 //        }
-//    }
+    }
 }
     
 extension AppDelegate: MessagingDelegate {

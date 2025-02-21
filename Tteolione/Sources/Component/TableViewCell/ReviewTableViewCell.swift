@@ -21,7 +21,7 @@ final class ReviewTableViewCell: BaseTableViewCell {
                                             font: Font.regular15,
                                             color: .myAppDarkGray)
     private let thumbCountView = ShadowView(color: .white,
-                                            corner: (Device.screenWidth * 0.11) / 2,
+                                            corner: 18,
                                             shadowColor: UIColor(red: 0x58/255.0,
                                                                  green: 0x8F/255.0,
                                                                  blue: 0x11/255.0,
@@ -45,24 +45,25 @@ final class ReviewTableViewCell: BaseTableViewCell {
         shadowView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
             make.top.bottom.equalToSuperview().inset(8)
+            make.height.greaterThanOrEqualTo(50)
         }
         
         nicknameLabel.snp.makeConstraints { make in
-            make.top.equalTo(shadowView).inset(12)
+            make.centerY.equalTo(shadowView)
             make.leading.equalTo(shadowView).inset(12)
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(8)
-            make.leading.equalTo(nicknameLabel)
-            make.trailing.equalTo(shadowView).inset(12)
-            make.bottom.equalTo(shadowView).inset(12)
+            make.top.equalTo(shadowView).inset(8)
+            make.leading.equalTo(nicknameLabel.snp.trailing).offset(12)
+            make.trailing.equalTo(shadowView).inset(56)
+            make.bottom.equalTo(shadowView).inset(8)
         }
         
         thumbCountView.snp.makeConstraints { make in
-            make.top.equalTo(shadowView).inset(12)
+            make.centerY.equalTo(shadowView)
             make.trailing.equalTo(shadowView).inset(12)
-            make.size.equalTo(48)
+            make.size.equalTo(36)
         }
         
         thumbCountLabel.snp.makeConstraints { make in

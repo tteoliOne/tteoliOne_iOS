@@ -34,6 +34,19 @@
 		720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		720D70FC2D65996700FC25FB /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 720D70FB2D65996700FC25FB /* FirebaseMessaging */; };
 		720D70FE2D65E50800FC25FB /* ProfileImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */; };
+		720D71002D66432000FC25FB /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D70FF2D66432000FC25FB /* MyReviewView.swift */; };
+		720D71022D6643A500FC25FB /* MyReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71012D6643A500FC25FB /* MyReviewViewController.swift */; };
+		720D71042D6645FA00FC25FB /* MyReviewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71032D6645FA00FC25FB /* MyReviewReactor.swift */; };
+		720D71072D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71062D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift */; };
+		720D71092D66EC9800FC25FB /* AddressCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71082D66EC9800FC25FB /* AddressCoordinator.swift */; };
+		720D710B2D67051600FC25FB /* WithdrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D710A2D67051600FC25FB /* WithdrawViewController.swift */; };
+		720D710D2D67054500FC25FB /* WithdrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D710C2D67054500FC25FB /* WithdrawView.swift */; };
+		720D710F2D67054F00FC25FB /* WithdrawReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D710E2D67054F00FC25FB /* WithdrawReactor.swift */; };
+		720D71112D67882A00FC25FB /* ProductDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71102D67882A00FC25FB /* ProductDetailCoordinator.swift */; };
+		720D71132D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71122D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift */; };
+		720D71152D678B9A00FC25FB /* PostCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71142D678B9A00FC25FB /* PostCoordinatorDelegate.swift */; };
+		720D71172D678BA300FC25FB /* PostCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D71162D678BA300FC25FB /* PostCoordinator.swift */; };
+		720D711A2D684A7100FC25FB /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 720D71192D684A7100FC25FB /* IQKeyboardManagerSwift */; };
 		721BF2A32D55022000E37E3B /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A22D55022000E37E3B /* Encodable+Extension.swift */; };
 		721BF2A82D55174900E37E3B /* MyProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A72D55174900E37E3B /* MyProductListView.swift */; };
 		721BF2AA2D55175700E37E3B /* MyProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721BF2A92D55175700E37E3B /* MyProductListViewController.swift */; };
@@ -336,6 +349,18 @@
 		720D70E02D63B84700FC25FB /* SystemMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageCell.swift; sourceTree = "<group>"; };
 		720D70F62D6597E600FC25FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		720D70FD2D65E50800FC25FB /* ProfileImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageManager.swift; sourceTree = "<group>"; };
+		720D70FF2D66432000FC25FB /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
+		720D71012D6643A500FC25FB /* MyReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewViewController.swift; sourceTree = "<group>"; };
+		720D71032D6645FA00FC25FB /* MyReviewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewReactor.swift; sourceTree = "<group>"; };
+		720D71062D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D71082D66EC9800FC25FB /* AddressCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCoordinator.swift; sourceTree = "<group>"; };
+		720D710A2D67051600FC25FB /* WithdrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawViewController.swift; sourceTree = "<group>"; };
+		720D710C2D67054500FC25FB /* WithdrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawView.swift; sourceTree = "<group>"; };
+		720D710E2D67054F00FC25FB /* WithdrawReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawReactor.swift; sourceTree = "<group>"; };
+		720D71102D67882A00FC25FB /* ProductDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCoordinator.swift; sourceTree = "<group>"; };
+		720D71122D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D71142D678B9A00FC25FB /* PostCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		720D71162D678BA300FC25FB /* PostCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinator.swift; sourceTree = "<group>"; };
 		721BF2A22D55022000E37E3B /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		721BF2A72D55174900E37E3B /* MyProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListView.swift; sourceTree = "<group>"; };
 		721BF2A92D55175700E37E3B /* MyProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductListViewController.swift; sourceTree = "<group>"; };
@@ -614,6 +639,7 @@
 				72361E6A2D0C3236009BEF12 /* RxMoya in Frameworks */,
 				720D70FA2D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				720D70C12D61C6FA00FC25FB /* RxGesture in Frameworks */,
+				720D711A2D684A7100FC25FB /* IQKeyboardManagerSwift in Frameworks */,
 				7246FA132D393B2800EE6B5E /* RxKakaoSDKAuth in Frameworks */,
 				724DEC8E2D00937F00171F44 /* SnapKit in Frameworks */,
 				721BF2CB2D55FFE900E37E3B /* RxDataSources in Frameworks */,
@@ -718,6 +744,7 @@
 				721BF2B92D55F58300E37E3B /* SettingReactor.swift */,
 				720D70CB2D62FFF000FC25FB /* ProfileSettingReactor.swift */,
 				720D70D42D63293D00FC25FB /* ProfileResetPasswordReactor.swift */,
+				720D710E2D67054F00FC25FB /* WithdrawReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -731,6 +758,7 @@
 				721BF2D02D56013100E37E3B /* SettingVersionCell.swift */,
 				720D70C92D62FFE200FC25FB /* ProfileSettingView.swift */,
 				720D70D22D63291F00FC25FB /* ProfileResetPasswordView.swift */,
+				720D710C2D67054500FC25FB /* WithdrawView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -741,6 +769,7 @@
 				721BF2B52D55F57400E37E3B /* SettingViewController.swift */,
 				720D70C72D62FFD900FC25FB /* ProfileSettingViewController.swift */,
 				720D70D02D6328E500FC25FB /* ProfileResetPasswordViewController.swift */,
+				720D710A2D67051600FC25FB /* WithdrawViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1444,6 +1473,7 @@
 			children = (
 				725F81822D4347D7002C4E1C /* ProfileReactor.swift */,
 				721BF2AB2D55176300E37E3B /* MyProductListReactor.swift */,
+				720D71032D6645FA00FC25FB /* MyReviewReactor.swift */,
 			);
 			path = Reactor;
 			sourceTree = "<group>";
@@ -1454,6 +1484,7 @@
 				723620002D3541A5009BEF12 /* ProfileView.swift */,
 				723620042D355502009BEF12 /* ProfileListTableViewCell.swift */,
 				721BF2A72D55174900E37E3B /* MyProductListView.swift */,
+				720D70FF2D66432000FC25FB /* MyReviewView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1463,6 +1494,7 @@
 			children = (
 				72361FFE2D35417C009BEF12 /* ProfileViewController.swift */,
 				721BF2A92D55175700E37E3B /* MyProductListViewController.swift */,
+				720D71012D6643A500FC25FB /* MyReviewViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1545,6 +1577,7 @@
 				72361E902D1411D9009BEF12 /* LoginCoordinator.swift */,
 				7246FA002D38C04C00EE6B5E /* FindAccountCoordinator.swift */,
 				7246FA0C2D38EA7800EE6B5E /* JoinCoordinator.swift */,
+				720D71082D66EC9800FC25FB /* AddressCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1555,6 +1588,7 @@
 				72361E942D155D61009BEF12 /* LoginDelegate.swift */,
 				7246FA062D38C0BC00EE6B5E /* FindAccountCoordinatorDelegate.swift */,
 				7246FA0F2D38EB3900EE6B5E /* JoinCoordinatorDelegate.swift */,
+				720D71062D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1622,6 +1656,8 @@
 				7246FA282D3A805C00EE6B5E /* Protocol */,
 				72361FE32D3417E2009BEF12 /* MainCoordinator.swift */,
 				72977EBD2D48943300D1FDE7 /* SearchCoordinator.swift */,
+				720D71102D67882A00FC25FB /* ProductDetailCoordinator.swift */,
+				720D71162D678BA300FC25FB /* PostCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1631,6 +1667,8 @@
 			children = (
 				7246FA292D3A817400EE6B5E /* MainCoordinatorDelegate.swift */,
 				72977EBF2D48950000D1FDE7 /* SearchCoordinatorDelegate.swift */,
+				720D71122D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift */,
+				720D71142D678B9A00FC25FB /* PostCoordinatorDelegate.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2044,6 +2082,7 @@
 				720D70CE2D6313F300FC25FB /* Toast */,
 				720D70F92D65996700FC25FB /* FirebaseAnalyticsWithoutAdIdSupport */,
 				720D70FB2D65996700FC25FB /* FirebaseMessaging */,
+				720D71192D684A7100FC25FB /* IQKeyboardManagerSwift */,
 			);
 			productName = Tteolione;
 			productReference = 724DEC6B2D0091B700171F44 /* Tteolione.app */;
@@ -2084,6 +2123,7 @@
 				720D70BF2D61C6FA00FC25FB /* XCRemoteSwiftPackageReference "RxGesture" */,
 				720D70CD2D6313F300FC25FB /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				720D71182D684A7100FC25FB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 724DEC6C2D0091B700171F44 /* Products */;
 			projectDirPath = "";
@@ -2170,6 +2210,7 @@
 				72977EC72D489AF400D1FDE7 /* RecentSearchView.swift in Sources */,
 				72361E482D0B292B009BEF12 /* PasswordExplainLabel.swift in Sources */,
 				720D70BC2D61BE5700FC25FB /* OpponentReactor.swift in Sources */,
+				720D71002D66432000FC25FB /* MyReviewView.swift in Sources */,
 				72361F6C2D2EBF99009BEF12 /* SubmitReviewRequestBody.swift in Sources */,
 				72361FD22D316F8A009BEF12 /* ProductDetailView.swift in Sources */,
 				723620052D355502009BEF12 /* ProfileListTableViewCell.swift in Sources */,
@@ -2227,6 +2268,7 @@
 				72361E912D1411D9009BEF12 /* LoginCoordinator.swift in Sources */,
 				720D70DF2D63A63E00FC25FB /* UITableView+Extension.swift in Sources */,
 				720D70C62D623F1600FC25FB /* ReviewTableViewCell.swift in Sources */,
+				720D71152D678B9A00FC25FB /* PostCoordinatorDelegate.swift in Sources */,
 				72361F1D2D2E502C009BEF12 /* TokenAPI.swift in Sources */,
 				72361FC82D315B59009BEF12 /* PostReceiptView.swift in Sources */,
 				72361EDA2D2920B0009BEF12 /* FindAccountRequestBody.swift in Sources */,
@@ -2243,12 +2285,16 @@
 				720D70C42D61CBE500FC25FB /* CustomSegmentedControl.swift in Sources */,
 				725F81852D43488D002C4E1C /* ProfileCoordinatorDelegate.swift in Sources */,
 				72361F9A2D2F8EE8009BEF12 /* MainView.swift in Sources */,
+				720D71112D67882A00FC25FB /* ProductDetailCoordinator.swift in Sources */,
 				72361FF72D353693009BEF12 /* SearchResultsViewController.swift in Sources */,
+				720D71132D67883600FC25FB /* ProductDetailCoordinatorDelegate.swift in Sources */,
 				72361E2A2D02DAFD009BEF12 /* IconWithLabelView.swift in Sources */,
 				720D70D92D63880500FC25FB /* ReviewPopView.swift in Sources */,
 				72977EE12D51CDE600D1FDE7 /* SideMenuTableViewCell.swift in Sources */,
 				72361EC22D26BCC4009BEF12 /* AuthViewController.swift in Sources */,
 				72361FE42D3417E2009BEF12 /* MainCoordinator.swift in Sources */,
+				720D71022D6643A500FC25FB /* MyReviewViewController.swift in Sources */,
+				720D71042D6645FA00FC25FB /* MyReviewReactor.swift in Sources */,
 				72361F262D2E51C2009BEF12 /* TokenDTO.swift in Sources */,
 				72361E782D0EB691009BEF12 /* MultipartFormDataConvertible.swift in Sources */,
 				721BF2F52D59CA6B00E37E3B /* ChatListCoordinatorDelegate.swift in Sources */,
@@ -2259,6 +2305,7 @@
 				724DECB42D0187A800171F44 /* AppButtonTitle.swift in Sources */,
 				72977EED2D53C2B400D1FDE7 /* DeclarationViewController.swift in Sources */,
 				72977ED12D48A57300D1FDE7 /* SearchResultsView.swift in Sources */,
+				720D710F2D67054F00FC25FB /* WithdrawReactor.swift in Sources */,
 				721BF2CD2D56010900E37E3B /* SettingSwitchCell.swift in Sources */,
 				723620032D354246009BEF12 /* ProfileCoordinator.swift in Sources */,
 				72361E242D02D1E8009BEF12 /* LineTextField.swift in Sources */,
@@ -2272,6 +2319,7 @@
 				72977EC22D48957900D1FDE7 /* SearchReactor.swift in Sources */,
 				72361E642D0C24C2009BEF12 /* NetworkError.swift in Sources */,
 				7246FA2E2D3AC76C00EE6B5E /* Constants.swift in Sources */,
+				720D71092D66EC9800FC25FB /* AddressCoordinator.swift in Sources */,
 				72361E222D02D1B1009BEF12 /* AppJoinImage.swift in Sources */,
 				724DECC62D02CBC600171F44 /* EmailAuthView.swift in Sources */,
 				72361E4A2D0B2963009BEF12 /* AppPasswordExplain.swift in Sources */,
@@ -2300,6 +2348,7 @@
 				72361F332D2E98BF009BEF12 /* ProductDTO.swift in Sources */,
 				723620192D364CAD009BEF12 /* AddressReactor.swift in Sources */,
 				72361FA42D2F926F009BEF12 /* BaseCollectionViewCell.swift in Sources */,
+				720D710B2D67051600FC25FB /* WithdrawViewController.swift in Sources */,
 				72361FDC2D3413CC009BEF12 /* TabBarCoordinator.swift in Sources */,
 				720D70C82D62FFD900FC25FB /* ProfileSettingViewController.swift in Sources */,
 				7246FA1A2D39418E00EE6B5E /* KakaoAuthVM.swift in Sources */,
@@ -2332,6 +2381,7 @@
 				72361F572D2EB404009BEF12 /* ReportRequestBody.swift in Sources */,
 				72361F512D2EB134009BEF12 /* OtherUserDTO.swift in Sources */,
 				72361FD02D316F7A009BEF12 /* ProductDetailViewController.swift in Sources */,
+				720D710D2D67054500FC25FB /* WithdrawView.swift in Sources */,
 				72361E3C2D087BA2009BEF12 /* IDReactor.swift in Sources */,
 				72361F0E2D2E370A009BEF12 /* SocialAPI.swift in Sources */,
 				72361F142D2E3B6A009BEF12 /* SocialProfileImageRequestBody.swift in Sources */,
@@ -2381,6 +2431,7 @@
 				721BF2B62D55F57400E37E3B /* SettingViewController.swift in Sources */,
 				72361FBA2D30DC0D009BEF12 /* PostReactor.swift in Sources */,
 				72977F012D5488A000D1FDE7 /* SlideInPresentationAnimator.swift in Sources */,
+				720D71072D66EC8A00FC25FB /* AddressCoordinatorDelegate.swift in Sources */,
 				72361ED62D27C583009BEF12 /* ResetPasswordReactor.swift in Sources */,
 				720D70D72D6387CE00FC25FB /* ReviewPopViewController.swift in Sources */,
 				721BF2D12D56013100E37E3B /* SettingVersionCell.swift in Sources */,
@@ -2399,6 +2450,7 @@
 				725F818C2D43B2BE002C4E1C /* MapReactor.swift in Sources */,
 				72361ED42D27C57B009BEF12 /* ResetPasswordView.swift in Sources */,
 				721BF2FF2D5C615900E37E3B /* DBManager.swift in Sources */,
+				720D71172D678BA300FC25FB /* PostCoordinator.swift in Sources */,
 				72361E6E2D0C65AC009BEF12 /* ServerResponse.swift in Sources */,
 				724DECAB2D0184EE00171F44 /* AppText.swift in Sources */,
 				72361E522D0BF5C9009BEF12 /* ProfileSetViewController.swift in Sources */,
@@ -2698,6 +2750,14 @@
 				minimumVersion = 11.8.1;
 			};
 		};
+		720D71182D684A7100FC25FB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		721BF2C92D55FFE900E37E3B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
@@ -2776,6 +2836,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 720D70F82D65996700FC25FB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		720D71192D684A7100FC25FB /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 720D71182D684A7100FC25FB /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 		721BF2CA2D55FFE900E37E3B /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;

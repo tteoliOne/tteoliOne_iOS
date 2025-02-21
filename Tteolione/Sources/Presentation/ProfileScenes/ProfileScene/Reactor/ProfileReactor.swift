@@ -16,25 +16,35 @@ final class ProfileReactor: Reactor {
         case resetProfileButtonTap
         case resetProfileListTap
         case myShareTap(StatusType)
+        case myReviewTap
         case updateNickname(String)
         case updateIntro(String)
         case photoButtonTap
         case imageSelected(UIImage)
         case gearButtonTap
+        case logoutButtonTap
+        case logoutCheckTap
+        case xButtonTap
     }
     
     enum Mutation {
         case setProfile(UserProfileDTO)
         case showError(NetworkError)
+        case clearErrorMessage
         case setFailureType(Bool)
         case setResetProfileListTapped(Bool)
         case myProductScreen(Bool, StatusType?)
+        case reveiwScreen(Bool)
         case setNickname(String)
         case setIntro(String)
         case setIntroLengthText(String)
+        case setOriginalNickname(String)
+        case setOriginalIntro(String)
+        case setOriginalLengthText(String)
         case setProfileImagePicker(Bool)
         case setProfileImage(UIImage?)
         case setGearButtonTapped(Bool)
+        case setLogoutButtonTapped(Bool)
     }
     
     struct State {
@@ -43,20 +53,27 @@ final class ProfileReactor: Reactor {
         var errorMessage: String?
         var isFailure: Bool = false
         var isMyProductScreen: Bool = false
+        var isReviewScreen: Bool = false
         var isResetProfileListTapped: Bool = false
         var selectedStatus: StatusType?
         var nickname: String = ""
         var intro: String = ""
         var introLengthText: String = "0/20"
+        var originalNickname: String = ""
+        var originalIntro: String = ""
+        var originalLengthText: String = "0/20"
         var isProductImagePickerShown: Bool = false
         var profileImage: UIImage?
         var isGearButtonTapped: Bool = false
+        var isLogoutButtonTapped: Bool = false
     }
     
     private let networkProvider: NetworkProvider<UserAPI>
+    private let userSessionNetworkProvider: NetworkProvider<UserSessionAPI>
     let initialState: State
     
-    init(networkProvider: NetworkProvider<UserAPI>) {
+    init(networkProvider: NetworkProvider<UserAPI>,
+         userSessionNetworkProvider: NetworkProvider<UserSessionAPI>) {
         let menuItems = [
             MenuItem(title: "내 공유글 목록"),
             MenuItem(title: "공유완료 목록"),
@@ -66,6 +83,7 @@ final class ProfileReactor: Reactor {
         ]
         self.initialState = State(tableViewItems: menuItems)
         self.networkProvider = networkProvider
+        self.userSessionNetworkProvider = userSessionNetworkProvider
     }
     
 }
@@ -125,6 +143,27 @@ extension ProfileReactor {
                 .just(.setGearButtonTapped(true)),
                 .just(.setGearButtonTapped(false))
             ])
+            
+        case .myReviewTap:
+            return .concat([
+                .just(.reveiwScreen(true)),
+                .just(.reveiwScreen(false))
+            ])
+            
+        case .logoutButtonTap:
+            return .concat([
+                .just(.setLogoutButtonTapped(true)),
+                .just(.setLogoutButtonTapped(false))
+            ])
+            
+        case .logoutCheckTap:
+            return logout()
+            
+        case .xButtonTap:
+            return .concat([
+                .just(.setFailureType(true)),
+                .just(.setFailureType(false))
+            ])
         }
     }
     
@@ -169,6 +208,24 @@ extension ProfileReactor {
             
         case .setGearButtonTapped(let isGear):
             newState.isGearButtonTapped = isGear
+            
+        case .reveiwScreen(let isTap):
+            newState.isReviewScreen = isTap
+            
+        case .setLogoutButtonTapped(let isTap):
+            newState.isLogoutButtonTapped = isTap
+            
+        case .setOriginalNickname(let nickname):
+            newState.originalNickname = nickname
+            
+        case .setOriginalIntro(let intro):
+            newState.originalIntro = intro
+            
+        case .clearErrorMessage:
+            newState.errorMessage = nil
+            
+        case .setOriginalLengthText(let length):
+            newState.originalLengthText = length
         }
         
         return newState
@@ -193,6 +250,9 @@ extension ProfileReactor {
                     .just(.setProfile(dto)),
                     .just(.setNickname(dto.nickname)),
                     .just(.setIntro(dto.intro ?? "")),
+                    .just(.setOriginalNickname(dto.nickname)),
+                    .just(.setOriginalIntro(dto.intro ?? "")),
+                    .just(.setOriginalLengthText(introLengthText)),
                     .just(.setIntroLengthText(introLengthText)),
                     .create { observer in
                         Task {
@@ -226,22 +286,49 @@ extension ProfileReactor {
         let profileImageData = profileImage?.jpegData(compressionQuality: 0.8) ?? Data()
         let body = UpdateMyProfileRequestBody(userProfileRequest: requestBody,
                                               image: profileImageData)
-        return networkProvider.request(.updateMyProfile(body: body),
-                                       decodingType: ServerResponse<String>.self)
-        .asObservable()
-        .flatMap { response -> Observable<Mutation> in
-            switch handleResponse(response) {
-            case .success(_):
-                return .concat([
-                    .just(.setNickname(nickname)),
-                    .just(.setIntro(intro)),
-                    .just(.setProfileImage(profileImage)),
-                    .just(.setFailureType(true)),
-                    .just(.setFailureType(false))
-                ])
-            case .failure(let error):
-                return .just(.showError(error))
+        return .concat([
+            .just(.clearErrorMessage),
+            networkProvider.request(.updateMyProfile(body: body),
+                                    decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .catch { error in
+                if let networkError = error as? NetworkError {
+                    return .just(ServerResponse<String>(success: false, code: -1, message: networkError.errorDescription, data: nil))
+                }
+                return .just(ServerResponse<String>(success: false, code: -1, message: "알 수 없는 오류", data: nil))
             }
-        }
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    return .concat([
+                        .just(.setNickname(nickname)),
+                        .just(.setIntro(intro)),
+                        .just(.setOriginalNickname(nickname)),
+                        .just(.setOriginalIntro(intro)),
+                        .just(.setProfileImage(profileImage)),
+                        .just(.setFailureType(true)),
+                        .just(.setFailureType(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+        ])
+    }
+    
+    private func logout() -> Observable<Mutation> {
+        return userSessionNetworkProvider
+            .request(.logout,
+                     decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    NotificationCenter.default.post(name: .logout, object: nil)
+                    return .empty()
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
     }
 }

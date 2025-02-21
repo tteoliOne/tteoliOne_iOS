@@ -11,16 +11,20 @@ import RxDataSources
 
 final class SettingView: BaseView {
     
-    let dataSource = RxTableViewSectionedAnimatedDataSource<SettingSection>(
-        configureCell: { _, tableView, indexPath, item in
+    var toggleNotificationAction: ((Bool) -> Void)?
+    
+    lazy var dataSource = RxTableViewSectionedAnimatedDataSource<SettingSection>(
+        configureCell: { [weak self] _, tableView, indexPath, item in
+            
             switch item {
             case .chatNotification(let isOn):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingSwitchCell.identifier,
                                                                for: indexPath) as? SettingSwitchCell else {
                     return UITableViewCell()
                 }
-                cell.configure(title: item.title,
-                               isOn: isOn)
+                cell.configure(title: item.title, isOn: isOn) { isOn in
+                    self?.toggleNotificationAction?(isOn)
+                }
                 return cell
                 
             case .version(let version):

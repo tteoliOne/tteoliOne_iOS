@@ -12,7 +12,7 @@ import RxCocoa
 final class PostViewController: BaseViewController<PostView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: MainCoordinatorDelegate?
+    weak var delegate: PostCoordinatorDelegate?
     
 }
 
@@ -355,5 +355,5 @@ extension PostViewController: MapViewControllerDelegate {
 }
 
 extension PostViewController: DelegateOwner {
-    typealias Delegate = MainCoordinatorDelegate
+    typealias Delegate = PostCoordinatorDelegate
 }

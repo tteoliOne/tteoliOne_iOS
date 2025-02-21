@@ -15,6 +15,9 @@ final class ProfileViewController: BaseViewController<ProfileView> {
     var disposeBag = DisposeBag()
     weak var delegate: ProfileCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension ProfileViewController: View {
@@ -26,10 +29,18 @@ extension ProfileViewController: View {
     }
     
     func bindAction(_ reactor: ProfileReactor) {
-//        reactor.action.onNext(.fetchProfile)
         self.rx.viewWillAppear
             .map { _ in ProfileReactor.Action.fetchProfile }
             .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.xButton.rx.tap
+            .subscribe(onNext: {
+                reactor.action.onNext(.xButtonTap)
+                self.rootView.setNicknameTextField.text = reactor.currentState.originalNickname
+                self.rootView.setIntroTextField.text = reactor.currentState.originalIntro
+                self.rootView.remainCountLabel.text = reactor.currentState.originalLengthText
+            })
             .disposed(by: disposeBag)
         
         rootView.setButton.rx.tap
@@ -79,6 +90,11 @@ extension ProfileViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.logOutButton.rx.tap
+            .map { ProfileReactor.Action.logoutButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.tableView.rx.itemSelected
             .map { indexPath in
                 return indexPath.row
@@ -88,11 +104,11 @@ extension ProfileViewController: View {
                 case 0:
                     reactor.action.onNext(.myShareTap(.eNew))
                 case 1:
-                    print(2)
+                    reactor.action.onNext(.myShareTap(.eSoldOut))
                 case 2:
                     reactor.action.onNext(.myShareTap(.saved))
                 case 3:
-                    print(4)
+                    reactor.action.onNext(.myReviewTap)
                 case 4:
                     reactor.action.onNext(.resetProfileListTap)
                 default:
@@ -131,6 +147,15 @@ extension ProfileViewController: View {
                 owner.resetProfile()
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.view.makeToast(errorMessage)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindNavigation(_ reactor: ProfileReactor) {
@@ -153,25 +178,25 @@ extension ProfileViewController: View {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.nickname }
+        reactor.state.map { $0.originalNickname }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.nickname.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.intro }
+        reactor.state.map { $0.originalIntro }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.oneLinerLabel.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.nickname }
+        reactor.state.map { $0.originalNickname }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.setNicknameTextField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.intro }
+        reactor.state.map { $0.originalIntro }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.setIntroTextField.rx.text)
@@ -207,6 +232,28 @@ extension ProfileViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.delegate?.showSettingView()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isReviewScreen }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.delegate?.pushMyReviewViewController()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLogoutButtonTapped }
+            .distinctUntilChanged()
+            .filter { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showAlert(title: "로그 아웃",
+                                message: "로그 아웃 하시겠습니까?",
+                                cancelTitle: "취소") {
+                    reactor.action.onNext(.logoutCheckTap)
+                }
             }
             .disposed(by: disposeBag)
     }

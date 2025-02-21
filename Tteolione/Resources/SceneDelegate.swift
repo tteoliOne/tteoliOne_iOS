@@ -15,6 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var appCoordinator: Coordinator?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        registerForNotifications()
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
@@ -64,3 +65,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didLogout),
+                                               name: .logout,
+                                               object: nil)
+    }
+    
+    @objc private func didLogout() {
+        switchToLoginScreen()
+    }
+    
+    func switchToLoginScreen() {
+        guard let window = self.window else { return }
+        NotificationCenter.default.removeObserver(self)
+        URLSession.shared.invalidateAndCancel()
+        UserDefaultsStorage.remove(.accessToken)
+        UserDefaultsStorage.remove(.refreshToken)
+        UserDefaultsStorage.remove(.fcmToken)
+        UserDefaultsStorage.remove(.userID)
+        UserDefaultsStorage.remove(.typeLogin)
+        window.rootViewController = nil
+        let navigationController = UINavigationController()
+        window.rootViewController = navigationController
+        appCoordinator = AppCoordinator(navigationController: navigationController)
+        appCoordinator?.start()
+        window.makeKeyAndVisible()
+        registerForNotifications()
+    }
+}

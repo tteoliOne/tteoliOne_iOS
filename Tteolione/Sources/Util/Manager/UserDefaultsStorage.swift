@@ -87,6 +87,10 @@ enum UserDefaultsStorage {
         recentSearches = []
     }
     
+    static func remove(_ key: Keys) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
+    
     static func deleteAll() {
         Keys.allCases.forEach {
             UserDefaults.standard.removeObject(forKey: $0.rawValue)

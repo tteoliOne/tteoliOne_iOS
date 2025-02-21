@@ -56,3 +56,8 @@ struct ChatMessage {
         return type == .sent
     }
 }
+
+enum AddressViewType: String {
+    case login
+    case change
+}

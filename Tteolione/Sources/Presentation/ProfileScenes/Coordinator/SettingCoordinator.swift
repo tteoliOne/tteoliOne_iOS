@@ -21,7 +21,7 @@ final class SettingCoordinator: NSObject, SettingCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = SettingReactor()
+        let reactor = SettingReactor(networkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: SettingViewController.self,
             with: reactor,
@@ -50,6 +50,27 @@ extension SettingCoordinator {
         let reactor = ProfileResetPasswordReactor(networkProvider: dependency.userProvider)
         let viewController = createViewController(
             ofType: ProfileResetPasswordViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
+    func pushAddressSettingView() {
+        let coordinator = AddressCoordinator(navigationController: navigationController,
+                                             dependency: dependency,
+                                             viewType: .change)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
+    func pushWithdrawSettingView() {
+        let reactor = WithdrawReactor(networkProvider: dependency.userProvider)
+        let viewController = createViewController(
+            ofType: WithdrawViewController.self,
             with: reactor,
             delegate: self
         )

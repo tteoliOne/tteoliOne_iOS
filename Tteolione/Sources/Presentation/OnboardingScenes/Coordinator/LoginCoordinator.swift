@@ -60,14 +60,12 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
     }
     
     func pushAddressView() {
-        let reactor = AddressReactor()
-        let viewController = createViewController(
-            ofType: AddressViewController.self,
-            with: reactor,
-            delegate: self
-        )
-        
-        show(viewController)
+        let coordinator = AddressCoordinator(navigationController: navigationController,
+                                             dependency: dependency,
+                                             viewType: .login)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
     func pushKakaoSetProfileView(with token: String) {
@@ -101,9 +99,9 @@ final class LoginCoordinator: LoginCoordinatorDelegate {
         navigationController.popToRootViewController(animated: true)
     }
     
-    func goHome() {
-        finishAllChildren()
-        parentCoordinator?.start()
-    }
+//    func goHome() {
+//        finishAllChildren()
+//        parentCoordinator?.start()
+//    }
     
 }

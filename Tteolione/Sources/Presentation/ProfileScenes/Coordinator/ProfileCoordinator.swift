@@ -21,7 +21,8 @@ final class ProfileCoordinator: NSObject, ProfileCoordinatorDelegate {
     }
     
     func start() {
-        let reactor = ProfileReactor(networkProvider: dependency.userProvider)
+        let reactor = ProfileReactor(networkProvider: dependency.userProvider,
+                                     userSessionNetworkProvider: dependency.userSessionProvider)
         let viewController = createViewController(
             ofType: ProfileViewController.self,
             with: reactor,
@@ -44,6 +45,27 @@ extension ProfileCoordinator {
         viewController.hidesBottomBarWhenPushed = true
         navigationController.setNavigationBarHidden(true, animated: false)
         show(viewController)
+    }
+    
+    func pushMyReviewViewController() {
+        let reactor = MyReviewReactor(networkProvider: dependency.userProvider)
+        let viewController = createViewController(
+            ofType: MyReviewViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController.setNavigationBarHidden(true, animated: false)
+        show(viewController)
+    }
+    
+    func pushDetailViewController(productId: Int) {
+        let coordinator = ProductDetailCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   productId: productId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
     func showSettingView() {

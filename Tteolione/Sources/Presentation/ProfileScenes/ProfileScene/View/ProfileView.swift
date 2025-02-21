@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import IQKeyboardManagerSwift
 
 final class ProfileView: BaseView {
     
@@ -48,17 +49,11 @@ final class ProfileView: BaseView {
         tableView.backgroundColor = .myAppMain
         return tableView
     }()
-    private let logOutButton = CommonButton(title: .logout,
-                                            corner: 0,
-                                            backgroundColor: .clear,
-                                            textColor: .myAppDarkGray,
-                                            font: Font.regular17)
-    private let slash = SlashLabel(font: Font.regular20)
-    private let withdrawalButton = CommonButton(title: .withdrawal,
-                                            corner: 0,
-                                            backgroundColor: .clear,
-                                            textColor: .myAppDarkGray,
-                                            font: Font.regular17)
+    let logOutButton = CommonButton(title: .logout,
+                                    corner: 0,
+                                    backgroundColor: .clear,
+                                    textColor: .myAppDarkGray,
+                                    font: Font.regular17)
     
     //MARK: - 프로필 변경시 화면
     let profileSetButton = CommonButton(title: .profile,
@@ -66,6 +61,7 @@ final class ProfileView: BaseView {
                                         backgroundColor: .clear,
                                         textColor: .black,
                                         font: Font.Andong20)
+    let xButton = XButton(color: .myAppBlack)
     private let setNicknameLabel = AndongLabel(text: AppText.Etc.nickname,
                                                color: .myAppBlack)
     private let setNicknameView = ShadowView(color: .white,
@@ -75,9 +71,6 @@ final class ProfileView: BaseView {
                                                                   blue: 0x11/255.0,
                                                                   alpha: 1.0).cgColor)
     let setNicknameTextField = CommonTextField()
-    private let setNickErrorLabel = RegularLabel(text: "닉네임 중복입니다!!",
-                                              font: Font.regular13,
-                                              color: .myAppRed)
     private let setIntroLabel = AndongLabel(text: AppText.Etc.intro,
                                             color: .myAppBlack)
     private let setIntroView = ShadowView(color: .white,
@@ -96,16 +89,16 @@ final class ProfileView: BaseView {
     
     override func configureHierarchy() {
         [profileFieldView, listView,
-         logOutButton, slash,
-         withdrawalButton].forEach { addSubview($0) }
+         logOutButton].forEach { addSubview($0) }
         
         [profileShadowView, nicknameView,
          gearButton,
          thumbView, oneLinerLabel,
          profileSetButton, setNicknameLabel,
-         setNicknameView, setNickErrorLabel,
+         setNicknameView,
          setIntroLabel, setIntroView,
-         remainCountLabel, setButton].forEach { profileFieldView.addSubview($0) }
+         remainCountLabel, setButton,
+         xButton].forEach { profileFieldView.addSubview($0) }
         [setNicknameTextField].forEach { setNicknameView.addSubview($0) }
         [setIntroTextField].forEach { setIntroView.addSubview($0) }
         
@@ -187,24 +180,13 @@ final class ProfileView: BaseView {
             make.horizontalEdges.equalTo(listView).inset(20)
         }
         
-        slash.snp.makeConstraints { make in
-            make.centerX.equalTo(safeAreaLayoutGuide)
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(40)
-        }
-        
         logOutButton.snp.makeConstraints { make in
-            make.trailing.equalTo(slash.snp.leading).offset(-8)
-            make.centerY.equalTo(slash)
-        }
-        
-        withdrawalButton.snp.makeConstraints { make in
-            make.leading.equalTo(slash.snp.trailing).offset(8)
-            make.centerY.equalTo(slash)
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(40)
+            make.centerX.equalTo(safeAreaLayoutGuide)
         }
     }
     
     override func configureView() {
-        slash.textColor = .myAppDarkGray
         tableView.rowHeight = ((Device.screenHeight * 0.44) - 40) / 5
         setNicknameTextField.textAlignment = .center
         setIntroTextField.textAlignment = .center
@@ -219,7 +201,8 @@ final class ProfileView: BaseView {
 extension ProfileView {
     
     func setupViews(with value: UserProfileDTO) {
-        thumbCount.text = "\(value.thumbsUpScore)"
+        let roundedThumbsUpScore = round(value.thumbsUpScore * 10) / 10
+        thumbCount.text = String(format: "%.1f", roundedThumbsUpScore)
     }
     
     func updateImage(_ image: UIImage) {
@@ -230,6 +213,11 @@ extension ProfileView {
         UIView.animate(withDuration: 0.3, animations: {
             self.profileFieldView.snp.updateConstraints { make in
                 make.height.equalTo(Device.screenHeight * 0.75)
+            }
+            
+            self.xButton.snp.makeConstraints { make in
+                make.top.equalTo(self.profileFieldView).inset(20)
+                make.trailing.equalTo(self.profileFieldView).inset(16)
             }
 
             self.profileShadowView.snp.remakeConstraints { make in
@@ -258,14 +246,9 @@ extension ProfileView {
             self.setNicknameTextField.snp.makeConstraints { make in
                 make.edges.equalTo(self.setNicknameView)
             }
-
-            self.setNickErrorLabel.snp.makeConstraints { make in
-                make.centerX.equalTo(self.profileFieldView)
-                make.top.equalTo(self.setNicknameView.snp.bottom).offset(8)
-            }
             
             self.setIntroLabel.snp.makeConstraints { make in
-                make.top.equalTo(self.setNickErrorLabel.snp.bottom).offset(20)
+                make.top.equalTo(self.setNicknameTextField.snp.bottom).offset(28)
                 make.centerX.equalTo(self.profileFieldView)
             }
 
@@ -294,18 +277,19 @@ extension ProfileView {
 
             let hiddenViews = [
                 self.nicknameView, self.thumbView, self.oneLinerLabel,
-                self.logOutButton, self.slash, self.withdrawalButton,
-                self.gearButton
+                self.logOutButton, self.gearButton
             ]
             
             let visibleViews: [UIView] = [
                 self.setButton, self.setIntroView, self.setIntroLabel,
-                self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
-                self.setNicknameView, self.remainCountLabel
+                self.profileSetButton, self.setNicknameLabel,
+                self.setNicknameView, self.remainCountLabel, self.xButton
             ]
             self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
 
             self.layoutIfNeeded()
+        }, completion: { _ in
+            IQKeyboardManager.shared.reloadLayoutIfNeeded()
         })
     }
 
@@ -323,14 +307,13 @@ extension ProfileView {
             
             let visibleViews = [
                 self.nicknameView, self.thumbView, self.oneLinerLabel,
-                self.logOutButton, self.slash, self.withdrawalButton,
-                self.gearButton
+                self.logOutButton, self.gearButton
             ]
             
             let hiddenViews: [UIView] = [
                 self.setButton, self.setIntroView, self.setIntroLabel,
-                self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
-                self.setNicknameView, self.remainCountLabel
+                self.profileSetButton, self.setNicknameLabel,
+                self.setNicknameView, self.remainCountLabel, self.xButton
             ]
 
             self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)

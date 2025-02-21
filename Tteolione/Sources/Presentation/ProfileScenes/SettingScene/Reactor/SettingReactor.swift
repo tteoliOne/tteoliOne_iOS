@@ -8,6 +8,7 @@
 import Foundation
 import ReactorKit
 import RxSwift
+import UIKit
 
 final class SettingReactor: Reactor {
     
@@ -16,6 +17,11 @@ final class SettingReactor: Reactor {
         case backButtonTap
         case profileSettingTap
         case profileResetPasswordTap
+        case resetAddressTap
+        case logoutTap
+        case logoutCheckTap
+        case withDrawTap
+        case getToggleNotification
     }
     
     enum Mutation {
@@ -23,6 +29,11 @@ final class SettingReactor: Reactor {
         case backButtonTapped(Bool)
         case profileSettingTapped(Bool)
         case profileResetPasswordTapped(Bool)
+        case resetAddressTapped(Bool)
+        case logoutTapped(Bool)
+        case logoutCheckTapped(Bool)
+        case withDrawTapped(Bool)
+        case showError(NetworkError)
     }
     
     struct State {
@@ -30,19 +41,29 @@ final class SettingReactor: Reactor {
         var isBackButtonTapped: Bool = false
         var isProfileSettingTapped: Bool = false
         var isProfileResetPasswordTapped: Bool = false
+        var isResetAddressTapped: Bool = false
+        var isLogoutTapped: Bool = false
+        var isLogoutCheckTapped: Bool = false
+        var isWithDrawTapped: Bool = false
+        var errorMessage: String?
     }
     
+    private let userSessionNetworkProvider: NetworkProvider<UserSessionAPI>
     var initialState = State()
     
-    init() {
-        let sections = [
-            SettingSection(title: "계정", items: [.profile, .password, .address]),
-            SettingSection(title: "알림", items: [.chatNotification(true)]),
-            SettingSection(title: "정보", items: [
-                .terms, .privacy, .version("1.0.0"), .logout, .withdraw
-            ])
-        ]
-        self.initialState = State(sections: sections)
+    init(networkProvider: NetworkProvider<UserSessionAPI>) {
+        self.userSessionNetworkProvider = networkProvider
+        Task {
+            let isNotificationEnabled = await SettingReactor.fetchNotificationStatus()
+            let sections = [
+                SettingSection(title: "계정", items: [.profile, .password, .address]),
+                SettingSection(title: "알림", items: [.chatNotification(isNotificationEnabled)]),
+                SettingSection(title: "정보", items: [
+                    .terms, .privacy, .version(SettingReactor.appVersion), .logout, .withdraw
+                ])
+            ]
+            self.initialState = State(sections: sections)
+        }
     }
 }
 
@@ -70,6 +91,44 @@ extension SettingReactor {
                 .just(.profileResetPasswordTapped(true)),
                 .just(.profileResetPasswordTapped(false))
             ])
+            
+        case .resetAddressTap:
+            return .concat([
+                .just(.resetAddressTapped(true)),
+                .just(.resetAddressTapped(false))
+            ])
+            
+        case .logoutTap:
+            return .concat([
+                .just(.logoutTapped(true)),
+                .just(.logoutTapped(false))
+            ])
+            
+        case .logoutCheckTap:
+            return logout()
+            
+        case .withDrawTap:
+            return .concat([
+                .just(.withDrawTapped(true)),
+                .just(.withDrawTapped(false))
+            ])
+            
+        case .getToggleNotification:
+            return .deferred {
+                return Single<Bool>.create { single in
+                    Task {
+                        let isNotificationEnabled = await SettingReactor.fetchNotificationStatus()
+                        DispatchQueue.main.async {
+                            single(.success(isNotificationEnabled))
+                        }
+                    }
+                    return Disposables.create()
+                }
+                .asObservable()
+                .map { isEnabled in
+                    Mutation.updateNotificationState(isEnabled)
+                }
+            }
         }
     }
     
@@ -93,8 +152,59 @@ extension SettingReactor {
             
         case .profileResetPasswordTapped(let isTap):
             newState.isProfileResetPasswordTapped = isTap
+            
+        case .resetAddressTapped(let isTap):
+            newState.isResetAddressTapped = isTap
+            
+        case .logoutTapped(let isTap):
+            newState.isLogoutTapped = isTap
+            
+        case .logoutCheckTapped(let isTap):
+            newState.isLogoutCheckTapped = isTap
+            
+        case .showError(let error):
+            newState.errorMessage = error.errorDescription
+            
+        case .withDrawTapped(let isTap):
+            newState.isWithDrawTapped = isTap
         }
+        
         return newState
     }
     
+}
+
+extension SettingReactor {
+    static var appVersion: String {
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    }
+}
+
+extension SettingReactor {
+    static func fetchNotificationStatus() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .authorized
+    }
+    
+}
+
+extension SettingReactor {
+    private func logout() -> Observable<Mutation> {
+        return userSessionNetworkProvider
+            .request(.logout,
+                     decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    NotificationCenter.default.post(name: .logout, object: nil)
+                    return .concat([
+                        .just(.logoutCheckTapped(true)),
+                        .just(.logoutCheckTapped(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+    }
 }

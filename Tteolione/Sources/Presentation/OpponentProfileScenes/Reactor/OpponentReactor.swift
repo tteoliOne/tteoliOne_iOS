@@ -167,12 +167,12 @@ extension OpponentReactor {
     
     private func fetchOpponentReview(_ userId: Int) -> Observable<Mutation> {
         return networkUserProvider.request(.getMyReview(userId: userId),
-                                           decodingType: ServerResponse<MyReviewDTO>.self)
+                                           decodingType: ServerResponse<[MyReviewDTO]>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(let dto):
-                return .just(.setOpponentReviews([dto]))
+                return .just(.setOpponentReviews(dto))
             case .failure(let error):
                 return .just(.showError(error))
             }

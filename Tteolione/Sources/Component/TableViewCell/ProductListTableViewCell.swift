@@ -15,7 +15,7 @@ final class ProductListTableViewCell: BaseTableViewCell {
     private let containerView = ShadowView()
     private let productImageView: LoadImageView = {
         let imageView = LoadImageView()
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = 20
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         return imageView
     }()
@@ -53,6 +53,16 @@ final class ProductListTableViewCell: BaseTableViewCell {
         label.font = Font.regular13
         return label
     }()
+    private let completedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .myAppMain.withAlphaComponent(0.5)
+        view.layer.cornerRadius = 20
+        view.isHidden = true
+        return view
+    }()
+    private let completedLabel = AndongLabel(text: "공유 완료",
+                                             font: Font.Andong25,
+                                             color: .white)
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -64,7 +74,8 @@ final class ProductListTableViewCell: BaseTableViewCell {
         [productImageView, titleLabel,
          markImageView, distanceLabel,
          unitPriceLabel, likeButton,
-         likeCountLabel].forEach { containerView.addSubview($0) }
+         likeCountLabel, completedView].forEach { containerView.addSubview($0) }
+        [completedLabel].forEach { completedView.addSubview($0) }
     }
     
     override func configureLayout() {
@@ -108,6 +119,14 @@ final class ProductListTableViewCell: BaseTableViewCell {
             make.centerX.equalTo(likeButton)
             make.top.equalTo(likeButton.snp.bottom).offset(4)
         }
+        
+        completedView.snp.makeConstraints { make in
+            make.edges.equalTo(containerView)
+        }
+        
+        completedLabel.snp.makeConstraints { make in
+            make.center.equalTo(completedView)
+        }
     }
     
     private func updateLikeButton(isLiked: Bool, likeCount: Int) {
@@ -130,6 +149,10 @@ extension ProductListTableViewCell {
         likeCountLabel.text = "\(data.totalLikes)"
         likeButton.updateLikeState(isLiked: data.liked)
         likeButton.isSelected = data.liked
+        if data.soldStatus == "eSoldOut" {
+            completedView.isHidden = false
+        } else {
+            completedView.isHidden = true
+        }
     }
-    
 }

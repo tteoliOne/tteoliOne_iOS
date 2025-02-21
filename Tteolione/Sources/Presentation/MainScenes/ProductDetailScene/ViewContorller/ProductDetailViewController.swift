@@ -13,7 +13,7 @@ import UIKit
 final class ProductDetailViewController: BaseNavigationViewController<ProductDetailView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: MainCoordinatorDelegate?
+    weak var delegate: ProductDetailCoordinatorDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -51,6 +51,7 @@ extension ProductDetailViewController: View {
             .disposed(by: disposeBag)
         
         rootView.profileImageView.rx.tapGesture()
+            .when(.recognized)
             .map { _ in ProductDetailReactor.Action.profileTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -133,6 +134,7 @@ extension ProductDetailViewController: View {
         
         reactor.state
             .compactMap { state -> Int? in
+                print("state.isProfileTap: \(state.isProfileTap)")
                 guard state.isProfileTap else { return nil }
                 return state.sellerId
             }
@@ -186,5 +188,5 @@ extension ProductDetailViewController {
 }
 
 extension ProductDetailViewController: DelegateOwner {
-    typealias Delegate = MainCoordinatorDelegate
+    typealias Delegate = ProductDetailCoordinatorDelegate
 }

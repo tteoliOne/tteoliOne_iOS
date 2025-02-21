@@ -16,6 +16,9 @@ final class ProfileSettingViewController: BaseViewController<ProfileSettingView>
     var disposeBag = DisposeBag()
     weak var delegate: SettingCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension ProfileSettingViewController: View {
