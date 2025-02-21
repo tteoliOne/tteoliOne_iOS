@@ -15,6 +15,9 @@ final class SearchViewController: BaseViewController<SearchView> {
     var disposeBag = DisposeBag()
     weak var delegate: SearchCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension SearchViewController: View {
