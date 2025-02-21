@@ -29,7 +29,6 @@ extension ProfileViewController: View {
     }
     
     func bindAction(_ reactor: ProfileReactor) {
-//        reactor.action.onNext(.fetchProfile)
         self.rx.viewWillAppear
             .map { _ in ProfileReactor.Action.fetchProfile }
             .bind(to: reactor.action)
@@ -40,6 +39,7 @@ extension ProfileViewController: View {
                 reactor.action.onNext(.xButtonTap)
                 self.rootView.setNicknameTextField.text = reactor.currentState.originalNickname
                 self.rootView.setIntroTextField.text = reactor.currentState.originalIntro
+                self.rootView.remainCountLabel.text = reactor.currentState.originalLengthText
             })
             .disposed(by: disposeBag)
         
@@ -145,6 +145,15 @@ extension ProfileViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: rootView) { owner, _ in
                 owner.resetProfile()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.view.makeToast(errorMessage)
             }
             .disposed(by: disposeBag)
     }

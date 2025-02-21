@@ -30,15 +30,17 @@ final class ProfileReactor: Reactor {
     enum Mutation {
         case setProfile(UserProfileDTO)
         case showError(NetworkError)
+        case clearErrorMessage
         case setFailureType(Bool)
         case setResetProfileListTapped(Bool)
         case myProductScreen(Bool, StatusType?)
         case reveiwScreen(Bool)
         case setNickname(String)
         case setIntro(String)
+        case setIntroLengthText(String)
         case setOriginalNickname(String)
         case setOriginalIntro(String)
-        case setIntroLengthText(String)
+        case setOriginalLengthText(String)
         case setProfileImagePicker(Bool)
         case setProfileImage(UIImage?)
         case setGearButtonTapped(Bool)
@@ -56,9 +58,10 @@ final class ProfileReactor: Reactor {
         var selectedStatus: StatusType?
         var nickname: String = ""
         var intro: String = ""
+        var introLengthText: String = "0/20"
         var originalNickname: String = ""
         var originalIntro: String = ""
-        var introLengthText: String = "0/20"
+        var originalLengthText: String = "0/20"
         var isProductImagePickerShown: Bool = false
         var profileImage: UIImage?
         var isGearButtonTapped: Bool = false
@@ -217,6 +220,12 @@ extension ProfileReactor {
             
         case .setOriginalIntro(let intro):
             newState.originalIntro = intro
+            
+        case .clearErrorMessage:
+            newState.errorMessage = nil
+            
+        case .setOriginalLengthText(let length):
+            newState.originalLengthText = length
         }
         
         return newState
@@ -243,6 +252,7 @@ extension ProfileReactor {
                     .just(.setIntro(dto.intro ?? "")),
                     .just(.setOriginalNickname(dto.nickname)),
                     .just(.setOriginalIntro(dto.intro ?? "")),
+                    .just(.setOriginalLengthText(introLengthText)),
                     .just(.setIntroLengthText(introLengthText)),
                     .create { observer in
                         Task {
@@ -276,25 +286,34 @@ extension ProfileReactor {
         let profileImageData = profileImage?.jpegData(compressionQuality: 0.8) ?? Data()
         let body = UpdateMyProfileRequestBody(userProfileRequest: requestBody,
                                               image: profileImageData)
-        return networkProvider.request(.updateMyProfile(body: body),
-                                       decodingType: ServerResponse<String>.self)
-        .asObservable()
-        .flatMap { response -> Observable<Mutation> in
-            switch handleResponse(response) {
-            case .success(_):
-                return .concat([
-                    .just(.setNickname(nickname)),
-                    .just(.setIntro(intro)),
-                    .just(.setOriginalNickname(nickname)),
-                    .just(.setOriginalIntro(intro)),
-                    .just(.setProfileImage(profileImage)),
-                    .just(.setFailureType(true)),
-                    .just(.setFailureType(false))
-                ])
-            case .failure(let error):
-                return .just(.showError(error))
+        return .concat([
+            .just(.clearErrorMessage),
+            networkProvider.request(.updateMyProfile(body: body),
+                                    decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .catch { error in
+                if let networkError = error as? NetworkError {
+                    return .just(ServerResponse<String>(success: false, code: -1, message: networkError.errorDescription, data: nil))
+                }
+                return .just(ServerResponse<String>(success: false, code: -1, message: "알 수 없는 오류", data: nil))
             }
-        }
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(_):
+                    return .concat([
+                        .just(.setNickname(nickname)),
+                        .just(.setIntro(intro)),
+                        .just(.setOriginalNickname(nickname)),
+                        .just(.setOriginalIntro(intro)),
+                        .just(.setProfileImage(profileImage)),
+                        .just(.setFailureType(true)),
+                        .just(.setFailureType(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+        ])
     }
     
     private func logout() -> Observable<Mutation> {
