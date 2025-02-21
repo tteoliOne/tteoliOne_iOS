@@ -11,11 +11,15 @@ import RxKakaoSDKAuth
 import KakaoSDKAuth
 import FirebaseCore
 import FirebaseMessaging
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        IQKeyboardManager.shared.isEnabled = true
+        
         //카카오 연결
         if let kakaoAppKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_NATIVE_APP_KEY") as? String {
             RxKakaoSDK.initSDK(appKey: kakaoAppKey)
