@@ -78,6 +78,12 @@ extension SettingViewController: View {
             }
             .disposed(by: disposeBag)
         
+        rootView.tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.rootView.tableView.deselectRow(at: indexPath, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         rootView.toggleNotificationAction = { [weak self] isOn in
             guard let self = self else { return }
             
