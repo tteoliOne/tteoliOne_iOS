@@ -13,11 +13,23 @@ final class MainCoordinator: NSObject, MainCoordinatorDelegate {
     var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     private let dependency: AppDependency
+    private var leftButton: UIButton?
     
     init(navigationController: UINavigationController,
          dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
+        super.init()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateNickname),
+            name: .nicknameDidChange,
+            object: nil
+        )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .nicknameDidChange, object: nil)
     }
     
     func start() {
@@ -94,7 +106,9 @@ extension MainCoordinator {
     
     private func configureNavBarButtons(for viewController: UIViewController) {
         let leftButton = UIButton()
-        leftButton.setTitle("내 이", for: .normal)
+        self.leftButton = leftButton
+        let nickname = UserDefaultsStorage.nickname
+        leftButton.setTitle(nickname, for: .normal)
         leftButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         leftButton.frame = CGRect(x: 0, y: 0, width: 70, height: 30)
         leftButton.setTitleColor(.black, for: .normal)
@@ -131,6 +145,28 @@ extension MainCoordinator {
     
     @objc private func didTapLeftButton() {
         showSideMenu()
+    }
+    
+    @objc private func updateNickname() {
+        let newNickname = UserDefaultsStorage.nickname
+        print("작동: \(newNickname)")
+        
+        DispatchQueue.main.async {
+            self.leftButton?.setTitle(newNickname, for: .normal)
+            self.leftButton?.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            self.leftButton?.setTitleColor(.black, for: .normal)
+            self.leftButton?.sizeToFit()
+            
+            let spacing: CGFloat = 3
+            let titleSize = self.leftButton?.titleLabel?.intrinsicContentSize ?? .zero
+            self.leftButton?.titleEdgeInsets = UIEdgeInsets(top: 0, left: -(self.leftButton?.imageView?.frame.width ?? 0) - spacing,
+                                                            bottom: 0,
+                                                            right: (self.leftButton?.imageView?.frame.width ?? 0) + spacing)
+            self.leftButton?.imageEdgeInsets = UIEdgeInsets(top: 0, left: titleSize.width + spacing,
+                                                            bottom: 0,
+                                                            right: -(titleSize.width) - spacing)
+            self.navigationController.navigationBar.layoutIfNeeded()
+        }
     }
     
 }
