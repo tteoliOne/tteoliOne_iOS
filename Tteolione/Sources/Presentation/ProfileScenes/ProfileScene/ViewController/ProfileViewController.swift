@@ -32,6 +32,14 @@ extension ProfileViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.xButton.rx.tap
+            .subscribe(onNext: {
+                reactor.action.onNext(.xButtonTap)
+                self.rootView.setNicknameTextField.text = reactor.currentState.originalNickname
+                self.rootView.setIntroTextField.text = reactor.currentState.originalIntro
+            })
+            .disposed(by: disposeBag)
+        
         rootView.setButton.rx.tap
             .map { ProfileReactor.Action.resetProfileButtonTap }
             .bind(to: reactor.action)
@@ -158,25 +166,25 @@ extension ProfileViewController: View {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.nickname }
+        reactor.state.map { $0.originalNickname }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.nickname.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.intro }
+        reactor.state.map { $0.originalIntro }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.oneLinerLabel.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.nickname }
+        reactor.state.map { $0.originalNickname }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.setNicknameTextField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.intro }
+        reactor.state.map { $0.originalIntro }
             .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.setIntroTextField.rx.text)

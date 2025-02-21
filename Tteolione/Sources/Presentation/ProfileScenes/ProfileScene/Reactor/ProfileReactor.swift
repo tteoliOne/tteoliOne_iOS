@@ -24,6 +24,7 @@ final class ProfileReactor: Reactor {
         case gearButtonTap
         case logoutButtonTap
         case logoutCheckTap
+        case xButtonTap
     }
     
     enum Mutation {
@@ -35,6 +36,8 @@ final class ProfileReactor: Reactor {
         case reveiwScreen(Bool)
         case setNickname(String)
         case setIntro(String)
+        case setOriginalNickname(String)
+        case setOriginalIntro(String)
         case setIntroLengthText(String)
         case setProfileImagePicker(Bool)
         case setProfileImage(UIImage?)
@@ -53,6 +56,8 @@ final class ProfileReactor: Reactor {
         var selectedStatus: StatusType?
         var nickname: String = ""
         var intro: String = ""
+        var originalNickname: String = ""
+        var originalIntro: String = ""
         var introLengthText: String = "0/20"
         var isProductImagePickerShown: Bool = false
         var profileImage: UIImage?
@@ -150,6 +155,12 @@ extension ProfileReactor {
             
         case .logoutCheckTap:
             return logout()
+            
+        case .xButtonTap:
+            return .concat([
+                .just(.setFailureType(true)),
+                .just(.setFailureType(false))
+            ])
         }
     }
     
@@ -200,6 +211,12 @@ extension ProfileReactor {
             
         case .setLogoutButtonTapped(let isTap):
             newState.isLogoutButtonTapped = isTap
+            
+        case .setOriginalNickname(let nickname):
+            newState.originalNickname = nickname
+            
+        case .setOriginalIntro(let intro):
+            newState.originalIntro = intro
         }
         
         return newState
@@ -224,6 +241,8 @@ extension ProfileReactor {
                     .just(.setProfile(dto)),
                     .just(.setNickname(dto.nickname)),
                     .just(.setIntro(dto.intro ?? "")),
+                    .just(.setOriginalNickname(dto.nickname)),
+                    .just(.setOriginalIntro(dto.intro ?? "")),
                     .just(.setIntroLengthText(introLengthText)),
                     .create { observer in
                         Task {
@@ -266,6 +285,8 @@ extension ProfileReactor {
                 return .concat([
                     .just(.setNickname(nickname)),
                     .just(.setIntro(intro)),
+                    .just(.setOriginalNickname(nickname)),
+                    .just(.setOriginalIntro(intro)),
                     .just(.setProfileImage(profileImage)),
                     .just(.setFailureType(true)),
                     .just(.setFailureType(false))

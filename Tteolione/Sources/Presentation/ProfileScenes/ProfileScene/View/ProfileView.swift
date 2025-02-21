@@ -60,6 +60,7 @@ final class ProfileView: BaseView {
                                         backgroundColor: .clear,
                                         textColor: .black,
                                         font: Font.Andong20)
+    let xButton = XButton(color: .myAppBlack)
     private let setNicknameLabel = AndongLabel(text: AppText.Etc.nickname,
                                                color: .myAppBlack)
     private let setNicknameView = ShadowView(color: .white,
@@ -98,7 +99,8 @@ final class ProfileView: BaseView {
          profileSetButton, setNicknameLabel,
          setNicknameView, setNickErrorLabel,
          setIntroLabel, setIntroView,
-         remainCountLabel, setButton].forEach { profileFieldView.addSubview($0) }
+         remainCountLabel, setButton,
+         xButton].forEach { profileFieldView.addSubview($0) }
         [setNicknameTextField].forEach { setNicknameView.addSubview($0) }
         [setIntroTextField].forEach { setIntroView.addSubview($0) }
         
@@ -214,6 +216,11 @@ extension ProfileView {
             self.profileFieldView.snp.updateConstraints { make in
                 make.height.equalTo(Device.screenHeight * 0.75)
             }
+            
+            self.xButton.snp.makeConstraints { make in
+                make.top.equalTo(self.profileFieldView).inset(20)
+                make.trailing.equalTo(self.profileFieldView).inset(16)
+            }
 
             self.profileShadowView.snp.remakeConstraints { make in
                 make.size.equalTo(Device.screenWidth * 0.33)
@@ -283,7 +290,7 @@ extension ProfileView {
             let visibleViews: [UIView] = [
                 self.setButton, self.setIntroView, self.setIntroLabel,
                 self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
-                self.setNicknameView, self.remainCountLabel
+                self.setNicknameView, self.remainCountLabel, self.xButton
             ]
             self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
 
@@ -311,7 +318,7 @@ extension ProfileView {
             let hiddenViews: [UIView] = [
                 self.setButton, self.setIntroView, self.setIntroLabel,
                 self.setNickErrorLabel, self.profileSetButton, self.setNicknameLabel,
-                self.setNicknameView, self.remainCountLabel
+                self.setNicknameView, self.remainCountLabel, self.xButton
             ]
 
             self.updateVisibility(hiddenViews: hiddenViews, visibleViews: visibleViews)
