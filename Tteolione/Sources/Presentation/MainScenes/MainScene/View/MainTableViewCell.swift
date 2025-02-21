@@ -14,6 +14,7 @@ final class MainTableViewCell: BaseTableViewCell {
     
     var disposeBag = DisposeBag()
     let likeButtonTapped = PublishRelay<Int>()
+    let nextButtonTapped = PublishRelay<Void>()
     
     private let categoryLabel: UILabel = {
         let label = UILabel()
@@ -95,6 +96,9 @@ final class MainTableViewCell: BaseTableViewCell {
                         for: IndexPath(item: index, section: 0)
                     ) as? NextButtonCollectionViewCell {
                         buttonCell.configureButton()
+                        buttonCell.buttonTapped
+                            .bind(to: self.nextButtonTapped)
+                            .disposed(by: buttonCell.disposeBag)
                         return buttonCell
                     }
                 }

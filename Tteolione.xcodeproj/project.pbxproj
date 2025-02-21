@@ -1611,6 +1611,7 @@
 			children = (
 				7246FA272D3A805300EE6B5E /* Coordinator */,
 				72361F932D2F8E90009BEF12 /* MainScene */,
+				7273D7C32D6892F3002B18E6 /* CategoryProductScene */,
 				72361FB12D30DBC0009BEF12 /* PostScene */,
 				72361FEC2D3535A7009BEF12 /* SearchScene */,
 				72361FCB2D316F1F009BEF12 /* ProductDetailScene */,
@@ -1929,6 +1930,13 @@
 				72361FDB2D3413CC009BEF12 /* TabBarCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		7273D7C32D6892F3002B18E6 /* CategoryProductScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CategoryProductScene;
 			sourceTree = "<group>";
 		};
 		72977EC32D48983900D1FDE7 /* UISearchBar */ = {

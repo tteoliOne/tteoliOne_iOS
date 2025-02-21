@@ -36,14 +36,21 @@ extension MainViewController: View {
             .disposed(by: disposeBag)
         
         rootView.tableView.rx.willDisplayCell
-            .compactMap { cell, indexPath -> MainTableViewCell? in
-                return cell as? MainTableViewCell
+            .compactMap { cell, indexPath -> (MainTableViewCell, IndexPath)? in
+                guard let mainCell = cell as? MainTableViewCell else { return nil }
+                return (mainCell, indexPath)
             }
-            .subscribe(onNext: { tableViewCell in
+            .subscribe(onNext: { (tableViewCell, indexPath) in
                 tableViewCell.likeButtonTapped
                     .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
                     .subscribe(onNext: { productId in
                         reactor.action.onNext(.likeButtonTap(productId))
+                    })
+                    .disposed(by: tableViewCell.disposeBag)
+
+                tableViewCell.nextButtonTapped
+                    .subscribe(onNext: {
+                        print("버튼 클릭 - \(indexPath.row). \(indexPath.section). \(indexPath.item) 번째 카테고리")
                     })
                     .disposed(by: tableViewCell.disposeBag)
             })

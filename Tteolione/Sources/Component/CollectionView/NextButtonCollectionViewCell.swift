@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 
 final class NextButtonCollectionViewCell: BaseCollectionViewCell {
     
+    var disposeBag = DisposeBag()
+    let buttonTapped = PublishRelay<Void>()
     private let button: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .white
@@ -36,7 +40,9 @@ final class NextButtonCollectionViewCell: BaseCollectionViewCell {
     }
     
     func configureButton() {
-        
+        button.rx.tap
+            .bind(to: buttonTapped)
+            .disposed(by: disposeBag)
     }
     
 }
