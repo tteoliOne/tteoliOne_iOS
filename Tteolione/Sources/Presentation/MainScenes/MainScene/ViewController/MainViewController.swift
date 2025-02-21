@@ -49,8 +49,9 @@ extension MainViewController: View {
                     .disposed(by: tableViewCell.disposeBag)
 
                 tableViewCell.nextButtonTapped
+                    .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
                     .subscribe(onNext: {
-                        print("버튼 클릭 - \(indexPath.row). \(indexPath.section). \(indexPath.item) 번째 카테고리")
+                        reactor.action.onNext(.nextButtonTap(indexPath.item + 1))
                     })
                     .disposed(by: tableViewCell.disposeBag)
             })
@@ -108,6 +109,17 @@ extension MainViewController: View {
                                                        productDetail: nil)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.categoryId }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, id in
+                owner.delegate?.pushCategoryProudctViewController(categoryId: id)
+            }
+            .disposed(by: disposeBag)
+
     }
 }
 

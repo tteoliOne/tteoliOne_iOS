@@ -55,6 +55,28 @@ extension MainCoordinator {
         coordinator.start()
     }
     
+    func pushCategoryProudctViewController(categoryId: Int) {
+        let reactor = CategoryProductReactor(networkProvider: dependency.productServiceProvider,
+                                             categoryId: categoryId)
+        let viewController = createViewController(
+            ofType: CategoryProductViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.title = NavigationTitle.main.title
+        viewController.hidesBottomBarWhenPushed = true
+        show(viewController)
+    }
+    
+    func pushDetailViewController(productId: Int) {
+        let coordinator = ProductDetailCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   productId: productId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
     private func configureNavBarAppearance() {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()

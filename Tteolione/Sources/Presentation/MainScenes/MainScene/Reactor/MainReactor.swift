@@ -15,6 +15,7 @@ final class MainReactor: Reactor {
         case fetchProducts
         case postButtonTap
         case likeButtonTap(Int)
+        case nextButtonTap(Int)
     }
     
     enum Mutation {
@@ -23,6 +24,7 @@ final class MainReactor: Reactor {
         case setNavigateToPost(Bool)
         case setProductId([Int])
         case setProcessingLike(Bool)
+        case setCategortId(Int?)
     }
     
     struct State {
@@ -31,6 +33,7 @@ final class MainReactor: Reactor {
         var navigateToPost: Bool = false
         var productIds: [Int] = []
         var isProcessingLike: Bool = false
+        var categoryId: Int?
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
@@ -62,6 +65,13 @@ extension MainReactor {
             return .concat([
                 fetchLikePost(productId: productId)
             ])
+            
+        case .nextButtonTap(let id):
+            guard currentState.categoryId != id else { return .empty() }
+            return .concat([
+                .just(.setCategortId(id)),
+                .just(.setCategortId(nil))
+            ])
         }
     }
     
@@ -87,6 +97,11 @@ extension MainReactor {
             
         case .setProcessingLike(let isProcessing):
             newState.isProcessingLike = isProcessing
+            
+        case .setCategortId(let id):
+            if newState.categoryId != id {
+                newState.categoryId = id
+            }
         }
         
         return newState

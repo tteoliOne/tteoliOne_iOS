@@ -48,4 +48,6 @@ enum AppButtonTitle: String {
     case change = "변경"
     case write = "작성하기"
     case withdraw = "탈퇴하기"
+    
+    case filter = "최신순"
 }
