@@ -51,7 +51,9 @@ final class PostReceiptReactor: Reactor {
         self.networkProvider = networkProvider
         self.viewType = viewType
         self.productId = productId
-        self.initialState = State(response: response,
+        let isEnabled = viewType == .edit || !images.isEmpty
+        self.initialState = State(isRegisterButtonIsEnabled: isEnabled,
+                                  response: response,
                                   images: images,
                                   receiptImage: receiptImage)
     }
@@ -76,6 +78,9 @@ extension PostReceiptReactor {
             ])
             
         case .registerButtonTap:
+            print("🔍 isRegisterButtonIsEnabled: \(currentState.isRegisterButtonIsEnabled)")
+                print("🔍 receiptImage: \(currentState.receiptImage != nil ? "✅ 존재함" : "❌ 없음")")
+
             guard currentState.isRegisterButtonIsEnabled,
                   let receiptImage = currentState.receiptImage else {
                 return .empty()
