@@ -56,12 +56,20 @@ extension MyProductListViewController: View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        NotificationCenter.default.rx.notification(.toggleLike)
-            .compactMap { $0.object as? Int }
-            .subscribe(onNext: { productId in
-                reactor.action.onNext(.toggleLike(productId))
-            })
-            .disposed(by: disposeBag)
+        rootView.tableView.rx.willDisplayCell
+                .compactMap { cell, indexPath -> (ProductListTableViewCell, IndexPath)? in
+                    guard let productCell = cell as? ProductListTableViewCell else { return nil }
+                    return (productCell, indexPath)
+                }
+                .subscribe(onNext: { (cell, indexPath) in
+                    cell.likeButtonTapped
+                        .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+                        .subscribe(onNext: { productId in
+                            reactor.action.onNext(.toggleLike(productId))
+                        })
+                        .disposed(by: cell.disposeBag)
+                })
+                .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: MyProductListReactor) {

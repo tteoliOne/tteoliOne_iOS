@@ -16,6 +16,7 @@ final class CategoryProductReactor: Reactor {
         case loadMore
         case selectProduct(ProductPreviewDTO)
         case toggleSortOrder
+        case toggleLike(Int)
     }
     
     enum Mutation {
@@ -26,6 +27,8 @@ final class CategoryProductReactor: Reactor {
         case showError(NetworkError)
         case updatePageInfo(Int, Bool)
         case setSortOrder(String)
+        case updateProductLike(ProductFilterListDTO)
+        case showToastMessage(String?)
     }
     
     struct State {
@@ -37,6 +40,7 @@ final class CategoryProductReactor: Reactor {
         var currentPage: Int = 0
         var isLastPage: Bool = false
         var sortOrder: String = "createAt-desc"
+        var showToastMessage: String?
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
@@ -80,6 +84,9 @@ extension CategoryProductReactor {
                                   page: 0,
                                   sort: newSortOrder)
             ])
+            
+        case .toggleLike(let productId):
+            return fetchLikePost(productId: productId)
         }
     }
     
@@ -122,6 +129,12 @@ extension CategoryProductReactor {
             
         case .setSortOrder(let sortOrder):
             newState.sortOrder = sortOrder
+            
+        case .updateProductLike(let updatedDTO):
+            newState.product = updatedDTO
+            
+        case .showToastMessage(let message):
+            newState.showToastMessage = message
         }
         
         return newState
@@ -150,6 +163,51 @@ extension CategoryProductReactor {
                 return .concat([
                     page == 0 ? .just(.setProducts(dto)) : .just(.appendProducts(dto)),
                     .just(.updatePageInfo(page, dto.last))
+                ])
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+    
+    private func fetchLikePost(productId: Int) -> Observable<Mutation> {
+        return networkProvider.request(.likeProduct(productId: productId),
+                                              decodingType: ServerResponse<String>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(let success):
+                guard let productList = self.currentState.product else {
+                    print("❌ 데이터 없음")
+                    return .empty()
+                }
+
+                var updatedProducts = productList.content
+
+                if let index = updatedProducts.firstIndex(where: { $0.productId == productId }) {
+                    print("✅ 변경할 상품 찾음 - index: \(index), productId: \(productId)")
+                    updatedProducts[index].liked.toggle()
+                    updatedProducts[index].totalLikes += updatedProducts[index].liked ? 1 : -1
+                } else {
+                    print("❌ 해당 productId를 찾을 수 없음: \(productId)")
+                }
+
+                let updatedDTO = ProductFilterListDTO(
+                    content: updatedProducts,
+                    pageable: productList.pageable,
+                    size: productList.size,
+                    number: productList.number,
+                    sort: productList.sort,
+                    numberOfElements: productList.numberOfElements,
+                    first: productList.first,
+                    last: productList.last,
+                    empty: productList.empty
+                )
+                
+                return .concat([
+                    .just(.updateProductLike(updatedDTO)),
+                    .just(.showToastMessage(success)),
+                    .just(.showToastMessage(nil))
                 ])
             case .failure(let error):
                 return .just(.showError(error))

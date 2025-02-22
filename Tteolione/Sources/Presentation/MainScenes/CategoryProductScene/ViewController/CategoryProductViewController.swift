@@ -50,6 +50,21 @@ extension CategoryProductViewController: View {
             .map { CategoryProductReactor.Action.selectProduct($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.willDisplayCell
+                .compactMap { cell, indexPath -> (ProductListTableViewCell, IndexPath)? in
+                    guard let productCell = cell as? ProductListTableViewCell else { return nil }
+                    return (productCell, indexPath)
+                }
+                .subscribe(onNext: { (cell, indexPath) in
+                    cell.likeButtonTapped
+                        .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+                        .subscribe(onNext: { productId in
+                            reactor.action.onNext(.toggleLike(productId))
+                        })
+                        .disposed(by: cell.disposeBag)
+                })
+                .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: CategoryProductReactor) {
@@ -78,6 +93,15 @@ extension CategoryProductViewController: View {
             .map { $0.sortOrder == "createAt-desc" ? "최신순" : "오래된순" }
             .distinctUntilChanged()
             .bind(to: rootView.filterButton.rx.title())
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.showToastMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                owner.view.makeToast(value)
+            }
             .disposed(by: disposeBag)
     }
     
