@@ -224,7 +224,6 @@ extension MyProductListReactor {
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(let success):
-                
                 guard let productList = self.currentState.setProductDTO else {
                     print("❌ 데이터 없음")
                     return .empty()

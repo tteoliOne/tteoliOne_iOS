@@ -14,8 +14,8 @@ final class MainReactor: Reactor {
     enum Action {
         case fetchProducts
         case postButtonTap
-        case likeButtonTap(Int)
         case nextButtonTap(Int)
+        case toggleLike(Int)
     }
     
     enum Mutation {
@@ -23,7 +23,8 @@ final class MainReactor: Reactor {
         case showError(NetworkError)
         case setNavigateToPost(Bool)
         case setProductId([Int])
-        case setProcessingLike(Bool)
+        case updateProductLike(ProductDTO)
+        case showToastMessage(String?)
         case setCategortId(Int?)
     }
     
@@ -32,7 +33,7 @@ final class MainReactor: Reactor {
         var errorMessage: String?
         var navigateToPost: Bool = false
         var productIds: [Int] = []
-        var isProcessingLike: Bool = false
+        var showToastMessage: String?
         var categoryId: Int?
     }
     
@@ -60,11 +61,8 @@ extension MainReactor {
                 .just(.setNavigateToPost(false))
             ])
             
-        case .likeButtonTap(let productId):
-            guard !currentState.isProcessingLike else { return .empty() }
-            return .concat([
-                fetchLikePost(productId: productId)
-            ])
+        case .toggleLike(let productId):
+            return fetchLikePost(productId: productId)
             
         case .nextButtonTap(let id):
             guard currentState.categoryId != id else { return .empty() }
@@ -95,13 +93,18 @@ extension MainReactor {
         case .setProductId(let ids):
             newState.productIds = ids
             
-        case .setProcessingLike(let isProcessing):
-            newState.isProcessingLike = isProcessing
+//        case .setProcessingLike(let isProcessing):
+//            newState.isProcessingLike = isProcessing
             
         case .setCategortId(let id):
             if newState.categoryId != id {
                 newState.categoryId = id
             }
+        case .updateProductLike(let updatedDTO):
+            newState.products = [updatedDTO]
+            
+        case .showToastMessage(let message):
+            newState.showToastMessage = message
         }
         
         return newState
@@ -139,10 +142,29 @@ extension MainReactor {
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
-            case .success(_):
+            case .success(let success):
+                guard let updatedProductDTO = self.currentState.products.first else {
+                    print("❌ 데이터 없음")
+                    return .empty()
+                }
+
+                var updatedList = updatedProductDTO.list
+
+                for (listIndex, var productList) in updatedList.enumerated() {
+                    if let productIndex = productList.products.firstIndex(where: { $0.productId == productId }) {
+                        print("✅ 서버 반영 - listIndex: \(listIndex), productIndex: \(productIndex), productId: \(productId)")
+
+                        productList.products[productIndex].toggleLike()
+                        updatedList[listIndex] = productList
+                    }
+                }
+
+                let updatedDTO = ProductDTO(list: updatedList)
+
                 return .concat([
-                    .just(.setProcessingLike(true)),
-                    .just(.setProcessingLike(false))
+                    .just(.updateProductLike(updatedDTO)), // ✅ 최종 UI 업데이트
+                    .just(.showToastMessage(success)),
+                    .just(.showToastMessage(nil))
                 ])
             case .failure(let error):
                 return .just(.showError(error))

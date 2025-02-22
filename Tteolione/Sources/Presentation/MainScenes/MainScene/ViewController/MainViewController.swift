@@ -41,19 +41,19 @@ extension MainViewController: View {
                 return (mainCell, indexPath)
             }
             .subscribe(onNext: { (tableViewCell, indexPath) in
-                tableViewCell.likeButtonTapped
-                    .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
-                    .subscribe(onNext: { productId in
-                        reactor.action.onNext(.likeButtonTap(productId))
-                    })
-                    .disposed(by: tableViewCell.disposeBag)
-
                 tableViewCell.nextButtonTapped
                     .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
                     .subscribe(onNext: {
                         reactor.action.onNext(.nextButtonTap(indexPath.item + 1))
                     })
                     .disposed(by: tableViewCell.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(.toggleLike)
+            .compactMap { $0.object as? Int }
+            .subscribe(onNext: { productId in
+                reactor.action.onNext(.toggleLike(productId))
             })
             .disposed(by: disposeBag)
     }
@@ -95,6 +95,15 @@ extension MainViewController: View {
             .observe(on: MainScheduler.instance)
             .bind(with: rootView) { owner, offset in
                 owner.adjustButtonShape(forScrollOffset: offset)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.showToastMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                owner.view.makeToast(value)
             }
             .disposed(by: disposeBag)
     }
