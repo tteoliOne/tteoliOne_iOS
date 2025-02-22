@@ -62,7 +62,7 @@ extension CategoryProductViewController: View {
                 cellType: ProductListTableViewCell.self
             )) { _, item, cell in
                 cell.selectionStyle = .none
-                cell.configure(with: item)
+                cell.product = item
             }
             .disposed(by: disposeBag)
         

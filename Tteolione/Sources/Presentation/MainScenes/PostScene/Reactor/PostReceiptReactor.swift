@@ -78,9 +78,6 @@ extension PostReceiptReactor {
             ])
             
         case .registerButtonTap:
-            print("🔍 isRegisterButtonIsEnabled: \(currentState.isRegisterButtonIsEnabled)")
-                print("🔍 receiptImage: \(currentState.receiptImage != nil ? "✅ 존재함" : "❌ 없음")")
-
             guard currentState.isRegisterButtonIsEnabled,
                   let receiptImage = currentState.receiptImage else {
                 return .empty()

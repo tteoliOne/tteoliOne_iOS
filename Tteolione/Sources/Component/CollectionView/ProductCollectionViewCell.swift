@@ -132,8 +132,8 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         likeButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self, let product = self.product else { return }
-                product.liked.toggle()
-                product.totalLikes = product.liked ? (product.totalLikes + 1) : (product.totalLikes - 1)
+//                product.liked.toggle()
+//                product.totalLikes = product.liked ? (product.totalLikes + 1) : (product.totalLikes - 1)
                 self.product = product
                 self.likeButtonTapped.accept(product.productId)
                 updateLikeButton(isLiked: product.liked, likeCount: product.totalLikes)

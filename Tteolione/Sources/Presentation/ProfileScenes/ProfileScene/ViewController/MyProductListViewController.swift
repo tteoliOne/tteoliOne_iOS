@@ -5,6 +5,7 @@
 //  Created by 전준영 on 2/7/25.
 //
 
+import Foundation
 import ReactorKit
 import RxCocoa
 
@@ -54,19 +55,25 @@ extension MyProductListViewController: View {
             .map { MyProductListReactor.Action.selectProduct($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(.toggleLike)
+            .compactMap { $0.object as? Int }
+            .subscribe(onNext: { productId in
+                reactor.action.onNext(.toggleLike(productId))
+            })
+            .disposed(by: disposeBag)
     }
     
     func bindState(_ reactor: MyProductListReactor) {
         reactor.state
             .map { $0.setProductDTO?.content ?? [] }
-            .distinctUntilChanged()
             .observe(on: MainScheduler.instance)
             .bind(to: rootView.tableView.rx.items(
                 cellIdentifier: ProductListTableViewCell.identifier,
                 cellType: ProductListTableViewCell.self
             )) { _, item, cell in
                 cell.selectionStyle = .none
-                cell.configure(with: item)
+                cell.product = item
             }
             .disposed(by: disposeBag)
         
@@ -76,6 +83,15 @@ extension MyProductListViewController: View {
             .bind(with: rootView, onNext: { owner, value in
                 owner.setupTitle(with: value)
             })
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.showToastMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                owner.view.makeToast(value)
+            }
             .disposed(by: disposeBag)
     }
     

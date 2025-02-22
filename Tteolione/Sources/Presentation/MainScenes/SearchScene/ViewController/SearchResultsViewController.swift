@@ -23,7 +23,7 @@ final class SearchResultsViewController: BaseViewController<SearchResultsView> {
         results.bind(to: rootView.tableView.rx.items(
             cellIdentifier: ProductListTableViewCell.identifier,
             cellType: ProductListTableViewCell.self)) { _, element, cell in
-                cell.configure(with: element)
+                cell.product = element
             }
             .disposed(by: disposeBag)
     }
