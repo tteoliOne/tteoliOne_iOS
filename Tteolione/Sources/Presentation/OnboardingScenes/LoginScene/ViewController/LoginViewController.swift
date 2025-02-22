@@ -17,6 +17,10 @@ final class LoginViewController: BaseNavigationViewController<LoginView> {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension LoginViewController: View {

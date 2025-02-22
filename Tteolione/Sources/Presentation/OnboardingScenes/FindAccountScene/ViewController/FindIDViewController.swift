@@ -13,6 +13,9 @@ final class FindIDViewController: BaseViewController<FindIDView> {
     var disposeBag = DisposeBag()
     weak var delegate: FindAccountCoordinator?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension FindIDViewController: View {
