@@ -42,7 +42,18 @@ final class AddressCoordinator: NSObject, AddressCoordinatorDelegate {
 extension AddressCoordinator {
     func goHome() {
         finishAllChildren()
-        parentCoordinator?.start()
+
+        var currentCoordinator: Coordinator? = self
+        while let parent = currentCoordinator?.parentCoordinator {
+            currentCoordinator = parent
+        }
+        
+        if let appCoordinator = currentCoordinator as? AppCoordinator {
+            print("🟢 AppCoordinator start 실행!")
+            appCoordinator.start()
+        } else {
+            print("❌ AppCoordinator를 찾지 못함")
+        }
     }
     
     func finshView() {

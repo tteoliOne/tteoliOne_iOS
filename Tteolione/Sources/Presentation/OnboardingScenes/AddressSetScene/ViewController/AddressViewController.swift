@@ -86,7 +86,6 @@ extension AddressViewController: View {
             .compactMap { $0.1 }
             .observe(on: MainScheduler.instance)
             .bind(with: self) { owner, status in
-                print(status)
                 switch status {
                 case .login:
                     owner.delegate?.goHome()
