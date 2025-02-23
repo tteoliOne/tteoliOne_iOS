@@ -18,6 +18,7 @@ final class ChatMessageData {
     var sendTime: Int
     var isMine: Bool
     var contentType: String
+    var unRead: Bool?
     var opponentProfileURL: String?
     var localProfilePath: String?
 
@@ -29,6 +30,7 @@ final class ChatMessageData {
          sendTime: Int,
          isMine: Bool,
          contentType: String,
+         unRead: Bool? = false,
          opponentProfileURL: String? = nil,
          localProfilePath: String? = nil) {
         self.messageID = messageID
@@ -39,6 +41,7 @@ final class ChatMessageData {
         self.sendTime = sendTime
         self.isMine = isMine
         self.contentType = contentType
+        self.unRead = unRead
         self.opponentProfileURL = opponentProfileURL
         self.localProfilePath = localProfilePath
     }

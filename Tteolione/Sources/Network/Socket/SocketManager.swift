@@ -249,18 +249,19 @@ extension ChatWebSocketService: StompClientLibDelegate {
             }
         } else if contentType == "notice",
                   let content = data["content"] as? String,
-                  let senderNo = data["senderNo"] as? Int,
-                  let timestamp = data["sendTime"] as? Int,
-                  let productNo = data["productNo"] as? Int {
+                  let senderNo = data["senderNo"] as? Int?,
+                  let timestamp = data["sendTime"] as? Int?,
+                  let productNo = data["productNo"] as? Int? {
             NotificationCenter.default.post(name: .didLeaveChat,
                                             object: nil,
                                             userInfo: [
                                                 "content": content,
-                                                "senderNo": senderNo,
-                                                "timestamp": timestamp,
+                                                "senderNo": senderNo ?? 0,
+                                                "timestamp": timestamp ?? 0,
                                                 "chatRoomNo": chatRoomNo,
-                                                "productNo": productNo
+                                                "productNo": productNo ?? 0
                                             ])
+            NotificationCenter.default.post(name: .didComeOpponent, object: nil)
         }
         else {
             print("⚠️ 지원되지 않는 메시지 타입: \(contentType)")

@@ -63,6 +63,39 @@ extension DBManager {
         return messages.last?.sendTime
     }
     
+    func fetchUnreadMessages(chatRoomID: Int) -> [ChatMessageData] {
+        let request = FetchDescriptor<ChatMessageData>(
+            predicate: #Predicate { $0.chatRoomNo == chatRoomID && $0.unRead == true },
+            sortBy: [SortDescriptor(\.sendTime, order: .forward)]
+        )
+        
+        do {
+            let items: [ChatMessageData] = try modelContext.fetch(request)
+            return items
+        } catch {
+            print("❌ [DB] 읽지 않은 메시지 조회 실패: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    func updateMessageAsRead(chatRoomID: Int, sendTime: Int) {
+        let request = FetchDescriptor<ChatMessageData>(
+            predicate: #Predicate { $0.chatRoomNo == chatRoomID && $0.sendTime == sendTime }
+        )
+
+        do {
+            let messages = try modelContext.fetch(request)
+            guard let message = messages.first else { return }
+
+            message.unRead = false
+
+            try modelContext.save()
+            print("✅ [DB] 읽음 상태 업데이트 완료: \(message)")
+        } catch {
+            print("❌ [DB] 읽음 상태 업데이트 실패: \(error.localizedDescription)")
+        }
+    }
+    
     func removeItem<T: PersistentModel>(_ model: T) {
         modelContext.delete(model)
         

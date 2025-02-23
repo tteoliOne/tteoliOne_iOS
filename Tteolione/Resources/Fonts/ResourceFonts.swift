@@ -31,6 +31,7 @@ enum Font {
 }
 
 extension Font {
+    static let regular12 = Font.regular(12).font()
     static let regular13 = Font.regular(13).font()
     static let regular14 = Font.regular(14).font()
     static let regular15 = Font.regular(15).font()
