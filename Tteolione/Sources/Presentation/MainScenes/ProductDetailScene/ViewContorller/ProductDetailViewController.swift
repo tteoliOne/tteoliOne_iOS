@@ -134,7 +134,6 @@ extension ProductDetailViewController: View {
         
         reactor.state
             .compactMap { state -> Int? in
-                print("state.isProfileTap: \(state.isProfileTap)")
                 guard state.isProfileTap else { return nil }
                 return state.sellerId
             }

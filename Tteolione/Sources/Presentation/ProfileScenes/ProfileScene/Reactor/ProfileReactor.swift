@@ -300,6 +300,7 @@ extension ProfileReactor {
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
                 case .success(_):
+                    UserDefaultsStorage.nickname = nickname
                     return .concat([
                         .just(.setNickname(nickname)),
                         .just(.setIntro(intro)),

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseViewController<RootView: UIView>: UIViewController {
+class BaseViewController<RootView: UIView>: UIViewController, UIGestureRecognizerDelegate {
     
     let rootView: RootView
     
@@ -32,26 +32,23 @@ class BaseViewController<RootView: UIView>: UIViewController {
         setupKeyboardDismissGesture()
     }
     
-    func configureHierarchy() {
-        
-    }
+    func configureHierarchy() {}
     
     func configureView() {
         view.backgroundColor = .white
     }
     
-    func configureConstraints() {
-        
-    }
+    func configureConstraints() {}
     
     func setupKeyboardDismissGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
+        tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc private func dismissKeyboard() {
-        view.endEditing(true) // 키보드 내리기
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+        self.navigationController?.view.endEditing(true)
     }
-    
 }

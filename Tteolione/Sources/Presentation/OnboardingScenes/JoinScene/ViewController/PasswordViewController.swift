@@ -13,6 +13,9 @@ final class PasswordViewController: BaseViewController<PasswordView> {
     var disposeBag = DisposeBag()
     weak var delegate: JoinCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension PasswordViewController: View {

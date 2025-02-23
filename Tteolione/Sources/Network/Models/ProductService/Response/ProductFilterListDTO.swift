@@ -42,3 +42,14 @@ struct PageSortDTO: Equatable, Decodable {
     let ascending: Bool
     
 }
+
+extension PageableDTO {
+    static let empty = PageableDTO(
+        sort: [],
+        offset: 0,
+        pageNumber: 0,
+        pageSize: 0,
+        unpaged: false,
+        paged: false
+    )
+}

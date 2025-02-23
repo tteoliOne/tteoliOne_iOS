@@ -36,6 +36,7 @@ final class ProfileCoordinator: NSObject, ProfileCoordinatorDelegate {
 extension ProfileCoordinator {
     func pushMyProductViewController(status: StatusType) {
         let reactor = MyProductListReactor(networkProvider: dependency.userProvider,
+                                           productNetworkProvider: dependency.productServiceProvider,
                                            status: status)
         let viewController = createViewController(
             ofType: MyProductListViewController.self,

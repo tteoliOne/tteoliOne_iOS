@@ -49,9 +49,6 @@ final class KakaoAuthVM {
                 return self?.handlePostLogin(oauthToken: oauthToken).asObservable() ?? Observable.just(.failure(message: "로그인 처리 중 오류"))
             }
     }
-
-    
-
     
     private func loginUsingApp() -> Observable<OAuthToken?> {
         return Observable.create { observer in
@@ -93,6 +90,11 @@ final class KakaoAuthVM {
                 switch handleResponse(response) {
                 case .success(let data):
                     if data.existsUser {
+                        UserDefaultsStorage.token = data.accessToken ?? ""
+                        UserDefaultsStorage.refreshToken = data.refreshToken ?? ""
+                        UserDefaultsStorage.userID = data.userId ?? 0
+                        UserDefaultsStorage.nickname = data.nickname ?? ""
+                        UserDefaultsStorage.typeLogin = LoginTypeKey.kakao.rawValue
                         return .just(.existingUser)
                     } else {
                         return .just(.newUser(accessToken: accessToken))

@@ -75,6 +75,11 @@ extension AppleAuthManager: ASAuthorizationControllerDelegate, ASAuthorizationCo
             switch handleResponse(response) {
             case .success(let data):
                 if data.existsUser {
+                    UserDefaultsStorage.token = data.accessToken ?? ""
+                    UserDefaultsStorage.refreshToken = data.refreshToken ?? ""
+                    UserDefaultsStorage.userID = data.userId ?? 0
+                    UserDefaultsStorage.nickname = data.nickname ?? ""
+                    UserDefaultsStorage.typeLogin = LoginTypeKey.apple.rawValue
                     return .just(.existingUser)
                 } else if let token = data.appleRefreshToken {
                     return .just(.newUser(accessToken: token))

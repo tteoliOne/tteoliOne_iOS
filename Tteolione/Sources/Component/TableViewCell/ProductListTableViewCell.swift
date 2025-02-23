@@ -8,9 +8,17 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 
 final class ProductListTableViewCell: BaseTableViewCell {
     
+    let likeButtonTapped = PublishRelay<Int>()
+    var product: ProductPreviewDTO? {
+        didSet {
+            configure()
+            bindLikeButton()
+        }
+    }
     var disposeBag = DisposeBag()
     private let containerView = ShadowView()
     private let productImageView: LoadImageView = {
@@ -67,6 +75,7 @@ final class ProductListTableViewCell: BaseTableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        bindLikeButton()
     }
     
     override func configureHierarchy() {
@@ -133,23 +142,42 @@ final class ProductListTableViewCell: BaseTableViewCell {
         likeButton.updateLikeState(isLiked: isLiked)
         likeCountLabel.text = "\(likeCount)"
     }
+    
+    //    private func bindLikeButton() {
+    //        likeButton.rx.tap
+    //            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+    //            .subscribe(onNext: { [weak self] in
+    //                guard let self = self, let product = self.product else { return }
+    //                NotificationCenter.default.post(name: .toggleLike, object: product.productId)
+    //            })
+    //            .disposed(by: disposeBag)
+    //    }
+    
+    private func bindLikeButton() {
+        likeButton.rx.tap
+            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+            .compactMap { [weak self] in self?.product?.productId }
+            .bind(to: likeButtonTapped) // ✅ NotificationCenter 대신 Relay 사용
+            .disposed(by: disposeBag)
+    }
 }
 
 extension ProductListTableViewCell {
-    func configure(with data: ProductPreviewDTO) {
-        if let imageUrl = URL(string: data.imageUrl) {
+    private func configure() {
+        guard let product = product else { return }
+        if let imageUrl = URL(string: product.imageUrl) {
             productImageView.loadImage(from: imageUrl)
         } else {
             productImageView.image = nil
         }
-        titleLabel.text = data.title
-        distanceLabel.text = String(format: "%.fkm 도보 \(data.walkingTime)분",
-                                    data.walkingDistance / 1000)
-        unitPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(data.unitPrice))원"
-        likeCountLabel.text = "\(data.totalLikes)"
-        likeButton.updateLikeState(isLiked: data.liked)
-        likeButton.isSelected = data.liked
-        if data.soldStatus == "eSoldOut" {
+        titleLabel.text = product.title
+        distanceLabel.text = String(format: "%.fkm 도보 \(product.walkingTime)분",
+                                    product.walkingDistance / 1000)
+        unitPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(product.unitPrice))원"
+        likeCountLabel.text = "\(product.totalLikes)"
+        likeButton.updateLikeState(isLiked: product.liked)
+        likeButton.isSelected = product.liked
+        if product.soldStatus == "eSoldOut" {
             completedView.isHidden = false
         } else {
             completedView.isHidden = true

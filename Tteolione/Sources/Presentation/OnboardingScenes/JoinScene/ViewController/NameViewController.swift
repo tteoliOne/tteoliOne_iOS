@@ -13,6 +13,9 @@ final class NameViewController: BaseViewController<NameView> {
     var disposeBag = DisposeBag()
     weak var delegate: JoinCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension NameViewController: View {

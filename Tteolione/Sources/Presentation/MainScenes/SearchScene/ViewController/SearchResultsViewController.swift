@@ -21,15 +21,15 @@ final class SearchResultsViewController: BaseViewController<SearchResultsView> {
     
     private func setupBindings() {
         results.bind(to: rootView.tableView.rx.items(
-                cellIdentifier: ProductListTableViewCell.identifier,
-                cellType: ProductListTableViewCell.self)) { _, element, cell in
-                cell.configure(with: element)
+            cellIdentifier: ProductListTableViewCell.identifier,
+            cellType: ProductListTableViewCell.self)) { _, element, cell in
+                cell.product = element
             }
-                .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func updateSearchResults(with results: [ProductPreviewDTO]) {
         self.results.accept(results)
     }
-
+    
 }

@@ -38,6 +38,7 @@ final class LoginReactor: Reactor {
         case setId(String)
         case setPassword(String)
         case showError(NetworkError)
+        case clearErrorMessage
         case setKakaoLoginToAddress(Bool)
         case setKakaoLoginToProfile(Bool)
         case setToken(String?)
@@ -45,6 +46,7 @@ final class LoginReactor: Reactor {
         case setAppleLoginToAddress(Bool)
         case setAppleLoginToProfile(Bool)
         case setAppleErrorMessage(String)
+        case setLoading(Bool)
     }
 
     struct State {
@@ -64,6 +66,7 @@ final class LoginReactor: Reactor {
         var token: String = ""
         var isAppleLoginToAddress: Bool = false
         var isAppleLoginToProfile: Bool = false
+        var isLoading: Bool = false
     }
     
     private let kakaoAuthVM: KakaoAuthVM
@@ -133,11 +136,14 @@ extension LoginReactor {
             
         case .loginButtonTap:
             guard currentState.isLoginButtonEnabled.allSatisfy({ $0 }) else { return .empty() }
+            
             let id = currentState.id
             let password = currentState.password
             return .concat([
+                .just(.setLoading(true)),
                 performLogin(id: id,
-                             password: password)
+                             password: password),
+                .just(.setLoading(false))
             ])
             
         case .kakaoButtonTap:
@@ -147,15 +153,19 @@ extension LoginReactor {
                     switch result {
                     case .existingUser:
                         return .concat([
+                            .just(.setLoading(true)),
                             .just(.setKakaoLoginToAddress(true)),
-                            .just(.setKakaoLoginToAddress(false))
+                            .just(.setKakaoLoginToAddress(false)),
+                            .just(.setLoading(false))
                         ])
                         
                     case .newUser(let accessToken):
                         return .concat([
+                            .just(.setLoading(true)),
                             .just(.setToken(accessToken)),
                             .just(.setKakaoLoginToProfile(true)),
-                            .just(.setKakaoLoginToProfile(false))
+                            .just(.setKakaoLoginToProfile(false)),
+                            .just(.setLoading(false))
                         ])
                         
                     case .failure(let message):
@@ -170,15 +180,19 @@ extension LoginReactor {
                     switch result {
                     case .existingUser:
                         return .concat([
+                            .just(.setLoading(true)),
                             .just(.setAppleLoginToAddress(true)),
-                            .just(.setAppleLoginToAddress(false))
+                            .just(.setAppleLoginToAddress(false)),
+                            .just(.setLoading(false))
                         ])
                         
                     case .newUser(let accessToken):
                         return .concat([
+                            .just(.setLoading(true)),
                             .just(.setToken(accessToken)),
                             .just(.setAppleLoginToProfile(true)),
-                            .just(.setAppleLoginToProfile(false))
+                            .just(.setAppleLoginToProfile(false)),
+                            .just(.setLoading(false))
                         ])
                         
                     case .failure(let message):
@@ -249,6 +263,12 @@ extension LoginReactor {
             
         case let .setAppleErrorMessage(message):
             newState.errorMessage = message
+            
+        case let .setLoading(isLoading):
+            newState.isLoading = isLoading
+            
+        case .clearErrorMessage:
+            newState.errorMessage = nil
         }
         
         return newState
@@ -264,25 +284,34 @@ extension LoginReactor {
         let body = LoginRequestBody(loginId: id,
                                     password: password,
                                     targetToken: fcmtoken)
-        return networkProvider.request(.login(body: body),
-                                       decodingType: ServerResponse<UserDTO>.self)
-        .asObservable()
-        .flatMap { response -> Observable<Mutation> in
-            switch handleResponse(response) {
-            case .success(let result):
-                UserDefaultsStorage.nickname = result.nickname ?? ""
-                UserDefaultsStorage.token = result.accessToken ?? ""
-                UserDefaultsStorage.refreshToken = result.refreshToken ?? ""
-                UserDefaultsStorage.userID = result.userId ?? 0
-                UserDefaultsStorage.typeLogin = LoginTypeKey.local.rawValue
-                return .concat([
-                    .just(.setLoginToNext(true)),
-                    .just(.setLoginToNext(false))
-                ])
-            case .failure(let error):
-                return .just(.showError(error))
+        return .concat([
+            .just(.clearErrorMessage),
+            networkProvider.request(.login(body: body),
+                                    decodingType: ServerResponse<UserDTO>.self)
+            .asObservable()
+            .catch { error in
+                if let networkError = error as? NetworkError {
+                    return .just(ServerResponse<UserDTO>(success: false, code: -1, message: networkError.errorDescription, data: nil))
+                }
+                return .just(ServerResponse<UserDTO>(success: false, code: -1, message: "알 수 없는 오류", data: nil))
             }
-        }
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let result):
+                    UserDefaultsStorage.nickname = result.nickname ?? ""
+                    UserDefaultsStorage.token = result.accessToken ?? ""
+                    UserDefaultsStorage.refreshToken = result.refreshToken ?? ""
+                    UserDefaultsStorage.userID = result.userId ?? 0
+                    UserDefaultsStorage.typeLogin = LoginTypeKey.local.rawValue
+                    return .concat([
+                        .just(.setLoginToNext(true)),
+                        .just(.setLoginToNext(false))
+                    ])
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
+            }
+        ])
     }
     
     private func updateLoginButtonState(at index: Int, isValid: Bool) -> [Bool] {
