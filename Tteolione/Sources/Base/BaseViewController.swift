@@ -51,4 +51,12 @@ class BaseViewController<RootView: UIView>: UIViewController, UIGestureRecognize
         self.view.endEditing(true)
         self.navigationController?.view.endEditing(true)
     }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view is UIControl {
+            return false
+        }
+        return true
+    }
+
 }
