@@ -7,6 +7,7 @@
 
 import ReactorKit
 import RxCocoa
+import Toast
 
 final class LoginViewController: BaseNavigationViewController<LoginView> {
     
@@ -99,6 +100,18 @@ extension LoginViewController: View {
     }
     
     private func bindState(_ reactor: LoginReactor) {
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, isLoading in
+                if isLoading {
+                    owner.view.showLoadingToast()
+                } else {
+                    owner.view.hideLoadingToast()
+                }
+            }
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.isEmailLabelUp }
             .distinctUntilChanged()
             .bind(with: self) { owner, isUp in
@@ -135,6 +148,15 @@ extension LoginViewController: View {
             .bind(with: self) { owner, isEnabled in
                 let isAllEnabled = isEnabled.allSatisfy { $0 }
                 owner.rootView.setButton(isAllEnabled)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.errorMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, errorMessage in
+                owner.view.makeToast(errorMessage)
             }
             .disposed(by: disposeBag)
     }
