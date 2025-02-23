@@ -76,11 +76,6 @@ final class ChattingView: BaseView {
         return button
     }()
     
-    override func touchesBegan(_ touches: Set<UITouch>,
-                               with event: UIEvent?) {
-        self.endEditing(true)
-    }
-    
     override func configureHierarchy() {
         [inputTopView, tableView,
          inputContainerView].forEach { addSubview($0) }
@@ -133,14 +128,14 @@ final class ChattingView: BaseView {
         inputContainerView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(50).priority(.high) // 최소 높이 설정, 우선순위 조정
+            make.height.equalTo(50).priority(.high)
         }
 
         messageTextView.snp.makeConstraints { make in
             make.leading.equalTo(inputContainerView).offset(12)
             make.top.bottom.equalTo(inputContainerView).inset(8)
             make.trailing.equalTo(sendButton.snp.leading).offset(-8)
-            make.height.greaterThanOrEqualTo(36) // 최소 높이 설정
+            make.height.greaterThanOrEqualTo(36)
         }
 
         sendButton.snp.makeConstraints { make in
