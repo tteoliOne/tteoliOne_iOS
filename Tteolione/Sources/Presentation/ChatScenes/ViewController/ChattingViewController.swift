@@ -8,6 +8,7 @@
 import ReactorKit
 import RxCocoa
 import UIKit
+import IQKeyboardManagerSwift
 
 final class ChattingViewController: BaseViewController<ChattingView> {
     
@@ -17,6 +18,15 @@ final class ChattingViewController: BaseViewController<ChattingView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigation()
+        
+        IQKeyboardManager.shared.isEnabled = false
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -54,13 +64,6 @@ extension ChattingViewController: View {
     }
     
     func bindState(_ reactor: ChattingReactor) {
-        reactor.state.map { $0.isConnected }
-            .distinctUntilChanged()
-            .subscribe(onNext: { isConnected in
-                print("✅ WebSocket 연결 상태: \(isConnected)")
-            })
-            .disposed(by: disposeBag)
-        
         reactor.state.map { $0.productData }
             .distinctUntilChanged()
             .compactMap { $0 }
@@ -202,6 +205,35 @@ extension ChattingViewController {
         return UIMenu(title: "", children: [reportAction, exitAction])
     }
     
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+            return
+        }
+        
+        let keyboardHeight = keyboardFrame.height - view.safeAreaInsets.bottom
+        UIView.animate(withDuration: duration) {
+            self.rootView.inputContainerView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+            self.rootView.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            self.rootView.tableView.scrollIndicatorInsets = self.rootView.tableView.contentInset
+            DispatchQueue.main.async {
+                self.rootView.tableView.scrollToBottom(animated: true)
+            }
+        }
+    }
+
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else {
+            return
+        }
+        
+        UIView.animate(withDuration: duration) {
+            self.rootView.inputContainerView.transform = .identity
+            self.rootView.tableView.contentInset = .zero
+            self.rootView.tableView.scrollIndicatorInsets = .zero
+        }
+    }
+
 }
 
 extension ChattingViewController: DelegateOwner {

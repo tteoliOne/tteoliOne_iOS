@@ -56,7 +56,7 @@ final class ChattingView: BaseView {
         return tableView
     }()
     
-    private let inputContainerView = UIView()
+    let inputContainerView = UIView()
     
     let messageTextView: UITextView = {
         let textView = UITextView()
