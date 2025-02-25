@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icons8-영수증-80 1.png",
+      "filename" : "receiptPhoto.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "receiptPhoto@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "receiptPhoto@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

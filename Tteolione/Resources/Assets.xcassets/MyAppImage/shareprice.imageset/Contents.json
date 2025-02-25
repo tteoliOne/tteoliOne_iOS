@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "shareprice.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "shareprice.png",
+      "filename" : "shareprice@2x.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "shareprice@3x.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }
