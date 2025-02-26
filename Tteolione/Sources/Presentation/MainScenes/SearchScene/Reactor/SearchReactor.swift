@@ -14,6 +14,7 @@ final class SearchReactor: Reactor {
     enum Action {
         case updateQuery(String)
         case performSearch(String)
+        case toggleLike(Int)
     }
     
     enum Mutation {
@@ -22,6 +23,8 @@ final class SearchReactor: Reactor {
         case setResults([ProductPreviewDTO])
         case setLoading(Bool)
         case showError(NetworkError)
+        case updateProductLike(ProductPreviewDTO)
+        case showToastMessage(String?)
     }
     
     struct State {
@@ -30,6 +33,7 @@ final class SearchReactor: Reactor {
         var results: [ProductPreviewDTO] = []
         var isLoading: Bool = false
         var errorMessage: String?
+        var showToastMessage: String?
     }
     
     private let networkProvider: NetworkProvider<ProductServiceAPI>
@@ -60,6 +64,9 @@ extension SearchReactor {
                     .ifEmpty(switchTo: Observable.just(.setResults([]))),
                 .just(.setLoading(false))
             ])
+            
+        case .toggleLike(let productId):
+            return fetchLikePost(productId: productId)
         }
     }
     
@@ -85,6 +92,12 @@ extension SearchReactor {
             
         case .showError(let error):
             newState.errorMessage = error.errorDescription
+            
+        case .updateProductLike(let updatedDTO):
+            newState.results = [updatedDTO]
+            
+        case .showToastMessage(let message):
+            newState.showToastMessage = message
         }
         
         return newState
@@ -121,4 +134,37 @@ extension SearchReactor {
         }
     }
     
+    private func fetchLikePost(productId: Int) -> Observable<Mutation> {
+        return networkProvider.request(.likeProduct(productId: productId),
+                                       decodingType: ServerResponse<String>.self)
+        .asObservable()
+        .flatMap { response -> Observable<Mutation> in
+            switch handleResponse(response) {
+            case .success(let success):
+                var updatedResults = self.currentState.results
+
+                if let index = updatedResults.firstIndex(where: { $0.productId == productId }) {
+                    // ✅ 기존 값 유지하면서 좋아요 정보만 수정
+                    var updatedProduct = updatedResults[index]
+                    updatedProduct.liked.toggle()
+                    updatedProduct.totalLikes += updatedProduct.liked ? 1 : -1
+
+                    updatedResults[index] = updatedProduct
+
+                    return .concat([
+                        .just(.setResults(updatedResults)),
+                        .just(.showToastMessage(success)),
+                        .just(.showToastMessage(nil))
+                    ])
+                } else {
+                    print("❌ 해당 제품을 찾을 수 없음")
+                    return .empty()
+                }
+
+            case .failure(let error):
+                return .just(.showError(error))
+            }
+        }
+    }
+
 }

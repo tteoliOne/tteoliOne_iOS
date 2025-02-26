@@ -47,6 +47,9 @@ final class RecentSearchViewController: BaseViewController<RecentSearchView> {
             .subscribe(onNext: { [weak self] selectedSearch in
                 UserDefaultsStorage.addRecentSearch(selectedSearch)
                 self?.delegate?.didSelectRecentSearch(selectedSearch)
+                DispatchQueue.main.async {
+                    self?.rootView.tableView.reloadData()
+                }
             })
             .disposed(by: disposeBag)
     }

@@ -2682,6 +2682,7 @@
 				DEVELOPMENT_TEAM = QQN262X7KM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "떠리원";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";
@@ -2720,6 +2721,7 @@
 				DEVELOPMENT_TEAM = QQN262X7KM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "떠리원";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";

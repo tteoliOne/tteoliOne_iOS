@@ -143,21 +143,11 @@ final class ProductListTableViewCell: BaseTableViewCell {
         likeCountLabel.text = "\(likeCount)"
     }
     
-    //    private func bindLikeButton() {
-    //        likeButton.rx.tap
-    //            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
-    //            .subscribe(onNext: { [weak self] in
-    //                guard let self = self, let product = self.product else { return }
-    //                NotificationCenter.default.post(name: .toggleLike, object: product.productId)
-    //            })
-    //            .disposed(by: disposeBag)
-    //    }
-    
     private func bindLikeButton() {
         likeButton.rx.tap
             .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
             .compactMap { [weak self] in self?.product?.productId }
-            .bind(to: likeButtonTapped) // ✅ NotificationCenter 대신 Relay 사용
+            .bind(to: likeButtonTapped)
             .disposed(by: disposeBag)
     }
 }

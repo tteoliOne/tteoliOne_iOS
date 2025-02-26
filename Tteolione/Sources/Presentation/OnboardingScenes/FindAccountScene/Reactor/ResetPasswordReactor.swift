@@ -115,7 +115,7 @@ extension ResetPasswordReactor {
                      decodingType: ServerResponse<String>.self)
             .asObservable()
             .flatMap { [weak self] response -> Observable<Mutation> in
-                guard let self = self else {
+                guard self != nil else {
                     return .empty()
                 }
                 switch handleResponse(response) {
