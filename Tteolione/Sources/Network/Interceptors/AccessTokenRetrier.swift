@@ -47,23 +47,44 @@ final class AccessTokenRetrier: RequestInterceptor {
     
     private func refreshAccessToken(completion: @escaping (Bool) -> Void) {
         let provider = MoyaProvider<TokenAPI>()
+        let fcmToken = UserDefaultsStorage.fcmToken
         let body = ReissueTokenRequestBody(accessToken: UserDefaultsStorage.token,
                                            refreshToken: UserDefaultsStorage.refreshToken,
-                                           targetToken: nil)
+                                           targetToken: fcmToken)
+
         provider.request(.reissueToken(body: body)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let tokenDTO = try JSONDecoder().decode(ServerResponse<TokenDTO>.self, from: response.data)
-                    UserDefaultsStorage.token = tokenDTO.data?.accessToken ?? ""
-                    UserDefaultsStorage.refreshToken = tokenDTO.data?.refreshToken ?? ""
-                    completion(true)
+                    let tokenResponse = try JSONDecoder().decode(ServerResponse<TokenDTO>.self, from: response.data)
+                    let statusCode = tokenResponse.code
+                    switch statusCode {
+                    case 112:
+                        NotificationCenter.default.post(name: .logout, object: nil)
+                        completion(false)
+                    case 113:
+                        NotificationCenter.default.post(name: .logout, object: nil)
+                        completion(false)
+                    case 114:
+                        NotificationCenter.default.post(name: .logout, object: nil)
+                        completion(false)
+                    default:
+                        if let tokenDTO = tokenResponse.data {
+                            UserDefaultsStorage.token = tokenDTO.accessToken ?? ""
+                            UserDefaultsStorage.refreshToken = tokenDTO.refreshToken ?? ""
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
+                    }
+                    
                 } catch {
                     completion(false)
                 }
-            case .failure(let error):
+            case .failure(_):
                 completion(false)
             }
         }
     }
+
 }

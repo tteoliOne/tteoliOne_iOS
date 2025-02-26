@@ -13,7 +13,7 @@ import PhotosUI
 final class PostReceiptViewController: BaseViewController<PostReceiptView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: MainCoordinatorDelegate?
+    weak var delegate: PostCoordinatorDelegate?
     
 }
 
@@ -116,5 +116,5 @@ extension PostReceiptViewController: PHPickerViewControllerDelegate {
 }
 
 extension PostReceiptViewController: DelegateOwner {
-    typealias Delegate = MainCoordinatorDelegate
+    typealias Delegate = PostCoordinatorDelegate
 }

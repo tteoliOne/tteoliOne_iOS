@@ -146,7 +146,7 @@ extension ProfileSetReactor {
             .asObservable()
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
-                case .success(let message):
+                case .success(_):
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))
@@ -163,7 +163,9 @@ extension ProfileSetReactor {
         guard let profileImageData = profile.jpegData(compressionQuality: 0.8) else {
             return .just(.showError(NetworkError.invalidInputImage))
         }
-        let signUpRequest = SocialRequestBody(accessToken: token)
+        let fcmToken = UserDefaultsStorage.fcmToken
+        let signUpRequest = SocialRequestBody(accessToken: token,
+                                              targetToken: fcmToken)
         let body = SocialProfileImageRequestBody(socialRequest: signUpRequest,
                                                  image: profileImageData,
                                                  requestName: "oAuth2KakaoRequest")
@@ -195,7 +197,9 @@ extension ProfileSetReactor {
         guard let profileImageData = profile.jpegData(compressionQuality: 0.8) else {
             return .just(.showError(NetworkError.invalidInputImage))
         }
-        let signUpRequest = SocialRequestBody(appleRefreshToken: token)
+        let fcmToken = UserDefaultsStorage.fcmToken
+        let signUpRequest = SocialRequestBody(targetToken: fcmToken,
+                                              appleRefreshToken: token)
         let body = SocialProfileImageRequestBody(socialRequest: signUpRequest,
                                                  image: profileImageData,
                                                  requestName: "oAuth2AppleRequest")

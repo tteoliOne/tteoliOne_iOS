@@ -84,6 +84,8 @@ enum AppText {
         static let nickname = "닉네임"
         static let thumb = "따봉"
         static let intro = "소개"
+        static let addressSet = "주소 설정"
+        static let withdraw = "계정을 탈퇴하시면 게시글, 채팅, 좋아요 등 모든 정보들이 삭제됩니다.\n계정 삭제 후 14일 뒤에 다시 가입 하실 수 있습니다.\n정말로 삭제하십니까?"
     }
     
     enum MyProduct {
@@ -92,6 +94,15 @@ enum AppText {
         static let likeList = "저장글 목록"
         static let review = "후기 목록"
         static let setting = "설정"
+        static let profileSetting = "프로필 설정"
+        static let resetPassword = "비밀번호 변경"
+        static let withdraw = "탈퇴하기"
+    }
+    
+    enum ResetPassword {
+        static let checkPassword = "새 비밀번호 확인"
+        static let newPassword = "새 비밀번호"
+        static let originalPassword = "기존 비밀번호 입력"
     }
     
 }

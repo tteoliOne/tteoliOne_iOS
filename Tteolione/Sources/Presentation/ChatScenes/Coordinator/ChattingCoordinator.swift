@@ -15,15 +15,18 @@ final class ChattingCoordinator: ChattingCoordinatorDelegate {
     private let dependency: AppDependency
     private let chatId: Int
     private let productId: Int
+    private let chatTitle: String
     
     init(navigationController: UINavigationController,
          dependency: AppDependency,
          chatId: Int,
-         productId: Int) {
+         productId: Int,
+         title: String) {
         self.navigationController = navigationController
         self.dependency = dependency
         self.chatId = chatId
         self.productId = productId
+        self.chatTitle = "\(title) 채팅"
     }
     
     deinit {
@@ -41,12 +44,39 @@ final class ChattingCoordinator: ChattingCoordinatorDelegate {
         )
         viewController.hidesBottomBarWhenPushed = true
         navigationController.setNavigationBarHidden(false, animated: false)
+        viewController.title = chatTitle
         show(viewController)
     }
 }
 
 extension ChattingCoordinator {
+    func pushReviewView(productId: Int) {
+        let reactor = ReviewPopReactor(networkChatProvider: dependency.chatNetworkProvider,
+                                       productId: productId)
+        let viewController = createViewController(
+            ofType: ReviewPopViewController.self,
+            with: reactor,
+            delegate: self
+        )
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.view.backgroundColor = .clear
+        show(viewController, as: .present)
+    }
+    
+    func showReportView(reportType: ReportType, reportId: Int, opponentId: Int) {
+        let coordinator = ReportCoordinator(navigationController: navigationController,
+                                            dependency: dependency,
+                                            reportType: reportType,
+                                            reportId: reportId,
+                                            opponentId: opponentId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
     func finishView() {
         finishAllChildren()
+        popVC()
     }
 }

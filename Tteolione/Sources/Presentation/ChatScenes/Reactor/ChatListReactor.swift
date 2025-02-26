@@ -22,6 +22,7 @@ final class ChatListReactor: Reactor {
         case tableIndexTapped(Bool)
         case setSelectedChatNo(Int?)
         case setSelectedProductNo(Int?)
+        case setOpponentName(String?)
     }
     
     struct State {
@@ -30,9 +31,9 @@ final class ChatListReactor: Reactor {
         var isTableIndexTapped: Bool = false
         var selectedChatNo: Int?
         var selectedProductNo: Int?
+        var opponentName: String?
     }
     
-    private var chatWebSocketService: ChatWebSocketService?
     private let networkChatProvider: NetworkProvider<ChatAPI>
     let initialState = State()
     
@@ -49,11 +50,14 @@ extension ChatListReactor {
             return fetchChatList()
             
         case let .tableIndexTap(chatNo, productNo):
-            chatWebSocketService = ChatWebSocketService(chatId: chatNo,
-                                                        productId: productNo)
+            guard let chatList = currentState.setChatListDTO,
+                  let opponentName = chatList.first(where: { $0.chatNo == chatNo })?.participant.username else {
+                return .empty()
+            }
             return .concat([
                 .just(.setSelectedChatNo(chatNo)),
                 .just(.setSelectedProductNo(productNo)),
+                .just(.setOpponentName(opponentName)),
                 .just(.tableIndexTapped(true)),
                 .just(.tableIndexTapped(false))
             ])
@@ -82,6 +86,9 @@ extension ChatListReactor {
             
         case .setSelectedProductNo(let productNo):
             newState.selectedProductNo = productNo
+            
+        case .setOpponentName(let name):
+            newState.opponentName = name
         }
         
         return newState

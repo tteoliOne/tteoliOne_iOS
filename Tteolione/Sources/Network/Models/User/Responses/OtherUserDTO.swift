@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OtherUserDTO: Decodable {
+struct OtherUserDTO: Equatable, Decodable {
     
     let profile: String
     let nickname: String

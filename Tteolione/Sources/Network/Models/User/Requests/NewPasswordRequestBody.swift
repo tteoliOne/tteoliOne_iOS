@@ -9,7 +9,7 @@ import Foundation
 
 struct NewPasswordRequestBody: Encodable {
     
-    let passwrod: String
+    let password: String
     let newPassword: String
     let newPasswordConfirm: String
     

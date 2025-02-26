@@ -8,14 +8,22 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
 
 final class ProductListTableViewCell: BaseTableViewCell {
     
+    let likeButtonTapped = PublishRelay<Int>()
+    var product: ProductPreviewDTO? {
+        didSet {
+            configure()
+            bindLikeButton()
+        }
+    }
     var disposeBag = DisposeBag()
     private let containerView = ShadowView()
     private let productImageView: LoadImageView = {
         let imageView = LoadImageView()
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = 20
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         return imageView
     }()
@@ -53,10 +61,21 @@ final class ProductListTableViewCell: BaseTableViewCell {
         label.font = Font.regular13
         return label
     }()
+    private let completedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .myAppMain.withAlphaComponent(0.5)
+        view.layer.cornerRadius = 20
+        view.isHidden = true
+        return view
+    }()
+    private let completedLabel = AndongLabel(text: "공유 완료",
+                                             font: Font.Andong25,
+                                             color: .white)
     
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        bindLikeButton()
     }
     
     override func configureHierarchy() {
@@ -64,7 +83,8 @@ final class ProductListTableViewCell: BaseTableViewCell {
         [productImageView, titleLabel,
          markImageView, distanceLabel,
          unitPriceLabel, likeButton,
-         likeCountLabel].forEach { containerView.addSubview($0) }
+         likeCountLabel, completedView].forEach { containerView.addSubview($0) }
+        [completedLabel].forEach { completedView.addSubview($0) }
     }
     
     override func configureLayout() {
@@ -108,28 +128,49 @@ final class ProductListTableViewCell: BaseTableViewCell {
             make.centerX.equalTo(likeButton)
             make.top.equalTo(likeButton.snp.bottom).offset(4)
         }
+        
+        completedView.snp.makeConstraints { make in
+            make.edges.equalTo(containerView)
+        }
+        
+        completedLabel.snp.makeConstraints { make in
+            make.center.equalTo(completedView)
+        }
     }
     
     private func updateLikeButton(isLiked: Bool, likeCount: Int) {
         likeButton.updateLikeState(isLiked: isLiked)
         likeCountLabel.text = "\(likeCount)"
     }
+    
+    private func bindLikeButton() {
+        likeButton.rx.tap
+            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+            .compactMap { [weak self] in self?.product?.productId }
+            .bind(to: likeButtonTapped)
+            .disposed(by: disposeBag)
+    }
 }
 
 extension ProductListTableViewCell {
-    func configure(with data: ProductPreviewDTO) {
-        if let imageUrl = URL(string: data.imageUrl) {
+    private func configure() {
+        guard let product = product else { return }
+        if let imageUrl = URL(string: product.imageUrl) {
             productImageView.loadImage(from: imageUrl)
         } else {
             productImageView.image = nil
         }
-        titleLabel.text = data.title
-        distanceLabel.text = String(format: "%.fkm 도보 \(data.walkingTime)분",
-                                    data.walkingDistance / 1000)
-        unitPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(data.unitPrice))원"
-        likeCountLabel.text = "\(data.totalLikes)"
-        likeButton.updateLikeState(isLiked: data.liked)
-        likeButton.isSelected = data.liked
+        titleLabel.text = product.title
+        distanceLabel.text = String(format: "%.fkm 도보 \(product.walkingTime)분",
+                                    product.walkingDistance / 1000)
+        unitPriceLabel.text = "개당 \(FormatterManager.shared.numberFormatter(product.unitPrice))원"
+        likeCountLabel.text = "\(product.totalLikes)"
+        likeButton.updateLikeState(isLiked: product.liked)
+        likeButton.isSelected = product.liked
+        if product.soldStatus == "eSoldOut" {
+            completedView.isHidden = false
+        } else {
+            completedView.isHidden = true
+        }
     }
-    
 }

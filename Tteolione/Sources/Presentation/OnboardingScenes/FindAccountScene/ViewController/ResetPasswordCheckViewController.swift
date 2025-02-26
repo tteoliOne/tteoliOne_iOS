@@ -13,6 +13,9 @@ final class ResetPasswordCheckViewController: BaseViewController<ResetPasswordCh
     var disposeBag = DisposeBag()
     weak var delegate: FindAccountCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension ResetPasswordCheckViewController: View {

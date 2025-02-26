@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatContentDTO: Decodable {
+struct ChatContentDTO: Equatable, Decodable {
     
     let loginId: String
     let productId: Int
@@ -26,7 +26,7 @@ struct ChatContentDTO: Decodable {
     
 }
 
-struct ChatContentListDTO: Decodable {
+struct ChatContentListDTO: Equatable, Decodable {
     
     let id: String
     let chatRoomNo: Int

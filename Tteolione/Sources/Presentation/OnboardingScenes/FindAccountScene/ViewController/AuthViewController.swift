@@ -18,6 +18,9 @@ final class AuthViewController: BaseViewController<AuthView> {
         reactor?.action.onNext(.startTimer)
     }
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension AuthViewController: View {

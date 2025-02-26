@@ -39,3 +39,26 @@ enum StatusType: String {
     case eSoldOut
     case saved
 }
+
+enum ChatMessageType {
+    case received
+    case sent
+    case notice
+}
+
+struct ChatMessage {
+    let text: String
+    let type: ChatMessageType
+    let timestamp: String
+    let opponentProfile: String?
+    let unRead: Bool?
+    
+    var isMine: Bool {
+        return type == .sent
+    }
+}
+
+enum AddressViewType: String {
+    case login
+    case change
+}

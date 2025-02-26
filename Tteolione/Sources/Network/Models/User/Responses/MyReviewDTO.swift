@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MyReviewDTO: Decodable {
+struct MyReviewDTO: Equatable, Decodable {
     
     let productId: Int
     let reviewId: Int

@@ -50,3 +50,18 @@ final class MyProductListView: BaseView {
     }
     
 }
+
+extension MyProductListView {
+    func setupTitle(with value: StatusType) {
+        switch value {
+        case .eNew:
+            titleLabel.text = AppText.MyProduct.myShare
+            
+        case .eSoldOut:
+            titleLabel.text = AppText.MyProduct.complete
+            
+        case .saved:
+            titleLabel.text = AppText.MyProduct.likeList
+        }
+    }
+}

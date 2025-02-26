@@ -13,6 +13,9 @@ final class NicknameViewController: BaseViewController<NicknameView> {
     var disposeBag = DisposeBag()
     weak var delegate: JoinCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension NicknameViewController: View {

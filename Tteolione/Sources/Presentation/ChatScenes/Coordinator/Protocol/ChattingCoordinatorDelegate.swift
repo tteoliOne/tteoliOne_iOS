@@ -9,4 +9,6 @@ import Foundation
 
 protocol ChattingCoordinatorDelegate: Coordinator {
     func finishView()
+    func pushReviewView(productId: Int)
+    func showReportView(reportType: ReportType, reportId: Int, opponentId: Int)
 }

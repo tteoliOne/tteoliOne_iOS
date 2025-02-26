@@ -19,6 +19,7 @@ final class ProductDetailReactor: Reactor {
         case deletePost
         case reportPost
         case callButtonTap
+        case profileTap
     }
     
     enum Mutation {
@@ -31,10 +32,14 @@ final class ProductDetailReactor: Reactor {
         case showReportScreen(Bool)
         case callButtonTapped(Bool)
         case setChatDto(ChatDTO)
+        case profileTapped(Bool)
+        case setSellerId(Int)
+        case setOpponentName(String?)
     }
 
     struct State {
         var productId: Int = 0
+        var sellerId: Int = 0
         var products: ProductDetailDTO?
         var errorMessage: String?
         var isReceiptTapped: Bool = false
@@ -45,16 +50,18 @@ final class ProductDetailReactor: Reactor {
         var isReportScreenShown: Bool = false
         var isCallButtonTapped: Bool = false
         var chatDto: ChatDTO?
+        var isProfileTap: Bool = false
+        var opponentName: String?
     }
     
     private let networkPorductProvider: NetworkProvider<ProductServiceAPI>
     private let networkChatProvider: NetworkProvider<ChatAPI>
     var initialState: State = State()
     
-    init(networkPorductProvider: NetworkProvider<ProductServiceAPI>,
+    init(networkProductProvider: NetworkProvider<ProductServiceAPI>,
          networkChatProvider: NetworkProvider<ChatAPI>,
          productId: Int) {
-        self.networkPorductProvider = networkPorductProvider
+        self.networkPorductProvider = networkProductProvider
         self.networkChatProvider = networkChatProvider
         self.initialState = State(productId: productId)
     }
@@ -93,6 +100,13 @@ extension ProductDetailReactor {
             
         case .callButtonTap:
             return createChat(productId: currentState.productId)
+            
+        case .profileTap:
+            print("???????")
+            return .concat([
+                .just(.profileTapped(true)),
+                .just(.profileTapped(false))
+            ])
         }
     }
     
@@ -133,6 +147,15 @@ extension ProductDetailReactor {
             
         case .setChatDto(let dto):
             newState.chatDto = dto
+            
+        case .profileTapped(let tapped):
+            newState.isProfileTap = tapped
+            
+        case .setSellerId(let id):
+            newState.sellerId = id
+            
+        case .setOpponentName(let name):
+            newState.opponentName = name
         }
         
         return newState
@@ -150,7 +173,9 @@ extension ProductDetailReactor {
             switch handleResponse(response) {
             case .success(let dto):
                 return .concat([
-                    .just(.setProducts(dto))
+                    .just(.setProducts(dto)),
+                    .just(.setSellerId(dto.sellerId)),
+                    .just(.setOpponentName(dto.sellerNickname))
                 ])
             case .failure(let error):
                 return .just(.showError(error))

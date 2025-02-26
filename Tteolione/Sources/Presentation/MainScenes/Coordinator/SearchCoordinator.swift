@@ -65,8 +65,13 @@ extension SearchCoordinator {
         switchChildViewController(to: searchSuggestionsVC, in: viewController)
     }
 
-    func switchToResults(with results: [ProductPreviewDTO], in viewController: SearchViewController) {
-        searchResultsVC.updateSearchResults(with: results)
+    func switchToResults(with results: [ProductPreviewDTO],
+                         in viewController: SearchViewController,
+                         query: String) {
+        searchResultsVC.updateSearchResults(with: results,
+                                            query: query)
+        searchResultsVC.reactor = viewController.reactor
+        searchResultsVC.delegate = self
         switchChildViewController(to: searchResultsVC, in: viewController)
     }
     
@@ -82,5 +87,14 @@ extension SearchCoordinator {
         parentVC.rootView.childContainerView.addSubview(newVC.view)
         
         newVC.didMove(toParent: parentVC)
+    }
+    
+    func pushDetailViewController(productId: Int) {
+        let coordinator = ProductDetailCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   productId: productId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
 }

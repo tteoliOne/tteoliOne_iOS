@@ -57,17 +57,20 @@ extension ChatListViewController: View {
     
     func bindNavigation(_ reactor: ChatListReactor) {
         reactor.state
-            .compactMap { state -> (Int, Int)? in
+            .compactMap { state -> (Int, Int, String)? in
                 guard state.isTableIndexTapped,
                       let chatNo = state.selectedChatNo,
-                      let productNo = state.selectedProductNo else {
+                      let productNo = state.selectedProductNo,
+                      let opponentName = state.opponentName else {
                     return nil
                 }
-                return (chatNo, productNo)
+                return (chatNo, productNo, opponentName)
             }
             .bind(with: self) { owner, chatData in
-                let (chatNo, productNo) = chatData
-                owner.delegate?.showChatView(chatId: chatNo, productId: productNo)
+                let (chatNo, productNo, opponentName) = chatData
+                owner.delegate?.showChatView(chatId: chatNo,
+                                             productId: productNo,
+                                             opponentName: opponentName)
             }
             .disposed(by: disposeBag)
     }

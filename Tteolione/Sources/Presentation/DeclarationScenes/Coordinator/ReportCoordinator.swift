@@ -15,15 +15,18 @@ final class ReportCoordinator: NSObject, ReportCoordinatorDelegate {
     private let dependency: AppDependency
     private let reportType: ReportType
     private let reportId: Int
+    private let opponentId: Int?
     
     init(navigationController: UINavigationController,
          dependency: AppDependency,
          reportType: ReportType,
-         reportId: Int) {
+         reportId: Int,
+         opponentId: Int? = nil) {
         self.navigationController = navigationController
         self.dependency = dependency
         self.reportType = reportType
         self.reportId = reportId
+        self.opponentId = opponentId
     }
     
     func start() {
@@ -36,7 +39,9 @@ extension ReportCoordinator {
     
     func pushDeclarationViewController() {
         let reactor = DeclarationReactor(networkProvider: dependency.userProvider,
-                                         productId: reportId)
+                                         reportId: reportId,
+                                         reportType: reportType,
+                                         opponent: opponentId)
         let viewController = createViewController(
             ofType: DeclarationViewController.self,
             with: reactor,
@@ -78,7 +83,9 @@ extension ReportCoordinator {
     
     func pushEtcReportViewController() {
         let reactor = EtcReportReactor(networkProvider: dependency.userProvider,
-                                       productId: reportId)
+                                       reportId: reportId,
+                                       reportType: reportType,
+                                       opponentId: opponentId)
         let viewController = createViewController(
             ofType: EtcReportViewController.self,
             with: reactor,

@@ -36,16 +36,24 @@ extension MainViewController: View {
             .disposed(by: disposeBag)
         
         rootView.tableView.rx.willDisplayCell
-            .compactMap { cell, indexPath -> MainTableViewCell? in
-                return cell as? MainTableViewCell
+            .compactMap { cell, indexPath -> (MainTableViewCell, IndexPath)? in
+                guard let mainCell = cell as? MainTableViewCell else { return nil }
+                return (mainCell, indexPath)
             }
-            .subscribe(onNext: { tableViewCell in
-                tableViewCell.likeButtonTapped
+            .subscribe(onNext: { (tableViewCell, indexPath) in
+                tableViewCell.nextButtonTapped
                     .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
-                    .subscribe(onNext: { productId in
-                        reactor.action.onNext(.likeButtonTap(productId))
+                    .subscribe(onNext: {
+                        reactor.action.onNext(.nextButtonTap(indexPath.item + 1))
                     })
                     .disposed(by: tableViewCell.disposeBag)
+            })
+            .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(.toggleLike)
+            .compactMap { $0.object as? Int }
+            .subscribe(onNext: { productId in
+                reactor.action.onNext(.toggleLike(productId))
             })
             .disposed(by: disposeBag)
     }
@@ -66,7 +74,7 @@ extension MainViewController: View {
                 cell.collectionView.rx.itemSelected
                     .subscribe(onNext: { [weak self] indexPath in
                         let selectedProduct = productList.products[indexPath.item]
-                        self?.delegate?.pushProductDetailViewController(productId: selectedProduct.productId)
+                        self?.delegate?.pushProductDetailView(productId: selectedProduct.productId)
                     })
                     .disposed(by: cell.disposeBag)
             }
@@ -89,6 +97,15 @@ extension MainViewController: View {
                 owner.adjustButtonShape(forScrollOffset: offset)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.showToastMessage }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, value in
+                owner.view.makeToast(value)
+            }
+            .disposed(by: disposeBag)
     }
     
     func bindNavigation(_ reactor: MainReactor) {
@@ -101,6 +118,17 @@ extension MainViewController: View {
                                                        productDetail: nil)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.categoryId }
+            .distinctUntilChanged()
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, id in
+                owner.delegate?.pushCategoryProudctViewController(categoryId: id)
+            }
+            .disposed(by: disposeBag)
+
     }
 }
 

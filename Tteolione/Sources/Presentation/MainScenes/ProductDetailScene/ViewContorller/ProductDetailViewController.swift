@@ -7,13 +7,18 @@
 
 import ReactorKit
 import RxCocoa
+import RxGesture
 import UIKit
 
 final class ProductDetailViewController: BaseNavigationViewController<ProductDetailView> {
     
     var disposeBag = DisposeBag()
-    weak var delegate: MainCoordinatorDelegate?
+    weak var delegate: ProductDetailCoordinatorDelegate?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 }
 
 extension ProductDetailViewController: View {
@@ -42,6 +47,12 @@ extension ProductDetailViewController: View {
         
         rootView.callButton.rx.tap
             .map { ProductDetailReactor.Action.callButtonTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.profileImageView.rx.tapGesture()
+            .when(.recognized)
+            .map { _ in ProductDetailReactor.Action.profileTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -105,12 +116,29 @@ extension ProductDetailViewController: View {
             .disposed(by: disposeBag)
         
         reactor.state
-            .compactMap { state -> ChatDTO? in
-                guard state.isCallButtonTapped else { return nil }
-                return state.chatDto
+            .compactMap { state -> (ChatDTO, String)? in
+                guard state.isCallButtonTapped,
+                let dto = state.chatDto,
+                let opponentName = state.opponentName else {
+                    return nil
+                }
+                return (dto, opponentName)
             }
-            .bind(with: self) { owner, dto in
-                owner.delegate?.showChatView(chatId: dto.chatId, productId: dto.productNo)
+            .bind(with: self) { owner, data in
+                let (dto, opponentName) = data
+                owner.delegate?.showChatView(chatId: dto.chatId,
+                                             productId: dto.productNo,
+                                             opponentName: opponentName)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .compactMap { state -> Int? in
+                guard state.isProfileTap else { return nil }
+                return state.sellerId
+            }
+            .bind(with: self) { owner, id in
+                owner.delegate?.showOpponentView(userId: id)
             }
             .disposed(by: disposeBag)
     }
@@ -159,5 +187,5 @@ extension ProductDetailViewController {
 }
 
 extension ProductDetailViewController: DelegateOwner {
-    typealias Delegate = MainCoordinatorDelegate
+    typealias Delegate = ProductDetailCoordinatorDelegate
 }

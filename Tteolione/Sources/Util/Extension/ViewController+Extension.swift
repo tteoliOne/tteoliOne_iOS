@@ -22,6 +22,7 @@ extension UIViewController {
     
     func showAlert(title: String? = nil,
                    message: String,
+                   cancelTitle: String? = nil,
                    completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
@@ -29,6 +30,11 @@ extension UIViewController {
         }
         okAction.setValue(UIColor.myAppMain, forKey: "titleTextColor")
         alert.addAction(okAction)
+        if let cancelTitle = cancelTitle {
+            let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
+            cancelAction.setValue(UIColor.myAppMain, forKey: "titleTextColor")
+            alert.addAction(cancelAction)
+        }
         self.present(alert, animated: true, completion: nil)
     }
     

@@ -16,9 +16,9 @@ final class ChatMessageCell: BaseTableViewCell {
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = UIImage(named: "31photo") // 기본 프로필 이미지 설정
-        imageView.isHidden = true // 내 메시지일 경우 숨김
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "31photo")
+        imageView.isHidden = true
         return imageView
     }()
     
@@ -47,11 +47,20 @@ final class ChatMessageCell: BaseTableViewCell {
         return view
     }()
     
+    private let unreadLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .myAppMain
+        label.font = Font.regular12
+        label.text = "1"
+        return label
+    }()
+    
     override func configureHierarchy() {
         contentView.addSubview(profileImageView)
         contentView.addSubview(containerView)
         containerView.addSubview(messageLabel)
         containerView.addSubview(timeLabel)
+        containerView.addSubview(unreadLabel)
     }
     
     override func configureLayout() {
@@ -70,8 +79,8 @@ final class ChatMessageCell: BaseTableViewCell {
         messageLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(12)
             make.top.bottom.equalToSuperview().inset(8)
-            make.width.greaterThanOrEqualTo(20) // 최소 크기 설정
-            make.height.greaterThanOrEqualTo(20) // 최소 크기 설정
+            make.width.greaterThanOrEqualTo(20)
+            make.height.greaterThanOrEqualTo(20)
         }
         
         timeLabel.snp.makeConstraints { make in
@@ -82,9 +91,14 @@ final class ChatMessageCell: BaseTableViewCell {
     func configure(with message: ChatMessage) {
         messageLabel.text = message.text
         timeLabel.text = message.timestamp
-        
         if message.isMine {
             profileImageView.isHidden = true
+                unreadLabel.isHidden = false
+            if message.unRead ?? true {
+                unreadLabel.isHidden = false
+            } else {
+                unreadLabel.isHidden = true
+            }
             containerView.snp.remakeConstraints { make in
                 make.top.equalToSuperview().offset(8)
                 make.bottom.equalToSuperview().offset(-8)
@@ -96,8 +110,23 @@ final class ChatMessageCell: BaseTableViewCell {
                 make.trailing.equalTo(containerView.snp.leading).offset(-4)
                 make.bottom.equalTo(containerView)
             }
+            
+            unreadLabel.snp.remakeConstraints { make in
+                make.leading.equalTo(timeLabel).inset(-8)
+                make.centerY.equalTo(timeLabel)
+            }
         } else {
             profileImageView.isHidden = false
+            unreadLabel.isHidden = true
+            profileImageView.image = UIImage(named: "31photo")
+            
+            if let profilePath = message.opponentProfile, !profilePath.isEmpty {
+                let profileURL = URL(fileURLWithPath: profilePath)
+                if let imageData = try? Data(contentsOf: profileURL), let image = UIImage(data: imageData) {
+                    profileImageView.image = image
+                }
+            }
+            
             profileImageView.snp.remakeConstraints { make in
                 make.leading.equalToSuperview().offset(8)
                 make.bottom.equalTo(containerView)

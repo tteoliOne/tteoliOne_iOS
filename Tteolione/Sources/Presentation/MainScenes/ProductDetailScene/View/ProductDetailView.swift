@@ -26,7 +26,7 @@ final class ProductDetailView: BaseView {
         return pageControl
     }()
     private let productFieldView = UIView()
-    private let profileImageView = CircleImageView(joinImage: .setProfile,
+    let profileImageView = CircleImageView(joinImage: .setProfile,
                                                    corner: 30,
                                                    border: 1)
     private let nicknameLabel = RegularLabel(text: "닉네임",
@@ -216,6 +216,8 @@ final class ProductDetailView: BaseView {
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(profileImageView.snp.centerY)
             make.leading.equalTo(profileImageView.snp.trailing).offset(32)
+            make.trailing.lessThanOrEqualTo(productFieldView.snp.trailing).inset(24)
+            make.width.lessThanOrEqualTo(Device.screenWidth * 0.6)
         }
         
         boundarView.snp.makeConstraints { make in
@@ -270,12 +272,13 @@ final class ProductDetailView: BaseView {
         
         buyPriceLabel.snp.makeConstraints { make in
             make.top.equalTo(buyPriceImageView)
-            make.leading.equalTo(buyPriceImageView.snp.trailing).offset(8)
+            make.leading.equalTo(buyPriceImageView.snp.trailing).offset(16)
         }
         
         buyPriceWonLabel.snp.makeConstraints { make in
             make.top.equalTo(buyPriceLabel.snp.bottom).offset(4)
-            make.centerX.equalTo(buyPriceLabel)
+            make.leading.equalTo(buyPriceImageView.snp.trailing).offset(4)
+            make.trailing.equalTo(buyPriceFieldView).offset(-4)
         }
         
         buyCountFieldView.snp.makeConstraints { make in
@@ -293,12 +296,13 @@ final class ProductDetailView: BaseView {
         
         buyCountLabel.snp.makeConstraints { make in
             make.top.equalTo(buyCountImageView)
-            make.leading.equalTo(buyCountImageView.snp.trailing).offset(8)
+            make.leading.equalTo(buyCountImageView.snp.trailing).offset(16)
         }
         
         buyCountPCSLabel.snp.makeConstraints { make in
             make.top.equalTo(buyCountLabel.snp.bottom).offset(4)
-            make.centerX.equalTo(buyCountLabel)
+            make.leading.equalTo(buyCountImageView.snp.trailing).offset(4)
+            make.trailing.equalTo(buyCountFieldView).offset(-4)
         }
         
         sharePriceFieldView.snp.makeConstraints { make in
@@ -316,12 +320,13 @@ final class ProductDetailView: BaseView {
         
         sharePriceLabel.snp.makeConstraints { make in
             make.top.equalTo(sharePriceImageView)
-            make.leading.equalTo(sharePriceImageView.snp.trailing).offset(8)
+            make.leading.equalTo(sharePriceImageView.snp.trailing).offset(16)
         }
         
         sharePriceWonLabel.snp.makeConstraints { make in
             make.top.equalTo(sharePriceLabel.snp.bottom).offset(4)
-            make.centerX.equalTo(sharePriceLabel)
+            make.leading.equalTo(sharePriceImageView.snp.trailing).offset(4)
+            make.trailing.equalTo(sharePriceFieldView).offset(-4)
         }
         
         shareCountFieldView.snp.makeConstraints { make in
@@ -339,12 +344,13 @@ final class ProductDetailView: BaseView {
         
         shareCountLabel.snp.makeConstraints { make in
             make.top.equalTo(shareCountImageView)
-            make.leading.equalTo(shareCountImageView.snp.trailing).offset(8)
+            make.leading.equalTo(shareCountImageView.snp.trailing).offset(16)
         }
         
         shareCountPCSLabel.snp.makeConstraints { make in
             make.top.equalTo(shareCountLabel.snp.bottom).offset(4)
-            make.centerX.equalTo(shareCountLabel)
+            make.leading.equalTo(shareCountImageView.snp.trailing).offset(4)
+            make.trailing.equalTo(shareCountFieldView).offset(-4)
         }
         
         detailView.snp.makeConstraints { make in
@@ -398,6 +404,17 @@ final class ProductDetailView: BaseView {
         buyCountImageView.backgroundColor = .white
         sharePriceImageView.backgroundColor = .white
         shareCountImageView.backgroundColor = .white
+        
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.7
+        titleLabel.numberOfLines = 1
+        
+        [buyPriceWonLabel, buyCountPCSLabel, sharePriceWonLabel, shareCountPCSLabel].forEach {
+            $0.adjustsFontSizeToFitWidth = true
+            $0.minimumScaleFactor = 0.7
+            $0.numberOfLines = 1
+            $0.textAlignment = .center
+        }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideReceiptPopup))
         receiptPopupView.addGestureRecognizer(tapGesture)

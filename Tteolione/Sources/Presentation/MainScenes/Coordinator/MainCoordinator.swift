@@ -13,11 +13,23 @@ final class MainCoordinator: NSObject, MainCoordinatorDelegate {
     var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     private let dependency: AppDependency
+    private var leftButton: UIButton?
     
     init(navigationController: UINavigationController,
          dependency: AppDependency) {
         self.navigationController = navigationController
         self.dependency = dependency
+        super.init()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateNickname),
+            name: .nicknameDidChange,
+            object: nil
+        )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .nicknameDidChange, object: nil)
     }
     
     func start() {
@@ -37,106 +49,44 @@ extension MainCoordinator {
     
     func pushPostViewController(viewType: PostViewType,
                                 productDetail: ProductDetailDTO? = nil) {
-        let reactor = PostReactor(viewType: viewType,
-                                  productDetail: productDetail)
-        let viewController = createViewController(
-            ofType: PostViewController.self,
-            with: reactor,
-            delegate: self
-        )
-        navigationController.setNavigationBarHidden(false, animated: false)
-        show(viewController)
+        let coordinator = PostCoordinator(navigationController: navigationController,
+                                          dependency: dependency,
+                                          viewType: viewType,
+                                          productDetail: productDetail)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
     }
     
-    func pushProductDetailViewController(productId: Int) {
-        let reactor = ProductDetailReactor(networkPorductProvider: dependency.productServiceProvider,
-                                           networkChatProvider: dependency.chatNetworkProvider,
-                                           productId: productId)
+    func pushProductDetailView(productId: Int) {
+        let coordinator = ProductDetailCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   productId: productId)
+        coordinator.parentCoordinator = self
+        addChildCoordinator(coordinator)
+        coordinator.start()
+    }
+    
+    func pushCategoryProudctViewController(categoryId: Int) {
+        let reactor = CategoryProductReactor(networkProvider: dependency.productServiceProvider,
+                                             categoryId: categoryId)
         let viewController = createViewController(
-            ofType: ProductDetailViewController.self,
+            ofType: CategoryProductViewController.self,
             with: reactor,
             delegate: self
         )
+        viewController.title = NavigationTitle.main.title
         viewController.hidesBottomBarWhenPushed = true
         show(viewController)
     }
     
-    func pushMapViewController() {
-        let reactor = MapReactor()
-        let viewController = createViewController(
-            ofType: MapViewController.self,
-            with: reactor,
-            delegate: self
-        )
-        if let postViewController = navigationController.viewControllers.last as? PostViewController {
-            viewController.delegates = postViewController
-        }
-        let rightButton = UIBarButtonItem(title: "완료",
-                                          style: .done,
-                                          target: self,
-                                          action: #selector(didTapDoneButton))
-        viewController.navigationItem.rightBarButtonItem = rightButton
-        show(viewController)
-    }
-    
-    func pushPostReceiptViewController(with viewType: PostViewType,
-                                       productRequestBody: ProductRequestBody,
-                                       productImages: [UIImage],
-                                       receiptImage: UIImage?,
-                                       productId: Int? = nil) {
-        let reactor = PostReceiptReactor(viewType: viewType,
-                                         networkProvider: dependency.productServiceProvider,
-                                         response: productRequestBody,
-                                         images: productImages,
-                                         receiptImage: receiptImage,
-                                         productId: productId)
-        let viewController = createViewController(
-            ofType: PostReceiptViewController.self,
-            with: reactor,
-            delegate: self
-        )
-        viewController.modalPresentationStyle = .pageSheet
-        
-        if let sheet = viewController.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.preferredCornerRadius = 20
-            sheet.largestUndimmedDetentIdentifier = .large
-        }
-        show(viewController, as: .present)
-    }
-    
-    func showReportView(reportType: ReportType, reportId: Int) {
-        let coordinator = ReportCoordinator(navigationController: navigationController,
-                                            dependency: dependency,
-                                            reportType: reportType,
-                                            reportId: reportId)
+    func pushDetailViewController(productId: Int) {
+        let coordinator = ProductDetailCoordinator(navigationController: navigationController,
+                                                   dependency: dependency,
+                                                   productId: productId)
         coordinator.parentCoordinator = self
         addChildCoordinator(coordinator)
         coordinator.start()
-    }
-    
-    func showChatView(chatId: Int, productId: Int) {
-        let coordinator = ChattingCoordinator(navigationController: navigationController,
-                                              dependency: dependency,
-                                              chatId: chatId,
-                                              productId: productId)
-        coordinator.parentCoordinator = self
-        addChildCoordinator(coordinator)
-        coordinator.start()
-    }
-    
-    func dismissAndPop() {
-        navigationController.dismiss(animated: true) { [weak navigationController] in
-            guard let navigationController = navigationController else { return }
-            navigationController.popViewController(animated: true)
-        }
-    }
-    
-    @objc private func didTapDoneButton() {
-        if let mapViewController = navigationController.viewControllers.last as? MapViewController {
-            mapViewController.completeSelection()
-        }
-        navigationController.popViewController(animated: true)
     }
     
     private func configureNavBarAppearance() {
@@ -156,7 +106,9 @@ extension MainCoordinator {
     
     private func configureNavBarButtons(for viewController: UIViewController) {
         let leftButton = UIButton()
-        leftButton.setTitle("내 이", for: .normal)
+        self.leftButton = leftButton
+        let nickname = UserDefaultsStorage.nickname
+        leftButton.setTitle(nickname, for: .normal)
         leftButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         leftButton.frame = CGRect(x: 0, y: 0, width: 70, height: 30)
         leftButton.setTitleColor(.black, for: .normal)
@@ -193,6 +145,28 @@ extension MainCoordinator {
     
     @objc private func didTapLeftButton() {
         showSideMenu()
+    }
+    
+    @objc private func updateNickname() {
+        let newNickname = UserDefaultsStorage.nickname
+        print("작동: \(newNickname)")
+        
+        DispatchQueue.main.async {
+            self.leftButton?.setTitle(newNickname, for: .normal)
+            self.leftButton?.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            self.leftButton?.setTitleColor(.black, for: .normal)
+            self.leftButton?.sizeToFit()
+            
+            let spacing: CGFloat = 3
+            let titleSize = self.leftButton?.titleLabel?.intrinsicContentSize ?? .zero
+            self.leftButton?.titleEdgeInsets = UIEdgeInsets(top: 0, left: -(self.leftButton?.imageView?.frame.width ?? 0) - spacing,
+                                                            bottom: 0,
+                                                            right: (self.leftButton?.imageView?.frame.width ?? 0) + spacing)
+            self.leftButton?.imageEdgeInsets = UIEdgeInsets(top: 0, left: titleSize.width + spacing,
+                                                            bottom: 0,
+                                                            right: -(titleSize.width) - spacing)
+            self.navigationController.navigationBar.layoutIfNeeded()
+        }
     }
     
 }

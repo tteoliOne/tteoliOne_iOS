@@ -35,6 +35,7 @@ enum UserDefaultsStorage {
         case recentSearches
         case accessToken
         case refreshToken
+        case fcmToken
         case userID
         case nickname
         case typeLogin
@@ -51,11 +52,20 @@ enum UserDefaultsStorage {
     @UserDefault(key: Keys.refreshToken.rawValue, defaultValue: "")
     static var refreshToken: String
 
+    @UserDefault(key: Keys.fcmToken.rawValue, defaultValue: "")
+    static var fcmToken: String
+    
     @UserDefault(key: Keys.userID.rawValue, defaultValue: 0)
     static var userID: Int
 
-    @UserDefault(key: Keys.nickname.rawValue, defaultValue: "")
-    static var nickname: String
+//    @UserDefault(key: Keys.nickname.rawValue, defaultValue: "")
+    static var nickname: String {
+        get { UserDefaults.standard.string(forKey: Keys.nickname.rawValue) ?? "" }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: Keys.nickname.rawValue)
+            NotificationCenter.default.post(name: .nicknameDidChange, object: nil)
+        }
+    }
 
     @UserDefault(key: Keys.typeLogin.rawValue, defaultValue: LoginTypeKey.local.rawValue)
     static var typeLogin: String
@@ -81,6 +91,10 @@ enum UserDefaultsStorage {
     
     static func clearRecentSearches() {
         recentSearches = []
+    }
+    
+    static func remove(_ key: Keys) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
     }
     
     static func deleteAll() {

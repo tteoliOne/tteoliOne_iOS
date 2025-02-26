@@ -18,11 +18,13 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
     var product: ProductPreviewDTO? {
         didSet {
             configureUIwithData()
+            bindLikeButton()
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        disposeBag = DisposeBag()
         productImageView.image = nil
     }
     
@@ -128,18 +130,6 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         cellView()
-        
-        likeButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self = self, let product = self.product else { return }
-                product.liked.toggle()
-                product.totalLikes = product.liked ? (product.totalLikes + 1) : (product.totalLikes - 1)
-                self.product = product
-                self.likeButtonTapped.accept(product.productId)
-                updateLikeButton(isLiked: product.liked, likeCount: product.totalLikes)
-            })
-            .disposed(by: disposeBag)
-        
     }
     
     private func cellView() {
@@ -167,9 +157,13 @@ final class ProductCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    private func updateLikeButton(isLiked: Bool, likeCount: Int) {
-        likeButton.updateLikeState(isLiked: isLiked)
-        likeCountLabel.text = "\(likeCount)"
+    private func bindLikeButton() {
+        likeButton.rx.tap
+            .throttle(.milliseconds(500), latest: false, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                guard let self = self, let product = self.product else { return }
+                NotificationCenter.default.post(name: .toggleLike, object: product.productId)
+            })
+            .disposed(by: disposeBag)
     }
-    
 }

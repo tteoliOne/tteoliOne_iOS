@@ -10,6 +10,6 @@ import Foundation
 struct ReportRequestBody: Encodable {
     
     let content: String?
-    let reporteeId: String?
+    let reporteeId: Int?
     
 }

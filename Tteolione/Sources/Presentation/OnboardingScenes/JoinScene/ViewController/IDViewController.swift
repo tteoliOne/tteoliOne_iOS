@@ -13,6 +13,9 @@ final class IDViewController: BaseViewController<IDView> {
     var disposeBag = DisposeBag()
     weak var delegate: JoinCoordinatorDelegate?
     
+    override func setupKeyboardDismissGesture() {
+        super.setupKeyboardDismissGesture()
+    }
 }
 
 extension IDViewController: View {

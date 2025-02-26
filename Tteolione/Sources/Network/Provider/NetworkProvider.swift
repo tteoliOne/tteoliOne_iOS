@@ -8,6 +8,7 @@
 import Moya
 import RxSwift
 import RxMoya
+import Foundation
 
 final class NetworkProvider<T: TargetType> {
     
@@ -30,10 +31,13 @@ final class NetworkProvider<T: TargetType> {
             .retry(retryCount)
             .catch { error in
                 if let moyaError = error as? MoyaError, let response = moyaError.response {
+                    let json = try? JSONSerialization.jsonObject(with: response.data, options: []) as? [String: Any]
+                    let errorMessage = json?["message"] as? String ?? "알 수 없는 오류"
                     let serverError = NetworkError.serverError(
                         code: response.statusCode,
-                        message: String(data: response.data, encoding: .utf8) ?? "알 수 없는 오류"
+                        message: errorMessage
                     )
+                    print("📌 네트워크 요청 실패: \(serverError)")
                     return Single<R>.error(serverError)
                 } else {
                     return Single<R>.error(NetworkError.connectionError)
