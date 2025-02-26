@@ -146,7 +146,7 @@ extension ProfileSetReactor {
             .asObservable()
             .flatMap { response -> Observable<Mutation> in
                 switch handleResponse(response) {
-                case .success(let message):
+                case .success(_):
                     return .concat([
                         .just(.setNavigateToNext(true)),
                         .just(.setNavigateToNext(false))

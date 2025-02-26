@@ -81,7 +81,7 @@ final class AccessTokenRetrier: RequestInterceptor {
                 } catch {
                     completion(false)
                 }
-            case .failure(let error):
+            case .failure(_):
                 completion(false)
             }
         }

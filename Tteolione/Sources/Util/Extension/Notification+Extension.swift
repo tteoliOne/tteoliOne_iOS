@@ -22,4 +22,6 @@ extension Notification.Name {
     static let logout = Notification.Name("Logout")
     static let nicknameDidChange = Notification.Name("nicknameDidChange")
     static let toggleLike = Notification.Name("toggleLike")
+    static let didComeOpponent = Notification.Name("didComeOpponent")
+    static let didBackChat = Notification.Name("didBackChat")
 }

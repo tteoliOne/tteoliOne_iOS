@@ -51,6 +51,7 @@ struct ChatMessage {
     let type: ChatMessageType
     let timestamp: String
     let opponentProfile: String?
+    let unRead: Bool?
     
     var isMine: Bool {
         return type == .sent

@@ -32,6 +32,7 @@ final class SearchSuggestionsViewController: BaseViewController<SearchSuggestion
         rootView.tableView.rx.modelSelected(String.self)
             .subscribe(onNext: { [weak self] suggestion in
                 self?.delegate?.didSelectSuggestion(suggestion)
+                
             })
             .disposed(by: disposeBag)
     }

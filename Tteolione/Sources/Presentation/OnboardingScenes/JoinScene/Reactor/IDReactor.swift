@@ -123,7 +123,7 @@ extension IDReactor {
             .flatMap { [weak self] response -> Observable<Mutation> in
                 guard let self = self else { return .empty() }
                 switch handleResponse(response) {
-                case .success(let message):
+                case .success(_):
                     self.mediator.update(id, action: OnBoardingReactor.Action.updateID)
                     return .concat([
                         .just(.setNavigateToNext(true)),

@@ -1120,6 +1120,7 @@
 		72361F172D2E46A5009BEF12 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				72361E852D13FB99009BEF12 /* Coordinator */,
 				723B09352D3BD64300F464A4 /* Extension */,
 				7246FA082D38D21600EE6B5E /* Constant */,
 				7246F9F62D3792CD00EE6B5E /* Wrapper */,
@@ -1737,7 +1738,6 @@
 			children = (
 				7246F9F92D38BBC300EE6B5E /* Presentation */,
 				72361F172D2E46A5009BEF12 /* Util */,
-				72361E852D13FB99009BEF12 /* Coordinator */,
 				72361E5C2D0C22E3009BEF12 /* Network */,
 				724DECAC2D0186A200171F44 /* Component */,
 				724DEC952D01732200171F44 /* Base */,
@@ -2682,6 +2682,7 @@
 				DEVELOPMENT_TEAM = QQN262X7KM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "떠리원";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";
@@ -2720,6 +2721,7 @@
 				DEVELOPMENT_TEAM = QQN262X7KM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "떠리원";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";

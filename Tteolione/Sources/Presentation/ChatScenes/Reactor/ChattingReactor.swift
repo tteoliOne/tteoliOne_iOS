@@ -33,6 +33,7 @@ final class ChattingReactor: Reactor {
         case updateRequestButtonStatus(RequestButtonState)
         case exitChatRoomTap
         case reportPost
+        case setOpponentConnect(Bool)
     }
     
     enum Mutation {
@@ -47,6 +48,7 @@ final class ChattingReactor: Reactor {
         case pushReviewView(Bool)
         case pushReportPost(Bool)
         case setOpponentId(Int)
+        case setOpponentConnect(Bool)
     }
     
     struct State {
@@ -63,6 +65,7 @@ final class ChattingReactor: Reactor {
         var requestButtonState: RequestButtonState = .request
         var isReviewViewPushed: Bool = false
         var pushReportPost: Bool = false
+        var isOpponentConnect: Bool = false
     }
     
     private var chatWebSocketService: ChatWebSocketService?
@@ -115,6 +118,14 @@ final class ChattingReactor: Reactor {
                                                selector: #selector(handleLeaveChat(_:)),
                                                name: .didLeaveChat,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleCome(_:)),
+                                               name: .didComeOpponent,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleBackChat(_:)),
+                                               name: .didBackChat,
+                                               object: nil)
         self.initialState = State(chatId: chatId,
                                   productId: productId)
         Task { @MainActor in
@@ -135,7 +146,8 @@ final class ChattingReactor: Reactor {
                     text: message.content,
                     type: messageType,
                     timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendTime)),
-                    opponentProfile: opponentProfile
+                    opponentProfile: opponentProfile,
+                    unRead: message.unRead
                 )
             }
             
@@ -156,10 +168,12 @@ extension ChattingReactor {
             
         case .sendMessage(let message):
             chatWebSocketService?.sendMessage(content: message)
+            
             let chatMessage = ChatMessage(text: message,
                                           type: .sent,
                                           timestamp: FormatterManager.shared.getChatTimeFormat(),
-                                          opponentProfile: nil)
+                                          opponentProfile: nil,
+                                          unRead: !currentState.isOpponentConnect)
             return .concat([
                 .just(.addMessages([chatMessage])),
                 .just(.setSendButtonEnabled(false))
@@ -208,6 +222,9 @@ extension ChattingReactor {
                 .just(.pushReportPost(true)),
                 .just(.pushReportPost(false))
             ])
+            
+        case .setOpponentConnect(let isConnect):
+            return .just(.setOpponentConnect(isConnect))
         }
     }
 }
@@ -250,6 +267,9 @@ extension ChattingReactor {
             
         case .setOpponentId(let id):
             newState.opponentId = id
+            
+        case .setOpponentConnect(let opponent):
+            newState.isOpponentConnect = opponent
         }
         
         return newState
@@ -259,12 +279,14 @@ extension ChattingReactor {
 extension ChattingReactor {
     
     private func leaveChatRoom(chatRoomId: Int) -> Observable<Mutation> {
+        print("됨")
         return networkChatProvider.request(.leaveChatRoom(chatRoomId: chatRoomId),
                                            decodingType: ServerResponse<String>.self)
         .asObservable()
         .flatMap { response -> Observable<Mutation> in
             switch handleResponse(response) {
             case .success(_):
+                print("됨2")
                 return .concat([
                     .just(.viewDisappeared(true)),
                     .just(.viewDisappeared(false))
@@ -274,6 +296,21 @@ extension ChattingReactor {
             }
         }
     }
+    
+    private func leaveChatRoomWithoutReturn(chatRoomId: Int) {
+        networkChatProvider.request(.leaveChatRoom(chatRoomId: chatRoomId),
+                                    decodingType: ServerResponse<String>.self)
+            .asObservable()
+            .subscribe(onNext: { response in
+                print("API 호출 성공: \(response)")
+            }, onError: { error in
+                print("API 호출 실패: \(error.localizedDescription)")
+            }, onCompleted: {
+                print("API 호출 완료됨")
+            })
+            .disposed(by: disposeBag)
+    }
+
     
     private func deleteChatRoom(chatRoomId: Int) -> Observable<Mutation> {
         return networkChatProvider.request(.deleteChatRoom(chatRoomId: chatRoomId),
@@ -293,71 +330,82 @@ extension ChattingReactor {
     }
     
     private func fetchChatRoom(roomNo: Int) -> Observable<Mutation> {
-        let lastMessageTime = dbManager.getLastMessageTime(chatRoomID: roomNo) ?? 0
+        let lastUnreadTime = dbManager.fetchUnreadMessages(chatRoomID: roomNo).first?.sendTime
+        let lastMessageTime = lastUnreadTime ?? dbManager.getLastMessageTime(chatRoomID: roomNo) ?? 0
+        let storeLastMessageTime = dbManager.getLastMessageTime(chatRoomID: roomNo) ?? 0
 
         return networkChatProvider.request(.getChatHistory(roomNo: roomNo, date: lastMessageTime),
                                            decodingType: ServerResponse<ChatContentDTO>.self)
-        .asObservable()
-        .flatMap { response -> Observable<Mutation> in
-            switch handleResponse(response) {
-            case .success(let chatContentDTO):
-                self.chatWebSocketService = ChatWebSocketService(chatId: self.currentState.chatId ?? 0,
-                                                                 productId: self.currentState.productId ?? 0,
-                                                                 isMine: chatContentDTO.checkSeller)
-                let opponentId = chatContentDTO.opponentId
-                let opponentProfileURL = chatContentDTO.opponentProfile
+            .asObservable()
+            .flatMap { response -> Observable<Mutation> in
+                switch handleResponse(response) {
+                case .success(let chatContentDTO):
+                    self.chatWebSocketService = ChatWebSocketService(chatId: self.currentState.chatId ?? 0,
+                                                                     productId: self.currentState.productId ?? 0,
+                                                                     isMine: chatContentDTO.checkSeller)
+                    let opponentId = chatContentDTO.opponentId
+                    let opponentProfileURL = chatContentDTO.opponentProfile
 
-                return .create { observer in
-                    Task {
-                        let localProfilePath = await ProfileImageManager.shared.getProfileImage(for: opponentId, urlString: opponentProfileURL)
+                    return .create { observer in
+                        Task {
+                            let localProfilePath = await ProfileImageManager.shared.getProfileImage(for: opponentId, urlString: opponentProfileURL)
+                            
+                            let filteredMessages = chatContentDTO.chatList.filter { $0.sendDate > storeLastMessageTime }
+                            
+                            if !filteredMessages.isEmpty {
+                                filteredMessages.forEach { message in
+                                    let chatMessageData = ChatMessageData(
+                                        chatRoomNo: message.chatRoomNo,
+                                        content: message.content,
+                                        senderNo: message.senderNo,
+                                        productNo: chatContentDTO.productId,
+                                        sendTime: message.sendDate,
+                                        isMine: message.mine,
+                                        contentType: message.contentType,
+                                        unRead: (message.readCount != 0),
+                                        opponentProfileURL: opponentProfileURL,
+                                        localProfilePath: localProfilePath
+                                    )
+                                    
+                                    if message.readCount > 0 {
+                                        self.dbManager.updateMessageAsRead(chatRoomID: message.chatRoomNo,
+                                                                           sendTime: message.sendDate)
+                                    }
+                                    
+                                    self.dbManager.addItem(chatMessageData)
+                                }
 
-                        let newMessages = chatContentDTO.chatList
-                        if !newMessages.isEmpty {
-                            newMessages.forEach { message in
-                                let chatMessageData = ChatMessageData(
-                                    chatRoomNo: message.chatRoomNo,
-                                    content: message.content,
-                                    senderNo: message.senderNo,
-                                    productNo: chatContentDTO.productId,
-                                    sendTime: message.sendDate,
-                                    isMine: message.mine,
-                                    contentType: message.contentType,
-                                    opponentProfileURL: opponentProfileURL,
-                                    localProfilePath: localProfilePath
-                                )
-                                
-                                self.dbManager.addItem(chatMessageData)
+                                let chatMessages = filteredMessages.map { message in
+                                    let messageType: ChatMessageType = (message.contentType == "notice") ? .notice : (message.mine ? .sent : .received)
+                                    let isUnread = !message.mine && !(self.currentState.isConnected)
+                                    return ChatMessage(
+                                        text: message.content,
+                                        type: messageType,
+                                        timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate)),
+                                        opponentProfile: localProfilePath,
+                                        unRead: isUnread
+                                    )
+                                }
+
+                                observer.onNext(.setProductData(chatContentDTO))
+                                observer.onNext(.addMessages(chatMessages))
+                                observer.onNext(.setOpponentId(chatContentDTO.opponentId))
+                                observer.onCompleted()
+                            } else {
+                                observer.onNext(.setProductData(chatContentDTO))
+                                observer.onNext(.setOpponentId(chatContentDTO.opponentId))
+                                observer.onCompleted()
                             }
-
-                            let chatMessages = newMessages.map { message in
-                                let messageType: ChatMessageType = (message.contentType == "notice") ? .notice : (message.mine ? .sent : .received)
-
-                                return ChatMessage(
-                                    text: message.content,
-                                    type: messageType,
-                                    timestamp: FormatterManager.shared.getChatTimeFormat(from: Int64(message.sendDate)),
-                                    opponentProfile: localProfilePath
-                                )
-                            }
-
-                            observer.onNext(.setProductData(chatContentDTO))
-                            observer.onNext(.addMessages(chatMessages))
-                            observer.onNext(.setOpponentId(chatContentDTO.opponentId))
-                            observer.onCompleted()
-                        } else {
-                            observer.onNext(.setProductData(chatContentDTO))
-                            observer.onNext(.setOpponentId(chatContentDTO.opponentId))
-                            observer.onCompleted()
                         }
+                        return Disposables.create()
                     }
-                    return Disposables.create()
-                }
 
-            case .failure(let error):
-                return .just(.showError(error))
+                case .failure(let error):
+                    return .just(.showError(error))
+                }
             }
-        }
     }
+
     
     private func fetchPutRequest(productId: Int,
                                  chatRoomId: Int) -> Observable<Mutation> {
@@ -454,7 +502,8 @@ extension ChattingReactor {
                                                       productNo: data.productNo,
                                                       sendTime: data.sendTime,
                                                       isMine: true,
-                                                      contentType: data.contentType)
+                                                      contentType: data.contentType,
+                                                      unRead: (data.readCount != 0))
                     self.dbManager.addItem(chatMessage)
                 case .failure(let error):
                     print("❌ CallBack 실패: \(error.localizedDescription)")
@@ -493,7 +542,8 @@ extension ChattingReactor {
         action.onNext(.addMessages([ChatMessage(text: content,
                                                 type: isMine ? .sent : .received,
                                                 timestamp: formattedTime,
-                                                opponentProfile: opponentProfile)]))
+                                                opponentProfile: opponentProfile,
+                                                unRead: false)]))
     }
     
     @objc private func handleCallBackMessage(_ notification: Notification) {
@@ -549,6 +599,16 @@ extension ChattingReactor {
         action.onNext(.updateRequestButtonStatus(.complete))
     }
     
+    @objc private func handleCome(_ notification: Notification) {
+        action.onNext(.setOpponentConnect(true))
+    }
+    
+    @objc private func handleBackChat(_ notification: Notification) {
+        if let chatId = currentState.chatId {
+            leaveChatRoomWithoutReturn(chatRoomId: chatId)
+        }
+    }
+    
     @objc private func handleLeaveChat(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let content = userInfo["content"] as? String,
@@ -572,6 +632,7 @@ extension ChattingReactor {
         action.onNext(.addMessages([ChatMessage(text: content,
                                                 type: .notice,
                                                 timestamp: formattedTime,
-                                                opponentProfile: nil)]))
+                                                opponentProfile: nil,
+                                                unRead: false)]))
     }
 }

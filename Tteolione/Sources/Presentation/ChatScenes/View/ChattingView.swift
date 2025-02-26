@@ -56,7 +56,7 @@ final class ChattingView: BaseView {
         return tableView
     }()
     
-    private let inputContainerView = UIView()
+    let inputContainerView = UIView()
     
     let messageTextView: UITextView = {
         let textView = UITextView()
@@ -75,11 +75,6 @@ final class ChattingView: BaseView {
         button.tintColor = .gray
         return button
     }()
-    
-    override func touchesBegan(_ touches: Set<UITouch>,
-                               with event: UIEvent?) {
-        self.endEditing(true)
-    }
     
     override func configureHierarchy() {
         [inputTopView, tableView,
@@ -133,14 +128,14 @@ final class ChattingView: BaseView {
         inputContainerView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(50).priority(.high) // 최소 높이 설정, 우선순위 조정
+            make.height.equalTo(50).priority(.high)
         }
 
         messageTextView.snp.makeConstraints { make in
             make.leading.equalTo(inputContainerView).offset(12)
             make.top.bottom.equalTo(inputContainerView).inset(8)
             make.trailing.equalTo(sendButton.snp.leading).offset(-8)
-            make.height.greaterThanOrEqualTo(36) // 최소 높이 설정
+            make.height.greaterThanOrEqualTo(36)
         }
 
         sendButton.snp.makeConstraints { make in

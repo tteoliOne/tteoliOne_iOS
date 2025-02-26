@@ -26,7 +26,7 @@ final class ProfileImageManager {
     /// ✅ 저장된 프로필 이미지 가져오기 (캐시 또는 파일)
     func getProfileImage(for opponentId: Int, urlString: String) async -> String? {
         // ✅ 메모리 캐시에서 가져오기
-        if let cachedImage = cache.object(forKey: NSNumber(value: opponentId)) {
+        if cache.object(forKey: NSNumber(value: opponentId)) != nil {
             return getProfileImagePath(for: opponentId)?.path
         }
         
