@@ -95,8 +95,31 @@
 - 배포 후 발생한 긴급한 버그를 수정하는 브랜치
 - main 브랜치를 기준으로 생성하며, 빠르게 수정 후 즉시 배포
 
+## 주요기술
+### 아키텍처(Architecture)
+<img src="https://github.com/user-attachments/assets/c96a92a2-9494-460e-8b4e-65815d43ef1d" width="800">
 
+- ReactorKit을 활용하여 View와 비즈니스 로직을 분리.
+- View → Action → mutate() → reduce() → State → View 형태의 단방향 데이터 플로우 유지.
+- Moya를 활용하여 API 요청을 구조화하고, RxMoya를 이용해 RxSwift 기반으로 비동기 네트워크 처리를 최적화.
+- 채팅 및 실시간 데이터 전송을 위해 StompClientLib을 활용하여 WebSocket 통신을 적용.
+- SwiftData & UserDefaults를 활용한 데이터 관리
+- RxSwift를 활용한 반응형 데이터 처리 & 비동기 처리
 
+> ReactorKit 기반 아키텍처 설계
+
+- ReactorKit을 도입한 이유
+    - 비즈니스 로직과 UI의 명확한 역할 분리함.
+    - ReactorKit은 RxSwift 기반으로 동작하며, Observable을 활용한 비동기 이벤트 처리에 최적화됨.
+    - 데이터 흐름을 단방향 데이터 플로우 유지함.
+- View
+    - View 프로토콜을 적용해야하며, DisposeBag와 bind(reactor:) 메서드를 정의해야 함.
+    - bind 내부에는, Reactor로 보낼 Action과, Reactor로부터 수신할 State를 작성하면 됨.
+- Reactor
+  - Reactor는 View로 부터 Action Stream을 전달 받아, 내부에서 mutate()와 reduce() 과정을 거쳐서 State Stream으로 바꾸어 다시 View로 전달해주는 역할.
+  - State의 초기값을 설정하기 위해 initialState가 필요.
+  - mutate() 함수는 Action 스트림을 Mutation 스트림으로 변환하고, 변환된 Mutation 스트림은 reduce() 함수로 전달.
+  - reduce() 함수는 이전 State와 Mutation을 활용하여 새로운 State를 반환하고, 이 State를 View에서 구독을 하고 있었다면, State가 변경되어 UI가 업데이트 됨.
 
 
 
