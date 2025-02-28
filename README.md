@@ -95,9 +95,11 @@
 - 배포 후 발생한 긴급한 버그를 수정하는 브랜치
 - main 브랜치를 기준으로 생성하며, 빠르게 수정 후 즉시 배포
 
-## 주요기술
+## 프로젝트 구조
 ### 아키텍처(Architecture)
-<img src="https://github.com/user-attachments/assets/c96a92a2-9494-460e-8b4e-65815d43ef1d" width="800">
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/c96a92a2-9494-460e-8b4e-65815d43ef1d" width="800">
+</p>
 
 - ReactorKit을 활용하여 View와 비즈니스 로직을 분리.
 - View → Action → mutate() → reduce() → State → View 형태의 단방향 데이터 플로우 유지.
@@ -106,7 +108,7 @@
 - SwiftData & UserDefaults를 활용한 데이터 관리
 - RxSwift를 활용한 반응형 데이터 처리 & 비동기 처리
 
-> ReactorKit 기반 아키텍처 설계
+> ## ReactorKit 기반 아키텍처 설계
 
 - ReactorKit을 도입한 이유
     - 비즈니스 로직과 UI의 명확한 역할 분리함.
@@ -121,11 +123,53 @@
   - mutate() 함수는 Action 스트림을 Mutation 스트림으로 변환하고, 변환된 Mutation 스트림은 reduce() 함수로 전달.
   - reduce() 함수는 이전 State와 Mutation을 활용하여 새로운 State를 반환하고, 이 State를 View에서 구독을 하고 있었다면, State가 변경되어 UI가 업데이트 됨.
 
+> ## Coordinator 설계
 
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/dd25d874-7785-4fa2-ad24-aa34efab6fbe" width="800" height="400">
+</p>
 
+- 도입 배경
+    - 기존에는 ViewController가 직접 화면 전환을 처리하여 다른 ViewController와 강한 결합도를 가짐.
+    - 화면 전환 로직이 ViewController 내부에 혼재되면서 코드가 복잡해지고 유지보수성이 낮아지는 문제 발생.
+- Coordinator의 적용
+    - Coordinator는 화면 전환과 관련된 모든 데이터 전달을 담당하며, 각 ViewController에 필요한 데이터와 Reactor를 생성하여 주입.
+    - 화면 전환 시 필요한 인자를 Coordinator에서 관리하여, ViewController 내부에서 데이터 설정 로직이 혼재되지 않도록 설계.
 
+## 핵심 주요기술
+> ### StompClientLib을 활용한 실시간 양방향 통신
 
+- Stomp 프로토콜을 활용한 WebSocket 기반 메시징 시스템 구현
+    - Stomp는 텍스트 기반의 메시징 프로토콜로, 가볍고 효율적인 방식으로 메시지를 전송할 수 있음.
+    - (Topic - 방번호) 구조로 채팅방을 구독하여 실시간 메시지 송수신을 관리하며, 특정 사용자가 채팅방에 입장하면 자동으로 해당 Topic을 구독함.
+- 채팅방 생성 및 구독 흐름 최적화
+    - 사용자가 채팅방에 입장하면 해당 Topic을 구독하여 이전 메시지 및 실시간 메시지를 수신.
+    - 채팅방에서 퇴장하면 자동으로 Topic 구독 해제하여 불필요한 네트워크 리소스 사용을 방지.
+- Foreground / Background 상태 전환에 따른 소켓 연결 최적화
+    - 앱이 Background로 진입하면 소켓 연결을 해제하여 네트워크 리소스를 절약하고,
+    - 다시 Foreground로 전환될 때 자동으로 Stomp 연결을 복구하여 원활한 사용자 경험을 제공.
+    - NotificationCenter를 활용하여 앱의 라이프사이클 변화 감지 후 소켓을 자동으로 재연결.
+- SwiftData와 결합하여 실시간 메시지 저장 및 상태 관리
+    - 실시간으로 수신된 메시지는 SwiftData를 활용하여 로컬 DB에 저장하여, 빠른 메시지 로딩이 가능하도록 최적화.
+- ReactorKit과 결합한 상태 관리
+    - 불필요한 UI 리렌더링을 방지하기 위해 distinctUntilChanged() 적용, 동일한 데이터가 중복 업데이트되지 않도록 최적화.
+ 
+> ### Remote 알림 (실시간 채팅 알림 - FCM)
 
+- Firebase Cloud Messaging(FCM) 토큰을 기반으로 푸시 알림을 구현.
+- 서버가 FCM을 통해 채팅 메시지를 푸시로 전송, 사용자에게 실시간 알림 제공.
+- 앱 실행 시 FCM 토큰을 가져와 UserDefaults에 저장한 후, 로그인 시 서버로 전송하여 저장.
 
+> ### SwiftData
 
+- iOS 17부터 제공되는 SwiftData를 활용하여 메시지 저장 및 관리.
+- 실시간 채팅 데이터 관리 및 오프라인 상태에서도 메시지 조회 가능하도록 구성.
 
+> ### 이미지 캐싱
+
+- 이미지를 반복해서 호출하는 리소스를 줄이기 위해 메모리 캐시와 FileManager를 조합하여 이미지 캐싱 시스템을 구현
+
+> ### RxMoya & 라우터 패턴을 활용한 네트워크 구조화
+
+- RxMoya를 활용하여 네트워크 요청을 RxSwift 기반으로 처리.
+- 라우터 패턴을 적용하여 API 요청을 명확하게 정의하고, 네트워크 레이어를 모듈화.
