@@ -2683,20 +2683,21 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "떠리원";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "이 앱은 사용자의 현재 위치를 기반으로 가까운 순으로 상품을 추천하기 위해 위치 정보를 사용합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "이 앱은 사용자의 현재 위치를 기반으로 가까운 순으로 상품을 추천하기 위해 위치 정보를 사용합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범에서 사진 선택합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jun.Tteolione;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2722,20 +2723,21 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tteolione/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "떠리원";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "앱을 사용하는동안 계속 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "이 앱은 사용자의 현재 위치를 기반으로 가까운 순으로 상품을 추천하기 위해 위치 정보를 사용합니다.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "항상 위치정보를 이용합니다.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용중에만 위치정보를 이용합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "이 앱은 사용자의 현재 위치를 기반으로 가까운 순으로 상품을 추천하기 위해 위치 정보를 사용합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범에서 사진 선택합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jun.Tteolione;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
