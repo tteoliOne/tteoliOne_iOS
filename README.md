@@ -12,7 +12,6 @@
 - 진행 기간
     - 기획 : 2024.12.01 ~ 2024.12.14
     - 개발 : 2024.12.15 ~ 2025.02.26
-    - 출시 : 2025.02.27
 - 기술 스택
     - 개발 환경 
        - iOS : Swift 6.0, Xcode 16.2
@@ -25,27 +24,11 @@
 
 ## 📱 주요 화면
 
-> **로그인 화면**
-
-<img src="https://github.com/user-attachments/assets/d1e6c0e7-8a07-4be3-9ac6-c16df19955c1" width="200">
-
----
-
-> **메인화면** 및 **상세 화면**
-
-<img src="https://github.com/user-attachments/assets/31d6516a-04d9-4d20-8719-74a0be492999" width="200"> <img src="https://github.com/user-attachments/assets/b4fb4cc6-5b24-4520-bfb1-5c0ec94fb6b4" width="200">
-
----
-
-> **채팅 리스트** 및 **채팅 화면**
-
-<img src="https://github.com/user-attachments/assets/889b000b-157a-400e-9c6d-a7ccf2b706bc" width="200"> <img src="https://github.com/user-attachments/assets/eb301f80-133e-450a-9e50-ce7a6574dc88" width="200">
-
----
-
-> **내 프로필** 및 **상대방 프로필**
-
-<img src="https://github.com/user-attachments/assets/dbbe4c2a-e6b5-4cfb-b80f-613e6d6022b9" width="200"> <img src="https://github.com/user-attachments/assets/261fc9f8-a38c-4a0e-85b8-fe504a291c4a" width="200">
+| 로그인 화면 | 메인 화면 | 상세 화면 | 채팅리스트 화면 |
+|---------------|---------------|---------------|---------------|
+| <img src="https://github.com/user-attachments/assets/d1e6c0e7-8a07-4be3-9ac6-c16df19955c1" width="200"> | <img src="https://github.com/user-attachments/assets/31d6516a-04d9-4d20-8719-74a0be492999" width="200"> | <img src="https://github.com/user-attachments/assets/b4fb4cc6-5b24-4520-bfb1-5c0ec94fb6b4" width="200"> | <img src="https://github.com/user-attachments/assets/889b000b-157a-400e-9c6d-a7ccf2b706bc" width="200"> |
+| 채팅 화면 | 내 프로필 화면 | 상대방 프로필 화면 | 설정 화면 |
+| <img src="https://github.com/user-attachments/assets/eb301f80-133e-450a-9e50-ce7a6574dc88" width="200"> | <img src="https://github.com/user-attachments/assets/dbbe4c2a-e6b5-4cfb-b80f-613e6d6022b9" width="200"> | <img src="https://github.com/user-attachments/assets/261fc9f8-a38c-4a0e-85b8-fe504a291c4a" width="200"> | <img src="https://github.com/user-attachments/assets/6bb75512-eafe-43a9-8085-fe3e79fb3e47" width="200"> |
 
 ## 주요 키워드
 - 패턴 & 아키텍처
