@@ -136,6 +136,27 @@
     - 실시간으로 수신된 메시지는 SwiftData를 활용하여 로컬 DB에 저장하여, 빠른 메시지 로딩이 가능하도록 최적화.
 - ReactorKit과 결합한 상태 관리
     - 불필요한 UI 리렌더링을 방지하기 위해 distinctUntilChanged() 적용, 동일한 데이터가 중복 업데이트되지 않도록 최적화.
+      
+- Stomp 적용 방식 (소켓 연결 및 화면 구성)
+  - 실시간 채팅 구현을 위한 소켓 연결 및 데이터 처리 흐름
+  1. 채팅방 입장 시 Stomp 연결 및 Topic 구독
+  2. SwiftData에서 채팅 내역 로드 (기존 데이터 존재 여부 확인)
+     - 데이터 있음 → SwiftData에서 즉시 UI 업데이트
+     - 데이터 없음 → 서버 API 호출 후 SwiftData에 저장
+  3. 마지막 메시지 날짜 혹은 안 읽은 메시지의 첫 번째 날짜를 API로 전송하여 서버에서 필터링된 데이터 수신
+  4. 서버 Response를 받아 SwiftData에 저장하고 UI 업데이트
+     -> Stomp 연결 성공 후, 기존 데이터를 즉시 화면에 렌더링한 뒤 서버 데이터를 동기화하여 성능 최적화
+     
+- 메시지 송수신 (Send & Receive)
+  - 메시지 전송 흐름
+    1. 사용자가 메시지를 입력하고 Send 요청
+    2. Stomp를 통해 서버로 메시지 전송
+    3. CallBack API를 통해 메시지 전송 성공 여부 확인
+    4. 성공 시 SwiftData에 저장 및 UI 업데이트
+  - 메시지 수신 흐름
+    1. Stomp 구독을 통해 서버에서 실시간 메시지 수신
+    2. 메시지 수신 즉시 뷰에 반영 후 SwiftData에 저장
+    3. 상대방이 오프라인 상태라면 CallBack API를 통해 FCM을 트리거하여 푸시 알림 전송
  
 > ### Remote 알림 (실시간 채팅 알림 - FCM)
 
@@ -152,7 +173,127 @@
 
 - 이미지를 반복해서 호출하는 리소스를 줄이기 위해 메모리 캐시와 FileManager를 조합하여 이미지 캐싱 시스템을 구현
 
+> ### 위치 기반 시스템 (Location-Based System) 구현
+
+- CoreLocation과 MapKit을 활용하여 사용자 위치를 기반으로 장소 검색 및 추천 시스템 구현
+- MKLocalSearchCompletion을 통해 사용자가 입력한 키워드에 맞춰 자동완성된 장소 목록 제공
+- 선택한 장소를 기준으로 가장 가까운 순으로 정렬하여, 서버와 협업하여 카테고리별로 가까운 순으로 메인 화면에 반영
+
 > ### RxMoya & 라우터 패턴을 활용한 네트워크 구조화
 
 - RxMoya를 활용하여 네트워크 요청을 RxSwift 기반으로 처리.
 - 라우터 패턴을 적용하여 API 요청을 명확하게 정의하고, 네트워크 레이어를 모듈화.
+
+
+## 트러블슈팅
+### 1. 인증 시간
+### 문제 원인
+사용자에게 인증 번호를 입력받는 화면에서, 3분 타이머가 동작하고 있었고, 시간이 다 되면 자동으로 뒤로 가기가 발생하도록 설계돼 있었습니다.
+하지만 문제는, 3분이 되기 전에 인증을 성공했음에도 불구하고 타이머가 계속 흘러가면서, 결국 시간이 다 되자 화면이 강제로 뒤로 이동해버렸습니다!
+
+### 해결과정
+처음엔 단순히 인증 버튼을 눌렀을 때 stopTimer()를 호출하면 타이머 스트림이 멈출 거라고 생각했습니다
+~~~swift
+
+case .authCheckButtonTap:
+    stopTimer()
+
+private func stopTimer() {
+    stopTimerSubject.onNext(())
+}
+~~~
+
+하지만 이 방식은 타이머 스트림이 완전히 종료되는 게 아니라, stopTimerSubject는 여전히 살아있고 타이머의 구독 스트림도 dispose 되지 않았기 때문에 타이머는 계속 돌아가고 있었습니다.
+
+심지어 내가 놓쳤던 건, 타이머가 매번 startTimer()를 호출할 때마다 새로운 Observable을 리턴하고 있었고,
+내부적으로 Disposable을 따로 저장하거나 구독을 관리하지 않으니 타이머가 겹겹이 중첩되는 상황도 발생했습니다
+
+그래서 아래처럼 명시적으로 스트림을 종료하도록 onCompleted()까지 호출하고, 제대로 초기화 했습니다.
+
+~~~swift
+
+private func stopTimer() {
+    stopTimerSubject.onNext(())
+    stopTimerSubject.onCompleted()
+}
+
+~~~
+
+~~~swift
+private func startTimer() -> Observable<Mutation> {
+    guard timerDisposable == nil else { return .empty() }
+
+    let stream = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+        .take(totalSeconds + 1)
+        .take(until: stopTimerSubject)
+        .map { [weak self] elapsedSeconds in
+            ...
+        }
+        .do(onSubscribe: { print("타이머 시작") },
+            onDispose: { [weak self] in
+                self?.resetTimerState()
+            })
+
+    timerDisposable = stream.subscribe()
+    return .empty()
+}
+~~~
+
+### 결과
+인증 성공 시 타이머가 즉시 멈추고, 더 이상 시간이 지나도 자동으로 뒤로 가지 않으며, 불필요한 navigateBack 트리거가 발생하지 않게 되었습니다.
+
+--- 
+
+### 2. Coordinator가 해제되지 않던 문제
+### 문제 원인
+Coordinator 패턴을 적용하면서, 뷰를 닫을 때 popVC() 또는 dismissVC()만 호출하면 화면은 정상적으로 닫히는데,
+해당 Coordinator의 deinit이 호출되지 않는 문제가 있었습니다.
+
+원인을 분석해보니 Coordinator의 childCoordinators 배열에서 자식 Coordinator를 직접 제거해주지 않았기 때문이었습니다.
+
+### 해결 과정
+Coordinator는 화면을 push하거나 present할 때 자식 Coordinator를 childCoordinators에 추가하고,
+나중에 직접 제거해줘야 deinit이 제대로 호출된다고 생각했습니다!
+~~~swift
+func addChildCoordinator(_ coordinator: Coordinator) {
+    childCoordinators.append(coordinator)
+}
+~~~
+
+하지만 단순히 popVC()만 호출하면 Coordinator의 생명주기엔 영향이 없기 때문에
+childCoordinators 배열에 계속 남아 있게 되고, ARC가 메모리를 해제하지 못하게 되는 거죠.
+
+그래서 화면을 닫을 때는 꼭 finish()를 함께 호출해주는 finshView()를 만들고 사용하도록 구조를 정리했습니다.
+
+~~~swift
+func finshView() {
+    finishAllChildren() // 자식부터 정리
+    popVC()             // 화면 닫기
+}
+~~~
+
+finishAllChildren() 안에서는 모든 자식 Coordinator에 대해 finish()를 호출하고
+스스로도 부모 Coordinator에 알려서 childCoordinators에서 제거되도록 처리합니다.
+~~~swift
+func finishAllChildren() {
+    for child in childCoordinators {
+        child.finishAllChildren()
+    }
+    childCoordinators.removeAll()
+    finish() // 나도 제거 요청
+}
+~~~
+
+### 결과
+뷰를 닫을 때 finshView()를 사용하니 자식 Coordinator가 parent로부터 제거되고,
+deinit이 정상적으로 호출되어 메모리 누수가 발생하지 않게 되었습니다.
+
+## 회고
+이번 프로젝트에선 Coordinator + ReactorKit 구조를 도입해 아키텍처는 만족스러웠지만,
+UI/UX 디자인이 상대적으로 미흡했던 점이 아쉬웠습니다.
+앞으로는 디자인 퀄리티까지 신경 쓰는 방향으로 보완해나갈 예정입니다.
+
+
+
+
+
